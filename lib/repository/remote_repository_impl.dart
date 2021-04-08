@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/base_model.dart';
+import 'package:blossom_clinic/model/base_model_list.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
@@ -119,14 +120,17 @@ class RemoteRepositoryImpl extends RemoteRepository {
     }
   }
 
+  BaseModelList<DoctorInfo> doctorListCache;
   @override
   Future<Result<List<DoctorInfo>>> getDoctorList() async {
     try {
-      final _response = await retrofitClient.getDoctorList();
-      if (_response.status.resType == "S") {
-        return Success(_response.data);
+      if (doctorListCache == null) {
+        doctorListCache = await retrofitClient.getDoctorList();
+      }
+      if (doctorListCache.status.resType == "S") {
+        return Success(doctorListCache.data);
       } else {
-        return Error(_response.status);
+        return Error(doctorListCache.status);
       }
     } catch (object) {
       return Error(StatusModel.fromObjectError(object));

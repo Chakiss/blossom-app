@@ -10,6 +10,7 @@ import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
+import 'blossom_theme.dart';
 import 'model/user_model.dart';
 import 'network/omise_rest_client_manager.dart';
 import 'network/omise_retrofit_client.dart';
@@ -51,7 +52,7 @@ class BlossomClinicApplication extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        accentColor: BlossomTheme.white
       ),
       home: MultiProvider(
         providers: [

@@ -9,8 +9,8 @@ part of 'retrofit_client.dart';
 class _RetrofitClient implements RetrofitClient {
   _RetrofitClient(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    // baseUrl ??= 'https://apitest.blossom-app.com/blossomapi/';
-    baseUrl ??= 'https://api.blossom-app.com/blossomapi/';
+    baseUrl ??= 'https://apitest.blossom-app.com/blossomapi/';
+    // baseUrl ??= 'https://api.blossom-app.com/blossomapi/';
   }
 
   final Dio _dio;
