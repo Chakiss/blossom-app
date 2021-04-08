@@ -9,7 +9,8 @@ part of 'retrofit_client.dart';
 class _RetrofitClient implements RetrofitClient {
   _RetrofitClient(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://apitest.blossom-app.com/blossomapi/';
+    // baseUrl ??= 'https://apitest.blossom-app.com/blossomapi/';
+    baseUrl ??= 'https://api.blossom-app.com/blossomapi/';
   }
 
   final Dio _dio;
@@ -47,7 +48,7 @@ class _RetrofitClient implements RetrofitClient {
             method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value =
-        BaseModelList<PackageResponseModel>.fromJson(_result.data, (json) => PackageResponseModel.fromJson(json));
+    BaseModelList<PackageResponseModel>.fromJson(_result.data, (json) => PackageResponseModel.fromJson(json));
     return value;
   }
 
@@ -63,7 +64,7 @@ class _RetrofitClient implements RetrofitClient {
             method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value =
-        BaseModel<GetProfileResponseModel>.fromJson(_result.data, (json) => GetProfileResponseModel.fromJson(json));
+    BaseModel<GetProfileResponseModel>.fromJson(_result.data, (json) => GetProfileResponseModel.fromJson(json));
     return value;
   }
 
@@ -131,6 +132,24 @@ class _RetrofitClient implements RetrofitClient {
             method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = EndVideoCallResponseModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<BaseModelList<DoctorInfo>> getDoctorList() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'doctorInfo/v1.0.0/getDoctorsInfo',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseModelList<DoctorInfo>.fromJson(_result.data, (json) => DoctorInfo.fromJson(json));
     return value;
   }
 }

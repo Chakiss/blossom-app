@@ -3,6 +3,7 @@ import 'package:blossom_clinic/model/base_model_list.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
+import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
 import 'package:blossom_clinic/model/response/get_soruce_destination_response_model.dart';
@@ -14,7 +15,8 @@ import 'package:dio/dio.dart';
 
 part 'retrofit_client.g.dart';
 
-@RestApi(baseUrl: "https://apitest.blossom-app.com/blossomapi/")
+// @RestApi(baseUrl: "https://apitest.blossom-app.com/blossomapi/")
+@RestApi(baseUrl: "https://api.blossom-app.com/blossomapi/")
 abstract class RetrofitClient {
   factory RetrofitClient(Dio dio, {String baseUrl}) = _RetrofitClient;
 
@@ -42,4 +44,7 @@ abstract class RetrofitClient {
   @POST("videoCon/v1.0.0/endVideoCon")
   Future<EndVideoCallResponseModel> endVideoCall(
       @Header("Authorization") token, @Body() EndVideoConferenceRequestModel requestModel);
+
+  @GET("doctorInfo/v1.0.0/getDoctorsInfo")
+  Future<BaseModelList<DoctorInfo>> getDoctorList();
 }

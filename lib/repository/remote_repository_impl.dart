@@ -4,6 +4,7 @@ import 'package:blossom_clinic/model/request/end_video_conference_request_model.
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
+import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
 import 'package:blossom_clinic/model/response/get_soruce_destination_response_model.dart';
@@ -110,6 +111,20 @@ class RemoteRepositoryImpl extends RemoteRepository {
       final _response = await retrofitClient.endVideoCall(token, requestModel);
       if (_response.status.resType == "S") {
         return Success(_response);
+      } else {
+        return Error(_response.status);
+      }
+    } catch (object) {
+      return Error(StatusModel.fromObjectError(object));
+    }
+  }
+
+  @override
+  Future<Result<List<DoctorInfo>>> getDoctorList() async {
+    try {
+      final _response = await retrofitClient.getDoctorList();
+      if (_response.status.resType == "S") {
+        return Success(_response.data);
       } else {
         return Error(_response.status);
       }
