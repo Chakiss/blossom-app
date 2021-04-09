@@ -40,6 +40,8 @@ dependencies:
   meta: ^1.1.7
   fluttertoast: ^8.0.3
   shared_preferences: ^2.0.5
+  firebase_core: "^0.7.0"
+  firebase_messaging: "^8.0.0-dev.15"
 
 dev_dependencies:
   flutter_test:

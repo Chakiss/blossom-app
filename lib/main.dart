@@ -5,6 +5,8 @@ import 'package:blossom_clinic/repository/omise_repository_impl.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/repository/remote_repository_impl.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
@@ -18,7 +20,9 @@ import 'network/rest_client_manager.dart';
 import 'network/retrofit_client.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   _provideDependency();
+  registerFirebaseCloudMessage();
   runApp(BlossomClinicApplication());
 }
 
@@ -44,6 +48,37 @@ void _provideDependency() {
 
   injector.registerSingleton<UserModel>(() => UserModel());
   injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils());
+}
+
+Future<void> registerFirebaseCloudMessage() async {
+  await Firebase.initializeApp();
+  FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+  _messaging.getToken().then((token) {
+    print("Firebase Token $token"); // Print the Token in Console
+  });
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("Foreground Message");
+    print('Foreground Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  });
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+}
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Background Message");
+  print('Background Message data: ${message.data}');
 }
 
 class BlossomClinicApplication extends StatelessWidget {
