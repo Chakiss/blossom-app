@@ -17,6 +17,15 @@ class BottomTab extends StatefulWidget {
 }
 
 class _BottomTabState extends State<BottomTab> {
+
+  var selectedPosition = 0;
+
+  void setBottomMenu(int position) {
+    setState(() {
+      selectedPosition = position;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,49 +45,71 @@ class _BottomTabState extends State<BottomTab> {
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                widget.mainProvider.setPage(DoctorPage());
+                if (selectedPosition != 0) {
+                  widget.mainProvider.setPage(DoctorPage());
+                  setBottomMenu(0);
+                }
               },
               child: Column(
                 children: [
                   SvgPicture.asset(
                     "assets/ic_consult_doctor.svg",
-                    color: BlossomTheme.colorPrimary,
+                    color: selectedPosition == 0 ? BlossomTheme.colorPrimary : BlossomTheme.black,
                   ),
-                  BlossomText("พบแพทย์")
+                  BlossomText("พบแพทย์", color: selectedPosition == 0 ? BlossomTheme.colorPrimary : BlossomTheme.black)
                 ],
               ),
             )),
             Expanded(
-                child: Column(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (selectedPosition != 1) {
+                      setBottomMenu(1);
+                    }
+                  },
+                  child: Column(
               children: [
-                SvgPicture.asset(
-                  "assets/ic_consult_doctor.svg",
-                  color: BlossomTheme.colorPrimary,
-                ),
-                BlossomText("บริการ")],
-            )),
+                  SvgPicture.asset(
+                    "assets/ic_consult_doctor.svg",
+                    color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black,
+                  ),
+                  BlossomText("บริการ", color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black)],
+            ),
+                )),
             Expanded(
-                child: Column(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (selectedPosition != 2) {
+                      setBottomMenu(2);
+                    }
+                  },
+                  child: Column(
               children: [
-                SvgPicture.asset(
-                  "assets/ic_consult_doctor.svg",
-                  color: BlossomTheme.colorPrimary,
-                ),
-                BlossomText("สาขา")],
-            )),
+                  SvgPicture.asset(
+                    "assets/ic_consult_doctor.svg",
+                    color: selectedPosition == 2 ? BlossomTheme.colorPrimary : BlossomTheme.black,
+                  ),
+                  BlossomText("สาขา", color: selectedPosition == 2 ? BlossomTheme.colorPrimary : BlossomTheme.black)],
+            ),
+                )),
             Expanded(
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                widget.mainProvider.setPage(ProfilePage());
+                if (selectedPosition != 3) {
+                  widget.mainProvider.setPage(ProfilePage());
+                  setBottomMenu(3);
+                }
               },
               child: Column(
                 children: [
                   SvgPicture.asset(
                     "assets/ic_consult_doctor.svg",
-                    color: BlossomTheme.colorPrimary,
+                    color: selectedPosition == 3 ? BlossomTheme.colorPrimary : BlossomTheme.black,
                   ),
-                  BlossomText("ข้อมูลส่วนตัว")],
+                  BlossomText("ข้อมูลส่วนตัว", color: selectedPosition == 3 ? BlossomTheme.colorPrimary : BlossomTheme.black)],
               ),
             )),
           ],

@@ -40,7 +40,7 @@ void _provideDependency() {
     return OmiseRetrofitClient(restClientManager.getDio());
   });
   injector.registerSingleton<OmiseRepository>(
-          () => OmiseRepositoryImpl(omiseRetrofitClient: injector.get<OmiseRetrofitClient>()));
+      () => OmiseRepositoryImpl(omiseRetrofitClient: injector.get<OmiseRetrofitClient>()));
 
   injector.registerSingleton<UserModel>(() => UserModel());
   injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils());
@@ -52,13 +52,15 @@ class BlossomClinicApplication extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        accentColor: BlossomTheme.white
+        accentColor: BlossomTheme.white,
       ),
       home: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (BuildContext context) {
-            return SplashScreenProvider();
-          },)
+          ChangeNotifierProvider(
+            create: (BuildContext context) {
+              return SplashScreenProvider();
+            },
+          )
         ],
         child: SplashScreenPage(),
       ),

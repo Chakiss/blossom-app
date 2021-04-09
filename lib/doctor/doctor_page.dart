@@ -2,6 +2,7 @@ import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/doctor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,16 +54,26 @@ class DoctorPage extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                DoctorCard(value.doctorList[index]),
-                                Container(
-                                  margin: EdgeInsets.only(left: 30, right: 30),
-                                  height: 1,
-                                  color: Color(0xFF8D8D8D),
-                                )
-                              ],
-                            ),
+                          child: Column(
+                            children: [
+                              DoctorCard(value.doctorList[index], () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => CustomDialogTwoButton(
+                                    title: "Title",
+                                    description: "Description",
+                                    positiveButton: "Positive",
+                                    negativeButton: "Negative",
+                                  ),
+                                );
+                              }),
+                              Container(
+                                margin: EdgeInsets.only(left: 30, right: 30),
+                                height: 1,
+                                color: Color(0xFF8D8D8D),
+                              )
+                            ],
+                          ),
                         );
                       });
                 },

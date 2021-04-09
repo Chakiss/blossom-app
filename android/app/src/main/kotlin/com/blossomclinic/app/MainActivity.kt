@@ -1,4 +1,4 @@
-package com.blossomclinic.blossom_clinic
+package com.blossomclinic.app
 
 import io.flutter.embedding.android.FlutterActivity
 
