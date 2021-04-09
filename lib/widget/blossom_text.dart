@@ -20,6 +20,7 @@ class BlossomText extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       maxLines: 3,
       style: TextStyle(
+          decoration: TextDecoration.none,
           fontSize: size ?? 10,
           color: color ?? Colors.black,
           fontWeight: fontWeight ?? FontWeight.normal,

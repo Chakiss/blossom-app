@@ -1,8 +1,10 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/model/response/doctor_info.dart';
+import 'package:blossom_clinic/page/doctor_info/doctor_info_page.dart';
+import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
-import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/doctor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,15 +59,7 @@ class DoctorPage extends StatelessWidget {
                           child: Column(
                             children: [
                               DoctorCard(value.doctorList[index], () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => CustomDialogTwoButton(
-                                    title: "Title",
-                                    description: "Description",
-                                    positiveButton: "Positive",
-                                    negativeButton: "Negative",
-                                  ),
-                                );
+                                _goToDoctorInfoPage(context, value.doctorList[index]);
                               }),
                               Container(
                                 margin: EdgeInsets.only(left: 30, right: 30),
@@ -83,5 +77,14 @@ class DoctorPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _goToDoctorInfoPage(BuildContext context, DoctorInfo doctorInfo) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return MultiProvider(providers: [
+        ChangeNotifierProvider(create: (BuildContext context) => DoctorInfoProvider(),)
+      ],
+      child: DoctorInfoPage(doctorInfo),);
+    }));
   }
 }

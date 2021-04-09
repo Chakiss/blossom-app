@@ -19,10 +19,12 @@ class BaseScreen extends StatelessWidget {
           width: 100 * MediaQuery.of(context).size.width / 100,
           child: Image.asset("assets/nav_bar.png"),
         ),
-        SafeArea(
-            child: Container(
-          child: child,
-        ))
+        Expanded(
+          child: SafeArea(
+              child: Container(
+            child: child,
+          )),
+        )
       ],
     );
   }
