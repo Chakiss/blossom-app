@@ -1,11 +1,14 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
+import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
+import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DoctorInfoPage extends StatelessWidget {
   DoctorInfo doctorInfo;
@@ -87,9 +90,20 @@ class DoctorInfoPage extends StatelessWidget {
               ),
             ),
           ),
-          ButtonPinkGradient("ต่อไป", () {}),
+          ButtonPinkGradient("ต่อไป", () {
+            _goToConfirmConsultPage(context);
+          }),
         ],
       ),
     );
+  }
+
+  void _goToConfirmConsultPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return MultiProvider(providers: [
+        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(),)
+      ],
+      child: ConfirmConsultPage(),);
+    }));
   }
 }

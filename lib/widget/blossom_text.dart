@@ -1,3 +1,4 @@
+import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:flutter/material.dart';
 
 class BlossomText extends StatelessWidget {
@@ -22,7 +23,7 @@ class BlossomText extends StatelessWidget {
       style: TextStyle(
           decoration: TextDecoration.none,
           fontSize: size ?? 10,
-          color: color ?? Colors.black,
+          color: color ?? BlossomTheme.black,
           fontWeight: fontWeight ?? FontWeight.normal,
           fontFamily: font ?? FONT_PROMPT),
     );
