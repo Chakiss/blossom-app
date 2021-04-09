@@ -17,9 +17,10 @@ class ButtonPinkGradientSmall extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           )),
+      height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.only(left: 40, right: 40),
+            padding: EdgeInsets.only(left: 40, right: 40, top: 0, bottom: 0),
             primary: Colors.transparent,
             elevation: 0,
             shadowColor: Colors.transparent),

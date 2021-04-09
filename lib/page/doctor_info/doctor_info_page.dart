@@ -7,6 +7,7 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -99,7 +100,7 @@ class DoctorInfoPage extends StatelessWidget {
   }
 
   void _goToConfirmConsultPage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+    Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
         ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(),)
       ],
