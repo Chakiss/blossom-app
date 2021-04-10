@@ -5,26 +5,31 @@ import 'package:flutter/material.dart';
 class ButtonPinkGradient extends StatelessWidget {
   String text;
   bool isEnable;
+  double width;
+  double height;
+  double radius;
+  double textSize;
   Function() onPressed;
 
-  ButtonPinkGradient(this.text, this.isEnable, this.onPressed);
+  ButtonPinkGradient(this.text, this.isEnable, this.onPressed, {this.width, this.height, this.radius, this.textSize});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: width ?? null,
+      height: height ?? null,
       decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
           gradient: LinearGradient(
         colors: isEnable ? [Color(0xFFEF567E), Color(0xFFE8A872)] : [BlossomTheme.white, BlossomTheme.white],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       )),
-      height: 60,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.transparent, elevation: 0, shadowColor: Colors.transparent),
         child: BlossomText(
           text,
-          size: 16,
+          size: textSize ?? 16,
           color: isEnable ? BlossomTheme.white : BlossomTheme.black,
         ),
         onPressed: isEnable ? onPressed : null,

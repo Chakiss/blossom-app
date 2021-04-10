@@ -1,7 +1,9 @@
 import 'package:blossom_clinic/doctor/doctor_page.dart';
+import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../blossom_theme.dart';
@@ -17,7 +19,6 @@ class BottomTab extends StatefulWidget {
 }
 
 class _BottomTabState extends State<BottomTab> {
-
   var selectedPosition = 0;
 
   void setBottomMenu(int position) {
@@ -62,44 +63,51 @@ class _BottomTabState extends State<BottomTab> {
             )),
             Expanded(
                 child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (selectedPosition != 1) {
-                      setBottomMenu(1);
-                    }
-                  },
-                  child: Column(
-              children: [
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (selectedPosition != 1) {
+                  setBottomMenu(1);
+                }
+              },
+              child: Column(
+                children: [
                   SvgPicture.asset(
                     "assets/ic_consult_doctor.svg",
                     color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black,
                   ),
-                  BlossomText("บริการ", color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black)],
-            ),
-                )),
-            Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (selectedPosition != 2) {
-                      setBottomMenu(2);
-                    }
-                  },
-                  child: Column(
-              children: [
-                  SvgPicture.asset(
-                    "assets/ic_consult_doctor.svg",
-                    color: selectedPosition == 2 ? BlossomTheme.colorPrimary : BlossomTheme.black,
-                  ),
-                  BlossomText("สาขา", color: selectedPosition == 2 ? BlossomTheme.colorPrimary : BlossomTheme.black)],
-            ),
-                )),
+                  BlossomText("บริการ", color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black)
+                ],
+              ),
+            )),
             Expanded(
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
+                if (selectedPosition != 2) {
+                  setBottomMenu(2);
+                }
+              },
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    "assets/ic_consult_doctor.svg",
+                    color: selectedPosition == 2 ? BlossomTheme.colorPrimary : BlossomTheme.black,
+                  ),
+                  BlossomText("สาขา", color: selectedPosition == 2 ? BlossomTheme.colorPrimary : BlossomTheme.black)
+                ],
+              ),
+            )),
+            Expanded(
+                child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () async {
+                Widget page = LoginPage();
+                final AccessToken accessToken = await FacebookAuth.instance.accessToken;
+                if (accessToken != null) {
+                  page = ProfilePage();
+                }
                 if (selectedPosition != 3) {
-                  widget.mainProvider.setPage(ProfilePage());
+                  widget.mainProvider.setPage(page);
                   setBottomMenu(3);
                 }
               },
@@ -109,7 +117,9 @@ class _BottomTabState extends State<BottomTab> {
                     "assets/ic_consult_doctor.svg",
                     color: selectedPosition == 3 ? BlossomTheme.colorPrimary : BlossomTheme.black,
                   ),
-                  BlossomText("ข้อมูลส่วนตัว", color: selectedPosition == 3 ? BlossomTheme.colorPrimary : BlossomTheme.black)],
+                  BlossomText("ข้อมูลส่วนตัว",
+                      color: selectedPosition == 3 ? BlossomTheme.colorPrimary : BlossomTheme.black)
+                ],
               ),
             )),
           ],

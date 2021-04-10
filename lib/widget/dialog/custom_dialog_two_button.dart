@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomDialogTwoButton extends StatelessWidget {
   final String title, description, positiveButton, negativeButton;
+  Function() positiveListener, negativeListener;
 
   CustomDialogTwoButton(
       {@required this.title, @required this.description, @required this.positiveButton, @required this.negativeButton});
