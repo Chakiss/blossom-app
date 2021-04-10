@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
 
     List<Widget> dateReserveList;
-    var selectedIndex = 0;
+    var selectedIndex = -1;
 
     Future<void> callServiceGetDoctorDateReserve(BuildContext context, String doctorId) async {
       final result =  await remoteRepository.getDoctorDateReserve(doctorId);
