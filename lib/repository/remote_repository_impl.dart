@@ -8,6 +8,7 @@ import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
 import 'package:blossom_clinic/model/response/get_doctor_date_reserve_response_model.dart';
+import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
 import 'package:blossom_clinic/model/response/get_soruce_destination_response_model.dart';
 import 'package:blossom_clinic/model/response/package_response_model.dart';
@@ -146,6 +147,23 @@ class RemoteRepositoryImpl extends RemoteRepository {
         return Success(_response);
       } else {
         return Error(_response.status);
+      }
+    } catch (object) {
+      return Error(StatusModel.fromObjectError(object));
+    }
+  }
+
+  BaseModelList<GetDoctorMinConsultResponseModel> doctorMinCache;
+  @override
+  Future<Result<BaseModelList<GetDoctorMinConsultResponseModel>>> getDoctorMinConsult() async {
+    try {
+      if (doctorMinCache == null) {
+        doctorMinCache = await retrofitClient.getDoctorMinConsult();
+      }
+      if (doctorMinCache.status.resType == "S") {
+        return Success(doctorMinCache);
+      } else {
+        return Error(doctorMinCache.status);
       }
     } catch (object) {
       return Error(StatusModel.fromObjectError(object));

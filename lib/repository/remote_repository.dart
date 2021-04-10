@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/base_model.dart';
+import 'package:blossom_clinic/model/base_model_list.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
@@ -7,6 +8,7 @@ import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
 import 'package:blossom_clinic/model/response/get_doctor_date_reserve_response_model.dart';
+import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
 import 'package:blossom_clinic/model/response/get_soruce_destination_response_model.dart';
 import 'package:blossom_clinic/model/response/package_response_model.dart';
@@ -32,4 +34,6 @@ abstract class RemoteRepository {
   Future<Result<List<DoctorInfo>>> getDoctorList();
 
   Future<Result<BaseModel<GetDoctorDateReserveResponseModel>>> getDoctorDateReserve(String doctorId);
+
+  Future<Result<BaseModelList<GetDoctorMinConsultResponseModel>>> getDoctorMinConsult();
 }

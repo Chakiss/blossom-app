@@ -1,5 +1,7 @@
 import 'package:blossom_clinic/model/status_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+@JsonSerializable(genericArgumentFactories: true)
 class BaseModelList<T> {
   StatusModel status;
   List<T> data;
