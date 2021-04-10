@@ -12,7 +12,7 @@ class DoctorProvider extends BaseProvider with ChangeNotifier {
       doctorList = data;
       notifyListeners();
     }, (statusModel) {
-
+      errorHandle.proceed(context, statusModel);
     });
   }
 }

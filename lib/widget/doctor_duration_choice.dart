@@ -21,7 +21,7 @@ class _DoctorDurationChoiceState extends State<DoctorDurationChoice> {
   @override
   void initState() {
     super.initState();
-    widget.listener.call(widget.list[0].minute);
+    widget.listener.call(widget.list[0].quota);
   }
 
   @override
@@ -52,7 +52,7 @@ class _DoctorDurationChoiceState extends State<DoctorDurationChoice> {
                   color: selectedIndex == key ? BlossomTheme.pink : BlossomTheme.lightGray,
                   size: 32,
                 ),
-                Container(margin: EdgeInsets.only(left: 10), child: BlossomText("${value.minute} นาที", size: 14,))
+                Container(margin: EdgeInsets.only(left: 10), child: BlossomText("${value.quota} นาที", size: 14,))
               ],
             ),
           )
@@ -64,7 +64,7 @@ class _DoctorDurationChoiceState extends State<DoctorDurationChoice> {
   void _changeState(int index) {
     setState(() {
       selectedIndex = index;
-      widget.listener.call(widget.list[index].minute);
+      widget.listener.call(widget.list[index].quota);
     });
   }
 }

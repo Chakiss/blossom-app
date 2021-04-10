@@ -1,11 +1,14 @@
+import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 
 class ButtonPinkGradientSmall extends StatelessWidget {
+
   String text;
+  bool isEnable;
   Function() onPressed;
 
-  ButtonPinkGradientSmall(this.text, this.onPressed);
+  ButtonPinkGradientSmall(this.text, this.isEnable, this.onPressed);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class ButtonPinkGradientSmall extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           gradient: LinearGradient(
-            colors: [Color(0xFFEF567E), Color(0xFFE8A872)],
+            colors: isEnable ? [Color(0xFFEF567E), Color(0xFFE8A872)] : [BlossomTheme.white],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           )),
@@ -27,9 +30,9 @@ class ButtonPinkGradientSmall extends StatelessWidget {
         child: BlossomText(
           text,
           size: 16,
-          color: Colors.white,
+          color: isEnable ? BlossomTheme.white : BlossomTheme.black,
         ),
-        onPressed: onPressed,
+        onPressed: isEnable ? onPressed : null,
       ),
     );
   }

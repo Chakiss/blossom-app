@@ -1,14 +1,14 @@
 class GetDoctorMinConsultResponseModel {
 
-  int minute;
+  int quota;
   String unit;
+  int packCode;
+  int price;
 
-  GetDoctorMinConsultResponseModel({this.minute, this.unit});
+  GetDoctorMinConsultResponseModel({this.quota, this.unit, this.packCode, this.price});
 
   factory GetDoctorMinConsultResponseModel.fromJson(Map<String, dynamic> json) {
     return GetDoctorMinConsultResponseModel(
-      minute: json["minute"],
-      unit: json["unit"]
-    );
+        quota: json["quota"], unit: json["unit"], packCode: json["packCode"], price: json["price"]);
   }
 }

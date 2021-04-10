@@ -16,7 +16,7 @@ class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
         dateReserveList = _generateDateReserveItem(data.data.dateList);
         notifyListeners();
       }, (statusModel) {
-
+        errorHandle.proceed(context, statusModel);
       });
     }
 

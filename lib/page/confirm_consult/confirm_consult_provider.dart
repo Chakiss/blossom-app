@@ -23,17 +23,19 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
             });
         notifyListeners();
       }
-    }, (statusModel) => {});
+    }, (statusModel) {
+      errorHandle.proceed(context, statusModel);
+    });
   }
 
   Future<void> callServiceGetDoctorTimeReserve(BuildContext context, String doctorId, String date, int minute) async {
     selectedIndex = -1;
     final result = await remoteRepository.getDoctorTimeReserve(doctorId, date, minute);
     result.whenWithResult((data) {
-      dateReserveList =_generateTimeReserveItem(data.data.timeList);
+      dateReserveList = _generateTimeReserveItem(data.data.timeList);
       notifyListeners();
     }, (statusModel) {
-
+      errorHandle.proceed(context, statusModel);
     });
   }
 

@@ -4,6 +4,7 @@ import 'package:blossom_clinic/repository/omise_repository.dart';
 import 'package:blossom_clinic/repository/omise_repository_impl.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/repository/remote_repository_impl.dart';
+import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -50,6 +51,7 @@ void _provideDependency() {
 
   injector.registerSingleton<UserModel>(() => UserModel());
   injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils());
+  injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
 }
 
 Future<void> registerFirebaseCloudMessage() async {

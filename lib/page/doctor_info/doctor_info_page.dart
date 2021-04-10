@@ -92,9 +92,11 @@ class DoctorInfoPage extends StatelessWidget {
               ),
             ),
           ),
-          ButtonPinkGradient("ต่อไป", () {
-            _goToConfirmConsultPage(context);
-          }),
+          Consumer<DoctorInfoProvider>(builder: (BuildContext context, DoctorInfoProvider value, Widget child) {
+            return ButtonPinkGradient("ต่อไป", value.dateReserveModel != null ,() {
+              _goToConfirmConsultPage(context);
+            });
+          },)
         ],
       ),
     );

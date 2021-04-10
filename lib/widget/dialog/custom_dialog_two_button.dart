@@ -52,7 +52,7 @@ class CustomDialogTwoButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   // Spacer(),
-                  TextButton(
+                  negativeButton.isEmpty ? SizedBox() : TextButton(
                       style: ButtonStyle(
                         overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
                       ),
