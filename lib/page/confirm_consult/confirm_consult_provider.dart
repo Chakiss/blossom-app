@@ -41,7 +41,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
     List<Widget> list = [];
     timeReserveListData.asMap().forEach((index, element) {
       list.add(ConsultDoctorDayItem<DoctorTimeModel>(
-        element?.start ?? "",
+        "${element?.start ?? ""} ${element?.unit ?? "น."}",
         element,
         true,
         (timeReserve) {
