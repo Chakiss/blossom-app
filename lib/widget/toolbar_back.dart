@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 
 class ToolbarBack extends StatelessWidget {
   String title;
-
-  ToolbarBack({this.title});
+  Color titleColor;
+  Color backgroundColor;
+  double titleSize;
+  double padding;
+  ToolbarBack({this.title, this.titleColor, this.backgroundColor, this.titleSize, this.padding});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      color: backgroundColor ?? Colors.transparent,
+      padding: EdgeInsets.all(padding ?? 16),
       child: Row(
         children: [
           GestureDetector(
@@ -20,7 +24,7 @@ class ToolbarBack extends StatelessWidget {
               },
               child: Icon(
                 Icons.navigate_before,
-                color: BlossomTheme.white,
+                color: titleColor ?? BlossomTheme.white,
                 size: 40,
               )),
           Expanded(
@@ -30,8 +34,8 @@ class ToolbarBack extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
                     title ?? "",
-                    color: BlossomTheme.white,
-                    size: 28,
+                    color: titleColor ?? BlossomTheme.white,
+                    size: titleSize ?? 28,
                   )),
             ),
           )
