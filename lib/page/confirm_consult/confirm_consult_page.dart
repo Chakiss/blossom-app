@@ -22,7 +22,7 @@ class ConfirmConsultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.callServiceGetDoctorMinConsult(_doctorInfo.cubeId, _dateReserveModel.date);
+    _provider.callServiceGetDoctorMinConsult(context, _doctorInfo.cubeId, _dateReserveModel.date);
     return BaseScreen(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -65,7 +65,7 @@ class ConfirmConsultPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  GridView.count(
+                  value.dateReserveList != null ? GridView.count(
                     shrinkWrap: true,
                     primary: false,
                     padding: const EdgeInsets.all(0.0),
@@ -73,10 +73,8 @@ class ConfirmConsultPage extends StatelessWidget {
                     crossAxisCount: 5,
                     mainAxisSpacing:  14.0,
                     childAspectRatio: 3 / 1.5,
-                    children: <Widget>[
-
-                    ],
-                  ),
+                    children: value.dateReserveList,
+                  ) : BlossomProgressIndicator(),
                   Container(
                     margin: EdgeInsets.only(top: 20, bottom: 20),
                     height: 1,

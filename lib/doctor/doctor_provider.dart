@@ -6,7 +6,7 @@ class DoctorProvider extends BaseProvider with ChangeNotifier {
 
   List<DoctorInfo> doctorList = [];
 
-  Future<void> callServiceGetDoctorList() async {
+  Future<void> callServiceGetDoctorList(BuildContext context) async {
     var result = await remoteRepository.getDoctorList();
     result.whenWithResult((data) {
       doctorList = data;

@@ -15,7 +15,7 @@ class DoctorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     provider = Provider.of(context, listen: false);
-    provider.callServiceGetDoctorList();
+    provider.callServiceGetDoctorList(context);
     return BaseScreen(
       child: Container(
         width: MediaQuery.of(context).size.width,
