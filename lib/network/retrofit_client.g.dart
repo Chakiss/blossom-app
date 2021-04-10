@@ -152,4 +152,25 @@ class _RetrofitClient implements RetrofitClient {
     final value = BaseModelList<DoctorInfo>.fromJson(_result.data, (json) => DoctorInfo.fromJson(json));
     return value;
   }
+
+  @override
+  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(
+      doctorId) async {
+    ArgumentError.checkNotNull(doctorId, 'doctorId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{'doctorId': doctorId};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'doctorInfo/v1.0.0/getDoctorDateReserve',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value =
+        BaseModel<GetDoctorDateReserveResponseModel>.fromJson(_result.data, (json) => GetDoctorDateReserveResponseModel.fromJson(json));
+    return value;
+  }
 }

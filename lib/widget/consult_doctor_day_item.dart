@@ -1,33 +1,54 @@
+import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 
-class ConsultDoctorDayItem extends StatelessWidget {
+class ConsultDoctorDayItem<T> extends StatefulWidget {
   String text;
-  Function() onPressed;
+  T data;
+  int index;
+  int selectedIndex;
+  bool isEnable;
+  Function(dynamic) onPressed;
 
-  ConsultDoctorDayItem(this.text, this.onPressed);
+  ConsultDoctorDayItem(this.text, this.data, this.isEnable, this.onPressed, {this.index, this.selectedIndex});
+
+  @override
+  _ConsultDoctorDayItemState<T> createState() => _ConsultDoctorDayItemState<T>();
+}
+
+class _ConsultDoctorDayItemState<T> extends State<ConsultDoctorDayItem<T>> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
+          borderRadius: BorderRadius.all(Radius.circular(4)),
           gradient: LinearGradient(
-        colors: [Color(0xFFEF567E), Color(0xFFE8A872)],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+            colors: widget.isEnable ? widget.index == widget.selectedIndex
+                ? [Color(0xFFEF567E), Color(0xFFE8A872)]
+                : [BlossomTheme.white, BlossomTheme.lightPink] : [BlossomTheme.gray, BlossomTheme.lightGray],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )),
       height: 60,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.all(0), primary: Colors.transparent, elevation: 0, shadowColor: Colors.transparent),
         child: BlossomText(
-          text,
+          widget.text,
           size: 12,
-          color: Colors.white,
+          color: widget.index == widget.selectedIndex ? BlossomTheme.white : BlossomTheme.black,
         ),
-        onPressed: onPressed,
+        onPressed: () {
+          widget.onPressed.call(widget.data);
+        },
       ),
     );
   }

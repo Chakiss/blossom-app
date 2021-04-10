@@ -5,6 +5,7 @@ import 'package:blossom_clinic/model/request/start_video_conference_request_mode
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
+import 'package:blossom_clinic/model/response/get_doctor_date_reserve_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
 import 'package:blossom_clinic/model/response/get_soruce_destination_response_model.dart';
 import 'package:blossom_clinic/model/response/package_response_model.dart';
@@ -47,4 +48,7 @@ abstract class RetrofitClient {
 
   @GET("doctorInfo/v1.0.0/getDoctorsInfo")
   Future<BaseModelList<DoctorInfo>> getDoctorList();
+
+  @GET("doctorInfo/v1.0.0/getDoctorDateReserve")
+  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(@Query("doctorId") doctorId);
 }

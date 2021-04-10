@@ -1,11 +1,13 @@
+
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
+import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
+import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
-import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,12 @@ class DoctorInfoPage extends StatelessWidget {
 
   DoctorInfoPage(this.doctorInfo);
 
+  DoctorInfoProvider _doctorInfoProvider;
+
   @override
   Widget build(BuildContext context) {
+    _doctorInfoProvider = Provider.of(context, listen: false);
+    _doctorInfoProvider.callServiceGetDoctorDateReserve(context, doctorInfo?.cubeId ?? "0");
     return BaseScreen(
       child: Column(
         children: [
@@ -65,28 +71,23 @@ class DoctorInfoPage extends StatelessWidget {
                   Container(
                     height: 16,
                   ),
-                  Expanded(
-                    child: GridView.count(
-                      primary: false,
-                      padding: const EdgeInsets.all(0.0),
-                      crossAxisSpacing: 10.0,
-                      crossAxisCount: 5,
-                      mainAxisSpacing: 28.0,
-                      childAspectRatio: 3 / 1.5,
-                      children: <Widget>[
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {}),
-                        ConsultDoctorDayItem("14 เมษา", () {})
-                      ],
-                    ),
-                  )
+                  Consumer<DoctorInfoProvider>(builder: (BuildContext context, DoctorInfoProvider value, Widget child) {
+                    if (value.dateReserveList == null) {
+                      return BlossomProgressIndicator();
+                    } else {
+                      return GridView.count(
+                        shrinkWrap: true,
+                        primary: false,
+                        padding: const EdgeInsets.all(0.0),
+                        crossAxisSpacing: 10.0,
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 28.0,
+                        childAspectRatio: 3 / 1.5,
+                        children: value.dateReserveList,
+                      );
+                      return BlossomProgressIndicator();
+                    }
+                  },)
                 ],
               ),
             ),

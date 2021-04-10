@@ -12,10 +12,15 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(providers: [
           ChangeNotifierProvider(create: (BuildContext context) => MainProvider(),),
-          ChangeNotifierProvider(create: (BuildContext context) => DoctorProvider(),)
+          ChangeNotifierProvider(create: (BuildContext context) => DoctorProvider(),),
         ],
         child: MainPage(),);
       }));
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

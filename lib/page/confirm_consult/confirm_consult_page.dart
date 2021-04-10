@@ -62,15 +62,7 @@ class ConfirmConsultPage extends StatelessWidget {
                   mainAxisSpacing:  14.0,
                   childAspectRatio: 3 / 1.5,
                   children: <Widget>[
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
-                    ConsultDoctorDayItem("14 เมษา", () {}),
+
                   ],
                 ),
                 Container(
