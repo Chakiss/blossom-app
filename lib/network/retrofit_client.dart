@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:blossom_clinic/model/base_model.dart';
 import 'package:blossom_clinic/model/base_model_list.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
+import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
+import 'package:blossom_clinic/model/response/GetDoctorTimeReserveResponseModel.dart';
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
@@ -25,13 +27,13 @@ abstract class RetrofitClient {
   factory RetrofitClient(Dio dio, {String baseUrl}) = _RetrofitClient;
 
   @POST("auth/v1.0.0/signInWithFacebook")
-  Future<BaseModel<SignInFacebookResponseModel>> signInWithFacebook(@Body() requestModel);
+  Future<BaseModel<SignInFacebookResponseModel>> signInWithFacebook(@Body() SignInFacebookRequestModel requestModel);
 
   @GET("package/v1.0.0/videoCon?packCode=1")
-  Future<BaseModelList<PackageResponseModel>> getPackage(@Header("Authorization") token);
+  Future<BaseModelList<PackageResponseModel>> getPackage(@Header("Authorization") String token);
 
   @GET("user/v1.0.0/profile")
-  Future<BaseModel<GetProfileResponseModel>> getProfile(@Header("Authorization") token);
+  Future<BaseModel<GetProfileResponseModel>> getProfile(@Header("Authorization") String token);
 
   @POST("package/v2.0.0/videoCon")
   Future<BaseModel<BuyPackResponseModel>> buyPackage(
@@ -53,8 +55,12 @@ abstract class RetrofitClient {
   Future<BaseModelList<DoctorInfo>> getDoctorList();
 
   @GET("doctorInfo/v1.0.0/getDoctorDateReserve")
-  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(@Query("doctorId") doctorId);
+  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(@Query("doctorId") String doctorId);
 
   @GET("doctorInfo/v1.0.0/getDoctorMinConsult")
   Future<BaseModelList<GetDoctorMinConsultResponseModel>> getDoctorMinConsult();
+
+  @GET("doctorInfo/v1.0.0/getDoctorTimeReserve")
+  Future<BaseModel<GetDoctorTimeReserveResponseModel>> getDoctorTimeReserve(@Query("doctorId") String doctorId,
+      @Query("date") String date, @Query("minute") int minute);
 }

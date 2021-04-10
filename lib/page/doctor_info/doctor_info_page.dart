@@ -105,7 +105,7 @@ class DoctorInfoPage extends StatelessWidget {
       return MultiProvider(providers: [
         ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(),)
       ],
-      child: ConfirmConsultPage(),);
+      child: ConfirmConsultPage(doctorInfo, _doctorInfoProvider.dateReserveModel),);
     }));
   }
 }

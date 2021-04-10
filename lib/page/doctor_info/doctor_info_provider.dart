@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
 
     List<Widget> dateReserveList;
+    DateReserveModel dateReserveModel;
     var selectedIndex = -1;
 
     Future<void> callServiceGetDoctorDateReserve(BuildContext context, String doctorId) async {
@@ -29,6 +30,7 @@ class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
             print("Test Item Click $index");
             selectedIndex = index;
             dateReserveList = _generateDateReserveItem(dateReserveListData);
+            dateReserveModel = dateReserve;
             notifyListeners();
           }, index: index, selectedIndex: selectedIndex,));
         } else {

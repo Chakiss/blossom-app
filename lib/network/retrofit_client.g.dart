@@ -48,7 +48,7 @@ class _RetrofitClient implements RetrofitClient {
             method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value =
-    BaseModelList<PackageResponseModel>.fromJson(_result.data, (json) => PackageResponseModel.fromJson(json));
+        BaseModelList<PackageResponseModel>.fromJson(_result.data, (json) => PackageResponseModel.fromJson(json));
     return value;
   }
 
@@ -64,7 +64,7 @@ class _RetrofitClient implements RetrofitClient {
             method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value =
-    BaseModel<GetProfileResponseModel>.fromJson(_result.data, (json) => GetProfileResponseModel.fromJson(json));
+        BaseModel<GetProfileResponseModel>.fromJson(_result.data, (json) => GetProfileResponseModel.fromJson(json));
     return value;
   }
 
@@ -140,57 +140,59 @@ class _RetrofitClient implements RetrofitClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'doctorInfo/v1.0.0/getDoctorsInfo',
+    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorsInfo',
         queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = BaseModelList<DoctorInfo>.fromJson(_result.data, (json) => DoctorInfo.fromJson(json));
     return value;
   }
 
   @override
-  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(
-      doctorId) async {
+  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(doctorId) async {
     ArgumentError.checkNotNull(doctorId, 'doctorId');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{'doctorId': doctorId};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'doctorInfo/v1.0.0/getDoctorDateReserve',
+    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorDateReserve',
         queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
-    final value =
-    BaseModel<GetDoctorDateReserveResponseModel>.fromJson(_result.data, (json) => GetDoctorDateReserveResponseModel.fromJson(json));
+    final value = BaseModel<GetDoctorDateReserveResponseModel>.fromJson(
+        _result.data, (json) => GetDoctorDateReserveResponseModel.fromJson(json));
     return value;
   }
 
   @override
-  Future<BaseModelList<GetDoctorMinConsultResponseModel>>
-      getDoctorMinConsult() async {
+  Future<BaseModelList<GetDoctorMinConsultResponseModel>> getDoctorMinConsult() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'doctorInfo/v1.0.0/getDoctorMinConsult',
+    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorMinConsult',
         queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
-    final value =
-        BaseModelList<GetDoctorMinConsultResponseModel>.fromJson(_result.data, (json) => GetDoctorMinConsultResponseModel.fromJson(json));
+    final value = BaseModelList<GetDoctorMinConsultResponseModel>.fromJson(
+        _result.data, (json) => GetDoctorMinConsultResponseModel.fromJson(json));
+    return value;
+  }
+
+  @override
+  Future<BaseModel<GetDoctorTimeReserveResponseModel>> getDoctorTimeReserve(doctorId, date, minute) async {
+    ArgumentError.checkNotNull(doctorId, 'doctorId');
+    ArgumentError.checkNotNull(date, 'date');
+    ArgumentError.checkNotNull(minute, 'minute');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{'doctorId': doctorId, 'date': date, 'minute': minute};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorTimeReserve',
+        queryParameters: queryParameters,
+        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = BaseModel<GetDoctorTimeReserveResponseModel>.fromJson(
+      _result.data,
+      (json) => GetDoctorTimeReserveResponseModel.fromJson(json),
+    );
     return value;
   }
 }

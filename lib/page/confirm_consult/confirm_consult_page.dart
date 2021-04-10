@@ -1,9 +1,10 @@
 import 'package:blossom_clinic/base/base_screen.dart';
+import 'package:blossom_clinic/model/date_reserve_model.dart';
+import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient_small.dart';
-import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,11 +14,15 @@ import '../../blossom_theme.dart';
 class ConfirmConsultPage extends StatelessWidget {
   
   ConfirmConsultProvider _provider;
+  DoctorInfo _doctorInfo;
+  DateReserveModel _dateReserveModel;
+
+  ConfirmConsultPage(this._doctorInfo, this._dateReserveModel);
   
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.callServiceGetDoctorMinConsult();
+    _provider.callServiceGetDoctorMinConsult(_doctorInfo.cubeId, _dateReserveModel.date);
     return BaseScreen(
       child: Column(
         mainAxisSize: MainAxisSize.min,
