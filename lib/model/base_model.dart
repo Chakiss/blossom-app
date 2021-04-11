@@ -11,6 +11,6 @@ class BaseModel<T> {
   factory BaseModel.fromJson(Map<String, dynamic> json, Function(Map<String, dynamic>) create) {
     return BaseModel(
         status: StatusModel.fromJson(json["status"]),
-        data: create(json["data"]));
+        data: json["data"] != null ? create(json["data"]) : null);
   }
 }

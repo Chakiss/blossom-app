@@ -10,9 +10,11 @@ class BaseModelList<T> {
 
   factory BaseModelList.fromJson(Map<String, dynamic> json, Function(Map<String, dynamic>) create) {
     List<T> data = [];
-    json["data"].forEach((v) {
-      data.add(create(v));
-    });
+    if (json["data"] != null) {
+      json["data"].forEach((v) {
+        data.add(create(v));
+      });
+    }
     return BaseModelList(
         status: StatusModel.fromJson(json["status"]),
         data: data);

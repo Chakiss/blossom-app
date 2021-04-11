@@ -83,7 +83,9 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
     if (accessToken != null) {
       await _callServiceBookingConsultDoctor(context, doctorMin.packCode, doctorInfo.doctorId,
           "${dateReserveModel.date} ${doctorTimeModel.start}", "${dateReserveModel.date} ${doctorTimeModel.end}");
-    } else {}
+    } else {
+
+    }
   }
 
   Future<OmiseCard> checkHaveCreditCard() async {
@@ -106,9 +108,16 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
         BookingConsultDoctorRequestModel(packCode, doctorId, startDate, endDate);
     final result = await remoteRepository.bookingConsultDoctor(userModel.getBearerToken(), requestModel);
     result.whenWithResult((data) {
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-        return WebViewPage("Omise", data.data.omiseChargeAuthUrl);
-      }));
-    }, (statusModel) {});
+      openWebViewUrl(context, "Omise", data.data.omiseChargeAuthUrl);
+    }, (statusModel) {
+      errorHandle.proceed(context, statusModel);
+    });
+  }
+
+  void openWebViewUrl(BuildContext context, String title, String url) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)
+    {
+      return WebViewPage(title, url ?? "https://www.google.co.th");
+    }));
   }
 }

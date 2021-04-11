@@ -17,12 +17,17 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
   SplashScreenProvider(this._loginUseCase);
 
   Future<void> checkLogin(BuildContext context) async {
-    final result = await _loginUseCase.execute(context, FacebookAuth.instance);
-    result.whenWithResult((data) {
+    final AccessToken accessToken = await FacebookAuth.instance.accessToken;
+    if (accessToken != null) {
+      final result = await _loginUseCase.execute(context, FacebookAuth.instance);
+      result.whenWithResult((data) {
+        goToMainPage(context);
+      }, (statusModel) {
+        goToMainPage(context);
+      });
+    } else {
       goToMainPage(context);
-    }, (statusModel) {
-      goToMainPage(context);
-    });
+    }
   }
 
   void goToMainPage(BuildContext context) {
