@@ -57,7 +57,6 @@ class CustomDialogOneButton extends StatelessWidget {
                         overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop();
                         positiveListener?.call();// To close the dialog
                       },
                       child: BlossomText(

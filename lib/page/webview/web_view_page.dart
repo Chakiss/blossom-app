@@ -11,20 +11,23 @@ class WebViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          ToolbarBack(
-            title: title,
-            backgroundColor: BlossomTheme.pink,
-            titleSize: 16,
-            padding: 8,
-          ),
-          Expanded(
-              child: WebView(
-            initialUrl: link,
-          ))
-        ],
+    return Scaffold(
+      backgroundColor: BlossomTheme.pink,
+      body: SafeArea(
+        child: Column(
+          children: [
+            ToolbarBack(
+              title: title,
+              backgroundColor: BlossomTheme.pink,
+              titleSize: 16,
+              padding: 8,
+            ),
+            Expanded(
+                child: WebView(
+              initialUrl: link,
+            ))
+          ],
+        ),
       ),
     );
   }

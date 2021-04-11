@@ -1,9 +1,11 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/base/result.dart';
+import 'package:blossom_clinic/model/base_model.dart';
 import 'package:blossom_clinic/model/date_reserve_model.dart';
 import 'package:blossom_clinic/model/doctor_time_model.dart';
 import 'package:blossom_clinic/model/omise_card.dart';
 import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
+import 'package:blossom_clinic/model/response/booking_consult_doctor_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/model/response/omise_add_customer_response_model.dart';
@@ -79,10 +81,18 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> confirmConsult(BuildContext context, DoctorInfo doctorInfo, GetDoctorMinConsultResponseModel doctorMin,
       DoctorTimeModel doctorTimeModel, DateReserveModel dateReserveModel) async {
+    // openWebViewUrl(context, "Omise", null);
     final AccessToken accessToken = await FacebookAuth.instance.accessToken;
     if (accessToken != null) {
-      await _callServiceBookingConsultDoctor(context, doctorMin.packCode, doctorInfo.doctorId,
+      final result = await _callServiceBookingConsultDoctor(context, doctorMin.packCode, doctorInfo.doctorId,
           "${dateReserveModel.date} ${doctorTimeModel.start}", "${dateReserveModel.date} ${doctorTimeModel.end}");
+      result.whenWithResult((data) {
+        Navigator.pop(context);
+        openWebViewUrl(context, "Omise", data.data.omiseChargeAuthUrl);
+      }, (statusModel) async {
+        Navigator.pop(context);
+        errorHandle.proceed(context, statusModel);
+      });
     } else {
 
     }
@@ -102,21 +112,16 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
     }
   }
 
-  Future<void> _callServiceBookingConsultDoctor(
+  Future<Result<BaseModel<BookingConsultDoctorResponseModel>>> _callServiceBookingConsultDoctor(
       BuildContext context, int packCode, int doctorId, String startDate, String endDate) async {
     BookingConsultDoctorRequestModel requestModel =
         BookingConsultDoctorRequestModel(packCode, doctorId, startDate, endDate);
     final result = await remoteRepository.bookingConsultDoctor(userModel.getBearerToken(), requestModel);
-    result.whenWithResult((data) {
-      openWebViewUrl(context, "Omise", data.data.omiseChargeAuthUrl);
-    }, (statusModel) {
-      errorHandle.proceed(context, statusModel);
-    });
+    return result;
   }
 
   void openWebViewUrl(BuildContext context, String title, String url) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)
-    {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return WebViewPage(title, url ?? "https://www.google.co.th");
     }));
   }
