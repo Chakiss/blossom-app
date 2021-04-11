@@ -10,8 +10,8 @@ class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
     DateReserveModel dateReserveModel;
     var selectedIndex = -1;
 
-    Future<void> callServiceGetDoctorDateReserve(BuildContext context, String doctorId) async {
-      final result =  await remoteRepository.getDoctorDateReserve(doctorId);
+    Future<void> callServiceGetDoctorDateReserve(BuildContext context, int doctorId) async {
+      final result =  await remoteRepository.getDoctorDateReserve(doctorId.toString());
       result.whenWithResult((data) {
         dateReserveList = _generateDateReserveItem(data.data.dateList);
         notifyListeners();

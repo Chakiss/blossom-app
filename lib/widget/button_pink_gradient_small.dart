@@ -16,7 +16,7 @@ class ButtonPinkGradientSmall extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4)),
           gradient: LinearGradient(
-            colors: isEnable ? [Color(0xFFEF567E), Color(0xFFE8A872)] : [BlossomTheme.white],
+            colors: isEnable ? [Color(0xFFEF567E), Color(0xFFE8A872)] : [BlossomTheme.white, BlossomTheme.white],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           )),

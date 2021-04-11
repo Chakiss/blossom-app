@@ -4,10 +4,11 @@ import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
-import 'package:blossom_clinic/widget/button_pink_gradient_small.dart';
+import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
@@ -22,23 +23,26 @@ class ConfirmConsultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.callServiceGetDoctorMinConsult(context, _doctorInfo.cubeId, _dateReserveModel.date);
+    _provider.callServiceGetDoctorMinConsult(context, _doctorInfo.doctorId ?? 0, _dateReserveModel.date);
     return BaseScreen(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ToolbarBack(
-            title: "ยืนยันการจอง",
-          ),
-          Spacer(
-            flex: 1,
-          ),
-          Container(
-              width: 80 * MediaQuery.of(context).size.width / 100,
-              child: Consumer<ConfirmConsultProvider>(
-                builder: (BuildContext context, ConfirmConsultProvider value, Widget child) {
-                  return Column(
+      safeAreaBottom: false,
+      child: Consumer<ConfirmConsultProvider>(
+        builder: (BuildContext context, ConfirmConsultProvider value, Widget child) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ToolbarBack(
+                title: "ยืนยันการจอง",
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                    child: Container(
+                  width: 80 * MediaQuery.of(context).size.width / 100,
+                  child: Column(
                     children: [
+                      SizedBox(
+                        height: 40,
+                      ),
                       Align(
                         alignment: Alignment.topLeft,
                         child: BlossomText(
@@ -79,44 +83,52 @@ class ConfirmConsultPage extends StatelessWidget {
                               children: value.dateReserveList,
                             )
                           : BlossomProgressIndicator(),
-                      Container(
-                        margin: EdgeInsets.only(top: 20, bottom: 20),
-                        height: 1,
-                        color: BlossomTheme.lightGray,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: BlossomText(
-                          "ค่าใช้จ่ายในการปรึกษา 500 บาท",
-                          color: BlossomTheme.black,
-                          size: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 52,
-                      ),
-                      ButtonPinkGradientSmall(
-                          "ยืนยัน", value.doctorTimeModel != null && value.currentMinute != null, () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => CustomDialogTwoButton(
-                                title: "ยืนยันการจอง",
-                                description: "คุณต้องการจองการปรึกษาแพทย์ ${_doctorInfo?.profileTitle ?? ""}" +
-                                    "ใน วันที่ ${_dateReserveModel.date} " +
-                                    "เวลา ${value.doctorTimeModel?.start ?? ""} ${value.doctorTimeModel?.unit ?? "น."} " +
-                                    "เป็นเวลา ${value.currentMinute} นาที",
-                                positiveButton: "ยืนยัน",
-                                negativeButton: "ยกเลิก"));
-                      })
+                      // Container(
+                      //   margin: EdgeInsets.only(top: 20, bottom: 20),
+                      //   height: 1,
+                      //   color: BlossomTheme.lightGray,
+                      // ),
+                      // Align(
+                      //   alignment: Alignment.topLeft,
+                      //   child: BlossomText(
+                      //     "ค่าใช้จ่ายในการปรึกษา 500 บาท",
+                      //     color: BlossomTheme.black,
+                      //     size: 18,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 52,
+                      // ),
                     ],
+                  ),
+                )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ButtonPinkGradient(
+                "ยืนยัน",
+                value.doctorTimeModel != null && value.currentMinute != null,
+                () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CustomDialogTwoButton(
+                        title: "ยืนยันการจอง",
+                        description: "คุณต้องการจองการปรึกษาแพทย์ ${_doctorInfo?.profileTitle ?? ""} " +
+                            "ในวันที่ ${DateFormat("d MMMM yyyy", "TH").format(DateTime.parse(_dateReserveModel.date))} " +
+                            "เวลา ${value.doctorTimeModel?.start ?? ""} ${value.doctorTimeModel?.unit ?? "น."} " +
+                            "เป็นเวลา ${value.currentMinute} นาที",
+                        positiveButton: "ยืนยัน",
+                        negativeButton: "ยกเลิก"),
                   );
                 },
-              )),
-          Spacer(
-            flex: 4,
-          ),
-        ],
+                width: MediaQuery.of(context).size.width,
+                height: 60,
+              )
+            ],
+          );
+        },
       ),
     );
   }

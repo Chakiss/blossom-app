@@ -8,6 +8,7 @@ class DoctorInfo {
   final String mobileNo;
   final String statusOnline;
   final String cubeId;
+  final int doctorId;
 
   DoctorInfo({
     this.firstName,
@@ -19,6 +20,7 @@ class DoctorInfo {
     this.mobileNo,
     this.statusOnline,
     this.cubeId,
+    this.doctorId
   });
 
   factory DoctorInfo.formJsonBody(Map<String, dynamic> json) {
@@ -36,6 +38,7 @@ class DoctorInfo {
       mobileNo: data['mobileNo'],
       statusOnline: data['statusOnline'],
       cubeId: data['cubeId'],
+      doctorId: data['doctorId']
     );
   }
 }

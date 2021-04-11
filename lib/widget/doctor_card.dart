@@ -55,6 +55,7 @@ class DoctorCard extends StatelessWidget {
                             ),
                             BlossomText(
                               doctorInfo?.profileDesc ?? "",
+                              maxLines: 3,
                               size: 12,
                             )
                           ],

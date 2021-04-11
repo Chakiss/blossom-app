@@ -11,7 +11,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
   DoctorTimeModel doctorTimeModel;
   var selectedIndex = -1;
 
-  Future<void> callServiceGetDoctorMinConsult(BuildContext context, String doctorId, String dateTime) async {
+  Future<void> callServiceGetDoctorMinConsult(BuildContext context, int doctorId, String dateTime) async {
     final result = await remoteRepository.getDoctorMinConsult();
     result.whenWithResult((data) {
       if (data?.data != null) {
@@ -19,7 +19,8 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
             list: data?.data,
             listener: (value) {
               currentMinute = value;
-              callServiceGetDoctorTimeReserve(context, doctorId, dateTime, currentMinute);
+              doctorTimeModel = null;
+              callServiceGetDoctorTimeReserve(context, doctorId.toString(), dateTime, currentMinute);
             });
         notifyListeners();
       }

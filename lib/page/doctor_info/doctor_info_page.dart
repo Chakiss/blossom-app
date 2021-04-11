@@ -23,7 +23,7 @@ class DoctorInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _doctorInfoProvider = Provider.of(context, listen: false);
-    _doctorInfoProvider.callServiceGetDoctorDateReserve(context, doctorInfo?.cubeId ?? "0");
+    _doctorInfoProvider.callServiceGetDoctorDateReserve(context, doctorInfo?.doctorId ?? 0);
     return BaseScreen(
       child: Column(
         children: [
@@ -76,6 +76,7 @@ class DoctorInfoPage extends StatelessWidget {
                       return BlossomProgressIndicator();
                     } else {
                       return GridView.count(
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         primary: false,
                         padding: const EdgeInsets.all(0.0),

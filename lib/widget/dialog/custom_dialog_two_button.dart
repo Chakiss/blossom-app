@@ -42,7 +42,7 @@ class CustomDialogTwoButton extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             BlossomText(
-              description + description + description + description + description + description,
+              description,
               size: 16,
               color: BlossomTheme.black,
             ),

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
   Widget child;
+  bool safeAreaBottom;
 
-  BaseScreen({this.child});
+  BaseScreen({this.child, this.safeAreaBottom});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class BaseScreen extends StatelessWidget {
         ),
         Expanded(
           child: SafeArea(
+            bottom: safeAreaBottom ?? true,
               child: Container(
             child: child,
           )),
