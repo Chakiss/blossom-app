@@ -26,9 +26,7 @@ class BaseScreen extends StatelessWidget {
         ),
         SafeArea(
           bottom: safeAreaBottom ?? true,
-            child: Container(
-          child: child,
-        ))
+            child: child)
       ],
     );
   }

@@ -8,28 +8,26 @@ class ServicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      child: Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          GridView.count(
-          shrinkWrap: true,
-          primary: false,
-          padding: const EdgeInsets.all(20.0),
-          crossAxisSpacing: 10.0,
-          crossAxisCount: 2,
-          mainAxisSpacing: 10.0,
-          childAspectRatio: 1 / 1,
-          children: [
-            _createServiceItem(context, "Treatment", "https://www.blossomclinicthailand.com/treatment/"),
-            _createServiceItem(context, "กระชับรูขุมขน", "https://www.blossomclinicthailand.com/กระชับรูขุมขน/"),
-            _createServiceItem(context, "ปรับรูปหน้า", "https://www.blossomclinicthailand.com/ปรับรูปหน้า/"),
-            _createServiceItem(context, "รอยดำ รอยแดง หลุมสิว", "https://www.blossomclinicthailand.com/รอยดำรอยแดงหลุมสิว/"),
-            _createServiceItem(context, "วิตามินผิว", "https://www.blossomclinicthailand.com/วิตามินผิว/"),
-            _createServiceItem(context, "กำจัดขน", "https://www.blossomclinicthailand.com/กำจัดขน/"),
-          ])
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        GridView.count(
+        shrinkWrap: true,
+        primary: false,
+        padding: const EdgeInsets.all(20.0),
+        crossAxisSpacing: 10.0,
+        crossAxisCount: 2,
+        mainAxisSpacing: 10.0,
+        childAspectRatio: 1 / 1,
+        children: [
+          _createServiceItem(context, "Treatment", "https://www.blossomclinicthailand.com/treatment/"),
+          _createServiceItem(context, "กระชับรูขุมขน", "https://www.blossomclinicthailand.com/กระชับรูขุมขน/"),
+          _createServiceItem(context, "ปรับรูปหน้า", "https://www.blossomclinicthailand.com/ปรับรูปหน้า/"),
+          _createServiceItem(context, "รอยดำ รอยแดง หลุมสิว", "https://www.blossomclinicthailand.com/รอยดำรอยแดงหลุมสิว/"),
+          _createServiceItem(context, "วิตามินผิว", "https://www.blossomclinicthailand.com/วิตามินผิว/"),
+          _createServiceItem(context, "กำจัดขน", "https://www.blossomclinicthailand.com/กำจัดขน/"),
+        ])
+        ],
       ),
     );
   }
