@@ -7,7 +7,7 @@ class CustomDialogTwoButton extends StatelessWidget {
   Function() positiveListener, negativeListener;
 
   CustomDialogTwoButton(
-      {@required this.title, @required this.description, @required this.positiveButton, @required this.negativeButton});
+      {@required this.title, @required this.description, @required this.positiveButton, this.positiveListener, @required this.negativeButton, this.negativeListener});
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +59,7 @@ class CustomDialogTwoButton extends StatelessWidget {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop(); // To close the dialog
+                        negativeListener?.call();
                       },
                       child: BlossomText(
                         negativeButton,
@@ -70,7 +71,8 @@ class CustomDialogTwoButton extends StatelessWidget {
                         overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop(); // To close the dialog
+                        Navigator.of(context).pop();
+                        positiveListener?.call();// To close the dialog
                       },
                       child: BlossomText(
                         positiveButton,

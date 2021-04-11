@@ -26,7 +26,7 @@ class ConfirmConsultPage extends StatelessWidget {
     _provider = Provider.of(context, listen: false);
     _provider.callServiceGetDoctorMinConsult(context, _doctorInfo.doctorId ?? 0, _dateReserveModel.date);
     return BaseScreen(
-      safeAreaBottom: false,
+      safeAreaBottom: true,
       child: Consumer<ConfirmConsultProvider>(
         builder: (BuildContext context, ConfirmConsultProvider value, Widget child) {
           return Column(
@@ -118,6 +118,9 @@ class ConfirmConsultPage extends StatelessWidget {
                                   "เวลา ${value.doctorTimeModel?.start ?? ""} ${value.doctorTimeModel?.unit ?? "น."} " +
                                   "เป็นเวลา ${value.currentMinute} นาที",
                               positiveButton: "ยืนยัน",
+                              positiveListener: () {
+                                _provider.confirmConsult(context, _doctorInfo, value.doctorMin, value.doctorTimeModel, _dateReserveModel);
+                              },
                               negativeButton: "ยกเลิก"),
                         );
                       },

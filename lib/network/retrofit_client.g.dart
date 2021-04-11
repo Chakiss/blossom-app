@@ -10,7 +10,6 @@ class _RetrofitClient implements RetrofitClient {
   _RetrofitClient(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
     baseUrl ??= 'https://apitest.blossom-app.com/blossomapi/';
-    // baseUrl ??= 'https://api.blossom-app.com/blossomapi/';
   }
 
   final Dio _dio;
@@ -22,17 +21,16 @@ class _RetrofitClient implements RetrofitClient {
     ArgumentError.checkNotNull(requestModel, 'requestModel');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = requestModel;
+    final _data = <String, dynamic>{};
+    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>('auth/v1.0.0/signInWithFacebook',
         queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{"Content-Type": "application/json; charset=UTF-8"},
-            extra: _extra,
-            baseUrl: baseUrl),
+        options: RequestOptions(method: 'POST', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<SignInFacebookResponseModel>.fromJson(
-        _result.data, (json) => SignInFacebookResponseModel.fromJson(json));
+      _result.data,
+      (json) => SignInFacebookResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -45,10 +43,12 @@ class _RetrofitClient implements RetrofitClient {
     final _result = await _dio.request<Map<String, dynamic>>('package/v1.0.0/videoCon?packCode=1',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
-    final value =
-        BaseModelList<PackageResponseModel>.fromJson(_result.data, (json) => PackageResponseModel.fromJson(json));
+    final value = BaseModelList<PackageResponseModel>.fromJson(
+      _result.data,
+      (json) => PackageResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -61,10 +61,12 @@ class _RetrofitClient implements RetrofitClient {
     final _result = await _dio.request<Map<String, dynamic>>('user/v1.0.0/profile',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
-    final value =
-        BaseModel<GetProfileResponseModel>.fromJson(_result.data, (json) => GetProfileResponseModel.fromJson(json));
+    final value = BaseModel<GetProfileResponseModel>.fromJson(
+      _result.data,
+      (json) => GetProfileResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -73,14 +75,17 @@ class _RetrofitClient implements RetrofitClient {
     ArgumentError.checkNotNull(token, 'token');
     ArgumentError.checkNotNull(packCode, 'packCode');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{'packCode': packCode};
+    final queryParameters = <String, dynamic>{r'packCode': packCode};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>('package/v2.0.0/videoCon',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
-    final value = BaseModel<BuyPackResponseModel>.fromJson(_result.data, (json) => BuyPackResponseModel.fromJson(json));
+    final value = BaseModel<BuyPackResponseModel>.fromJson(
+      _result.data,
+      (json) => BuyPackResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -94,10 +99,12 @@ class _RetrofitClient implements RetrofitClient {
     final _result = await _dio.request<Map<String, dynamic>>('videoCon/v1.0.0/getSourceDesc',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<GetSourceDestinationResponseModel>.fromJson(
-        _result.data, (json) => GetSourceDestinationResponseModel.fromJson(json));
+      _result.data,
+      (json) => GetSourceDestinationResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -144,7 +151,10 @@ class _RetrofitClient implements RetrofitClient {
         queryParameters: queryParameters,
         options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
-    final value = BaseModelList<DoctorInfo>.fromJson(_result.data, (json) => DoctorInfo.fromJson(json));
+    final value = BaseModelList<DoctorInfo>.fromJson(
+      _result.data,
+      (json) => DoctorInfo.fromJson(json),
+    );
     return value;
   }
 
@@ -152,14 +162,16 @@ class _RetrofitClient implements RetrofitClient {
   Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(doctorId) async {
     ArgumentError.checkNotNull(doctorId, 'doctorId');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{'doctorId': doctorId};
+    final queryParameters = <String, dynamic>{r'doctorId': doctorId};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorDateReserve',
         queryParameters: queryParameters,
         options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<GetDoctorDateReserveResponseModel>.fromJson(
-        _result.data, (json) => GetDoctorDateReserveResponseModel.fromJson(json));
+      _result.data,
+      (json) => GetDoctorDateReserveResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -173,7 +185,9 @@ class _RetrofitClient implements RetrofitClient {
         options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = BaseModelList<GetDoctorMinConsultResponseModel>.fromJson(
-        _result.data, (json) => GetDoctorMinConsultResponseModel.fromJson(json));
+      _result.data,
+      (json) => GetDoctorMinConsultResponseModel.fromJson(json),
+    );
     return value;
   }
 
@@ -183,7 +197,7 @@ class _RetrofitClient implements RetrofitClient {
     ArgumentError.checkNotNull(date, 'date');
     ArgumentError.checkNotNull(minute, 'minute');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{'doctorId': doctorId, 'date': date, 'minute': minute};
+    final queryParameters = <String, dynamic>{r'doctorId': doctorId, r'date': date, r'minute': minute};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorTimeReserve',
         queryParameters: queryParameters,
@@ -192,6 +206,25 @@ class _RetrofitClient implements RetrofitClient {
     final value = BaseModel<GetDoctorTimeReserveResponseModel>.fromJson(
       _result.data,
       (json) => GetDoctorTimeReserveResponseModel.fromJson(json),
+    );
+    return value;
+  }
+
+  @override
+  Future<BaseModel<BookingConsultDoctorResponseModel>> bookingConsultDoctor(String token, requestModel) async {
+    ArgumentError.checkNotNull(requestModel, 'requestModel');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>('booking/v1.0.0/videoCon',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = BaseModel<BookingConsultDoctorResponseModel>.fromJson(
+      _result.data,
+      (json) => BookingConsultDoctorResponseModel.fromJson(json),
     );
     return value;
   }

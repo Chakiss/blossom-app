@@ -11,6 +11,7 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorInfoPage extends StatelessWidget {
@@ -25,6 +26,7 @@ class DoctorInfoPage extends StatelessWidget {
     _doctorInfoProvider = Provider.of(context, listen: false);
     _doctorInfoProvider.callServiceGetDoctorDateReserve(context, doctorInfo?.doctorId ?? 0);
     return BaseScreen(
+      safeAreaBottom: false,
       child: Consumer<DoctorInfoProvider>(builder: (BuildContext context, DoctorInfoProvider value, Widget child) {
         return Column(
           children: [
@@ -106,7 +108,7 @@ class DoctorInfoPage extends StatelessWidget {
   void _goToConfirmConsultPage(BuildContext context) {
     Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(),)
+        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(Injector.appInstance.get()),)
       ],
       child: ConfirmConsultPage(doctorInfo, _doctorInfoProvider.dateReserveModel),);
     }));

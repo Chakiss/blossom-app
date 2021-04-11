@@ -1,10 +1,12 @@
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/base_model.dart';
 import 'package:blossom_clinic/model/base_model_list.dart';
+import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
 import 'package:blossom_clinic/model/response/GetDoctorTimeReserveResponseModel.dart';
+import 'package:blossom_clinic/model/response/booking_consult_doctor_response_model.dart';
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
@@ -175,6 +177,20 @@ class RemoteRepositoryImpl extends RemoteRepository {
   Future<Result<BaseModel<GetDoctorTimeReserveResponseModel>>> getDoctorTimeReserve(String doctorId, String date, int minute) async {
     try {
       final _response = await retrofitClient.getDoctorTimeReserve(doctorId, date, minute);
+      if (_response.status.resType == "S") {
+        return Success(_response);
+      } else {
+        return Error(_response.status);
+      }
+    } catch (object) {
+      return Error(StatusModel.fromObjectError(object));
+    }
+  }
+
+  @override
+  Future<Result<BaseModel<BookingConsultDoctorResponseModel>>> bookingConsultDoctor(String token, BookingConsultDoctorRequestModel requestModel) async {
+    try {
+      final _response = await retrofitClient.bookingConsultDoctor(token, requestModel);
       if (_response.status.resType == "S") {
         return Success(_response);
       } else {
