@@ -10,7 +10,7 @@ class SplashScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     provider = Provider.of(context, listen: false);
-    provider.goToMainPage(context);
+    provider.checkLogin(context);
     return Scaffold(
       body: SafeArea(
         child: Container(

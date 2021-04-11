@@ -28,7 +28,7 @@ class RemoteRepositoryImpl extends RemoteRepository {
   Future<Result<SignInFacebookResponseModel>> signInWithFacebook(SignInFacebookRequestModel requestModel) async {
     try {
       final _response = await retrofitClient.signInWithFacebook(requestModel);
-      if (_response.status.resType == "S" || _response.status.resType == "B") {
+      if (_response.status.resType == "S") {
         return Success(_response.data);
       } else {
         return Error(_response.status);
