@@ -52,7 +52,7 @@ class DoctorPage extends StatelessWidget {
               child: Consumer<DoctorProvider>(
                 builder: (BuildContext context, DoctorProvider value, Widget child) {
                   return ListView.builder(
-                      itemCount: value.doctorList.length,
+                      itemCount: value.doctorList.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
