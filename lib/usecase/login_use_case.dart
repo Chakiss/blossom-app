@@ -16,16 +16,20 @@ class LoginUseCase {
   LoginUseCase(this._remoteRepository, this._userModel);
 
   Future<Result<GetProfileResponseModel>> execute(BuildContext context, FacebookAuth facebookAuth) async {
-    final userData = await facebookAuth.getUserData();
-    if (userData != null) {
-      final signInFacebookResult = await _callServiceSignInWithFacebook(context, userData);
-      if (signInFacebookResult is Error) {
-        final statusModel = (signInFacebookResult as Error).statusModel;
-        return Error<GetProfileResponseModel>(statusModel);
+    try {
+      final userData = await facebookAuth.getUserData();
+      if (userData != null) {
+        final signInFacebookResult = await _callServiceSignInWithFacebook(context, userData);
+        if (signInFacebookResult is Error) {
+          final statusModel = (signInFacebookResult as Error).statusModel;
+          return Error<GetProfileResponseModel>(statusModel);
+        }
+        final getProfileResult = await _callServiceGetProfile(context);
+        return getProfileResult;
+      } else {
+        return Error<GetProfileResponseModel>(StatusModel("9999", "E", "Not login"));
       }
-      final getProfileResult = await _callServiceGetProfile(context);
-      return getProfileResult;
-    } else {
+    } catch (exception) {
       return Error<GetProfileResponseModel>(StatusModel("9999", "E", "Not login"));
     }
   }

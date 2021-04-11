@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class DoctorDurationChoice extends StatefulWidget {
 
   List<GetDoctorMinConsultResponseModel> list;
-  Function(int) listener;
+  Function(GetDoctorMinConsultResponseModel) listener;
 
   DoctorDurationChoice({this.listener, this.list});
 
@@ -21,7 +21,7 @@ class _DoctorDurationChoiceState extends State<DoctorDurationChoice> {
   @override
   void initState() {
     super.initState();
-    widget.listener.call(widget.list[0].quota);
+    widget.listener.call(widget.list[0]);
   }
 
   @override
@@ -64,7 +64,7 @@ class _DoctorDurationChoiceState extends State<DoctorDurationChoice> {
   void _changeState(int index) {
     setState(() {
       selectedIndex = index;
-      widget.listener.call(widget.list[index].quota);
+      widget.listener.call(widget.list[index]);
     });
   }
 }

@@ -9,9 +9,11 @@ class ButtonPinkGradient extends StatelessWidget {
   double height;
   double radius;
   double textSize;
+  EdgeInsetsGeometry padding;
   Function() onPressed;
 
-  ButtonPinkGradient(this.text, this.isEnable, this.onPressed, {this.width, this.height, this.radius, this.textSize});
+  ButtonPinkGradient(this.text, this.isEnable, this.onPressed,
+      {this.width, this.height, this.radius, this.textSize, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,17 @@ class ButtonPinkGradient extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
           gradient: LinearGradient(
-        colors: isEnable ? [Color(0xFFEF567E), Color(0xFFE8A872)] : [BlossomTheme.white, BlossomTheme.white],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      )),
+            colors: isEnable ? [Color(0xFFEF567E), Color(0xFFE8A872)] : [BlossomTheme.white, BlossomTheme.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.transparent, elevation: 0, shadowColor: Colors.transparent),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.transparent,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          padding: padding ?? null,
+        ),
         child: BlossomText(
           text,
           size: textSize ?? 16,

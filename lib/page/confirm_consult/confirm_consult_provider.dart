@@ -1,11 +1,13 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/doctor_time_model.dart';
+import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
   DoctorDurationChoice doctorDurationChoice;
+  GetDoctorMinConsultResponseModel doctorMin;
   int currentMinute;
   List<Widget> dateReserveList;
   DoctorTimeModel doctorTimeModel;
@@ -18,8 +20,9 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
         doctorDurationChoice = DoctorDurationChoice(
             list: data?.data,
             listener: (value) {
-              currentMinute = value;
+              doctorMin = value;
               doctorTimeModel = null;
+              currentMinute = value.quota;
               callServiceGetDoctorTimeReserve(context, doctorId.toString(), dateTime, currentMinute);
             });
         notifyListeners();
