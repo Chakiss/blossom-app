@@ -10,23 +10,25 @@ class BaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
-        Expanded(
-            flex: 1,
-            child: Container(
-              color: BlossomTheme.white,
-            )),
         Container(
-          width: 100 * MediaQuery.of(context).size.width / 100,
-          child: Image.asset("assets/nav_bar.png"),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: BlossomTheme.white,
         ),
-        Expanded(
-          child: SafeArea(
-            bottom: safeAreaBottom ?? true,
-              child: Container(
-            child: child,
-          )),
-        )
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            width: 100 * MediaQuery.of(context).size.width / 100,
+            child: Image.asset("assets/nav_bar.png"),
+          ),
+        ),
+        SafeArea(
+          bottom: safeAreaBottom ?? true,
+            child: Container(
+          child: child,
+        ))
       ],
     );
   }
