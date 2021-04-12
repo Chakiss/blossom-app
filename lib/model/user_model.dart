@@ -6,10 +6,11 @@ import 'package:blossom_clinic/model/response/sign_in_facebook_response_model.da
 class UserModel {
   String facebookId;
   String email;
+  String profilePath;
   SignInFacebookResponseModel signInFacebookResponseModel;
   GetProfileResponseModel profileResponseModel;
 
-  UserModel({this.facebookId, this.email, this.signInFacebookResponseModel, this.profileResponseModel});
+  UserModel({this.facebookId, this.email, this.profilePath, this.signInFacebookResponseModel, this.profileResponseModel});
 
   String getBearerToken() => "Bearer ${signInFacebookResponseModel?.token ?? ""}";
 
@@ -18,7 +19,8 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       facebookId: json["facebookId"],
-      email: json["email"]
+      email: json["email"],
+      profilePath: json["profilePath"]
     );
   }
 

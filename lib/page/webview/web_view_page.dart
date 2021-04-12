@@ -38,12 +38,9 @@ class WebViewPage extends StatelessWidget {
 
   JavascriptChannel _doneJavascriptChannel(BuildContext context) {
     return JavascriptChannel(
-        name: 'Toaster',
+        name: 'window',
         onMessageReceived: (JavascriptMessage message) {
-          // ignore: deprecated_member_use
-          Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
+          debugPrint("Prew: JavascriptMessage: $message");
         });
   }
 }

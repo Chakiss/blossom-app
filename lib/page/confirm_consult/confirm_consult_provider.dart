@@ -103,8 +103,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
               description: "กรุณาเข้าสู่ระบบเพื่อทำการจอง",
               positiveButton: "เข้าสู่ระบบ",
               positiveListener: () async {
-                Navigator.pop(dialogContext);
-                await loginFacebook(context, doctorInfo, doctorMin, doctorTimeModel, dateReserveModel);
+                await loginFacebook(dialogContext, doctorInfo, doctorMin, doctorTimeModel, dateReserveModel);
               },
               negativeButton: "ยกเลิก",
               negativeListener: () async {
@@ -148,7 +147,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
     if (result.status == LoginStatus.success) {
       final loginResult = await _loginUseCase.execute(context, FacebookAuth.instance);
       loginResult.whenWithResult((data) {
-
+        Navigator.pop(context);
       }, (statusModel) {
         errorHandle.proceed(context, statusModel);
       });

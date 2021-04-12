@@ -19,6 +19,7 @@ class LoginUseCase {
     try {
       final userData = await facebookAuth.getUserData();
       if (userData != null) {
+        _userModel.profilePath = userData["picture"]["data"]["url"];
         final signInFacebookResult = await _callServiceSignInWithFacebook(context, userData);
         if (signInFacebookResult is Error) {
           final statusModel = (signInFacebookResult as Error).statusModel;

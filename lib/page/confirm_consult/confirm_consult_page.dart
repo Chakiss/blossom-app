@@ -111,7 +111,7 @@ class ConfirmConsultPage extends StatelessWidget {
                           () {
                         showDialog(
                           context: context,
-                          builder: (BuildContext context) => CustomDialogTwoButton(
+                          builder: (BuildContext dialogContext) => CustomDialogTwoButton(
                               title: "ยืนยันการจอง",
                               description: "คุณต้องการจองการปรึกษาแพทย์ ${_doctorInfo?.profileTitle ?? ""} " +
                                   "ในวันที่ ${DateFormat("d MMMM yyyy", "TH").format(DateTime.parse(_dateReserveModel.date))} " +
@@ -119,12 +119,12 @@ class ConfirmConsultPage extends StatelessWidget {
                                   "เป็นเวลา ${value.currentMinute} นาที",
                               positiveButton: "ยืนยัน",
                               positiveListener: () async {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                                 await _provider.confirmConsult(context, _doctorInfo, value.doctorMin, value.doctorTimeModel, _dateReserveModel);
                                 // _provider.openWebViewUrl(context, "Omise", null);
                               },
                               negativeButton: "ยกเลิก", negativeListener: () {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                           },),
                         );
                       },
