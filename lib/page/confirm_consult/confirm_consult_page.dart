@@ -119,6 +119,7 @@ class ConfirmConsultPage extends StatelessWidget {
                                   "เป็นเวลา ${value.currentMinute} นาที",
                               positiveButton: "ยืนยัน",
                               positiveListener: () async {
+                                Navigator.pop(context);
                                 await _provider.confirmConsult(context, _doctorInfo, value.doctorMin, value.doctorTimeModel, _dateReserveModel);
                                 // _provider.openWebViewUrl(context, "Omise", null);
                               },

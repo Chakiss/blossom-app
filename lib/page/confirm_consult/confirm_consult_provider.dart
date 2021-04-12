@@ -11,15 +11,19 @@ import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_mo
 import 'package:blossom_clinic/model/response/omise_add_customer_response_model.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/repository/omise_repository.dart';
+import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
+import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
-  OmiseRepository _omiseRepository;
 
-  ConfirmConsultProvider(this._omiseRepository);
+  OmiseRepository _omiseRepository;
+  LoginUseCase _loginUseCase;
+
+  ConfirmConsultProvider(this._omiseRepository, this._loginUseCase);
 
   DoctorDurationChoice doctorDurationChoice;
   GetDoctorMinConsultResponseModel doctorMin;
@@ -87,14 +91,25 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
       final result = await _callServiceBookingConsultDoctor(context, doctorMin.packCode, doctorInfo.doctorId,
           "${dateReserveModel.date} ${doctorTimeModel.start}", "${dateReserveModel.date} ${doctorTimeModel.end}");
       result.whenWithResult((data) {
-        Navigator.pop(context);
         openWebViewUrl(context, "Omise", data.data.omiseChargeAuthUrl);
       }, (statusModel) async {
-        Navigator.pop(context);
         errorHandle.proceed(context, statusModel);
       });
     } else {
-
+      showDialog(
+          context: context,
+          builder: (BuildContext dialogContext) => CustomDialogTwoButton(
+              title: "คุณยังไม่ได้เข้าสู่ระบบ",
+              description: "กรุณาเข้าสู่ระบบเพื่อทำการจอง",
+              positiveButton: "เข้าสู่ระบบ",
+              positiveListener: () async {
+                Navigator.pop(dialogContext);
+                await loginFacebook(context, doctorInfo, doctorMin, doctorTimeModel, dateReserveModel);
+              },
+              negativeButton: "ยกเลิก",
+              negativeListener: () async {
+                Navigator.pop(dialogContext);
+              }));
     }
   }
 
@@ -124,5 +139,19 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return WebViewPage(title, url ?? "https://www.google.co.th");
     }));
+  }
+
+  Future<void> loginFacebook(BuildContext context, DoctorInfo doctorInfo, GetDoctorMinConsultResponseModel doctorMin,
+      DoctorTimeModel doctorTimeModel, DateReserveModel dateReserveModel) async {
+    final LoginResult result = await FacebookAuth.instance
+        .login(loginBehavior: LoginBehavior.WEB_VIEW_ONLY); // by the fault we request the email and the public profile
+    if (result.status == LoginStatus.success) {
+      final loginResult = await _loginUseCase.execute(context, FacebookAuth.instance);
+      loginResult.whenWithResult((data) {
+
+      }, (statusModel) {
+        errorHandle.proceed(context, statusModel);
+      });
+    } else {}
   }
 }

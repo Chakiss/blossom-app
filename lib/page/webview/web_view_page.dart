@@ -24,6 +24,9 @@ class WebViewPage extends StatelessWidget {
             ),
             Expanded(
                 child: WebView(
+              javascriptChannels: <JavascriptChannel>{
+                _doneJavascriptChannel(context),
+              },
               javascriptMode: JavascriptMode.unrestricted,
               initialUrl: link,
             ))
@@ -31,5 +34,16 @@ class WebViewPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  JavascriptChannel _doneJavascriptChannel(BuildContext context) {
+    return JavascriptChannel(
+        name: 'Toaster',
+        onMessageReceived: (JavascriptMessage message) {
+          // ignore: deprecated_member_use
+          Scaffold.of(context).showSnackBar(
+            SnackBar(content: Text(message.message)),
+          );
+        });
   }
 }
