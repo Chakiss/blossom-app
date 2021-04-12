@@ -1,11 +1,11 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
+import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
-
   ProfileProvider _profileProvider;
 
   @override
@@ -21,8 +21,22 @@ class ProfilePage extends StatelessWidget {
               margin: EdgeInsets.only(top: 40),
               child: ButtonPinkGradient(
                 "ออกจากระบบ",
-                true, () async {
-                  _profileProvider.logout(context);
+                true,
+                () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => CustomDialogTwoButton(
+                            title: "ออกจากระบบ",
+                            description: "ยืนยันการออกจากระบบ",
+                            positiveButton: "ตกลง",
+                            positiveListener: () async {
+                              await _profileProvider.logout(context);
+                            },
+                            negativeButton: "ยกเลิก",
+                            negativeListener: () {
+                              Navigator.pop(context);
+                            },
+                          ));
                 },
                 width: 60 * MediaQuery.of(context).size.width / 100,
                 radius: 4,

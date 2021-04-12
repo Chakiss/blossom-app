@@ -24,6 +24,7 @@ class WebViewPage extends StatelessWidget {
             ),
             Expanded(
                 child: WebView(
+              javascriptMode: JavascriptMode.unrestricted,
               initialUrl: link,
             ))
           ],

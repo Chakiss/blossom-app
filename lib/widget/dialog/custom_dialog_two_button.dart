@@ -7,7 +7,12 @@ class CustomDialogTwoButton extends StatelessWidget {
   Function() positiveListener, negativeListener;
 
   CustomDialogTwoButton(
-      {@required this.title, @required this.description, @required this.positiveButton, this.positiveListener, @required this.negativeButton, this.negativeListener});
+      {@required this.title,
+      @required this.description,
+      @required this.positiveButton,
+      @required this.positiveListener,
+      @required this.negativeButton,
+      @required this.negativeListener});
 
   @override
   Widget build(BuildContext context) {
@@ -53,25 +58,23 @@ class CustomDialogTwoButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   // Spacer(),
-                  negativeButton.isEmpty ? SizedBox() : TextButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
-                      ),
-                      onPressed: () {
-                        negativeListener?.call();
-                      },
-                      child: BlossomText(
-                        negativeButton,
-                        size: 15,
-                        color: BlossomTheme.black,
-                      )),
+                  negativeButton.isEmpty
+                      ? SizedBox()
+                      : TextButton(
+                          style: ButtonStyle(
+                            overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
+                          ),
+                          onPressed: negativeListener,
+                          child: BlossomText(
+                            negativeButton,
+                            size: 15,
+                            color: BlossomTheme.black,
+                          )),
                   TextButton(
                       style: ButtonStyle(
                         overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
                       ),
-                      onPressed: () {
-                        positiveListener?.call();
-                      },
+                      onPressed: positiveListener,
                       child: BlossomText(
                         positiveButton,
                         size: 15,

@@ -7,7 +7,7 @@ class CustomDialogOneButton extends StatelessWidget {
   Function() positiveListener;
 
   CustomDialogOneButton(
-      {@required this.title, @required this.description, @required this.positiveButton, this.positiveListener});
+      {@required this.title, @required this.description, @required this.positiveButton, @required this.positiveListener});
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +56,7 @@ class CustomDialogOneButton extends StatelessWidget {
                       style: ButtonStyle(
                         overlayColor: MaterialStateColor.resolveWith((states) => BlossomTheme.lightPink),
                       ),
-                      onPressed: () {
-                        positiveListener?.call();// To close the dialog
+                      onPressed: positiveListener ?? () {
                       },
                       child: BlossomText(
                         positiveButton,

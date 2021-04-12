@@ -122,7 +122,9 @@ class ConfirmConsultPage extends StatelessWidget {
                                 await _provider.confirmConsult(context, _doctorInfo, value.doctorMin, value.doctorTimeModel, _dateReserveModel);
                                 // _provider.openWebViewUrl(context, "Omise", null);
                               },
-                              negativeButton: "ยกเลิก"),
+                              negativeButton: "ยกเลิก", negativeListener: () {
+                                Navigator.pop(context);
+                          },),
                         );
                       },
                       height: 40,
