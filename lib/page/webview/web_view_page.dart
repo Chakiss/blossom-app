@@ -1,6 +1,15 @@
+import 'dart:io';
+
 import 'package:blossom_clinic/blossom_theme.dart';
+import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/page/login/login_provider.dart';
+import 'package:blossom_clinic/page/main/main_page.dart';
+import 'package:blossom_clinic/page/main/main_provider.dart';
+import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatelessWidget {
@@ -11,6 +20,9 @@ class WebViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+
     return Scaffold(
       backgroundColor: BlossomTheme.pink,
       body: SafeArea(
@@ -38,9 +50,28 @@ class WebViewPage extends StatelessWidget {
 
   JavascriptChannel _doneJavascriptChannel(BuildContext context) {
     return JavascriptChannel(
-        name: 'window',
+        name: 'Blossom',
         onMessageReceived: (JavascriptMessage message) {
-          debugPrint("Prew: JavascriptMessage: $message");
+          // Navigator.of(context).pushAndRemoveUntil(, (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => MainProvider(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => DoctorProvider(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => ProfileProvider(),
+                ),
+              ],
+              child: MainPage(),
+            );
+          }), (route) => false);
         });
   }
 }
