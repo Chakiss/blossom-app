@@ -64,7 +64,7 @@ class ConfirmConsultPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: BlossomText(
-                          "วันที่ต้องการปรึกษาแพทย์",
+                          "เวลาที่ต้องการปรึกษาแพทย์",
                           color: BlossomTheme.black,
                           size: 15,
                         ),
