@@ -17,15 +17,21 @@ class _RetrofitClient implements RetrofitClient {
   String baseUrl;
 
   @override
-  Future<BaseModel<SignInFacebookResponseModel>> signInWithFacebook(requestModel) async {
+  Future<BaseModel<SignInFacebookResponseModel>> signInWithFacebook(
+      requestModel) async {
     ArgumentError.checkNotNull(requestModel, 'requestModel');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('auth/v1.0.0/signInWithFacebook',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'auth/v1.0.0/signInWithFacebook',
         queryParameters: queryParameters,
-        options: RequestOptions(method: 'POST', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<SignInFacebookResponseModel>.fromJson(
       _result.data,
@@ -40,10 +46,14 @@ class _RetrofitClient implements RetrofitClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('package/v1.0.0/videoCon?packCode=1',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'package/v1.0.0/videoCon?packCode=1',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'GET',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModelList<PackageResponseModel>.fromJson(
       _result.data,
@@ -58,10 +68,14 @@ class _RetrofitClient implements RetrofitClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('user/v1.0.0/profile',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'user/v1.0.0/profile',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'GET',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<GetProfileResponseModel>.fromJson(
       _result.data,
@@ -77,10 +91,14 @@ class _RetrofitClient implements RetrofitClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'packCode': packCode};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('package/v2.0.0/videoCon',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'package/v2.0.0/videoCon',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<BuyPackResponseModel>.fromJson(
       _result.data,
@@ -90,16 +108,21 @@ class _RetrofitClient implements RetrofitClient {
   }
 
   @override
-  Future<BaseModel<GetSourceDestinationResponseModel>> getSourceDestination(token, sourceCubeId) async {
+  Future<BaseModel<GetSourceDestinationResponseModel>> getSourceDestination(
+      token, sourceCubeId) async {
     ArgumentError.checkNotNull(token, 'token');
     ArgumentError.checkNotNull(sourceCubeId, 'sourceCubeId');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'sourceCubeId': sourceCubeId};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('videoCon/v1.0.0/getSourceDesc',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'videoCon/v1.0.0/getSourceDesc',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'GET',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<GetSourceDestinationResponseModel>.fromJson(
       _result.data,
@@ -109,17 +132,22 @@ class _RetrofitClient implements RetrofitClient {
   }
 
   @override
-  Future<StartVideoCallResponseModel> startVideoCall(token, requestModel) async {
+  Future<StartVideoCallResponseModel> startVideoCall(
+      token, requestModel) async {
     ArgumentError.checkNotNull(token, 'token');
     ArgumentError.checkNotNull(requestModel, 'requestModel');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('videoCon/v1.0.0/startVideoCon',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'videoCon/v1.0.0/startVideoCon',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = StartVideoCallResponseModel.fromJson(_result.data);
     return value;
@@ -133,10 +161,14 @@ class _RetrofitClient implements RetrofitClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('videoCon/v1.0.0/endVideoCon',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'videoCon/v1.0.0/endVideoCon',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = EndVideoCallResponseModel.fromJson(_result.data);
     return value;
@@ -147,9 +179,14 @@ class _RetrofitClient implements RetrofitClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorsInfo',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'doctorInfo/v1.0.0/getDoctorsInfo',
         queryParameters: queryParameters,
-        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModelList<DoctorInfo>.fromJson(
       _result.data,
@@ -159,14 +196,20 @@ class _RetrofitClient implements RetrofitClient {
   }
 
   @override
-  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(doctorId) async {
+  Future<BaseModel<GetDoctorDateReserveResponseModel>> getDoctorDateReserve(
+      doctorId) async {
     ArgumentError.checkNotNull(doctorId, 'doctorId');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'doctorId': doctorId};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorDateReserve',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'doctorInfo/v1.0.0/getDoctorDateReserve',
         queryParameters: queryParameters,
-        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<GetDoctorDateReserveResponseModel>.fromJson(
       _result.data,
@@ -176,13 +219,19 @@ class _RetrofitClient implements RetrofitClient {
   }
 
   @override
-  Future<BaseModelList<GetDoctorMinConsultResponseModel>> getDoctorMinConsult() async {
+  Future<BaseModelList<GetDoctorMinConsultResponseModel>>
+      getDoctorMinConsult() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorMinConsult',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'doctorInfo/v1.0.0/getDoctorMinConsult',
         queryParameters: queryParameters,
-        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModelList<GetDoctorMinConsultResponseModel>.fromJson(
       _result.data,
@@ -192,16 +241,26 @@ class _RetrofitClient implements RetrofitClient {
   }
 
   @override
-  Future<BaseModel<GetDoctorTimeReserveResponseModel>> getDoctorTimeReserve(doctorId, date, minute) async {
+  Future<BaseModel<GetDoctorTimeReserveResponseModel>> getDoctorTimeReserve(
+      doctorId, date, minute) async {
     ArgumentError.checkNotNull(doctorId, 'doctorId');
     ArgumentError.checkNotNull(date, 'date');
     ArgumentError.checkNotNull(minute, 'minute');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'doctorId': doctorId, r'date': date, r'minute': minute};
+    final queryParameters = <String, dynamic>{
+      r'doctorId': doctorId,
+      r'date': date,
+      r'minute': minute
+    };
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('doctorInfo/v1.0.0/getDoctorTimeReserve',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'doctorInfo/v1.0.0/getDoctorTimeReserve',
         queryParameters: queryParameters,
-        options: RequestOptions(method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<GetDoctorTimeReserveResponseModel>.fromJson(
       _result.data,
@@ -211,21 +270,48 @@ class _RetrofitClient implements RetrofitClient {
   }
 
   @override
-  Future<BaseModel<BookingConsultDoctorResponseModel>> bookingConsultDoctor(String token, requestModel) async {
+  Future<BaseModel<BookingConsultDoctorResponseModel>> bookingConsultDoctor(
+      token, requestModel) async {
+    ArgumentError.checkNotNull(token, 'token');
     ArgumentError.checkNotNull(requestModel, 'requestModel');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('booking/v1.0.0/videoCon',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'booking/v1.0.0/videoCon',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST', headers: <String, dynamic>{r'Authorization': token}, extra: _extra, baseUrl: baseUrl),
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
         data: _data);
     final value = BaseModel<BookingConsultDoctorResponseModel>.fromJson(
       _result.data,
       (json) => BookingConsultDoctorResponseModel.fromJson(json),
     );
+    return value;
+  }
+
+  @override
+  Future<AddCardResponseModel> addCard(token, requestModel) async {
+    ArgumentError.checkNotNull(token, 'token');
+    ArgumentError.checkNotNull(requestModel, 'requestModel');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'payment/v1.0.0/card',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AddCardResponseModel.fromJson(_result.data);
     return value;
   }
 }

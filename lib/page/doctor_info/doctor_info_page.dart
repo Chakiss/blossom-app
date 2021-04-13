@@ -108,7 +108,7 @@ class DoctorInfoPage extends StatelessWidget {
   void _goToConfirmConsultPage(BuildContext context) {
     Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(Injector.appInstance.get(), Injector.appInstance.get()),)
+        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),)
       ],
       child: ConfirmConsultPage(doctorInfo, _doctorInfoProvider.dateReserveModel),);
     }));

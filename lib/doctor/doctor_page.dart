@@ -7,6 +7,7 @@ import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/doctor_card.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorPage extends StatelessWidget {
@@ -82,7 +83,7 @@ class DoctorPage extends StatelessWidget {
   void _goToDoctorInfoPage(BuildContext context, DoctorInfo doctorInfo) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => DoctorInfoProvider(),)
+        ChangeNotifierProvider(create: (BuildContext context) => DoctorInfoProvider(Injector.appInstance.get()),)
       ],
       child: DoctorInfoPage(doctorInfo),);
     }));

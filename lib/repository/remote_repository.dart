@@ -1,11 +1,13 @@
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/base_model.dart';
 import 'package:blossom_clinic/model/base_model_list.dart';
+import 'package:blossom_clinic/model/request/add_card_request_model.dart';
 import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
 import 'package:blossom_clinic/model/response/GetDoctorTimeReserveResponseModel.dart';
+import 'package:blossom_clinic/model/response/add_card_response_model.dart';
 import 'package:blossom_clinic/model/response/booking_consult_doctor_response_model.dart';
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
@@ -45,4 +47,7 @@ abstract class RemoteRepository {
 
   Future<Result<BaseModel<BookingConsultDoctorResponseModel>>> bookingConsultDoctor(String token,
       BookingConsultDoctorRequestModel requestModel);
+
+  Future<Result<AddCardResponseModel>> addCard(String token,
+      AddCardRequestModel requestModel);
 }

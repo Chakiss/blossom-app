@@ -3,14 +3,13 @@ import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/base_model.dart';
 import 'package:blossom_clinic/model/date_reserve_model.dart';
 import 'package:blossom_clinic/model/doctor_time_model.dart';
-import 'package:blossom_clinic/model/omise_card.dart';
 import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
 import 'package:blossom_clinic/model/response/booking_consult_doctor_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
-import 'package:blossom_clinic/model/response/omise_add_customer_response_model.dart';
+import 'package:blossom_clinic/model/user_model.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
-import 'package:blossom_clinic/repository/omise_repository.dart';
+import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
@@ -20,10 +19,11 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
 
-  OmiseRepository _omiseRepository;
+  UserModel _userModel;
+  RemoteRepository _remoteRepository;
   LoginUseCase _loginUseCase;
 
-  ConfirmConsultProvider(this._omiseRepository, this._loginUseCase);
+  ConfirmConsultProvider(this._userModel, this._remoteRepository, this._loginUseCase);
 
   DoctorDurationChoice doctorDurationChoice;
   GetDoctorMinConsultResponseModel doctorMin;
@@ -33,7 +33,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
   var selectedIndex = -1;
 
   Future<void> callServiceGetDoctorMinConsult(BuildContext context, int doctorId, String dateTime) async {
-    final result = await remoteRepository.getDoctorMinConsult();
+    final result = await _remoteRepository.getDoctorMinConsult();
     result.whenWithResult((data) {
       if (data?.data != null) {
         doctorDurationChoice = DoctorDurationChoice(
@@ -53,7 +53,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> callServiceGetDoctorTimeReserve(BuildContext context, String doctorId, String date, int minute) async {
     selectedIndex = -1;
-    final result = await remoteRepository.getDoctorTimeReserve(doctorId, date, minute);
+    final result = await _remoteRepository.getDoctorTimeReserve(doctorId, date, minute);
     result.whenWithResult((data) {
       dateReserveList = _generateTimeReserveItem(data.data.timeList);
       notifyListeners();
@@ -93,7 +93,11 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
       result.whenWithResult((data) {
         openWebViewUrl(context, "Omise", data.data.omiseChargeAuthUrl);
       }, (statusModel) async {
-        errorHandle.proceed(context, statusModel);
+        if (statusModel.resCode == "1004") {
+          _showDialogAddCard(context);
+        } else {
+          errorHandle.proceed(context, statusModel);
+        }
       });
     } else {
       showDialog(
@@ -112,25 +116,41 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
     }
   }
 
-  Future<OmiseCard> checkHaveCreditCard() async {
-    final result =
-        await _omiseRepository.getCustomer(userModel.getBasicToken(), userModel.profileResponseModel.omiseCustId);
-    if (result is Success<OmiseAddCustomerResponseModel>) {
-      if (result.data?.cards?.data?.isNotEmpty == true) {
-        return result.data?.cards?.data?.first;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
+  void _showDialogAddCard(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) => CustomDialogTwoButton(
+            title: "คุณไม่มีช่องทางการเงิน",
+            description: "กรุณาเพิ่มบัตรเครดิต/เดบิต เพื่อทำรายการ",
+            positiveButton: "เพิ่มบัตร",
+            positiveListener: () async {
+              Navigator.pop(dialogContext);
+            },
+            negativeButton: "ยกเลิก",
+            negativeListener: () async {
+              Navigator.pop(dialogContext);
+            }));
   }
+
+  // Future<OmiseCard> checkHaveCreditCard() async {
+  //   final result =
+  //       await _omiseRepository.getCustomer(userModel.getBasicToken(), _userModel.profileResponseModel.omiseCustId);
+  //   if (result is Success<OmiseAddCustomerResponseModel>) {
+  //     if (result.data?.cards?.data?.isNotEmpty == true) {
+  //       return result.data?.cards?.data?.first;
+  //     } else {
+  //       return null;
+  //     }
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   Future<Result<BaseModel<BookingConsultDoctorResponseModel>>> _callServiceBookingConsultDoctor(
       BuildContext context, int packCode, int doctorId, String startDate, String endDate) async {
     BookingConsultDoctorRequestModel requestModel =
         BookingConsultDoctorRequestModel(packCode, doctorId, startDate, endDate);
-    final result = await remoteRepository.bookingConsultDoctor(userModel.getBearerToken(), requestModel);
+    final result = await _remoteRepository.bookingConsultDoctor(_userModel.getBearerToken(), requestModel);
     return result;
   }
 
