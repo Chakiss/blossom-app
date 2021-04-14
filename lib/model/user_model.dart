@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
-import 'package:blossom_clinic/model/response/sign_in_facebook_response_model.dart';
+import 'package:blossom_clinic/model/response/sign_in_response_model.dart';
 
 class UserModel {
   String facebookId;

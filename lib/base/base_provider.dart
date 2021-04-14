@@ -1,10 +1,12 @@
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/model/status_model.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injector/injector.dart';
+import 'package:logger/logger.dart';
 
 class BaseProvider {
+
+  Logger logger = Injector.appInstance.get();
 
   ErrorHandle errorHandle = Injector.appInstance.get();
 

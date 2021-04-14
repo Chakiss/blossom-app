@@ -31,7 +31,7 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
         goToMainPage(context);
       });
     } else {
-      await _loginUseCase.execute(SignInRequestModel("blossomapp", "1234"));
+      // await _loginUseCase.execute(SignInRequestModel("blossomapp", "1234"));
       goToMainPage(context);
     }
   }

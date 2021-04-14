@@ -20,7 +20,7 @@ import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_mo
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
 import 'package:blossom_clinic/model/response/get_soruce_destination_response_model.dart';
 import 'package:blossom_clinic/model/response/package_response_model.dart';
-import 'package:blossom_clinic/model/response/sign_in_facebook_response_model.dart';
+import 'package:blossom_clinic/model/response/sign_in_response_model.dart';
 import 'package:blossom_clinic/model/response/start_video_call_response_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
