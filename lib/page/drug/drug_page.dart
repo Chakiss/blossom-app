@@ -1,24 +1,20 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../blossom_theme.dart';
 
 class DrugPage extends StatelessWidget {
+  final flutterWebViewPlugin = FlutterWebviewPlugin();
+
   @override
   Widget build(BuildContext context) {
-    final Completer<WebViewController> _controller = Completer<WebViewController>();
-
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-
+    flutterWebViewPlugin.close();
     return Scaffold(
       backgroundColor: BlossomTheme.darkPink,
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Toolbar(
@@ -29,13 +25,13 @@ class DrugPage extends StatelessWidget {
             ),
             Expanded(
                 child: WebviewScaffold(
-                  url: "https://www.blossomclinicthailand.com/สินค้า/",
-                  appCacheEnabled: true,
-                  initialChild: Container(
-                    color: BlossomTheme.white,
-                    child: BlossomProgressIndicator(),
-                  ),
-                ))
+                    url: "https://www.blossomclinicthailand.com/%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2",
+                    appCacheEnabled: true,
+                    withZoom: true,
+                    withLocalStorage: true,
+                    withJavascript: true,
+                    hidden: true,
+                    initialChild: Container(color: BlossomTheme.white, child: BlossomProgressIndicator())))
           ],
         ),
       ),
