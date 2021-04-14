@@ -1,11 +1,10 @@
 import 'package:blossom_clinic/base/base_screen.dart';
-import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_page.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
-import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/doctor_card.dart';
+import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
@@ -25,27 +24,7 @@ class DoctorPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlossomText(
-                    "พบแพทย์",
-                    color: BlossomTheme.white,
-                    size: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  BlossomText(
-                    "สวัสดี xxxxx xxxxxxxxxx",
-                    color: BlossomTheme.white,
-                    size: 16,
-                  ),
-                ],
-              ),
-            ),
+            Toolbar(title: "พบแพทย์",),
             Container(
               height: 30,
             ),
