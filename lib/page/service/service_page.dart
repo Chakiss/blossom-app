@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
@@ -15,6 +16,12 @@ class ServicePage extends StatefulWidget {
 class _ServicePageState extends State<ServicePage> {
 
   bool isLoad = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+  }
 
   @override
   Widget build(BuildContext context) {
