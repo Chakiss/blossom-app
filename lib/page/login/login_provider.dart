@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
@@ -38,13 +39,16 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
             create: (BuildContext context) => MainProvider(),
           ),
           ChangeNotifierProvider(
+            create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+          ),
+          ChangeNotifierProvider(
             create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
           ),
           ChangeNotifierProvider(
             create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),
           ),
           ChangeNotifierProvider(
-            create: (BuildContext context) => ProfileProvider(),
+            create: (BuildContext context) => ProfileProvider(Injector.appInstance.get()),
           ),
         ],
         child: MainPage(),

@@ -13,6 +13,7 @@ import 'package:blossom_clinic/model/response/booking_consult_doctor_response_mo
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
+import 'package:blossom_clinic/model/response/get_book_history_response_model.dart';
 import 'package:blossom_clinic/model/response/get_doctor_date_reserve_response_model.dart';
 import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
@@ -75,4 +76,8 @@ abstract class RetrofitClient {
   @POST("payment/v1.0.0/card")
   Future<AddCardResponseModel> addCard(
       @Header("Authorization") String token, @Body() AddCardRequestModel requestModel);
+
+  @GET("booking/v1.0.0/getBookingHistory")
+  Future<BaseModelList<GetBookingHistoryResponseModel>> getBookingHistory(
+      @Header("Authorization") String token);
 }

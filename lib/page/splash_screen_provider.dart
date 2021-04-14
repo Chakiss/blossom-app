@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
@@ -42,13 +43,16 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
+              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+            ),
+            ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(),
+              create: (BuildContext context) => ProfileProvider(Injector.appInstance.get()),
             ),
           ],
           child: MainPage(),

@@ -12,6 +12,7 @@ import 'package:blossom_clinic/model/response/booking_consult_doctor_response_mo
 import 'package:blossom_clinic/model/response/buy_pack_response_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/end_video_call_response_model.dart';
+import 'package:blossom_clinic/model/response/get_book_history_response_model.dart';
 import 'package:blossom_clinic/model/response/get_doctor_date_reserve_response_model.dart';
 import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/model/response/get_profile_response_model.dart';
@@ -207,6 +208,20 @@ class RemoteRepositoryImpl extends RemoteRepository {
   Future<Result<AddCardResponseModel>> addCard(String token, AddCardRequestModel requestModel) async {
     try {
       final _response = await retrofitClient.addCard(token, requestModel);
+      if (_response.status.resType == "S") {
+        return Success(_response);
+      } else {
+        return Error(_response.status);
+      }
+    } catch (object) {
+      return Error(StatusModel.fromObjectError(object));
+    }
+  }
+
+  @override
+  Future<Result<BaseModelList<GetBookingHistoryResponseModel>>> getBookingHistory(String token) async {
+    try {
+      final _response = await retrofitClient.getBookingHistory(token);
       if (_response.status.resType == "S") {
         return Success(_response);
       } else {
