@@ -23,14 +23,14 @@ class ProfileProvider extends BaseProvider with ChangeNotifier {
     _userModel.facebookId = null;
     _userModel.email = null;
     _userModel.profilePath = null;
-    _userModel.signInFacebookResponseModel = null;
+    _userModel.signInResponseModel = null;
     _userModel.profileResponseModel = null;
   }
 
   void _goToSplashScreen(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(Injector.appInstance.get()),),
+        ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(Injector.appInstance.get(), Injector.appInstance.get()),),
       ],
         child: SplashScreenPage(),);
     }));

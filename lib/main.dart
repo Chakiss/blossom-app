@@ -4,6 +4,7 @@ import 'package:blossom_clinic/repository/omise_repository.dart';
 import 'package:blossom_clinic/repository/omise_repository_impl.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/repository/remote_repository_impl.dart';
+import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
@@ -56,6 +57,9 @@ void _provideDependency() {
   injector.registerDependency<LoginUseCase>(() => LoginUseCase(
       injector.get(),
       injector.get()));
+  injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(
+      injector.get(),
+      injector.get()));
 }
 
 Future<void> registerFirebaseCloudMessage() async {
@@ -101,7 +105,7 @@ class BlossomClinicApplication extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (BuildContext context) {
-              return SplashScreenProvider(Injector.appInstance.get());
+              return SplashScreenProvider(Injector.appInstance.get(), Injector.appInstance.get());
             },
           )
         ],

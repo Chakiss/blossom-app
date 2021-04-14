@@ -4,7 +4,7 @@ import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
-import 'package:blossom_clinic/usecase/login_use_case.dart';
+import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:injector/injector.dart';
@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class LoginProvider extends BaseProvider with ChangeNotifier {
 
-  LoginUseCase _loginUseCase;
+  LoginFacebookUseCase _loginUseCase;
 
   LoginProvider(this._loginUseCase);
 

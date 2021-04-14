@@ -4,6 +4,7 @@ import 'package:blossom_clinic/model/base_model_list.dart';
 import 'package:blossom_clinic/model/request/add_card_request_model.dart';
 import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
+import 'package:blossom_clinic/model/request/sign_in_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
 import 'package:blossom_clinic/model/response/GetDoctorTimeReserveResponseModel.dart';
@@ -22,7 +23,9 @@ import 'package:blossom_clinic/model/response/sign_in_facebook_response_model.da
 import 'package:blossom_clinic/model/response/start_video_call_response_model.dart';
 
 abstract class RemoteRepository {
-  Future<Result<SignInFacebookResponseModel>> signInWithFacebook(SignInFacebookRequestModel requestModel);
+  Future<Result<BaseModel<SignInResponseModel>>> signIn(SignInRequestModel requestModel);
+
+  Future<Result<SignInResponseModel>> signInWithFacebook(SignInFacebookRequestModel requestModel);
 
   Future<Result<List<PackageResponseModel>>> getPackage(String token);
 

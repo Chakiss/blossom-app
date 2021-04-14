@@ -7,12 +7,12 @@ class UserModel {
   String facebookId;
   String email;
   String profilePath;
-  SignInFacebookResponseModel signInFacebookResponseModel;
+  SignInResponseModel signInResponseModel;
   GetProfileResponseModel profileResponseModel;
 
-  UserModel({this.facebookId, this.email, this.profilePath, this.signInFacebookResponseModel, this.profileResponseModel});
+  UserModel({this.facebookId, this.email, this.profilePath, this.signInResponseModel, this.profileResponseModel});
 
-  String getBearerToken() => "Bearer ${signInFacebookResponseModel?.token ?? ""}";
+  String getBearerToken() => "Bearer ${signInResponseModel?.token ?? ""}";
 
   String getBasicToken() => "Basic ${base64Encode(utf8.encode('skey_test_5n0xzn4kpsvxizlhvox'))}";
 

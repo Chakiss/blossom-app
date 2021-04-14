@@ -4,6 +4,7 @@ import 'package:blossom_clinic/model/base_model_list.dart';
 import 'package:blossom_clinic/model/request/add_card_request_model.dart';
 import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
+import 'package:blossom_clinic/model/request/sign_in_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
 import 'package:blossom_clinic/model/response/GetDoctorTimeReserveResponseModel.dart';
@@ -30,7 +31,21 @@ class RemoteRepositoryImpl extends RemoteRepository {
   RemoteRepositoryImpl({this.retrofitClient});
 
   @override
-  Future<Result<SignInFacebookResponseModel>> signInWithFacebook(SignInFacebookRequestModel requestModel) async {
+  Future<Result<BaseModel<SignInResponseModel>>> signIn(SignInRequestModel requestModel) async {
+    try {
+      final _response = await retrofitClient.signIn(requestModel);
+      if (_response.status.resType == "S") {
+        return Success(_response);
+      } else {
+        return Error(_response.status);
+      }
+    } catch (object) {
+      return Error(StatusModel.fromObjectError(object));
+    }
+  }
+
+  @override
+  Future<Result<SignInResponseModel>> signInWithFacebook(SignInFacebookRequestModel requestModel) async {
     try {
       final _response = await retrofitClient.signInWithFacebook(requestModel);
       if (_response.status.resType == "S") {

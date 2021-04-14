@@ -1,4 +1,4 @@
-class SignInFacebookResponseModel {
+class SignInResponseModel {
 
   String token;
   String role;
@@ -6,10 +6,10 @@ class SignInFacebookResponseModel {
   String firstName;
   String lastName;
 
-  SignInFacebookResponseModel({this.token, this.role, this.profileImg, this.firstName, this.lastName});
+  SignInResponseModel({this.token, this.role, this.profileImg, this.firstName, this.lastName});
 
-  factory SignInFacebookResponseModel.fromJson(Map<String, dynamic> json) {
-    return SignInFacebookResponseModel(
+  factory SignInResponseModel.fromJson(Map<String, dynamic> json) {
+    return SignInResponseModel(
       token: json["token"],
       role: json["role"],
       profileImg: json["profileImg"],

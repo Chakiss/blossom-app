@@ -13,7 +13,7 @@ class HistoryProvider extends BaseProvider with ChangeNotifier {
   HistoryProvider(this._remoteRepository, this._userModel);
 
   Future<void> callServiceGetBookingHistory() async {
-    if (_userModel.signInFacebookResponseModel != null) {
+    if (_userModel.signInResponseModel != null) {
       bookingList = [];
       notifyListeners();
       final result = await _remoteRepository.getBookingHistory(_userModel.getBearerToken());

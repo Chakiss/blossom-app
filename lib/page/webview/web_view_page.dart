@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
@@ -61,6 +62,9 @@ class WebViewPage extends StatelessWidget {
                 ),
                 ChangeNotifierProvider(
                   create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
                 ),
                 ChangeNotifierProvider(
                   create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),

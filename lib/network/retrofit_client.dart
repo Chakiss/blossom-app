@@ -6,6 +6,7 @@ import 'package:blossom_clinic/model/request/add_card_request_model.dart';
 import 'package:blossom_clinic/model/request/booking_consult_doctor_request_model.dart';
 import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/request/sign_in_facebook_request_model.dart';
+import 'package:blossom_clinic/model/request/sign_in_request_model.dart';
 import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/model/response/GetDoctorTimeReserveResponseModel.dart';
 import 'package:blossom_clinic/model/response/add_card_response_model.dart';
@@ -32,7 +33,10 @@ abstract class RetrofitClient {
   factory RetrofitClient(Dio dio, {String baseUrl}) = _RetrofitClient;
 
   @POST("auth/v1.0.0/signInWithFacebook")
-  Future<BaseModel<SignInFacebookResponseModel>> signInWithFacebook(@Body() SignInFacebookRequestModel requestModel);
+  Future<BaseModel<SignInResponseModel>> signInWithFacebook(@Body() SignInFacebookRequestModel requestModel);
+
+  @POST("auth/v1.0.0/signIn")
+  Future<BaseModel<SignInResponseModel>> signIn(@Body() SignInRequestModel requestModel);
 
   @GET("package/v1.0.0/videoCon?packCode=1")
   Future<BaseModelList<PackageResponseModel>> getPackage(@Header("Authorization") String token);

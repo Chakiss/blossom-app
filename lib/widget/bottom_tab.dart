@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/doctor/doctor_page.dart';
+import 'package:blossom_clinic/model/user_model.dart';
 import 'package:blossom_clinic/page/drug/drug_page.dart';
 import 'package:blossom_clinic/page/history/history_page.dart';
 import 'package:blossom_clinic/page/login/login_page.dart';
@@ -8,12 +9,15 @@ import 'package:blossom_clinic/page/service/service_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:injector/injector.dart';
 
 import '../blossom_theme.dart';
 import 'blossom_text.dart';
 
 class BottomTab extends StatefulWidget {
+
   MainProvider mainProvider;
+  UserModel _userModel = Injector.appInstance.get();
 
   BottomTab(this.mainProvider);
 
@@ -124,10 +128,9 @@ class _BottomTabState extends State<BottomTab> {
             Expanded(
                 child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () async {
+              onTap: () {
                 Widget page = LoginPage();
-                final AccessToken accessToken = await FacebookAuth.instance.accessToken;
-                if (accessToken != null) {
+                if (widget._userModel.signInResponseModel != null) {
                   page = ProfilePage();
                 }
                 if (selectedPosition != 4) {

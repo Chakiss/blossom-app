@@ -10,7 +10,7 @@ import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_mo
 import 'package:blossom_clinic/model/user_model.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
-import 'package:blossom_clinic/usecase/login_use_case.dart';
+import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
@@ -21,7 +21,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
 
   UserModel _userModel;
   RemoteRepository _remoteRepository;
-  LoginUseCase _loginUseCase;
+  LoginFacebookUseCase _loginUseCase;
 
   ConfirmConsultProvider(this._userModel, this._remoteRepository, this._loginUseCase);
 
@@ -85,9 +85,7 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> confirmConsult(BuildContext context, DoctorInfo doctorInfo, GetDoctorMinConsultResponseModel doctorMin,
       DoctorTimeModel doctorTimeModel, DateReserveModel dateReserveModel) async {
-    // openWebViewUrl(context, "Omise", null);
-    final AccessToken accessToken = await FacebookAuth.instance.accessToken;
-    if (accessToken != null) {
+    if (_userModel.signInResponseModel != null) {
       final result = await _callServiceBookingConsultDoctor(context, doctorMin.packCode, doctorInfo.doctorId,
           "${dateReserveModel.date} ${doctorTimeModel.start}", "${dateReserveModel.date} ${doctorTimeModel.end}");
       result.whenWithResult((data) {
@@ -166,7 +164,8 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
         .login(loginBehavior: LoginBehavior.WEB_VIEW_ONLY); // by the fault we request the email and the public profile
     if (result.status == LoginStatus.success) {
       final loginResult = await _loginUseCase.execute(context, FacebookAuth.instance);
-      loginResult.whenWithResult((data) {
+      loginResult.whenWithResult((data) async {
+        await showToast("เข้าสู่ระบบสำเร็จ กรุณากดทำรายการอีกครั้ง");
         Navigator.pop(context);
       }, (statusModel) {
         errorHandle.proceed(context, statusModel);

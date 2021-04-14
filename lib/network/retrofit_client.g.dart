@@ -17,7 +17,7 @@ class _RetrofitClient implements RetrofitClient {
   String baseUrl;
 
   @override
-  Future<BaseModel<SignInFacebookResponseModel>> signInWithFacebook(
+  Future<BaseModel<SignInResponseModel>> signInWithFacebook(
       requestModel) async {
     ArgumentError.checkNotNull(requestModel, 'requestModel');
     const _extra = <String, dynamic>{};
@@ -33,9 +33,32 @@ class _RetrofitClient implements RetrofitClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = BaseModel<SignInFacebookResponseModel>.fromJson(
+    final value = BaseModel<SignInResponseModel>.fromJson(
       _result.data,
-      (json) => SignInFacebookResponseModel.fromJson(json),
+      (json) => SignInResponseModel.fromJson(json),
+    );
+    return value;
+  }
+
+  @override
+  Future<BaseModel<SignInResponseModel>> signIn(requestModel) async {
+    ArgumentError.checkNotNull(requestModel, 'requestModel');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'auth/v1.0.0/signIn',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseModel<SignInResponseModel>.fromJson(
+      _result.data,
+      (json) => SignInResponseModel.fromJson(json),
     );
     return value;
   }
