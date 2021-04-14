@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../blossom_theme.dart';
@@ -26,17 +28,14 @@ class DrugPage extends StatelessWidget {
               padding: 12,
             ),
             Expanded(
-                child: Container(
-              color: BlossomTheme.white,
-              child: WebView(
-                javascriptMode: JavascriptMode.unrestricted,
-                initialUrl: "https://www.blossomclinicthailand.com/สินค้า/",
-                onWebViewCreated: (_) async {
-                  // _controller.complete(_);
-                  await _.clearCache();
-                },
-              ),
-            ))
+                child: WebviewScaffold(
+                  url: "https://www.blossomclinicthailand.com/สินค้า/",
+                  appCacheEnabled: true,
+                  initialChild: Container(
+                    color: BlossomTheme.white,
+                    child: BlossomProgressIndicator(),
+                  ),
+                ))
           ],
         ),
       ),
