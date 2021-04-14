@@ -81,6 +81,12 @@
     <string>$(PRODUCT_NAME) Camera Usage!</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>$(PRODUCT_NAME) Microphone Usage!</string>
-
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSAllowsArbitraryLoadsInWebContent</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

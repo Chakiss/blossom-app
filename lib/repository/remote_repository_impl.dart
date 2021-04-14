@@ -229,6 +229,7 @@ class RemoteRepositoryImpl extends RemoteRepository {
         return Error(_response.status);
       }
     } catch (object) {
+      print(object);
       return Error(StatusModel.fromObjectError(object));
     }
   }

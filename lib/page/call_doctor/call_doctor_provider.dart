@@ -29,6 +29,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     CubeUser cubeUser = CubeUser(
         id: int.parse(_userModel.profileResponseModel.cubeId ?? "0"),
         login: _userModel.profileResponseModel.email,
+        email: _userModel.profileResponseModel.email,
         fullName: "${_userModel.signInResponseModel?.firstName ?? ""} ${_userModel.signInResponseModel?.lastName ?? ""} ",
         password: _userModel.profileResponseModel.cubeSecreteKey);
 
@@ -41,7 +42,9 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
         _initCustomerCallClient(context);
-      }).catchError((error) {});
+      }).catchError((error) {
+        print(error);
+      });
     }
   }
 
@@ -52,12 +55,12 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callClient.onReceiveNewSession = (incomingCallSession) {};
     callClient.onSessionClosed = (closedCallSession) {};
 
-    Set<int> opponentsIds = {3567329};
+    Set<int> opponentsIds = {int.parse(_historyResponseModel.cubeId)};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
-    _initCallSession(context, callSession, _userModel);
+    _initCallSession(context, callSession);
   }
 
-  void _initCallSession(BuildContext context, P2PSession callSession, UserModel userModel) {
+  void _initCallSession(BuildContext context, P2PSession callSession) {
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();

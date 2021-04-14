@@ -1,4 +1,6 @@
 PODS:
+  - device_id (0.0.1):
+    - Flutter
   - FBSDKCoreKit (9.1.0):
     - FBSDKCoreKit/Basics (= 9.1.0)
     - FBSDKCoreKit/Core (= 9.1.0)
@@ -52,6 +54,10 @@ PODS:
     - FBSDKCoreKit (~> 9.1.0)
     - FBSDKLoginKit (~> 9.1.0)
     - Flutter
+  - flutter_webrtc (0.2.2):
+    - Flutter
+    - GoogleWebRTC (= 1.1.31999)
+    - Libyuv (= 1703)
   - flutter_webview_plugin (0.0.1):
     - Flutter
   - fluttertoast (0.0.2):
@@ -78,11 +84,15 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.3.1):
     - GoogleUtilities/Logger
+  - GoogleWebRTC (1.1.31999)
+  - Libyuv (1703)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
   - nanopb/decode (2.30907.0)
   - nanopb/encode (2.30907.0)
+  - package_info (0.0.1):
+    - Flutter
   - PromisesObjC (1.2.12)
   - shared_preferences (0.0.1):
     - Flutter
@@ -95,12 +105,15 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - device_id (from `.symlinks/plugins/device_id/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
+  - flutter_webrtc (from `.symlinks/plugins/flutter_webrtc/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
@@ -118,11 +131,15 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleDataTransport
     - GoogleUtilities
+    - GoogleWebRTC
+    - Libyuv
     - nanopb
     - PromisesObjC
     - Toast
 
 EXTERNAL SOURCES:
+  device_id:
+    :path: ".symlinks/plugins/device_id/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_messaging:
@@ -131,10 +148,14 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_facebook_auth:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
+  flutter_webrtc:
+    :path: ".symlinks/plugins/flutter_webrtc/ios"
   flutter_webview_plugin:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   video_player:
@@ -145,6 +166,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   FBSDKCoreKit: a00fe2efd780c195a5e09201bf51c56106245b40
   FBSDKLoginKit: d98498c598ec09de657385a9349a1f21119b7f86
   Firebase: 26223c695fe322633274198cb19dca8cb7e54416
@@ -157,11 +179,15 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 68d1bcb14880189558a8ae57167abe0b7e417232
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_facebook_auth: 4b170c07b7fce791497093fcc3f134fb215f3f07
+  flutter_webrtc: 39898454258b54ba51996850d5da8d5d53bf1524
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   GoogleDataTransport: b006084b73915a42c28a3466961a4edda3065da6
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
+  GoogleWebRTC: b39a78c4f5cc6b0323415b9233db03a2faa7b0f0
+  Libyuv: 5f79ced0ee66e60a612ca97de1e6ccacd187a437
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196

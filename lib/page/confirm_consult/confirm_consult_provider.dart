@@ -8,6 +8,8 @@ import 'package:blossom_clinic/model/response/booking_consult_doctor_response_mo
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/model/user_model.dart';
+import 'package:blossom_clinic/page/add_card/add_card_page.dart';
+import 'package:blossom_clinic/page/add_card/add_card_provider.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
@@ -16,6 +18,8 @@ import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:injector/injector.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
 
@@ -123,6 +127,15 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
             positiveButton: "เพิ่มบัตร",
             positiveListener: () async {
               Navigator.pop(dialogContext);
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                return MultiProvider(providers: [
+                  ChangeNotifierProvider(create: (BuildContext context) => AddCardProvider(
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                  ),)
+                ],
+                child: AddCardPage(),);
+              }));
             },
             negativeButton: "ยกเลิก",
             negativeListener: () async {
