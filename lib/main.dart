@@ -6,8 +6,10 @@ import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/repository/remote_repository_impl.dart';
 import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
+import 'package:blossom_clinic/utils/connecty_cube_properties.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
+import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,7 @@ void main() {
   initializeDateFormatting("TH");
   _provideDependency();
   registerFirebaseCloudMessage();
+  _initConnectycube();
   runApp(BlossomClinicApplication());
 }
 
@@ -60,6 +63,17 @@ void _provideDependency() {
   injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(
       injector.get(),
       injector.get()));
+}
+
+void _initConnectycube() {
+  init(
+    ConnectyCubProperties.APP_ID,
+    ConnectyCubProperties.AUTH_KEY,
+    ConnectyCubProperties.AUTH_SECRET,
+    onSessionRestore: () {
+
+    },
+  );
 }
 
 Future<void> registerFirebaseCloudMessage() async {
