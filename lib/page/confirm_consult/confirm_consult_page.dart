@@ -1,15 +1,15 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/model/date_reserve_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
+import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
+import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
-import 'package:blossom_clinic/widget/button_pink_gradient_small.dart';
-import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
@@ -108,25 +108,8 @@ class ConfirmConsultPage extends StatelessWidget {
                     ButtonPinkGradient(
                       "ยืนยัน",
                       value.doctorTimeModel != null && value.currentMinute != null,
-                          () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext dialogContext) => CustomDialogTwoButton(
-                              title: "ยืนยันการจอง",
-                              description: "คุณต้องการจองการปรึกษาแพทย์ ${_doctorInfo?.profileTitle ?? ""} " +
-                                  "ในวันที่ ${DateFormat("d MMMM yyyy", "TH").format(DateTime.parse(_dateReserveModel.date))} " +
-                                  "เวลา ${value.doctorTimeModel?.start ?? ""} ${value.doctorTimeModel?.unit ?? "น."} " +
-                                  "เป็นเวลา ${value.currentMinute} นาที",
-                              positiveButton: "ยืนยัน",
-                              positiveListener: () async {
-                                Navigator.pop(dialogContext);
-                                await _provider.confirmConsult(context, _doctorInfo, value.doctorMin, value.doctorTimeModel, _dateReserveModel);
-                                // _provider.openWebViewUrl(context, "Omise", null);
-                              },
-                              negativeButton: "ยกเลิก", negativeListener: () {
-                                Navigator.pop(dialogContext);
-                          },),
-                        );
+                      () {
+                        _goToCustomerPage(context);
                       },
                       height: 40,
                       radius: 4,
@@ -140,5 +123,16 @@ class ConfirmConsultPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _goToCustomerPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return MultiProvider(providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => AddCustomerInformationProvider(
+              Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
+        )
+      ], child: AddCustomerInformationPage(_doctorInfo, _provider.doctorMin, _provider.doctorTimeModel, _dateReserveModel));
+    }));
   }
 }
