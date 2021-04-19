@@ -4,6 +4,7 @@ import 'package:blossom_clinic/model/doctor_time_model.dart';
 import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/model/response/get_doctor_min_consult_response_model.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
+import 'package:blossom_clinic/widget/acne_look_radio_group.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/customer_information_item.dart';
@@ -53,21 +54,19 @@ class AddCustomerInformationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BlossomText(
-                      "อาการเบื้องต้น",
+                      "ลักษณะผิว",
                       size: 16,
                       fontWeight: FontWeight.bold,
                     ),
+                    AcneLookRadioGroup(),
                     SizedBox(
                       height: 20,
                     ),
-                    AspectRatio(
-                        aspectRatio: 2 / 1.5,
-                        child: TextFieldStrokeBlack(
-                          "ตัวอย่าง ... สิวบริเวณคางเยอะมากเลยค่ะ",
-                          textAlignVertical: TextAlignVertical.top,
-                          maxLength: 200,
-                          textEditingController: _symptomTextController,
-                        )),
+                    BlossomText(
+                      "ลักษณะสิว",
+                      size: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
