@@ -8,8 +8,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
   double paddingStart;
   double paddingEnd;
   TextAlign textAlign;
-  TextAlignVertical textAlignVertical;
-  TextEditingController textEditingController;
+  TextEditingController textController;
   int maxLength;
   Function(String) onChange;
 
@@ -21,10 +20,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
       this.textAlign,
       this.maxLength,
       this.onChange,
-      this.textAlignVertical,
-      this.textEditingController});
-
-  var textController = TextEditingController();
+      this.textController});
 
   String getText() => textController.text;
 
@@ -38,24 +34,37 @@ class TextFieldStrokeBlack extends StatelessWidget {
       child: Container(
           width: width ?? 80 * MediaQuery.of(context).size.width / 100,
           height: height ?? 48,
-          decoration: BoxDecoration(
-              border: Border.all(color: BlossomTheme.black), borderRadius: BorderRadius.all(Radius.circular(5))),
-          padding: EdgeInsets.only(left: paddingStart ?? 18, right: paddingEnd ?? 18),
-          child: TextField(
-              onChanged: onChange ?? (value) {},
-              controller: textEditingController ?? textController,
-              buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) =>
-                  null,
-              maxLength: maxLength ?? 50,
-              cursorColor: BlossomTheme.darkPink,
-              style: TextStyle(color: BlossomTheme.darkPink, fontFamily: FONT_PROMPT, fontSize: 15, height: 2),
-              textAlign: textAlign ?? TextAlign.left,
-              textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  hintText: hint,
-                  hintStyle: TextStyle(color: BlossomTheme.gray)))),
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: BlossomTheme.black), borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: Container(
+              padding: EdgeInsets.only(left: paddingStart ?? 18, right: paddingEnd ?? 18),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Center(
+                        child: TextField(
+                            onChanged: onChange ?? (value) {},
+                            controller: textController ?? TextEditingController(),
+                            buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) =>
+                                null,
+                            maxLength: maxLength ?? 50,
+                            style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
+                            textAlign: textAlign ?? TextAlign.left,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                hintText: hint,
+                                hintStyle: TextStyle(color: BlossomTheme.gray))),
+                      ),
+                    ),
+                    flex: 1,
+                  )
+                ],
+              ),
+            ),
+          )),
     );
   }
 }

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>508984845471-k3v10t1mj83iqkpmdo91qm9o64bh8il2.apps.googleusercontent.com</string>
+	<string>593223696061-hktjc330drrphhl7hkakjjkugk8r0d7r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.508984845471-k3v10t1mj83iqkpmdo91qm9o64bh8il2</string>
+	<string>com.googleusercontent.apps.593223696061-hktjc330drrphhl7hkakjjkugk8r0d7r</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBQ0LE-IAqQ_-X7nBx_tZ1X66Js0I7fY5M</string>
+	<string>AIzaSyDXyaH0ZlqG8y36-C-Jsbj-JwkSQMpAZ-o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>508984845471</string>
+	<string>593223696061</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.blossomclinic.app</string>
 	<key>PROJECT_ID</key>
-	<string>blossom-a0b48</string>
+	<string>blossom-clinic-thailand</string>
 	<key>STORAGE_BUCKET</key>
-	<string>blossom-a0b48.appspot.com</string>
+	<string>blossom-clinic-thailand.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:508984845471:ios:7c0a70568e97772429aeaa</string>
+	<string>1:593223696061:ios:cf9f62d45182fad1f441d4</string>
 </dict>
 </plist>

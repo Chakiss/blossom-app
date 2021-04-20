@@ -9,7 +9,9 @@ import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/utils/connecty_cube_properties.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +27,11 @@ import 'network/omise_retrofit_client.dart';
 import 'network/rest_client_manager.dart';
 import 'network/retrofit_client.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting("TH");
   _provideDependency();
-  registerFirebaseCloudMessage();
+  await registerFirebaseCloudMessage();
   _initConnectycube();
   runApp(BlossomClinicApplication());
 }
@@ -78,6 +80,8 @@ void _initConnectycube() {
 
 Future<void> registerFirebaseCloudMessage() async {
   await Firebase.initializeApp();
+  // await FirebaseAuth.instance.useEmulator("http://localhost:9099");
+  await FirebaseAuth.instance.useEmulator("http://wongsuksiri.thddns.net:6650");
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   await _messaging.requestPermission(
       alert: true,
