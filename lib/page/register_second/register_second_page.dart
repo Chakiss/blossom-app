@@ -14,6 +14,10 @@ class RegisterSecondPage extends StatefulWidget {
 }
 
 class _RegisterSecondPageState extends State<RegisterSecondPage> {
+
+  var acneTreatTextController = TextEditingController();
+  var drugAllergyTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Stack(fit: StackFit.expand, children: [
@@ -68,7 +72,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                AcneTreat(),
+                AcneTreat(acneTreatTextController),
                 SizedBox(
                   height: 12,
                 ),
@@ -92,7 +96,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     color: BlossomTheme.black,
                   ),
                 ),
-                DrugAllergy(),
+                DrugAllergy(drugAllergyTextController),
                 SizedBox(
                   height: 40,
                 ),

@@ -4,6 +4,11 @@ import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:flutter/material.dart';
 
 class AcneTreat extends StatefulWidget {
+
+  TextEditingController _textEditingController;
+
+  AcneTreat(this._textEditingController);
+
   @override
   _AcneTreatState createState() => _AcneTreatState();
 }
@@ -72,7 +77,7 @@ class _AcneTreatState extends State<AcneTreat> {
               ),
             ],
           ),
-          TextFieldStrokeBlack("", enabled: enable,)
+          TextFieldStrokeBlack("", enabled: enable, textController: widget._textEditingController,)
         ],
       ),
     );

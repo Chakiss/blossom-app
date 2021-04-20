@@ -45,26 +45,23 @@ class TextFieldStrokeBlack extends StatelessWidget {
                 color: enabled ? BlossomTheme.black : BlossomTheme.gray,
               ),
               borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: Expanded(
-            child: Container(
-              child: Center(
-                child: TextField(
-                    enabled: enabled ?? true,
-                    obscureText: isPasswordType ?? false,
-                    onChanged: onChange ?? (value) {},
-                    controller: textController ?? TextEditingController(),
-                    buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
-                    maxLength: maxLength ?? 50,
-                    style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
-                    textAlign: textAlign ?? TextAlign.left,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        hintText: hint,
-                        hintStyle: TextStyle(color: BlossomTheme.gray))),
-              ),
+          child: Container(
+            child: Center(
+              child: TextField(
+                  enabled: enabled ?? true,
+                  obscureText: isPasswordType ?? false,
+                  onChanged: onChange ?? (value) {},
+                  controller: textController ?? TextEditingController(),
+                  buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
+                  maxLength: maxLength ?? 50,
+                  style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
+                  textAlign: textAlign ?? TextAlign.left,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: hint,
+                      hintStyle: TextStyle(color: BlossomTheme.gray))),
             ),
-            flex: 1,
           )),
     );
   }

@@ -4,6 +4,11 @@ import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:flutter/material.dart';
 
 class DrugAllergy extends StatefulWidget {
+
+  TextEditingController _textEditingController;
+
+  DrugAllergy(this._textEditingController);
+
   @override
   _DrugAllergyState createState() => _DrugAllergyState();
 }
@@ -60,7 +65,7 @@ class _DrugAllergyState extends State<DrugAllergy> {
               ),
             ],
           ),
-          TextFieldStrokeBlack("", enabled: enable,)
+          TextFieldStrokeBlack("", enabled: enable, textController: widget._textEditingController,)
         ],
       ),
     );
