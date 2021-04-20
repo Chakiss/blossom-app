@@ -2,12 +2,12 @@ import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 
-class AcneLookRadioGroup extends StatefulWidget {
+class SkinLookRadioGroup extends StatefulWidget {
   @override
-  _AcneLookRadioGroupState createState() => _AcneLookRadioGroupState();
+  _SkinLookRadioGroupRadioGroupState createState() => _SkinLookRadioGroupRadioGroupState();
 }
 
-class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
+class _SkinLookRadioGroupRadioGroupState extends State<SkinLookRadioGroup> {
   String _acneLook = "";
 
   @override
@@ -22,7 +22,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                 children: [
                   Radio<String>(
                     fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "ผิวแห้ง",
+                    value: "สิวอุดตัน",
                     groupValue: _acneLook,
                     onChanged: (String value) {
                       setState(() {
@@ -31,7 +31,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                     },
                   ),
                   BlossomText(
-                    'ผิวแห้ง',
+                    'สิวอุดตัน',
                     size: 15,
                   ),
                 ],
@@ -40,7 +40,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                 children: [
                   Radio<String>(
                     fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "ผิวมันทั่วใบหน้า",
+                    value: "สิวอักเสบ",
                     groupValue: _acneLook,
                     onChanged: (String value) {
                       setState(() {
@@ -49,7 +49,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                     },
                   ),
                   BlossomText(
-                    'ผิวมันทั่วใบหน้า',
+                    'สิวอักเสบ',
                     size: 15,
                   ),
                 ],
@@ -62,7 +62,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                 children: [
                   Radio<String>(
                     fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "ผิวผสม, มันเฉพาะ T zone",
+                    value: "สิวอักเสบ สัมพันธ์กับรอบเดือน",
                     groupValue: _acneLook,
                     onChanged: (String value) {
                       setState(() {
@@ -71,7 +71,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                     },
                   ),
                   BlossomText(
-                    'ผิวผสม, มันเฉพาะ T zone',
+                    'สิวอักเสบ สัมพันธ์กับรอบเดือน',
                     size: 15,
                   ),
                 ],
@@ -80,7 +80,7 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                 children: [
                   Radio<String>(
                     fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "ผิวแพ้ง่าย",
+                    value: "รอยสิว",
                     groupValue: _acneLook,
                     onChanged: (String value) {
                       setState(() {
@@ -89,7 +89,29 @@ class _AcneLookRadioGroupState extends State<AcneLookRadioGroup> {
                     },
                   ),
                   BlossomText(
-                    'ผิวแพ้ง่าย',
+                    'รอยสิว',
+                    size: 15,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Row(
+                children: [
+                  Radio<String>(
+                    fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                    value: "หลุมสิว",
+                    groupValue: _acneLook,
+                    onChanged: (String value) {
+                      setState(() {
+                        _acneLook = value;
+                      });
+                    },
+                  ),
+                  BlossomText(
+                    'หลุมสิว',
                     size: 15,
                   ),
                 ],

@@ -1,9 +1,11 @@
+import 'package:blossom_clinic/page/register/register_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:blossom_clinic/widget/text_stroke_black.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
@@ -13,6 +15,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  RegisterProvider _provider;
   var emailTextController = TextEditingController();
   var passwordTextController = TextEditingController();
   var confirmPasswordTextController = TextEditingController();
@@ -22,7 +25,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final dateFormat = DateFormat("d MMM yyyy", "TH");
 
   @override
-  void initState() {}
+  void initState() {
+    _provider = Provider.of(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "email",
                         size: 16,
                         color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -73,6 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "password",
                         size: 16,
                         color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -92,6 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "confirm password",
                         size: 16,
                         color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -111,6 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "ชื่อ",
                         size: 16,
                         color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -129,6 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "นามสกุล",
                         size: 16,
                         color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -147,6 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         "วันเกิด",
                         size: 16,
                         color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
@@ -166,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 data: ThemeData.dark().copyWith(
                                   colorScheme: ColorScheme.dark(
                                     primary: BlossomTheme.pink,
-                                    onPrimary: BlossomTheme.white,
+                                    onPrimary: BlossomTheme.black,
                                     surface: BlossomTheme.darkPink,
                                     onSurface: BlossomTheme.black,
                                   ),
@@ -185,18 +196,29 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 12,
+                      height: 40,
                     ),
+                    ButtonPinkGradient(
+                      "ต่อไป",
+                      true,
+                      () {
+                        _provider.goToRegisterSecondPage(
+                            context,
+                            emailTextController.text,
+                            passwordTextController.text,
+                            confirmPasswordTextController.text,
+                            nameTextController.text,
+                            lastNameTextController.text,
+                            DateFormat("yyyy-MM-dd").format(selectedDate));
+                      },
+                      width: 30 * MediaQuery.of(context).size.width / 100,
+                      height: 40,
+                      radius: 6,
+                    )
                   ],
                 ),
               ),
             )),
-            ButtonPinkGradient(
-              "ต่อไป",
-              true,
-              () {},
-              width: MediaQuery.of(context).size.width,
-            )
           ],
         )
       ],

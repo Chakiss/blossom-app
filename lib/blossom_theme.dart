@@ -12,5 +12,6 @@ class BlossomTheme {
   static const Color black = Color(0xFF333333);
   static const Color gray = Color(0xFF8D8D8C);
   static const Color lightGray = Color(0xFFE8E8E8);
+  static const Color lightGrayAlpha = Color(0x66E8E8E8);
   static const Color colorPrimary = darkPink;
 }
