@@ -30,7 +30,7 @@ class ProfileProvider extends BaseProvider with ChangeNotifier {
   void _goToSplashScreen(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(Injector.appInstance.get(), Injector.appInstance.get()),),
+        ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(),),
       ],
         child: SplashScreenPage(),);
     }));

@@ -1,70 +1,30 @@
-import 'package:blossom_clinic/page/splash_screen_page.dart';
-import 'package:blossom_clinic/page/splash_screen_provider.dart';
-import 'package:blossom_clinic/repository/omise_repository.dart';
-import 'package:blossom_clinic/repository/omise_repository_impl.dart';
-import 'package:blossom_clinic/repository/remote_repository.dart';
-import 'package:blossom_clinic/repository/remote_repository_impl.dart';
-import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
-import 'package:blossom_clinic/usecase/login_use_case.dart';
+import 'package:blossom_clinic/blossom_clinic_application.dart';
+import 'package:blossom_clinic/di/app_module.dart';
+import 'package:blossom_clinic/di/use_case_module.dart';
 import 'package:blossom_clinic/utils/connecty_cube_properties.dart';
-import 'package:blossom_clinic/utils/error_handle.dart';
-import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
 
-import 'blossom_theme.dart';
-import 'model/user_model.dart';
-import 'network/omise_rest_client_manager.dart';
-import 'network/omise_retrofit_client.dart';
-import 'network/rest_client_manager.dart';
-import 'network/retrofit_client.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await registerFirebaseCloudMessage();
   initializeDateFormatting("TH");
   _provideDependency();
-  await registerFirebaseCloudMessage();
   _initConnectycube();
   runApp(BlossomClinicApplication());
 }
 
 void _provideDependency() {
   final injector = Injector.appInstance;
-  injector.registerSingleton<Logger>(() => Logger());
-
-  injector.registerDependency<RestClientManager>(() => RestClientManager());
-  injector.registerSingleton<RetrofitClient>(() {
-    RestClientManager restClientManager = injector.get<RestClientManager>();
-    return RetrofitClient(restClientManager.getDio());
-  });
-  injector
-      .registerSingleton<RemoteRepository>(() => RemoteRepositoryImpl(retrofitClient: injector.get<RetrofitClient>()));
-
-  injector.registerDependency<OmiseRestClientManager>(() => OmiseRestClientManager());
-  injector.registerSingleton<OmiseRetrofitClient>(() {
-    OmiseRestClientManager restClientManager = injector.get<OmiseRestClientManager>();
-    return OmiseRetrofitClient(restClientManager.getDio());
-  });
-  injector.registerSingleton<OmiseRepository>(
-      () => OmiseRepositoryImpl(omiseRetrofitClient: injector.get<OmiseRetrofitClient>()));
-
-  injector.registerSingleton<UserModel>(() => UserModel());
-  injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils());
-  injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
-  injector.registerDependency<LoginUseCase>(() => LoginUseCase(
-      injector.get(),
-      injector.get()));
-  injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(
-      injector.get(),
-      injector.get()));
+  AppModule(injector).provide();
+  UseCaseModule(injector).provide();
 }
 
 void _initConnectycube() {
@@ -80,8 +40,14 @@ void _initConnectycube() {
 
 Future<void> registerFirebaseCloudMessage() async {
   await Firebase.initializeApp();
-  // await FirebaseAuth.instance.useEmulator("http://localhost:9099");
-  await FirebaseAuth.instance.useEmulator("http://wongsuksiri.thddns.net:6650");
+  // await FirebaseAuth.instance.useEmulator("http://wongsuksiri.thddns.net:6650");
+  FirebaseFirestore.instance.settings = Settings(
+    host: "http://wongsuksiri.thddns.net:6652",
+    sslEnabled: false,
+    persistenceEnabled: false,
+  );
+  FirebaseFunctions.instance.useFunctionsEmulator(origin: "http://wongsuksiri.thddns.net:6651");
+
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   await _messaging.requestPermission(
       alert: true,
@@ -109,26 +75,4 @@ Future<void> registerFirebaseCloudMessage() async {
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Background Message");
   print('Background Message data: ${message.data}');
-}
-
-class BlossomClinicApplication extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        accentColor: BlossomTheme.white,
-      ),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (BuildContext context) {
-              return SplashScreenProvider(Injector.appInstance.get(), Injector.appInstance.get());
-            },
-          )
-        ],
-        child: SplashScreenPage(),
-      ),
-    );
-  }
 }

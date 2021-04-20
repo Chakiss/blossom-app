@@ -10,17 +10,19 @@ class TextFieldStrokeBlack extends StatelessWidget {
   TextAlign textAlign;
   TextEditingController textController;
   int maxLength;
+  bool isPasswordType;
   Function(String) onChange;
 
   TextFieldStrokeBlack(this.hint,
       {this.width,
-      this.height,
-      this.paddingStart,
-      this.paddingEnd,
-      this.textAlign,
-      this.maxLength,
-      this.onChange,
-      this.textController});
+        this.height,
+        this.paddingStart,
+        this.paddingEnd,
+        this.textAlign,
+        this.maxLength,
+        this.onChange,
+        this.isPasswordType,
+        this.textController});
 
   String getText() => textController.text;
 
@@ -32,7 +34,10 @@ class TextFieldStrokeBlack extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Container(
-          width: width ?? 80 * MediaQuery.of(context).size.width / 100,
+          width: width ?? 80 * MediaQuery
+              .of(context)
+              .size
+              .width / 100,
           height: height ?? 48,
           child: Container(
             decoration: BoxDecoration(
@@ -45,10 +50,11 @@ class TextFieldStrokeBlack extends StatelessWidget {
                     child: Container(
                       child: Center(
                         child: TextField(
+                            obscureText: isPasswordType ?? false,
                             onChanged: onChange ?? (value) {},
                             controller: textController ?? TextEditingController(),
                             buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) =>
-                                null,
+                            null,
                             maxLength: maxLength ?? 50,
                             style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
                             textAlign: textAlign ?? TextAlign.left,
