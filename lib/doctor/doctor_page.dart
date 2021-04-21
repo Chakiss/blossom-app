@@ -9,12 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DoctorPage extends StatelessWidget {
-  DoctorProvider provider;
-  DoctorInfoModel _doctorInfoModel;
+
+  DoctorProvider _provider;
 
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of(context, listen: false);
+    _provider = Provider.of(context, listen: false);
+    _provider.getDoctorList(context);
     return BaseScreen(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -31,14 +32,14 @@ class DoctorPage extends StatelessWidget {
               child: Consumer<DoctorProvider>(
                 builder: (BuildContext context, DoctorProvider value, Widget child) {
                   return ListView.builder(
-                      itemCount: 0,
+                      itemCount: value.listDoctor?.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
                           child: Column(
                             children: [
-                              DoctorCard(_doctorInfoModel,() {
-                                _goToDoctorInfoPage(context, _doctorInfoModel);
+                              DoctorCard(value.listDoctor[index],() {
+                                _goToDoctorInfoPage(context, value.listDoctor[index]);
                               }),
                               Container(
                                 margin: EdgeInsets.only(left: 30, right: 30),

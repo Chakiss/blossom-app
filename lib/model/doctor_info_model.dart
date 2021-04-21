@@ -1,6 +1,6 @@
 class DoctorInfoModel {
 
-  String createdAt;
+  DateTime createdAt;
   String displayName;
   String displayPhoto;
   String email;
@@ -8,14 +8,14 @@ class DoctorInfoModel {
   String lastName;
   String phoneNumber;
   String story;
-  String updatedAt;
+  DateTime updatedAt;
 
   DoctorInfoModel({this.createdAt, this.displayName, this.displayPhoto, this.email, this.firstName, this.lastName,
       this.phoneNumber, this.story, this.updatedAt});
 
   factory DoctorInfoModel.fromJson(Map<String, dynamic> json) {
     return DoctorInfoModel(
-      createdAt: json["createdAt"],
+      createdAt: json["createdAt"]?.toDate(),
       displayName: json["displayName"],
       displayPhoto: json["displayPhoto"],
       email: json["email"],
@@ -23,7 +23,7 @@ class DoctorInfoModel {
       lastName: json["lastName"],
       phoneNumber: json["phoneNumber"],
       story: json["story"],
-      updatedAt: json["updatedAt"],
+      updatedAt: json["updatedAt"]?.toDate(),
     );
   }
 }

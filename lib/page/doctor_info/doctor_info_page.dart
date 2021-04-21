@@ -9,16 +9,30 @@ import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DoctorInfoPage extends StatelessWidget {
+class DoctorInfoPage extends StatefulWidget {
   DoctorInfoModel _doctorInfoModel;
 
   DoctorInfoPage(this._doctorInfoModel);
 
+  @override
+  _DoctorInfoPageState createState() => _DoctorInfoPageState();
+}
+
+class _DoctorInfoPageState extends State<DoctorInfoPage> {
+
   DoctorInfoProvider _doctorInfoProvider;
+  String doctorProfileUrl = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getDoctorProfileUrl();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +43,7 @@ class DoctorInfoPage extends StatelessWidget {
         return Column(
           children: [
             ToolbarBack(
-              title: _doctorInfoModel?.displayName ?? "",
+              title: widget._doctorInfoModel?.displayName ?? "",
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -41,21 +55,25 @@ class DoctorInfoPage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 60.0,
-                            backgroundImage: NetworkImage(_doctorInfoModel.displayPhoto),
+                            backgroundColor: BlossomTheme.white,
+                            backgroundImage: NetworkImage(doctorProfileUrl),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(left: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BlossomText(
-                                  _doctorInfoModel?.displayName ?? "",
-                                  color: BlossomTheme.pink,
-                                  size: 20,
-                                ),
-                                BlossomText("${_doctorInfoModel?.firstName ?? ""} ${_doctorInfoModel?.lastName ?? ""}",
-                                    color: BlossomTheme.black, size: 17)
-                              ],
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  BlossomText(
+                                    widget._doctorInfoModel?.displayName ?? "",
+                                    color: BlossomTheme.darkPink,
+                                    size: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  BlossomText("${widget._doctorInfoModel?.firstName ?? ""}\n${widget._doctorInfoModel?.lastName ?? ""}",
+                                      color: BlossomTheme.black, size: 17)
+                                ],
+                              ),
                             ),
                           )
                         ],
@@ -110,5 +128,12 @@ class DoctorInfoPage extends StatelessWidget {
       ],
       child: ConfirmConsultPage(),);
     }));
+  }
+
+  Future<void> getDoctorProfileUrl() async {
+    doctorProfileUrl = await FirebaseStorage.instance.ref(widget._doctorInfoModel.displayPhoto).getDownloadURL();
+    setState(() {
+
+    });
   }
 }

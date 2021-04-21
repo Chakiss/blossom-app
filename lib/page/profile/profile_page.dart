@@ -5,7 +5,6 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -45,8 +44,8 @@ class ProfilePage extends StatelessWidget {
                                 title: "ออกจากระบบ",
                                 description: "ยืนยันการออกจากระบบ",
                                 positiveButton: "ตกลง",
-                                positiveListener: () async {
-
+                                positiveListener: () {
+                                  _profileProvider.logout(context);
                                 },
                                 negativeButton: "ยกเลิก",
                                 negativeListener: () {

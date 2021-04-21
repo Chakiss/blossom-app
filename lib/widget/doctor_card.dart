@@ -1,19 +1,34 @@
 import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'blossom_text.dart';
 
-class DoctorCard extends StatelessWidget {
+class DoctorCard extends StatefulWidget {
 
   DoctorInfoModel doctorInfo;
   Function() onTab;
   DoctorCard(this.doctorInfo, this.onTab);
 
   @override
+  _DoctorCardState createState() => _DoctorCardState();
+}
+
+class _DoctorCardState extends State<DoctorCard> {
+
+  String doctorProfileUrl = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getDoctorProfileUrl();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: onTab,
+      onTap: widget.onTab,
       child: Container(
         margin: EdgeInsets.only(bottom: 4),
         child: Card(
@@ -33,7 +48,7 @@ class DoctorCard extends StatelessWidget {
                     CircleAvatar(
                       radius: 40.0,
                       backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(doctorInfo.displayPhoto),
+                      backgroundImage: NetworkImage(doctorProfileUrl),
                     ),
                     Expanded(
                       flex: 1,
@@ -43,18 +58,18 @@ class DoctorCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BlossomText(
-                              doctorInfo?.displayName ?? "",
+                              widget.doctorInfo?.displayName ?? "",
                               color: Color.fromRGBO(246, 107, 98, 1),
                               size: 15,
                               fontWeight: FontWeight.bold,
                             ),
                             BlossomText(
-                              "${doctorInfo?.firstName ?? ""} ${doctorInfo?.lastName ?? ""}",
+                              "${widget.doctorInfo?.firstName ?? ""} ${widget.doctorInfo?.lastName ?? ""}",
                               size: 12,
                               fontWeight: FontWeight.bold,
                             ),
                             BlossomText(
-                              doctorInfo?.story ?? "",
+                              widget.doctorInfo?.story ?? "",
                               maxLines: 3,
                               size: 12,
                             )
@@ -76,5 +91,12 @@ class DoctorCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> getDoctorProfileUrl() async {
+    doctorProfileUrl = await FirebaseStorage.instance.ref(widget.doctorInfo.displayPhoto).getDownloadURL();
+    setState(() {
+
+    });
   }
 }
