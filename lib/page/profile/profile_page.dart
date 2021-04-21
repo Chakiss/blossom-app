@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/base/base_screen.dart';
-import 'package:blossom_clinic/model/user_model.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfileProvider _profileProvider;
-  UserModel _userModel = Injector.appInstance.get();
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +25,12 @@ class ProfilePage extends StatelessWidget {
                 CircleAvatar(
                   radius: 40 * MediaQuery.of(context).size.width / 200,
                   backgroundColor: Colors.white,
-                  backgroundImage: NetworkImage(_userModel.profilePath != null
-                      ? _userModel.profilePath
-                      : _userModel.signInResponseModel?.profileImg != null
-                          ? _userModel.signInResponseModel.profileImg
-                          : ""),
+                  backgroundImage: NetworkImage("url"),
                 ),
                 Container(
                     margin: EdgeInsets.symmetric(vertical: 24),
                     child: BlossomText(
-                      "${_userModel.signInResponseModel?.firstName ?? ""} ${_userModel.signInResponseModel?.lastName ?? ""}",
+                      "name lastName",
                       size: 18,
                       fontWeight: FontWeight.bold,
                     )),
@@ -52,7 +46,7 @@ class ProfilePage extends StatelessWidget {
                                 description: "ยืนยันการออกจากระบบ",
                                 positiveButton: "ตกลง",
                                 positiveListener: () async {
-                                  await _profileProvider.logout(context);
+
                                 },
                                 negativeButton: "ยกเลิก",
                                 negativeListener: () {

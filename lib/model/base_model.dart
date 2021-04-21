@@ -1,16 +1,16 @@
-import 'package:blossom_clinic/model/status_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
 class BaseModel<T> {
-  StatusModel status;
   T data;
 
-  BaseModel({this.status, this.data});
+  BaseModel({this.data});
+
+  Map<String, dynamic> toJson() {
+    return {"data": data};
+  }
 
   factory BaseModel.fromJson(Map<String, dynamic> json, Function(Map<String, dynamic>) create) {
-    return BaseModel(
-        status: StatusModel.fromJson(json["status"]),
-        data: json["data"] != null ? create(json["data"]) : null);
+    return BaseModel(data: json["data"] != null ? create(json["data"]) : null);
   }
 }

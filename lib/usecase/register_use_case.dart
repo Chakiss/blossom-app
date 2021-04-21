@@ -1,30 +1,21 @@
 import 'package:blossom_clinic/base/base_use_case.dart';
 import 'package:blossom_clinic/model/base/result.dart';
-import 'package:blossom_clinic/model/status_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:blossom_clinic/model/request/create_new_application_user_request_model.dart';
+import 'package:blossom_clinic/repository/remote_repository.dart';
 
-class RegisterUseCase extends BaseUseCase<Map<String, String>, StatusModel> {
-  FirebaseAuth _firebaseAuth;
+class RegisterUseCase extends BaseUseCase<CreateNewApplicationUserRequestModel, Map<String, dynamic>> {
 
-  RegisterUseCase(this._firebaseAuth);
+  RemoteRepository _remoteRepository;
+
+  RegisterUseCase(this._remoteRepository);
 
   @override
-  Future<Result<StatusModel>> execute(Map<String, String> parameter) async {
+  Future<Result<Map<String, dynamic>>> execute(CreateNewApplicationUserRequestModel parameter) async {
     try {
-      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: parameter["email"], password: parameter["password"]);
-      return Success(StatusModel("0", "S", "The password provided is too weak."));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return Error(StatusModel("0001", "E", "รหัสผ่านของคุณง่ายเกินไป กรุณากรอกใหม่อีกครั้ง"));
-      } else if (e.code == 'email-already-in-use') {
-        return Error(StatusModel("0001", "E", "อีเมล์นี้ได้ถูกใช้งานไปแล้ว กรุณากรอกใหม่อีกครั้ง"));
-      } else {
-        return Error(StatusModel("0001", "E", e.message));
-      }
+      final result = await _remoteRepository.register(parameter);
+      return Success(Map());
     } catch (e) {
-      print(e);
-      return Error(StatusModel("9999", "E", "Exception"));
+      return Error(e);
     }
   }
 }

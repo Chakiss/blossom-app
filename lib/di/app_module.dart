@@ -1,4 +1,3 @@
-import 'package:blossom_clinic/model/user_model.dart';
 import 'package:blossom_clinic/network/rest_client_manager.dart';
 import 'package:blossom_clinic/network/retrofit_client.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
@@ -14,7 +13,6 @@ class AppModule {
   AppModule(this.injector);
 
   void provide() {
-    injector.registerSingleton<UserModel>(() => UserModel());
     injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils());
     injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
     injector.registerSingleton<Logger>(() => Logger());

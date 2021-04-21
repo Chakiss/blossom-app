@@ -1,22 +1,41 @@
-import 'package:blossom_clinic/widget/acne_look_radio_group.dart';
+import 'package:blossom_clinic/page/register_second/register_second_provider.dart';
+import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
 import 'package:blossom_clinic/widget/acne_treat.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/drug_allergy.dart';
-import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
+import 'package:blossom_clinic/widget/acne_look_radio_group.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
 class RegisterSecondPage extends StatefulWidget {
+
+  Map<String, String> _profileData;
+
+  RegisterSecondPage(this._profileData);
+
   @override
   _RegisterSecondPageState createState() => _RegisterSecondPageState();
 }
 
 class _RegisterSecondPageState extends State<RegisterSecondPage> {
 
-  var acneTreatTextController = TextEditingController();
-  var drugAllergyTextController = TextEditingController();
+  RegisterSecondProvider _provider;
+  var _acneTreatTextController = TextEditingController();
+  var _drugAllergyTextController = TextEditingController();
+
+  String skinType = "";
+  String acneTypes = "";
+  String acneCareNoted = "";
+  String drugAllergyItems = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _provider = Provider.of(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +65,9 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                AcneLookRadioGroup(),
+                SkinLookRadioGroup((skin) {
+                  skinType = skin;
+                }),
                 SizedBox(
                   height: 12,
                 ),
@@ -59,7 +80,9 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SkinLookRadioGroup(),
+                AcneLookRadioGroup((acne) {
+                  acneTypes = acne;
+                }),
                 SizedBox(
                   height: 12,
                 ),
@@ -72,7 +95,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                AcneTreat(acneTreatTextController),
+                AcneTreat(_acneTreatTextController),
                 SizedBox(
                   height: 12,
                 ),
@@ -96,7 +119,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     color: BlossomTheme.black,
                   ),
                 ),
-                DrugAllergy(drugAllergyTextController),
+                DrugAllergy(_drugAllergyTextController),
                 SizedBox(
                   height: 40,
                 ),
@@ -104,8 +127,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   "ยืนยัน",
                   true,
                   () {
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    _provider.callServiceRegister(context, widget._profileData, skinType, acneTypes, _acneTreatTextController.text, _drugAllergyTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,

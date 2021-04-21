@@ -2,8 +2,6 @@ import 'package:blossom_clinic/blossom_clinic_application.dart';
 import 'package:blossom_clinic/di/app_module.dart';
 import 'package:blossom_clinic/di/use_case_module.dart';
 import 'package:blossom_clinic/utils/connecty_cube_properties.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -41,12 +39,12 @@ void _initConnectycube() {
 Future<void> registerFirebaseCloudMessage() async {
   await Firebase.initializeApp();
   // await FirebaseAuth.instance.useEmulator("http://wongsuksiri.thddns.net:6650");
-  FirebaseFirestore.instance.settings = Settings(
-    host: "http://wongsuksiri.thddns.net:6652",
-    sslEnabled: false,
-    persistenceEnabled: false,
-  );
-  FirebaseFunctions.instance.useFunctionsEmulator(origin: "http://wongsuksiri.thddns.net:6651");
+  // FirebaseFirestore.instance.settings = Settings(
+  //   host: "http://wongsuksiri.thddns.net:6652",
+  //   sslEnabled: false,
+  //   persistenceEnabled: false,
+  // );
+  // FirebaseFunctions.instance.useFunctionsEmulator(origin: "http://wongsuksiri.thddns.net:6651");
 
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   await _messaging.requestPermission(

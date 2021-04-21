@@ -1,4 +1,3 @@
-import 'package:blossom_clinic/model/response/get_book_history_response_model.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class HistoryItem extends StatelessWidget {
 
-  GetBookingHistoryResponseModel _historyResponseModel;
-  Function(GetBookingHistoryResponseModel) listener;
+  Function(dynamic) listener;
 
-  HistoryItem(this._historyResponseModel, this.listener);
+  HistoryItem(this.listener);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class HistoryItem extends StatelessWidget {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white,
-                  backgroundImage: NetworkImage(_historyResponseModel.image),
+                  backgroundImage: NetworkImage("url"),
                 ),
                 Expanded(
                     child: Container(
@@ -33,16 +31,16 @@ class HistoryItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlossomText(
-                        _historyResponseModel.title ?? "",
+                        "Title",
                         size: 12,
                         fontWeight: FontWeight.bold,
                       ),
-                      BlossomText(_historyResponseModel.description ?? "", size: 12)
+                      BlossomText("Description", size: 12)
                     ],
                   ),
                 )),
                 ButtonPinkGradient("โทรหา", true, () {
-                  listener.call(_historyResponseModel);
+                  listener.call("");
                 },
                 radius: 6,
                 height: 32,

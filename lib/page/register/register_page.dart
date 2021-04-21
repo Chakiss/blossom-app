@@ -19,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var emailTextController = TextEditingController();
   var passwordTextController = TextEditingController();
   var confirmPasswordTextController = TextEditingController();
+  var phoneNumberTextController = TextEditingController();
   var nameTextController = TextEditingController();
   var lastNameTextController = TextEditingController();
   DateTime selectedDate = DateTime.now();
@@ -57,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: BlossomText(
-                        "email",
+                        "อีเมล",
                         size: 16,
                         color: BlossomTheme.black,
                         fontWeight: FontWeight.bold,
@@ -76,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: BlossomText(
-                        "password",
+                        "รหัสผ่าน",
                         size: 16,
                         color: BlossomTheme.black,
                         fontWeight: FontWeight.bold,
@@ -96,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: BlossomText(
-                        "confirm password",
+                        "ยืนยันรหัสผ่าน",
                         size: 16,
                         color: BlossomTheme.black,
                         fontWeight: FontWeight.bold,
@@ -109,6 +110,25 @@ class _RegisterPageState extends State<RegisterPage> {
                       "",
                       textController: confirmPasswordTextController,
                       isPasswordType: true,
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: BlossomText(
+                        "เบอร์โทรศัพท์",
+                        size: 16,
+                        color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    TextFieldStrokeBlack(
+                      "",
+                      textController: phoneNumberTextController,
                     ),
                     SizedBox(
                       height: 12,
@@ -207,6 +227,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             emailTextController.text,
                             passwordTextController.text,
                             confirmPasswordTextController.text,
+                            phoneNumberTextController.text,
                             nameTextController.text,
                             lastNameTextController.text,
                             DateFormat("yyyy-MM-dd").format(selectedDate));

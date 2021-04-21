@@ -1,7 +1,7 @@
 
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/model/response/doctor_info.dart';
+import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
@@ -11,27 +11,25 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorInfoPage extends StatelessWidget {
-  DoctorInfo doctorInfo;
+  DoctorInfoModel _doctorInfoModel;
 
-  DoctorInfoPage(this.doctorInfo);
+  DoctorInfoPage(this._doctorInfoModel);
 
   DoctorInfoProvider _doctorInfoProvider;
 
   @override
   Widget build(BuildContext context) {
     _doctorInfoProvider = Provider.of(context, listen: false);
-    _doctorInfoProvider.callServiceGetDoctorDateReserve(context, doctorInfo?.doctorId ?? 0);
     return BaseScreen(
       safeAreaBottom: false,
       child: Consumer<DoctorInfoProvider>(builder: (BuildContext context, DoctorInfoProvider value, Widget child) {
         return Column(
           children: [
             ToolbarBack(
-              title: doctorInfo?.profileTitle ?? "",
+              title: _doctorInfoModel?.displayName ?? "",
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -43,7 +41,7 @@ class DoctorInfoPage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 60.0,
-                            backgroundImage: NetworkImage(doctorInfo.profileImg),
+                            backgroundImage: NetworkImage(_doctorInfoModel.displayPhoto),
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 16),
@@ -51,11 +49,11 @@ class DoctorInfoPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 BlossomText(
-                                  doctorInfo?.profileTitle ?? "",
+                                  _doctorInfoModel?.displayName ?? "",
                                   color: BlossomTheme.pink,
                                   size: 20,
                                 ),
-                                BlossomText("${doctorInfo?.firstName ?? ""} ${doctorInfo?.lastName ?? ""}",
+                                BlossomText("${_doctorInfoModel?.firstName ?? ""} ${_doctorInfoModel?.lastName ?? ""}",
                                     color: BlossomTheme.black, size: 17)
                               ],
                             ),
@@ -75,7 +73,7 @@ class DoctorInfoPage extends StatelessWidget {
                       Container(
                         height: 16,
                       ),
-                      value.dateReserveList == null ? BlossomProgressIndicator() : GridView.count(
+                      value == null ? BlossomProgressIndicator() : GridView.count(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         primary: false,
@@ -84,7 +82,7 @@ class DoctorInfoPage extends StatelessWidget {
                         crossAxisCount: 4,
                         mainAxisSpacing: 28.0,
                         childAspectRatio: 3 / 1.5,
-                        children: value.dateReserveList,
+                        children: [Container()],
                       ),
                     ],
                   ),
@@ -94,7 +92,7 @@ class DoctorInfoPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ButtonPinkGradient("ต่อไป", value.dateReserveModel != null ,() {
+            ButtonPinkGradient("ต่อไป", true ,() {
               _goToConfirmConsultPage(context);
             },
               width: MediaQuery.of(context).size.width,
@@ -108,9 +106,9 @@ class DoctorInfoPage extends StatelessWidget {
   void _goToConfirmConsultPage(BuildContext context) {
     Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider(Injector.appInstance.get()),)
+        ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider())
       ],
-      child: ConfirmConsultPage(doctorInfo, _doctorInfoProvider.dateReserveModel),);
+      child: ConfirmConsultPage(),);
     }));
   }
 }

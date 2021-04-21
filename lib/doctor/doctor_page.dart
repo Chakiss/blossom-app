@@ -1,21 +1,20 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
-import 'package:blossom_clinic/model/response/doctor_info.dart';
+import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_page.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
 import 'package:blossom_clinic/widget/doctor_card.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorPage extends StatelessWidget {
   DoctorProvider provider;
+  DoctorInfoModel _doctorInfoModel;
 
   @override
   Widget build(BuildContext context) {
     provider = Provider.of(context, listen: false);
-    provider.callServiceGetDoctorList(context);
     return BaseScreen(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -32,14 +31,14 @@ class DoctorPage extends StatelessWidget {
               child: Consumer<DoctorProvider>(
                 builder: (BuildContext context, DoctorProvider value, Widget child) {
                   return ListView.builder(
-                      itemCount: value.doctorList.length ?? 0,
+                      itemCount: 0,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
                           child: Column(
                             children: [
-                              DoctorCard(value.doctorList[index], () {
-                                _goToDoctorInfoPage(context, value.doctorList[index]);
+                              DoctorCard(_doctorInfoModel,() {
+                                _goToDoctorInfoPage(context, _doctorInfoModel);
                               }),
                               Container(
                                 margin: EdgeInsets.only(left: 30, right: 30),
@@ -59,12 +58,12 @@ class DoctorPage extends StatelessWidget {
     );
   }
 
-  void _goToDoctorInfoPage(BuildContext context, DoctorInfo doctorInfo) {
+  void _goToDoctorInfoPage(BuildContext context, DoctorInfoModel _doctorInfoModel) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => DoctorInfoProvider(Injector.appInstance.get()),)
+        ChangeNotifierProvider(create: (BuildContext context) => DoctorInfoProvider(),)
       ],
-      child: DoctorInfoPage(doctorInfo),);
+      child: DoctorInfoPage(_doctorInfoModel),);
     }));
   }
 }

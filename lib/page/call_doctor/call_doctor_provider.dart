@@ -1,8 +1,4 @@
-import 'package:blossom_clinic/model/request/end_video_conference_request_model.dart';
-import 'package:blossom_clinic/model/request/start_video_conference_request_model.dart';
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/model/response/get_book_history_response_model.dart';
-import 'package:blossom_clinic/model/user_model.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
@@ -10,9 +6,6 @@ import 'package:flutter/material.dart';
 
 class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
-  RemoteRepository _remoteRepository;
-  UserModel _userModel;
-  GetBookingHistoryResponseModel _historyResponseModel;
   RTCVideoView videoView;
   RTCVideoView videoViewSelf;
   P2PSession callSession;
@@ -23,15 +16,13 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   bool isMuteAudio = false;
   bool isVideoEnable = true;
 
-  CallDoctorProvider(this._remoteRepository, this._userModel, this._historyResponseModel);
-
   void signInConnectyCube(BuildContext context) {
     CubeUser cubeUser = CubeUser(
-        id: int.parse(_userModel.profileResponseModel.cubeId ?? "0"),
-        login: _userModel.profileResponseModel.email,
-        email: _userModel.profileResponseModel.email,
-        fullName: "${_userModel.signInResponseModel?.firstName ?? ""} ${_userModel.signInResponseModel?.lastName ?? ""} ",
-        password: _userModel.profileResponseModel.cubeSecreteKey);
+        id: 1,
+        login: "email",
+        email: "email",
+        fullName: "fullName",
+        password: "password");
 
     _connectCubeChat(context, cubeUser);
   }
@@ -55,7 +46,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callClient.onReceiveNewSession = (incomingCallSession) {};
     callClient.onSessionClosed = (closedCallSession) {};
 
-    Set<int> opponentsIds = {int.parse(_historyResponseModel.cubeId)};
+    Set<int> opponentsIds = {0};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
     _initCallSession(context, callSession);
   }
@@ -135,7 +126,6 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       // called when current session was closed
       logger.d("Prew, onSessionClosed");
       if (dataRef != null) {
-        callServiceStampEndVideoCall(callSession);
       }
     };
 
@@ -143,20 +133,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> callServiceStampStartVideoCall(P2PSession callSession) async {
-    StartVideoConferenceRequestModel requestModel = StartVideoConferenceRequestModel(
-        _userModel.profileResponseModel.cubeId, callSession.opponentsIds.first.toString());
-    var result = await _remoteRepository.startVideoCall(_userModel.getBearerToken(), requestModel);
-    result.whenWithResult((data) {
-      dataRef = data.data;
-      callSession.startCall();
-    }, (status) {});
-  }
-
-  Future<void> callServiceStampEndVideoCall(P2PSession callSession) async {
-    EndVideoConferenceRequestModel requestModel = EndVideoConferenceRequestModel(
-        _userModel.profileResponseModel.cubeId, callSession.opponentsIds.first.toString(), dataRef);
-    var result = await _remoteRepository.endVideoCall(_userModel.getBearerToken(), requestModel);
-    result.whenWithResult((data) {}, (status) {});
+    callSession.startCall();
   }
 
   Future<void> endCall() async {

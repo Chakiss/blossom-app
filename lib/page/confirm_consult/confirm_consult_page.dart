@@ -1,6 +1,4 @@
 import 'package:blossom_clinic/base/base_screen.dart';
-import 'package:blossom_clinic/model/date_reserve_model.dart';
-import 'package:blossom_clinic/model/response/doctor_info.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
@@ -9,22 +7,19 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
 class ConfirmConsultPage extends StatelessWidget {
   ConfirmConsultProvider _provider;
-  DoctorInfo _doctorInfo;
-  DateReserveModel _dateReserveModel;
 
-  ConfirmConsultPage(this._doctorInfo, this._dateReserveModel);
+  ConfirmConsultPage();
 
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.callServiceGetDoctorMinConsult(context, _doctorInfo.doctorId ?? 0, _dateReserveModel.date);
+    _provider.callServiceGetDoctorMinConsult(context);
     return BaseScreen(
       safeAreaBottom: true,
       child: Consumer<ConfirmConsultProvider>(
@@ -100,14 +95,14 @@ class ConfirmConsultPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     BlossomText(
-                      "ค่าใช้จ่ายในการปรึกษา ${value.doctorMin?.price ?? 0} บาท",
+                      "ค่าใช้จ่ายในการปรึกษา x บาท",
                       color: BlossomTheme.black,
                       size: 17,
                       fontWeight: FontWeight.bold,
                     ),
                     ButtonPinkGradient(
                       "ยืนยัน",
-                      value.doctorTimeModel != null && value.currentMinute != null,
+                      true,
                       () {
                         _goToCustomerPage(context);
                       },
@@ -129,10 +124,9 @@ class ConfirmConsultPage extends StatelessWidget {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => AddCustomerInformationProvider(
-              Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
+          create: (BuildContext context) => AddCustomerInformationProvider(),
         )
-      ], child: AddCustomerInformationPage(_doctorInfo, _provider.doctorMin, _provider.doctorTimeModel, _dateReserveModel));
+      ], child: AddCustomerInformationPage());
     }));
   }
 }

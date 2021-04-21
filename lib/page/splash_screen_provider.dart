@@ -9,7 +9,6 @@ import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreenProvider extends BaseProvider with ChangeNotifier {
@@ -30,7 +29,7 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
         pageBuilder: (context, animation, secondaryAnimation) {
           return MultiProvider(
             providers: [
-              ChangeNotifierProvider(create: (BuildContext context) => LoginProvider(Injector.appInstance.get())),
+              ChangeNotifierProvider(create: (BuildContext context) => LoginProvider()),
             ],
             child: LoginPage(),
           );
@@ -55,19 +54,19 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
               create: (BuildContext context) => MainProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
+              create: (BuildContext context) => DoctorProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) => HistoryProvider(),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),
+              create: (BuildContext context) => LoginProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(Injector.appInstance.get()),
+              create: (BuildContext context) => ProfileProvider(),
             ),
           ],
           child: MainPage(),

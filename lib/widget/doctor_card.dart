@@ -1,11 +1,11 @@
-import 'package:blossom_clinic/model/response/doctor_info.dart';
+import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:flutter/material.dart';
 
 import 'blossom_text.dart';
 
 class DoctorCard extends StatelessWidget {
 
-  DoctorInfo doctorInfo;
+  DoctorInfoModel doctorInfo;
   Function() onTab;
   DoctorCard(this.doctorInfo, this.onTab);
 
@@ -33,7 +33,7 @@ class DoctorCard extends StatelessWidget {
                     CircleAvatar(
                       radius: 40.0,
                       backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(doctorInfo.profileImg),
+                      backgroundImage: NetworkImage(doctorInfo.displayPhoto),
                     ),
                     Expanded(
                       flex: 1,
@@ -43,7 +43,7 @@ class DoctorCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BlossomText(
-                              doctorInfo?.profileTitle ?? "",
+                              doctorInfo?.displayName ?? "",
                               color: Color.fromRGBO(246, 107, 98, 1),
                               size: 15,
                               fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class DoctorCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             BlossomText(
-                              doctorInfo?.profileDesc ?? "",
+                              doctorInfo?.story ?? "",
                               maxLines: 3,
                               size: 12,
                             )
