@@ -8,9 +8,9 @@ class Result<T> {
       R Function(Map<String, String>) errorMap,
       ) {
     if (this is Success<T>) {
-      return result((this as Success<T>).data);
+      return result((this as Success<T>).data ?? null);
     } else if (this is Error) {
-      return errorMap((this as Error).errorMap);
+      return errorMap((this as Error).errorMap ?? {"message" : "exception"});
     } else {
       throw new Exception('Unhendled part, could be anything');
     }

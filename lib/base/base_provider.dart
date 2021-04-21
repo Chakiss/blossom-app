@@ -1,5 +1,7 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
+import 'package:blossom_clinic/widget/dialog/blossom_progress_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
@@ -17,5 +19,12 @@ class BaseProvider {
         gravity: ToastGravity.BOTTOM,
         backgroundColor: BlossomTheme.black,
         textColor: BlossomTheme.white);
+  }
+
+  void showProgressDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => BlossomProgressDialog()
+    );
   }
 }

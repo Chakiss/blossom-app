@@ -13,7 +13,7 @@ class ErrorHandle {
       builder: (BuildContext context) => CustomDialogOneButton(
         title: "เกิดข้อผิดพลาด",
         description: map["message"],
-        positiveButton: "ตกลก",
+        positiveButton: "ตกลง",
         positiveListener: () {
           Navigator.pop(context);
         },

@@ -9,6 +9,7 @@ import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -66,7 +67,7 @@ class WebViewPage extends StatelessWidget {
                   create: (BuildContext context) => HistoryProvider(),
                 ),
                 ChangeNotifierProvider(
-                  create: (BuildContext context) => LoginProvider(),
+                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),
                 ),
                 ChangeNotifierProvider(
                   create: (BuildContext context) => ProfileProvider(),

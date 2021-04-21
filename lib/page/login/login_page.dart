@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginProvider _provider;
-  var emailTextController = TextEditingController();
-  var passwordTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 TextFieldStrokeBlack(
                   "email@email.com",
-                  textController: emailTextController,
+                  textController: _emailTextController,
                 ),
                 SizedBox(
                   height: 10,
@@ -62,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 TextFieldStrokeBlack(
                   "",
-                  textController: passwordTextController,
+                  textController:_passwordTextController,
                   isPasswordType: true,
                 ),
                 SizedBox(
@@ -79,7 +79,13 @@ class LoginPage extends StatelessWidget {
                 ButtonPinkGradient(
                   "เข้าสู่ระบบ",
                   true,
-                  () {},
+                  () {
+                    _provider.login(
+                      context,
+                      _emailTextController.text,
+                      _passwordTextController.text
+                    );
+                  },
                   radius: 6,
                   height: 40,
                 ),
