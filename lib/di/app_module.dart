@@ -4,6 +4,7 @@ import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/repository/remote_repository_impl.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
+import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
 
@@ -23,5 +24,6 @@ class AppModule {
     });
     injector.registerSingleton<RemoteRepository>(
         () => RemoteRepositoryImpl(retrofitClient: injector.get<RetrofitClient>()));
+    injector.registerSingleton<UserData>(() => UserData());
   }
 }

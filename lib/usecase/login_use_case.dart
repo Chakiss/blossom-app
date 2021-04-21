@@ -3,20 +3,20 @@ import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginUseCase extends BaseUseCase<Map<String, String>, UserProfileModel> {
+class LoginUseCase extends BaseUseCase<Map<String, String>, UserCredential> {
 
   FirebaseAuth _firebaseAuth;
 
   LoginUseCase(this._firebaseAuth);
 
   @override
-  Future<Result<UserProfileModel>> execute(Map<String, String> parameter) async {
+  Future<Result<UserCredential>> execute(Map<String, String> parameter) async {
     try {
       UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: parameter["email"],
           password: parameter["password"]
       );
-      return Success(UserProfileModel());
+      return Success(userCredential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return Error({"message" : "อีเมล์หรือรหัสผ่านไม่ถูกต้อง"});

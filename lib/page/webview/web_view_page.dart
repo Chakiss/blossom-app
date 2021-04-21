@@ -67,7 +67,7 @@ class WebViewPage extends StatelessWidget {
                   create: (BuildContext context) => HistoryProvider(),
                 ),
                 ChangeNotifierProvider(
-                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get()),
+                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get()),
                 ),
                 ChangeNotifierProvider(
                   create: (BuildContext context) => ProfileProvider(),
