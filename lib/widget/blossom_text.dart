@@ -8,12 +8,12 @@ class BlossomText extends StatelessWidget {
   FontWeight fontWeight;
   String font;
   int maxLines;
-
+  TextAlign textAlign;
 
   static const String FONT_PROMPT = "Prompt";
   static const String FONT_ASAP = "Asap";
 
-  BlossomText(this.text, {this.color, this.size, this.fontWeight, this.font, this.maxLines});
+  BlossomText(this.text, {this.color, this.size, this.fontWeight, this.font, this.maxLines, this.textAlign = TextAlign.start});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,7 @@ class BlossomText extends StatelessWidget {
           color: color ?? BlossomTheme.black,
           fontWeight: fontWeight ?? FontWeight.normal,
           fontFamily: font ?? FONT_PROMPT),
+      textAlign: textAlign,
     );
   }
 }

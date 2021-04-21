@@ -45,6 +45,7 @@ class CustomDialogOneButton extends StatelessWidget {
               description,
               size: 16,
               color: BlossomTheme.black,
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 24.0),
             Align(

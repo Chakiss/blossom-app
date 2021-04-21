@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import '../../blossom_theme.dart';
 
 class RegisterSecondPage extends StatefulWidget {
-
   Map<String, String> _profileData;
 
   RegisterSecondPage(this._profileData);
@@ -21,7 +20,6 @@ class RegisterSecondPage extends StatefulWidget {
 }
 
 class _RegisterSecondPageState extends State<RegisterSecondPage> {
-
   RegisterSecondProvider _provider;
   var _acneTreatTextController = TextEditingController();
   var _drugAllergyTextController = TextEditingController();
@@ -127,7 +125,8 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   "ยืนยัน",
                   true,
                   () {
-                    _provider.callServiceRegister(context, widget._profileData, skinType, acneTypes, _acneTreatTextController.text, _drugAllergyTextController.text);
+                    _provider.callServiceRegister(context, widget._profileData, skinType, acneTypes,
+                        _acneTreatTextController.text, _drugAllergyTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,

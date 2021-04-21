@@ -8,7 +8,6 @@ import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
 
 class BaseProvider {
-
   Logger logger = Injector.appInstance.get();
   UserData userData = Injector.appInstance.get();
   ErrorHandle errorHandle = Injector.appInstance.get();
@@ -23,9 +22,6 @@ class BaseProvider {
   }
 
   void showProgressDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) => BlossomProgressDialog()
-    );
+    showDialog(barrierDismissible: false, context: context, builder: (BuildContext context) => BlossomProgressDialog());
   }
 }

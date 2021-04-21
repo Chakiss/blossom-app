@@ -22,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var phoneNumberTextController = TextEditingController();
   var nameTextController = TextEditingController();
   var lastNameTextController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate;
   final dateFormat = DateFormat("d MMM yyyy", "TH");
 
   @override
@@ -188,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onTap: () async {
                         final DateTime picked = await showDatePicker(
                             context: context,
-                            initialDate: selectedDate,
+                            initialDate: DateTime.now(),
                             // Refer step 1
                             firstDate: DateTime(1970),
                             lastDate: DateTime.now(),
@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           });
                       },
                       child: TextStrokeBlack(
-                        dateFormat.format(selectedDate),
+                        dateFormat.format(selectedDate == null ? DateTime.now() : selectedDate),
                       ),
                     ),
                     SizedBox(
@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             phoneNumberTextController.text,
                             nameTextController.text,
                             lastNameTextController.text,
-                            DateFormat("yyyy-MM-dd").format(selectedDate));
+                            selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(selectedDate));
                       },
                       width: 30 * MediaQuery.of(context).size.width / 100,
                       height: 40,
