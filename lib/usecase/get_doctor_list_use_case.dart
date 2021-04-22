@@ -1,12 +1,12 @@
 import 'dart:ffi';
 
-import 'package:blossom_clinic/base/base_use_case.dart';
+import 'package:blossom_clinic/base/base_async_use_case.dart';
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class GetDoctorListUseCase extends BaseUseCase<String, List<DoctorInfoModel>> {
+class GetDoctorListUseCase extends BaseAsyncUseCase<String, List<DoctorInfoModel>> {
 
   FirebaseFirestore _firestore;
 

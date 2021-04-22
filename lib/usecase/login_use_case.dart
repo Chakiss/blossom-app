@@ -1,9 +1,9 @@
-import 'package:blossom_clinic/base/base_use_case.dart';
+import 'package:blossom_clinic/base/base_async_use_case.dart';
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginUseCase extends BaseUseCase<Map<String, String>, UserCredential> {
+class LoginUseCase extends BaseAsyncUseCase<Map<String, String>, UserCredential> {
 
   FirebaseAuth _firebaseAuth;
 

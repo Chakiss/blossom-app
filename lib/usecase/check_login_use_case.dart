@@ -1,8 +1,8 @@
-import 'package:blossom_clinic/base/base_use_case.dart';
+import 'package:blossom_clinic/base/base_async_use_case.dart';
 import 'package:blossom_clinic/model/base/result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class CheckLoginUseCase extends BaseUseCase<Function(bool), bool> {
+class CheckLoginUseCase extends BaseAsyncUseCase<Function(bool), bool> {
 
   FirebaseAuth _firebaseAuth;
 

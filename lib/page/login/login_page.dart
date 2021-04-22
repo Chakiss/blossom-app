@@ -7,6 +7,7 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -99,7 +100,9 @@ class LoginPage extends StatelessWidget {
                     return MultiProvider(
                       providers: [
                         ChangeNotifierProvider(
-                          create: (BuildContext context) => RegisterProvider(),
+                          create: (BuildContext context) => RegisterProvider(
+                              Injector.appInstance.get(),
+                              Injector.appInstance.get()),
                         )
                       ],
                       child: RegisterPage(),
