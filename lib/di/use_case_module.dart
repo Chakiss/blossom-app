@@ -16,7 +16,7 @@ class UseCaseModule {
 
   void provide() {
     injector.registerDependency<RegisterUseCase>(() => RegisterUseCase(injector.get()));
-    injector.registerDependency<LoginUseCase>(() => LoginUseCase(FirebaseAuth.instance));
+    injector.registerDependency<LoginUseCase>(() => LoginUseCase(FirebaseAuth.instance, injector.get()));
     injector.registerDependency<CheckLoginUseCase>(() => CheckLoginUseCase(FirebaseAuth.instance));
     injector.registerDependency<GetUserProfileUseCase>(() => GetUserProfileUseCase(FirebaseFirestore.instance, injector.get()));
     injector.registerSingleton<GetDoctorListUseCase>(() => GetDoctorListUseCase(FirebaseFirestore.instance));
