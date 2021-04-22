@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/usecase/check_login_use_case.dart';
+import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_available_slots_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
@@ -8,6 +9,7 @@ import 'package:blossom_clinic/usecase/validate_email_use_case.dart';
 import 'package:blossom_clinic/usecase/validate_phone_number_use_case.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injector/injector.dart';
 
 class UseCaseModule {
@@ -24,5 +26,6 @@ class UseCaseModule {
     injector.registerDependency<ValidateEmailUseCase>(() => ValidateEmailUseCase());
     injector.registerDependency<ValidatePhoneNumberUseCase>(() => ValidatePhoneNumberUseCase());
     injector.registerDependency<GetDoctorAvailableSlotsUseCase>(() => GetDoctorAvailableSlotsUseCase(FirebaseFirestore.instance));
+    injector.registerDependency<DownloadFileFromCloudStorageUseCase>(() => DownloadFileFromCloudStorageUseCase(FirebaseStorage.instance, injector.get()));
   }
 }

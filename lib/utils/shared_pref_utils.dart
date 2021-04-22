@@ -1,19 +1,20 @@
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefUtils {
 
-  Future<void> saveUserModel(String userModelJson) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("UserModel", userModelJson);
+  SharedPreferences _sharedPref;
+
+  SharedPrefUtils(this._sharedPref);
+
+  static const String _keyMapFilePath = "keyMapFilePath";
+
+  Future<void> setMapFilePath(Map<String, String> mapFilePath) async {
+    await _sharedPref.setString(_keyMapFilePath, json.encode(mapFilePath) ?? "{}");
   }
 
-  Future<String> getUserModel() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("UserModel");
-  }
-
-  Future<void> clearUserModel() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("UserModel", "");
+  Map<String, String> getMapFilePath() {
+    final mapFilePathString = _sharedPref.getString(_keyMapFilePath) ?? "{  }";
+    return Map<String, String>.from(json.decode(mapFilePathString));
   }
 }

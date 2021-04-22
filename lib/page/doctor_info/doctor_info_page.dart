@@ -1,17 +1,21 @@
 
+import 'dart:io';
+
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
+import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case.dart';
+import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorInfoPage extends StatefulWidget {
@@ -26,13 +30,16 @@ class DoctorInfoPage extends StatefulWidget {
 class _DoctorInfoPageState extends State<DoctorInfoPage> {
 
   DoctorInfoProvider _provider;
-  String doctorProfileUrl = "";
+  String doctorProfilePath = "";
+  DownloadFileFromCloudStorageUseCase _downloadFileFromCloudStorageUseCase = Injector.appInstance.get();
+  UserData _userData = Injector.appInstance.get();
 
   @override
   void initState() {
     super.initState();
     _provider = Provider.of(context, listen: false);
     _provider.getDoctorAvailableSlots(context, widget._doctorInfoModel.doctorId);
+    doctorProfilePath = _userData.getImagePathFromLocal(widget._doctorInfoModel.displayPhoto);
     getDoctorProfileUrl();
   }
 
@@ -57,7 +64,7 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
                           CircleAvatar(
                             radius: 60.0,
                             backgroundColor: BlossomTheme.white,
-                            backgroundImage: NetworkImage(doctorProfileUrl),
+                            backgroundImage: FileImage(File(doctorProfilePath)),
                           ),
                           Expanded(
                             child: Container(
@@ -132,9 +139,16 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
   }
 
   Future<void> getDoctorProfileUrl() async {
-    doctorProfileUrl = await FirebaseStorage.instance.ref(widget._doctorInfoModel.displayPhoto).getDownloadURL();
-    setState(() {
+    if (doctorProfilePath.isEmpty) {
+      final result = await _downloadFileFromCloudStorageUseCase.execute(widget._doctorInfoModel.displayPhoto);
+      result.whenWithResult((filePath) {
+        setState(() {
+          doctorProfilePath = filePath;
+        });
+      }, (map) {
 
-    });
+
+      });
+    }
   }
 }

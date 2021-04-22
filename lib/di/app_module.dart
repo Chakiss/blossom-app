@@ -7,14 +7,16 @@ import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppModule {
   Injector injector;
+  SharedPreferences sharedPref;
 
-  AppModule(this.injector);
+  AppModule(this.injector, this.sharedPref);
 
   void provide() {
-    injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils());
+    injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils(sharedPref));
     injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
     injector.registerSingleton<Logger>(() => Logger());
     injector.registerDependency<RestClientManager>(() => RestClientManager());
@@ -24,6 +26,6 @@ class AppModule {
     });
     injector.registerSingleton<RemoteRepository>(
         () => RemoteRepositoryImpl(retrofitClient: injector.get<RetrofitClient>()));
-    injector.registerSingleton<UserData>(() => UserData());
+    injector.registerSingleton<UserData>(() => UserData(injector.get()));
   }
 }

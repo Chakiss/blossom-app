@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:blossom_clinic/model/doctor_info_model.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case.dart';
+import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 
 import 'blossom_text.dart';
 
@@ -16,11 +20,14 @@ class DoctorCard extends StatefulWidget {
 
 class _DoctorCardState extends State<DoctorCard> {
 
-  String doctorProfileUrl = "";
+  String doctorProfilePath = "";
+  DownloadFileFromCloudStorageUseCase _downloadFileFromCloudStorageUseCase = Injector.appInstance.get();
+  UserData _userData = Injector.appInstance.get();
 
   @override
   void initState() {
     super.initState();
+    doctorProfilePath = _userData.getImagePathFromLocal(widget.doctorInfo.displayPhoto);
     getDoctorProfileUrl();
   }
 
@@ -48,7 +55,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     CircleAvatar(
                       radius: 40.0,
                       backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(doctorProfileUrl),
+                      backgroundImage: FileImage(File(doctorProfilePath)),
                     ),
                     Expanded(
                       flex: 1,
@@ -94,9 +101,16 @@ class _DoctorCardState extends State<DoctorCard> {
   }
 
   Future<void> getDoctorProfileUrl() async {
-    doctorProfileUrl = await FirebaseStorage.instance.ref(widget.doctorInfo.displayPhoto).getDownloadURL();
-    setState(() {
+    if (doctorProfilePath.isEmpty) {
+      final result = await _downloadFileFromCloudStorageUseCase.execute(widget.doctorInfo.displayPhoto);
+      result.whenWithResult((filePath) {
+        setState(() {
+          doctorProfilePath = filePath;
+        });
+      }, (map) {
 
-    });
+
+      });
+    }
   }
 }

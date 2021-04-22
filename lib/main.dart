@@ -2,28 +2,28 @@ import 'package:blossom_clinic/blossom_clinic_application.dart';
 import 'package:blossom_clinic/di/app_module.dart';
 import 'package:blossom_clinic/di/use_case_module.dart';
 import 'package:blossom_clinic/utils/connecty_cube_properties.dart';
-import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerFirebaseCloudMessage();
   initializeDateFormatting("TH");
-  _provideDependency();
+  final sharedPref =  await SharedPreferences.getInstance();
+  _provideDependency(sharedPref);
   _initConnectycube();
   runApp(BlossomClinicApplication());
 }
 
-void _provideDependency() {
+void _provideDependency(SharedPreferences sharedPref) {
   final injector = Injector.appInstance;
-  AppModule(injector).provide();
+  AppModule(injector, sharedPref).provide();
   UseCaseModule(injector).provide();
 }
 
