@@ -1,25 +1,46 @@
 import 'package:blossom_clinic/base/base_screen.dart';
+import 'package:blossom_clinic/model/available_slot_model.dart';
+import 'package:blossom_clinic/model/slot_model.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
+import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
+import 'package:blossom_clinic/widget/consult_doctor_time_item.dart';
+import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
-class ConfirmConsultPage extends StatelessWidget {
-  ConfirmConsultProvider _provider;
+class ConfirmConsultPage extends StatefulWidget {
+  AvailableSlotModel _availableSlotModel;
 
-  ConfirmConsultPage();
+  ConfirmConsultPage(this._availableSlotModel);
+
+  @override
+  _ConfirmConsultPageState createState() => _ConfirmConsultPageState();
+}
+
+class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
+
+  ConfirmConsultProvider _provider;
+  List<SlotModel> _list;
+  String selectedTime = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _provider = Provider.of(context, listen: false);
+    _provider.timeSlotModel = widget._availableSlotModel.timeSlots[0];
+    _list = widget._availableSlotModel.timeSlots[0].slots;
+  }
 
   @override
   Widget build(BuildContext context) {
-    _provider = Provider.of(context, listen: false);
-    _provider.callServiceGetDoctorMinConsult(context);
     return BaseScreen(
       safeAreaBottom: true,
       child: Consumer<ConfirmConsultProvider>(
@@ -50,7 +71,17 @@ class ConfirmConsultPage extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      value.doctorDurationChoice != null ? value.doctorDurationChoice : BlossomProgressIndicator(),
+                      DoctorDurationChoice(
+                        widget._availableSlotModel.timeSlots,
+                        listener: (timeSlot) {
+                          value.timeSlotModel = timeSlot;
+                          setState(() {
+                            _provider.slotModel = null;
+                            selectedTime = "";
+                            _list = timeSlot.slots;
+                          });
+                        },
+                      ),
                       Container(
                         margin: EdgeInsets.only(top: 20, bottom: 20),
                         height: 1,
@@ -67,18 +98,16 @@ class ConfirmConsultPage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      value.dateReserveList != null
-                          ? GridView.count(
-                              shrinkWrap: true,
-                              primary: false,
-                              padding: const EdgeInsets.all(0.0),
-                              crossAxisSpacing: 10.0,
-                              crossAxisCount: 4,
-                              mainAxisSpacing: 10.0,
-                              childAspectRatio: 3 / 1.5,
-                              children: value.dateReserveList,
-                            )
-                          : BlossomProgressIndicator(),
+                      GridView.count(
+                        shrinkWrap: true,
+                        primary: false,
+                        padding: const EdgeInsets.all(0.0),
+                        crossAxisSpacing: 10.0,
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 10.0,
+                        childAspectRatio: 3 / 1.5,
+                        children: _generateDoctorTimeItem(),
+                      ),
                     ],
                   ),
                 )),
@@ -95,14 +124,14 @@ class ConfirmConsultPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     BlossomText(
-                      "ค่าใช้จ่ายในการปรึกษา x บาท",
+                      "ค่าใช้จ่ายในการปรึกษา ${_provider.timeSlotModel?.priceSale ?? 0} บาท",
                       color: BlossomTheme.black,
                       size: 17,
                       fontWeight: FontWeight.bold,
                     ),
                     ButtonPinkGradient(
                       "ยืนยัน",
-                      true,
+                      value.slotModel != null,
                       () {
                         _goToCustomerPage(context);
                       },
@@ -118,6 +147,17 @@ class ConfirmConsultPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  List<ConsultDoctorTimeItem> _generateDoctorTimeItem() {
+    return _list.map((e) => ConsultDoctorTimeItem(
+      e, (slot) {
+        setState(() {
+          _provider.slotModel = slot;
+          selectedTime = slot.title;
+        });
+    }, selectedTime: selectedTime,
+    )).toList();
   }
 
   void _goToCustomerPage(BuildContext context) {

@@ -127,7 +127,7 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
       return MultiProvider(providers: [
         ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider())
       ],
-      child: ConfirmConsultPage(),);
+      child: ConfirmConsultPage(_provider.availableSlotModel),);
     }));
   }
 
