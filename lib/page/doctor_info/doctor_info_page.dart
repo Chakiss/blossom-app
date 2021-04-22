@@ -25,18 +25,19 @@ class DoctorInfoPage extends StatefulWidget {
 
 class _DoctorInfoPageState extends State<DoctorInfoPage> {
 
-  DoctorInfoProvider _doctorInfoProvider;
+  DoctorInfoProvider _provider;
   String doctorProfileUrl = "";
 
   @override
   void initState() {
     super.initState();
+    _provider = Provider.of(context, listen: false);
+    _provider.getDoctorAvailableSlots(context, widget._doctorInfoModel.doctorId);
     getDoctorProfileUrl();
   }
 
   @override
   Widget build(BuildContext context) {
-    _doctorInfoProvider = Provider.of(context, listen: false);
     return BaseScreen(
       safeAreaBottom: false,
       child: Consumer<DoctorInfoProvider>(builder: (BuildContext context, DoctorInfoProvider value, Widget child) {
@@ -91,7 +92,7 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
                       Container(
                         height: 16,
                       ),
-                      value == null ? BlossomProgressIndicator() : GridView.count(
+                      value.list == null ? BlossomProgressIndicator() : GridView.count(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         primary: false,
@@ -100,7 +101,7 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
                         crossAxisCount: 4,
                         mainAxisSpacing: 28.0,
                         childAspectRatio: 3 / 1.5,
-                        children: [Container()],
+                        children: value.list,
                       ),
                     ],
                   ),
@@ -110,7 +111,7 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
             SizedBox(
               height: 20,
             ),
-            ButtonPinkGradient("ต่อไป", true ,() {
+            ButtonPinkGradient("ต่อไป", value.availableSlotModel != null ,() {
               _goToConfirmConsultPage(context);
             },
               width: MediaQuery.of(context).size.width,

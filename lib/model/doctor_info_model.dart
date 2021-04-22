@@ -9,9 +9,10 @@ class DoctorInfoModel {
   String phoneNumber;
   String story;
   DateTime updatedAt;
+  String doctorId;
 
   DoctorInfoModel({this.createdAt, this.displayName, this.displayPhoto, this.email, this.firstName, this.lastName,
-      this.phoneNumber, this.story, this.updatedAt});
+      this.phoneNumber, this.story, this.updatedAt, this.doctorId});
 
   factory DoctorInfoModel.fromJson(Map<String, dynamic> json) {
     return DoctorInfoModel(
@@ -24,6 +25,7 @@ class DoctorInfoModel {
       phoneNumber: json["phoneNumber"],
       story: json["story"],
       updatedAt: json["updatedAt"]?.toDate(),
+      doctorId: json["doctorId"]
     );
   }
 }
