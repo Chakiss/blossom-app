@@ -11,6 +11,7 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorInfoPage extends StatefulWidget {
@@ -127,8 +128,12 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
   void _goToConfirmConsultPage(BuildContext context) {
     Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) {
       return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (BuildContext context) => ConfirmConsultProvider())],
-        child: ConfirmConsultPage(_provider.availableSlotModel),
+        providers: [
+          ChangeNotifierProvider(
+              create: (BuildContext context) =>
+                  ConfirmConsultProvider(Injector.appInstance.get(), Injector.appInstance.get()))
+        ],
+        child: ConfirmConsultPage(widget._doctorInfoModel, _provider.availableSlotModel),
       );
     }));
   }

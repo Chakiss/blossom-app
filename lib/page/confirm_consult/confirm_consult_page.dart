@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/model/available_slot_model.dart';
+import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/model/slot_model.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
@@ -9,27 +10,30 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/consult_doctor_day_item.dart';
 import 'package:blossom_clinic/widget/consult_doctor_time_item.dart';
+import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/doctor_duration_choice.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
 class ConfirmConsultPage extends StatefulWidget {
+  DoctorInfoModel _doctorInfoModel;
   AvailableSlotModel _availableSlotModel;
 
-  ConfirmConsultPage(this._availableSlotModel);
+  ConfirmConsultPage(this._doctorInfoModel, this._availableSlotModel);
 
   @override
   _ConfirmConsultPageState createState() => _ConfirmConsultPageState();
 }
 
 class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
-
   ConfirmConsultProvider _provider;
   List<SlotModel> _list;
   String selectedTime = "";
+  DateFormat _dateFormat = DateFormat("d MMMM yyyy", "TH");
 
   @override
   void initState() {
@@ -133,7 +137,27 @@ class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
                       "ยืนยัน",
                       value.slotModel != null,
                       () {
-                        _goToCustomerPage(context);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext dialogContext) {
+                            return CustomDialogTwoButton(
+                                title: "ยืนยัน",
+                                description: "คุณยืนยันที่จะจองคิว ${widget._doctorInfoModel?.displayName ?? ""} " +
+                                    "ในวันที่ ${_dateFormat.format(widget._availableSlotModel.date)} " +
+                                    "เวลา ${_provider.slotModel?.title ?? ""} " +
+                                    "ระยะเวลา ${_provider.timeSlotModel.period} นาที " +
+                                    "มีค่าใช้จ่ายในการปรึกษาทั้งสิ้น ${_provider.timeSlotModel?.priceSale ?? 0} บาท",
+                                positiveButton: "ตกลง",
+                                positiveListener: () {
+                                  Navigator.pop(dialogContext);
+                                  _provider.callServiceCreateAppointmentOrder(context, widget._doctorInfoModel, widget._availableSlotModel);
+                                },
+                                negativeButton: "ยกเลิก",
+                                negativeListener: () {
+                                  Navigator.pop(context);
+                                });
+                          },
+                        );
                       },
                       height: 40,
                       radius: 4,
@@ -150,23 +174,17 @@ class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
   }
 
   List<ConsultDoctorTimeItem> _generateDoctorTimeItem() {
-    return _list.map((e) => ConsultDoctorTimeItem(
-      e, (slot) {
-        setState(() {
-          _provider.slotModel = slot;
-          selectedTime = slot.title;
-        });
-    }, selectedTime: selectedTime,
-    )).toList();
-  }
-
-  void _goToCustomerPage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return MultiProvider(providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => AddCustomerInformationProvider(),
-        )
-      ], child: AddCustomerInformationPage());
-    }));
+    return _list
+        .map((e) => ConsultDoctorTimeItem(
+              e,
+              (slot) {
+                setState(() {
+                  _provider.slotModel = slot;
+                  selectedTime = slot.title;
+                });
+              },
+              selectedTime: selectedTime,
+            ))
+        .toList();
   }
 }

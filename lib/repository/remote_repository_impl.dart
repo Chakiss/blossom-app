@@ -1,10 +1,12 @@
+import 'package:blossom_clinic/model/base/base_request_model.dart';
+import 'package:blossom_clinic/model/request/create_appointment_order_model.dart';
 import 'package:blossom_clinic/model/request/create_new_application_user_request_model.dart';
+import 'package:blossom_clinic/model/response/create_appointment_order_response_model.dart';
 import 'package:blossom_clinic/model/response/register_response_model.dart';
 import 'package:blossom_clinic/network/retrofit_client.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 
 class RemoteRepositoryImpl extends RemoteRepository {
-
   final RetrofitClient retrofitClient;
 
   RemoteRepositoryImpl({this.retrofitClient});
@@ -14,4 +16,8 @@ class RemoteRepositoryImpl extends RemoteRepository {
     return await retrofitClient.createNewApplicationUser(requestModel);
   }
 
+  @override
+  Future<CreateAppointmentOrderResponseModel> createAppointmentOrder(BaseRequestModel<CreateAppointmentOrderModel> requestModel) async {
+    return await retrofitClient.createAppointmentOrder(requestModel);
+  }
 }

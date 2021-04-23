@@ -24,7 +24,7 @@ class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _generateConsultDoctorDayList(List<AvailableSlotModel> data) {
-    final dateFormat = DateFormat("dd MMM");
+    final dateFormat = DateFormat("dd MMM", "TH");
     list = data
         .map((e) => ConsultDoctorDayItem(
               e,

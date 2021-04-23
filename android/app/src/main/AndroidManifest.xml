@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.blossomclinic.app">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -15,7 +16,9 @@
    <application
         android:label="Blossom Clinic"
         android:icon="@mipmap/ic_launcher"
-       android:requestLegacyExternalStorage="true">
+       android:usesCleartextTraffic="true"
+       android:requestLegacyExternalStorage="true"
+       tools:targetApi="m">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

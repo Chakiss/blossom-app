@@ -23,6 +23,7 @@ class GetDoctorAvailableSlotsUseCase extends BaseAsyncUseCase<String, List<Avail
           .get();
       final list = snapshot.docs
           .map((e) => AvailableSlotModel(
+              id: e.id,
               createdAt: e.data()["createdAt"].toDate(),
               date: e.data()["date"].toDate(),
               slotType: e.data()["slotType"],

@@ -125,4 +125,26 @@ class AddCustomerInformationPage extends StatelessWidget {
       ],
     );
   }
+
+  // showDialog(
+  // context: context,
+  // builder: (BuildContext dialogContext) {
+  // return CustomDialogTwoButton(
+  // title: "ยืนยัน",
+  // description: "คุณยืนยันที่จะจองคิว ${widget._doctorInfoModel?.displayName ?? ""} " +
+  // "ในวันที่ ${_dateFormat.format(widget._availableSlotModel.date)} " +
+  // "เวลา ${_provider.slotModel?.title ?? ""} " +
+  // "ระยะเวลา ${_provider.timeSlotModel.period} นาที " +
+  // "มีค่าใช้จ่ายในการปรึกษาทั้งสิ้น ${_provider.timeSlotModel?.priceSale ?? 0} บาท",
+  // positiveButton: "ตกลง",
+  // positiveListener: () {
+  // Navigator.pop(dialogContext);
+  // _provider.callServiceCreateAppointmentOrder(context);
+  // },
+  // negativeButton: "ยกเลิก",
+  // negativeListener: () {
+  // Navigator.pop(context);
+  // });
+  // },
+  // );
 }

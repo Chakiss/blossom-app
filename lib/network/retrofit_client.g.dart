@@ -36,4 +36,25 @@ class _RetrofitClient implements RetrofitClient {
     final value = RegisterResponseModel.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<CreateAppointmentOrderResponseModel> createAppointmentOrder(
+      requestModel) async {
+    ArgumentError.checkNotNull(requestModel, 'requestModel');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/orders-createAppointmentOrder',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = CreateAppointmentOrderResponseModel.fromJson(_result.data);
+    return value;
+  }
 }
