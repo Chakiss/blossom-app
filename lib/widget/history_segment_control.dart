@@ -23,7 +23,7 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
         mainAxisSize: MainAxisSize.min,
         children: [
           HistorySegmentItem(
-            "รายการ",
+            "การนัดหมาย",
             selectedPosition == 0,
             () {
               widget.listener.call(0);
@@ -36,12 +36,23 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
             radiusBottomLeft: 6,
           ),
           HistorySegmentItem(
-            "ประวัติ",
+            "การจ่ายเงิน",
             selectedPosition == 1,
             () {
               widget.listener.call(1);
               setState(() {
                 selectedPosition = 1;
+              });
+            },
+            width: 30 * MediaQuery.of(context).size.width / 100,
+          ),
+          HistorySegmentItem(
+            "ใบสั่งยา",
+            selectedPosition == 3,
+                () {
+              widget.listener.call(3);
+              setState(() {
+                selectedPosition = 3;
               });
             },
             width: 30 * MediaQuery.of(context).size.width / 100,

@@ -77,7 +77,7 @@ class _BottomTabState extends State<BottomTab> {
                     "assets/ic_history.svg",
                     color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black,
                   ),
-                  BlossomText("ประวัติ", color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black)
+                  BlossomText("รายการ", color: selectedPosition == 1 ? BlossomTheme.colorPrimary : BlossomTheme.black)
                 ],
               ),
             )),

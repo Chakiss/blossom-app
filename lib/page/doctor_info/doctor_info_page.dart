@@ -52,7 +52,7 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
                       children: [
                         Row(
                           children: [
-                            BlossomCircleAvatar(widget._doctorInfoModel.displayPhoto, 60),
+                            BlossomCircleAvatar(60, fileStorePath: widget._doctorInfoModel.displayPhoto,),
                             Expanded(
                               child: Container(
                                 margin: EdgeInsets.only(left: 16),

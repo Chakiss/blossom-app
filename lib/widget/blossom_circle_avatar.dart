@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 
 class BlossomCircleAvatar extends StatefulWidget {
-  String _fileStorePath;
+  String fileStorePath;
+  String imageKey;
   double _radius;
 
-  BlossomCircleAvatar(this._fileStorePath, this._radius);
+  BlossomCircleAvatar(this._radius, {this.fileStorePath, this.imageKey});
 
   @override
   _BlossomCircleAvatarState createState() => _BlossomCircleAvatarState();
@@ -23,8 +24,13 @@ class _BlossomCircleAvatarState extends State<BlossomCircleAvatar> {
   @override
   void initState() {
     super.initState();
-    imagePath = _userData.getImagePathFromLocal(widget._fileStorePath);
-    _downloadFileFromCloudStorage();
+    if (widget.imageKey != null) {
+      imagePath = _getLocalUrlPath();
+    }
+    if (widget.fileStorePath != null) {
+      imagePath = _userData.getImagePathFromLocal(widget.fileStorePath);
+      _downloadFileFromCloudStorage();
+    }
   }
 
   @override
@@ -36,9 +42,14 @@ class _BlossomCircleAvatarState extends State<BlossomCircleAvatar> {
     );
   }
 
+  String _getLocalUrlPath() {
+    final map = _userData.getMapFilePath().entries.firstWhere((element) => element.key.contains(widget.imageKey));
+    return map.value;
+  }
+
   Future<void> _downloadFileFromCloudStorage() async {
     if (imagePath.isEmpty) {
-      final result = await _downloadFileFromCloudStorageUseCase.execute(widget._fileStorePath);
+      final result = await _downloadFileFromCloudStorageUseCase.execute(widget.fileStorePath);
       result.whenWithResult((filePath) {
         setState(() {
           imagePath = filePath;

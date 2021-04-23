@@ -9,6 +9,10 @@ class UserData {
 
   UserProfileModel userProfileModel;
 
+  Map<String, String> getMapFilePath() {
+    return _sharedPrefUtils.getMapFilePath();
+  }
+
   String getImagePathFromLocal(String imageKey) {
     return _sharedPrefUtils.getMapFilePath()[imageKey] ?? "";
   }

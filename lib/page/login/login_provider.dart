@@ -46,7 +46,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => HistoryProvider(),
+              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),

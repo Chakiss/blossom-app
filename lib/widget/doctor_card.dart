@@ -43,7 +43,7 @@ class _DoctorCardState extends State<DoctorCard> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BlossomCircleAvatar(widget.doctorInfo.displayPhoto, 40),
+                    BlossomCircleAvatar(40, fileStorePath: widget.doctorInfo.displayPhoto,),
                     Expanded(
                       flex: 1,
                       child: Container(
