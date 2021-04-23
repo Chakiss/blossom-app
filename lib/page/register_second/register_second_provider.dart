@@ -4,6 +4,7 @@ import 'package:blossom_clinic/model/request/create_new_application_user_request
 import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/usecase/register_use_case.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
   void goToLoginPage(BuildContext context) {
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get()),)
+        ChangeNotifierProvider(create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),)
       ],
         child: LoginPage(),);
     }), (route) => false);
