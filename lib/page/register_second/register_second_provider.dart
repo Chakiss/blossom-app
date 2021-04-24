@@ -10,20 +10,18 @@ import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
-
   RegisterUseCase _registerUseCase;
 
   RegisterSecondProvider(this._registerUseCase);
 
   Future<void> callServiceRegister(BuildContext context, Map<String, String> profileData, String skinType,
       String acneTypes, String acneTreatText, String drugAllergyText) async {
-
     if (skinType?.isEmpty ?? true) {
-      errorHandle.proceed(context, {"message" : "กรุณาเลือกลักษณะผิว"});
+      errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะผิว"});
       return;
     }
     if (acneTypes?.isEmpty ?? true) {
-      errorHandle.proceed(context, {"message" : "กรุณาเลือกลักษณะสิว"});
+      errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะสิว"});
       return;
     }
 
@@ -54,10 +52,15 @@ class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
 
   void goToLoginPage(BuildContext context) {
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) {
-      return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),)
-      ],
-        child: LoginPage(),);
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(),
+                Injector.appInstance.get(), FirebaseAuth.instance),
+          )
+        ],
+        child: LoginPage(),
+      );
     }), (route) => false);
   }
 }

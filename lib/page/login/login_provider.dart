@@ -1,5 +1,7 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
+import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_page.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
@@ -7,6 +9,7 @@ import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/page/service/service_provider.dart';
+import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,9 +20,10 @@ import 'package:provider/provider.dart';
 class LoginProvider extends BaseProvider with ChangeNotifier {
   LoginUseCase _loginUseCase;
   GetUserProfileUseCase _getUserProfileUseCase;
+  GetDoctorProfileUseCase _getDoctorProfileUseCase;
   FirebaseAuth _firebaseAuth;
 
-  LoginProvider(this._loginUseCase, this._getUserProfileUseCase, this._firebaseAuth);
+  LoginProvider(this._loginUseCase, this._getUserProfileUseCase, this._getDoctorProfileUseCase, this._firebaseAuth);
 
   Future<void> login(BuildContext context, String email, String password) async {
     showProgressDialog(context);
@@ -27,14 +31,21 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
     result.whenWithResult((data) async {
       _firebaseAuth.currentUser.getIdTokenResult().then((idTokenResult) async {
         if (idTokenResult.claims["role"] != "patient") {
+          final getDoctorProfileResult = await _getDoctorProfileUseCase.execute(data.user.uid);
           Navigator.pop(context);
-          _goToDoctorMainPage(context);
+          getDoctorProfileResult.whenWithResult((userProfile) {
+            _goToDoctorMainPage(context);
+          }, (map) async {
+            await _firebaseAuth.signOut();
+            errorHandle.proceed(context, map);
+          });
         } else {
           final getProfileResult = await _getUserProfileUseCase.execute(data.user.uid);
           Navigator.pop(context);
           getProfileResult.whenWithResult((data) {
             _goToMainPage(context);
-          }, (map) {
+          }, (map) async {
+            await _firebaseAuth.signOut();
             errorHandle.proceed(context, map);
           });
         }
@@ -78,6 +89,12 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorMainProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorHomeProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorHistoryProvider(),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),

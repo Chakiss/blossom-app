@@ -1,5 +1,7 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
+import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
@@ -7,6 +9,7 @@ import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/page/service/service_provider.dart';
+import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +22,9 @@ import 'doctor_main/doctor_main_provider.dart';
 class SplashScreenProvider extends BaseProvider with ChangeNotifier {
   FirebaseAuth _firebaseAuth;
   GetUserProfileUseCase _getUserProfileUseCase;
+  GetDoctorProfileUseCase _getDoctorProfileUseCase;
 
-  SplashScreenProvider(this._firebaseAuth, this._getUserProfileUseCase);
+  SplashScreenProvider(this._firebaseAuth, this._getUserProfileUseCase, this._getDoctorProfileUseCase);
 
   Future<void> checkLogin(BuildContext context) async {
     _firebaseAuth.authStateChanges().listen((event) async {
@@ -29,7 +33,13 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
       } else {
         _firebaseAuth.currentUser.getIdTokenResult().then((idTokenResult) async {
           if (idTokenResult.claims["role"] != "patient") {
-            _goToDoctorMainPage(context);
+            final result = await _getDoctorProfileUseCase.execute(event.uid);
+            result.whenWithResult((userProfile) {
+              _goToDoctorMainPage(context);
+            }, (map) async {
+              await FirebaseAuth.instance.signOut();
+              _goToLoginPage(context);
+            });
           } else {
             final result = await _getUserProfileUseCase.execute(event.uid);
             result.whenWithResult((userProfile) {
@@ -56,7 +66,7 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
                 providers: [
                   ChangeNotifierProvider(
                       create: (BuildContext context) =>
-                          LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance)),
+                          LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance)),
                 ],
                 child: LoginPage(),
               );
@@ -91,7 +101,7 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) =>
-                  LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),
+                  LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ProfileProvider(),
@@ -110,6 +120,12 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorMainProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorHomeProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorHistoryProvider(),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),

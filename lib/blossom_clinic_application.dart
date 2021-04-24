@@ -19,7 +19,7 @@ class BlossomClinicApplication extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (BuildContext context) {
-              return SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get());
+              return SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get(), Injector.appInstance.get());
             },
           )
         ],

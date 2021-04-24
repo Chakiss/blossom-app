@@ -17,7 +17,7 @@ class ProfileProvider extends BaseProvider with ChangeNotifier {
   void goToSplashScreen(BuildContext context) {
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) {
       return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get()),)
+        ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get(), Injector.appInstance.get()),)
       ],
         child: SplashScreenPage(),);
     }), (route) => false);

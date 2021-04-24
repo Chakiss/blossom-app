@@ -4,6 +4,7 @@ import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case
 import 'package:blossom_clinic/usecase/get_customer_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_available_slots_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_list_use_case.dart';
+import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/usecase/register_use_case.dart';
@@ -32,5 +33,6 @@ class UseCaseModule {
     injector.registerDependency<DownloadFileFromCloudStorageUseCase>(() => DownloadFileFromCloudStorageUseCase(FirebaseStorage.instance, injector.get()));
     injector.registerDependency<CreateAppointmentOrderUseCase>(() => CreateAppointmentOrderUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
+    injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
   }
 }
