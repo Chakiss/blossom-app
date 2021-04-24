@@ -1,9 +1,8 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
-import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
-import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
+import 'package:blossom_clinic/utils/route_utils.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -11,7 +10,6 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class DoctorInfoPage extends StatefulWidget {
@@ -52,7 +50,10 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
                       children: [
                         Row(
                           children: [
-                            BlossomCircleAvatar(60, fileStorePath: widget._doctorInfoModel.displayPhoto,),
+                            BlossomCircleAvatar(
+                              60,
+                              fileStorePath: widget._doctorInfoModel.displayPhoto,
+                            ),
                             Expanded(
                               child: Container(
                                 margin: EdgeInsets.only(left: 16),
@@ -126,15 +127,6 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
   }
 
   void _goToConfirmConsultPage(BuildContext context) {
-    Navigator.push(context, CupertinoPageRoute(builder: (BuildContext context) {
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  ConfirmConsultProvider(Injector.appInstance.get(), Injector.appInstance.get()))
-        ],
-        child: ConfirmConsultPage(widget._doctorInfoModel, _provider.availableSlotModel),
-      );
-    }));
+    Navigator.push(context, RouteUtils.routeConfirmConsult(widget._doctorInfoModel, _provider.availableSlotModel));
   }
 }

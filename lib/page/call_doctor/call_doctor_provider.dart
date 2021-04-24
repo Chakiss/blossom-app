@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';

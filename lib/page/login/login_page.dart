@@ -1,13 +1,11 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
-import 'package:blossom_clinic/page/register/register_page.dart';
-import 'package:blossom_clinic/page/register/register_provider.dart';
+import 'package:blossom_clinic/utils/route_utils.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -91,17 +89,7 @@ class LoginPage extends StatelessWidget {
                   height: 1,
                 ),
                 ButtonPinkGradient("ลงทะเบียนใหม่", true, () {
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                    return MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (BuildContext context) =>
-                              RegisterProvider(Injector.appInstance.get(), Injector.appInstance.get()),
-                        )
-                      ],
-                      child: RegisterPage(),
-                    );
-                  }));
+                  Navigator.push(context, RouteUtils.routeRegister());
                 }, radius: 6, height: 40),
               ],
             ),

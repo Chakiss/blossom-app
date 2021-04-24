@@ -1,4 +1,9 @@
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/model/available_slot_model.dart';
+import 'package:blossom_clinic/model/customer_order_model.dart';
+import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
+import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_page.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
 import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
@@ -10,104 +15,166 @@ import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
+import 'package:blossom_clinic/page/omise/omise_page.dart';
+import 'package:blossom_clinic/page/omise/omise_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
+import 'package:blossom_clinic/page/register/register_page.dart';
+import 'package:blossom_clinic/page/register/register_provider.dart';
+import 'package:blossom_clinic/page/register_second/register_second_page.dart';
+import 'package:blossom_clinic/page/register_second/register_second_provider.dart';
 import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:blossom_clinic/page/splash_screen_page.dart';
 import 'package:blossom_clinic/page/splash_screen_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
-class RouteUtils {
+import 'no_animation_page_route.dart';
 
+class RouteUtils {
   static Route routeSplashScreen() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (BuildContext context) => SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get(), Injector.appInstance.get()),)
-    ],
-      child: SplashScreenPage(),);
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) =>
+                  SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get(), Injector.appInstance.get()),
+            )
+          ],
+          child: SplashScreenPage(),
+        );
+      });
+
+  static Route routeRegister() => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) =>
+              RegisterProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+        )
+      ],
+      child: RegisterPage(),
+    );
+  });
+
+  static Route routeRegisterSecondPage(Map<String, String> map) => NoAnimationPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => RegisterSecondProvider(Injector.appInstance.get()),
+        )
+      ],
+      child: RegisterSecondPage(map),
+    );
   });
 
   static Route routeLoginPage() => PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) {
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance)),
-        ],
-        child: LoginPage(),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get(),
+                      Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance)),
+            ],
+            child: LoginPage(),
+          );
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+        transitionDuration: Duration(milliseconds: 1000),
       );
-    },
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(
-        opacity: animation,
-        child: child,
-      );
-    },
-    transitionDuration: Duration(milliseconds: 1000),
-  );
 
   static Route routeMainPage() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => MainProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => ServiceProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) =>
-              LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => ProfileProvider(),
-        ),
-      ],
-      child: MainPage(),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => MainProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ServiceProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(),
+                  Injector.appInstance.get(), FirebaseAuth.instance),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ProfileProvider(),
+            ),
+          ],
+          child: MainPage(),
+        );
+      });
+
+  static Route routeConfirmConsult(DoctorInfoModel doctorInfoModel, AvailableSlotModel availableSlotModel) =>
+      CupertinoPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+                create: (BuildContext context) =>
+                    ConfirmConsultProvider(Injector.appInstance.get(), Injector.appInstance.get()))
+          ],
+          child: ConfirmConsultPage(doctorInfoModel, availableSlotModel),
+        );
+      });
+
+  static Route routeOmisePage(CustomerOrderModel customerOrderModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => OmiseProvider(Injector.appInstance.get()),
+            )
+          ],
+          child: OmisePage(customerOrderModel),
+        );
+      });
+
+  ////////// Doctor //////////
 
   static Route routeDoctorMainPage() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => DoctorMainProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => DoctorHomeProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => DoctorHistoryProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => ServiceProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => ProfileProvider(),
-        ),
-      ],
-      child: DoctorMainPage(),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorMainProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorHomeProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => DoctorHistoryProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ServiceProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => ProfileProvider(),
+            ),
+          ],
+          child: DoctorMainPage(),
+        );
+      });
 
   static Route routeDoctorDiagnosePage() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return DoctorDiagnoseProvider();
-          },
-        )
-      ],
-      child: DoctorDiagnosePage(),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return DoctorDiagnoseProvider();
+              },
+            )
+          ],
+          child: DoctorDiagnosePage(),
+        );
+      });
 }

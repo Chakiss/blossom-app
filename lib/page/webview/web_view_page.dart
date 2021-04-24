@@ -1,17 +1,8 @@
 import 'dart:io';
 
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/doctor/doctor_provider.dart';
-import 'package:blossom_clinic/page/history/history_provider.dart';
-import 'package:blossom_clinic/page/login/login_provider.dart';
-import 'package:blossom_clinic/page/main/main_page.dart';
-import 'package:blossom_clinic/page/main/main_provider.dart';
-import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
-import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatelessWidget {
@@ -38,9 +29,6 @@ class WebViewPage extends StatelessWidget {
             ),
             Expanded(
                 child: WebView(
-              javascriptChannels: <JavascriptChannel>{
-                _doneJavascriptChannel(context),
-              },
               javascriptMode: JavascriptMode.unrestricted,
               initialUrl: link,
             ))
@@ -48,35 +36,5 @@ class WebViewPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  JavascriptChannel _doneJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-        name: 'Blossom',
-        onMessageReceived: (JavascriptMessage message) {
-          // Navigator.of(context).pushAndRemoveUntil(, (route) => false);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) {
-            return MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => MainProvider(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => ProfileProvider(),
-                ),
-              ],
-              child: MainPage(),
-            );
-          }), (route) => false);
-        });
   }
 }

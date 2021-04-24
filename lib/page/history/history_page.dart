@@ -1,13 +1,11 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
-import 'package:blossom_clinic/page/omise/omise_page.dart';
-import 'package:blossom_clinic/page/omise/omise_provider.dart';
+import 'package:blossom_clinic/utils/route_utils.dart';
 import 'package:blossom_clinic/widget/customer_order_item.dart';
 import 'package:blossom_clinic/widget/history_segment_control.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -65,11 +63,6 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Future<void> _goToOmisePage(BuildContext context, CustomerOrderModel customerOrder) async {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => OmiseProvider(Injector.appInstance.get()),)
-      ],
-      child: OmisePage(customerOrder),);
-    }));
+    Navigator.push(context, RouteUtils.routeOmisePage(customerOrder));
   }
 }
