@@ -46,6 +46,7 @@ class LoginPage extends StatelessWidget {
                 TextFieldStrokeBlack(
                   "email@email.com",
                   textController: _emailTextController,
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: 10,
@@ -61,11 +62,9 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 6,
                 ),
-                TextFieldStrokeBlack(
-                  "",
-                  textController:_passwordTextController,
-                  isPasswordType: true,
-                ),
+                TextFieldStrokeBlack("",
+                    textController: _passwordTextController,
+                    isPasswordType: true,),
                 SizedBox(
                   height: 6,
                 ),
@@ -81,11 +80,7 @@ class LoginPage extends StatelessWidget {
                   "เข้าสู่ระบบ",
                   true,
                   () {
-                    _provider.login(
-                      context,
-                      _emailTextController.text,
-                      _passwordTextController.text
-                    );
+                    _provider.login(context, _emailTextController.text, _passwordTextController.text);
                   },
                   radius: 6,
                   height: 40,
@@ -100,9 +95,8 @@ class LoginPage extends StatelessWidget {
                     return MultiProvider(
                       providers: [
                         ChangeNotifierProvider(
-                          create: (BuildContext context) => RegisterProvider(
-                              Injector.appInstance.get(),
-                              Injector.appInstance.get()),
+                          create: (BuildContext context) =>
+                              RegisterProvider(Injector.appInstance.get(), Injector.appInstance.get()),
                         )
                       ],
                       child: RegisterPage(),

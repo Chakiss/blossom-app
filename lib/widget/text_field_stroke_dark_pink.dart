@@ -2,7 +2,6 @@ import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldStrokeDarkPink extends StatelessWidget {
-
   String hint;
   double width;
   double height;
@@ -12,8 +11,18 @@ class TextFieldStrokeDarkPink extends StatelessWidget {
   int maxLength;
   TextEditingController textController;
   Function(String) onChange;
+  TextInputType keyboardType;
 
-  TextFieldStrokeDarkPink(this.hint, {this.width, this.height, this.paddingStart, this.paddingEnd, this.textAlign, this.maxLength, this.textController, this.onChange});
+  TextFieldStrokeDarkPink(this.hint,
+      {this.width,
+      this.height,
+      this.paddingStart,
+      this.paddingEnd,
+      this.textAlign,
+      this.maxLength,
+      this.textController,
+      this.onChange,
+      this.keyboardType});
 
   String getText() => textController.text;
 
@@ -38,12 +47,12 @@ class TextFieldStrokeDarkPink extends StatelessWidget {
                     child: Container(
                       child: Center(
                         child: TextField(
-                          onChanged: onChange ?? (value) {
-
-                          },
+                            onChanged: onChange ?? (value) {},
                             controller: textController,
-                            buildCounter: (BuildContext context, { int currentLength, int maxLength, bool isFocused }) => null,
+                            buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) =>
+                                null,
                             maxLength: maxLength ?? 50,
+                            keyboardType: keyboardType,
                             style: TextStyle(color: BlossomTheme.darkPink, fontFamily: FONT_PROMPT, fontSize: 15),
                             textAlign: textAlign ?? TextAlign.left,
                             decoration: InputDecoration(

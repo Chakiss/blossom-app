@@ -12,6 +12,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
   int maxLength;
   bool isPasswordType;
   Function(String) onChange;
+  TextInputType keyboardType;
   bool enabled = true;
 
   TextFieldStrokeBlack(this.hint,
@@ -24,6 +25,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
       this.onChange,
       this.isPasswordType,
       this.textController,
+      this.keyboardType,
       this.enabled = true});
 
   String getText() => textController.text;
@@ -48,6 +50,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
           child: Container(
             child: Center(
               child: TextField(
+                  keyboardType: keyboardType,
                   enabled: enabled ?? true,
                   obscureText: isPasswordType ?? false,
                   onChanged: onChange ?? (value) {},

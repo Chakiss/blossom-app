@@ -167,6 +167,7 @@ class _DayAndCvvSectionState extends State<DayAndCvvSection> {
                           paddingEnd: 4,
                           textAlign: TextAlign.center,
                           maxLength: 3,
+                          keyboardType: TextInputType.number,
                           onChange: (value) {
                             cvvText = value;
                             widget.onDataChange("$monthText $yearText $cvvText");
