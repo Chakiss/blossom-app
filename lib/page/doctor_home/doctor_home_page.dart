@@ -42,14 +42,6 @@ class DoctorHomePage extends StatelessWidget {
                     "${_userData.doctorInfoModel?.firstName} ${_userData.doctorInfoModel?.lastName}",
                     size: 20,
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  BlossomText(
-                    "${_userData.doctorInfoModel?.story}",
-                    size: 14,
-                    textAlign: TextAlign.center,
-                  )
                 ],
               ),
             ),

@@ -8,8 +8,10 @@ class TextFieldStrokeBlack extends StatelessWidget {
   double paddingStart;
   double paddingEnd;
   TextAlign textAlign;
+  TextAlignVertical textAlignVertical;
   TextEditingController textController;
   int maxLength;
+  int maxLines;
   bool isPasswordType;
   Function(String) onChange;
   TextInputType keyboardType;
@@ -21,11 +23,13 @@ class TextFieldStrokeBlack extends StatelessWidget {
       this.paddingStart,
       this.paddingEnd,
       this.textAlign,
+      this.textAlignVertical,
       this.maxLength,
       this.onChange,
       this.isPasswordType,
       this.textController,
       this.keyboardType,
+      this.maxLines,
       this.enabled = true});
 
   String getText() => textController.text;
@@ -48,23 +52,24 @@ class TextFieldStrokeBlack extends StatelessWidget {
               ),
               borderRadius: BorderRadius.all(Radius.circular(5))),
           child: Container(
-            child: Center(
-              child: TextField(
-                  keyboardType: keyboardType,
-                  enabled: enabled ?? true,
-                  obscureText: isPasswordType ?? false,
-                  onChanged: onChange ?? (value) {},
-                  controller: textController ?? TextEditingController(),
-                  buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
-                  maxLength: maxLength ?? 50,
-                  style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
-                  textAlign: textAlign ?? TextAlign.left,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: hint,
-                      hintStyle: TextStyle(color: BlossomTheme.gray))),
-            ),
+            child: TextField(
+                cursorColor: BlossomTheme.darkPink,
+                keyboardType: keyboardType,
+                enabled: enabled ?? true,
+                obscureText: isPasswordType ?? false,
+                onChanged: onChange ?? (value) {},
+                controller: textController ?? TextEditingController(),
+                buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
+                maxLength: maxLength,
+                style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
+                textAlign: textAlign ?? TextAlign.left,
+                maxLines: maxLines ?? 1,
+                textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    hintText: hint,
+                    hintStyle: TextStyle(color: BlossomTheme.gray))),
           )),
     );
   }
