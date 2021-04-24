@@ -1,0 +1,100 @@
+import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
+import 'package:blossom_clinic/widget/acne_look_multi_choice.dart';
+import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/button_pink_gradient.dart';
+import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
+import 'package:blossom_clinic/widget/toolbar.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../blossom_theme.dart';
+
+class DoctorDiagnosePage extends StatefulWidget {
+  @override
+  _DoctorDiagnosePageState createState() => _DoctorDiagnosePageState();
+}
+
+class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
+
+  DoctorDiagnoseProvider _provider;
+
+  @override
+  void initState() {
+    super.initState();
+    _provider = Provider.of(context, listen: false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: BlossomTheme.white,
+      body: Column(children: [
+        Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 100 * MediaQuery.of(context).size.width / 100,
+                child: Image.asset("assets/nav_bar.png"),
+              ),
+            ),
+            SafeArea(child: Toolbar(title: "วินิจฉัย",)),
+          ],
+        ),
+        Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                width: 80 * MediaQuery.of(context).size.width / 100,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: BlossomText(
+                        "ลักษณะผิว",
+                        size: 16,
+                        color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SkinLookRadioGroup((skin) {
+                      _provider.skinType = skin;
+                    }),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: BlossomText(
+                        "ลักษณะสิว",
+                        size: 16,
+                        color: BlossomTheme.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    AcneMultiChoice((acne) {
+                      _provider.acneTypes = acne;
+                    }),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    ButtonPinkGradient(
+                      "ยืนยัน",
+                      true,
+                          () {
+
+                      },
+                      width: 30 * MediaQuery.of(context).size.width / 100,
+                      height: 40,
+                      radius: 6,
+                    )
+                  ],
+                ),
+              ),
+            )),
+      ]),
+    );;
+  }
+}

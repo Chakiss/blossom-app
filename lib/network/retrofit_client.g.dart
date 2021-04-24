@@ -9,8 +9,7 @@ part of 'retrofit_client.dart';
 class _RetrofitClient implements RetrofitClient {
   _RetrofitClient(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??=
-        'https://us-central1-blossom-clinic-thailand.cloudfunctions.net/';
+    baseUrl ??= 'https://api.omise.co/';
   }
 
   final Dio _dio;
@@ -18,43 +17,27 @@ class _RetrofitClient implements RetrofitClient {
   String baseUrl;
 
   @override
-  Future<RegisterResponseModel> createNewApplicationUser(requestModel) async {
-    ArgumentError.checkNotNull(requestModel, 'requestModel');
+  Future<Response<Map<String, dynamic>>> charge(
+      omiseSecretKey, amount, currency, tokenId, orderID) async {
+    ArgumentError.checkNotNull(omiseSecretKey, 'omiseSecretKey');
+    ArgumentError.checkNotNull(amount, 'amount');
+    ArgumentError.checkNotNull(currency, 'currency');
+    ArgumentError.checkNotNull(tokenId, 'tokenId');
+    ArgumentError.checkNotNull(orderID, 'orderId');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '/users-createNewApplicationUser',
+    final _data = {'amount': amount, 'currency': currency, 'card': tokenId, 'metadata[orderID]' : orderID};
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('charges',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
-            headers: <String, dynamic>{},
+            headers: <String, dynamic>{r'Authorization': omiseSecretKey},
             extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
             baseUrl: baseUrl),
         data: _data);
-    final value = RegisterResponseModel.fromJson(_result.data);
-    return value;
-  }
-
-  @override
-  Future<CreateAppointmentOrderResponseModel> createAppointmentOrder(
-      requestModel) async {
-    ArgumentError.checkNotNull(requestModel, 'requestModel');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '/orders-createAppointmentOrder',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = CreateAppointmentOrderResponseModel.fromJson(_result.data);
+    final value = _result;
     return value;
   }
 }

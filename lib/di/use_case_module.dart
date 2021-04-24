@@ -1,3 +1,4 @@
+import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
 import 'package:blossom_clinic/usecase/check_login_use_case.dart';
 import 'package:blossom_clinic/usecase/create_appointment_order_use_case.dart';
 import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case.dart';
@@ -15,6 +16,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injector/injector.dart';
+import 'package:omise_flutter/omise_flutter.dart';
 
 class UseCaseModule {
   Injector injector;
@@ -34,5 +36,6 @@ class UseCaseModule {
     injector.registerDependency<CreateAppointmentOrderUseCase>(() => CreateAppointmentOrderUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
+    injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil"), injector.get()));
   }
 }

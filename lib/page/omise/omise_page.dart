@@ -30,6 +30,7 @@ class _OmisePageState extends State<OmisePage> {
   @override
   void initState() {
     _provider = Provider.of(context, listen: false);
+    _provider.initOmise(widget._customerOrder.orderId);
     _dayAndCvvSection = DayAndCvvSection((value) {
       List<String> data = value.split(" ");
       monthExpireData = data[0];
