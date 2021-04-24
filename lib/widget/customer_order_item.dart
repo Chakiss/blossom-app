@@ -22,7 +22,10 @@ class CustomerOrderItem extends StatelessWidget {
             width: 80 * MediaQuery.of(context).size.width / 100,
             child: Row(
               children: [
-                BlossomCircleAvatar(30, imageKey: _customerOrderModel.doctorReference.id,),
+                BlossomCircleAvatar(
+                  30,
+                  imageKey: _customerOrderModel.doctorReference.id,
+                ),
                 Expanded(
                     child: Container(
                   margin: EdgeInsets.only(left: 16, right: 16),
@@ -34,12 +37,12 @@ class CustomerOrderItem extends StatelessWidget {
                         size: 12,
                         fontWeight: FontWeight.bold,
                       ),
-                      BlossomText("Description", size: 12)
+                      BlossomText(_getStatusDescription(_customerOrderModel.status), size: 12)
                     ],
                   ),
                 )),
                 ButtonPinkGradient(
-                  "โทร",
+                  _getButtonStatus(_customerOrderModel.status),
                   true,
                   () {
                     _listener.call(_customerOrderModel);
@@ -59,5 +62,27 @@ class CustomerOrderItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getStatusDescription(int status) {
+    switch (status) {
+      case 0:
+        return "ชำระเงินเพื่อยืนยันการจอง";
+      case 1:
+        return "จองเรียบร้อยแล้ว";
+      default:
+        return "ยกเลิกรายการ";
+    }
+  }
+
+  String _getButtonStatus(int status) {
+    switch (status) {
+      case 0:
+        return "ชำระเงิน";
+      case 1:
+        return "สำเร็จ";
+      default:
+        return "ยกเลิก";
+    }
   }
 }

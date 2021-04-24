@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AddCardTextField extends StatelessWidget {
 
-  TextEditingController cardTextController = TextEditingController();
+  TextEditingController cardTextController;
+
+  AddCardTextField({this.cardTextController});
 
   String getText() => cardTextController.text.replaceAll(RegExp(r' '), "");
 

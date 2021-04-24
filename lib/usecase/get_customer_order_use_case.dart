@@ -17,22 +17,7 @@ class GetCustomerOrderUseCase extends BaseAsyncUseCase<String, List<CustomerOrde
           .where("userReference", isEqualTo: _firestore.collection("patients").doc(parameter))
           .get();
       final list = snapshot.docs
-          .map((order) => CustomerOrderModel(
-                createdAt: order.data()["createdAt"].toDate(),
-                discount: order.data()["discount"],
-                doctorReference: order.data()["doctorReference"],
-                paymentGateway: order.data()["paymentGateway"],
-                paymentMethod: order.data()["paymentMethod"],
-                paymentReference: order.data()["paymentReference"],
-                status: order.data()["status"],
-                systemNoted: order.data()["systemNoted"],
-                total: order.data()["total"],
-                totalItemsDiscount: order.data()["totalItemsDiscount"],
-                totalItemsPrice: order.data()["totalItemsPrice"],
-                type: order.data()["type"],
-                updatedAt: order.data()["updatedAt"].toDate(),
-                userNoted: order.data()["userNoted"],
-              ))
+          .map((order) => CustomerOrderModel.fromJson(order.id, order.data()))
           .toList();
       return Success(list);
     } catch (e) {

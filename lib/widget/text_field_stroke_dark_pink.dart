@@ -10,11 +10,10 @@ class TextFieldStrokeDarkPink extends StatelessWidget {
   double paddingEnd;
   TextAlign textAlign;
   int maxLength;
+  TextEditingController textController;
   Function(String) onChange;
 
-  TextFieldStrokeDarkPink(this.hint, {this.width, this.height, this.paddingStart, this.paddingEnd, this.textAlign, this.maxLength, this.onChange});
-
-  var textController = TextEditingController();
+  TextFieldStrokeDarkPink(this.hint, {this.width, this.height, this.paddingStart, this.paddingEnd, this.textAlign, this.maxLength, this.textController, this.onChange});
 
   String getText() => textController.text;
 
