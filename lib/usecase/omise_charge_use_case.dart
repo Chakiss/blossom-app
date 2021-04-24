@@ -5,7 +5,6 @@ import 'package:blossom_clinic/model/base/result.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:omise_flutter/omise_flutter.dart';
-import 'package:flutter/foundation.dart';
 
 class OmiseChargeUseCase extends BaseAsyncUseCase<Map<String, dynamic>, dynamic> {
 
@@ -16,16 +15,20 @@ class OmiseChargeUseCase extends BaseAsyncUseCase<Map<String, dynamic>, dynamic>
   @override
   Future<Result> execute(Map<String, dynamic> parameter) async {
     try {
-      final int amount = parameter["amount"] as int;
       final String orderID = parameter["orderID"] as String;
-      final token = await _omise.token.create("John Doe", "4242424242424242", "12", "2030", "123");
+      final String cardNo = parameter["cardNo"] as String;
+      final String name = parameter["name"] as String;
+      final String expireMonth = parameter["expireMonth"] as String;
+      final String expireYear = parameter["expireYear"] as String;
+      final String cvv = parameter["cvv"] as String;
+      final int amount = parameter["amount"] as int;
+      final token = await _omise.token.create(name, cardNo, expireMonth, expireYear, cvv);
       final result = await _remoteRepository.omiseCharge(
       "Basic " + base64Encode(utf8.encode("skey_test_5n0xzn4kpsvxizlhvox" + ":")),
           amount,
           "THB",
           token.id,
           orderID);
-      debugPrint(json.encode(result.data));
       return Success("success");
     } catch (e) {
       print(e);
