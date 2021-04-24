@@ -1,21 +1,10 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/doctor/doctor_provider.dart';
-import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
-import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
-import 'package:blossom_clinic/page/doctor_main/doctor_main_page.dart';
-import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
-import 'package:blossom_clinic/page/history/history_provider.dart';
-import 'package:blossom_clinic/page/main/main_page.dart';
-import 'package:blossom_clinic/page/main/main_provider.dart';
-import 'package:blossom_clinic/page/profile/profile_provider.dart';
-import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
+import 'package:blossom_clinic/utils/route_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
-import 'package:provider/provider.dart';
 
 class LoginProvider extends BaseProvider with ChangeNotifier {
   LoginUseCase _loginUseCase;
@@ -59,52 +48,10 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _goToMainPage(BuildContext context) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (BuildContext context) => MainProvider(),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => ServiceProvider(),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(),
-            ),
-          ],
-          child: MainPage(),
-        );
-      }));
+      Navigator.pushReplacement(context, RouteUtils.routeMainPage());
   }
 
   void _goToDoctorMainPage(BuildContext context) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorMainProvider(),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorHomeProvider(),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorHistoryProvider(),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => ServiceProvider(),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(),
-            ),
-          ],
-          child: DoctorMainPage(),
-        );
-      }));
+      Navigator.pushReplacement(context, RouteUtils.routeDoctorMainPage());
   }
 }

@@ -1,7 +1,6 @@
 import 'package:blossom_clinic/base/base_screen.dart';
-import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_page.dart';
-import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
 import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
+import 'package:blossom_clinic/utils/route_utils.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -52,13 +51,6 @@ class DoctorHomePage extends StatelessWidget {
   }
 
   void _goToDoctorDiagnosePage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (BuildContext context) {
-          return DoctorDiagnoseProvider();
-        },)
-      ],
-      child: DoctorDiagnosePage(),);
-    }));
+    Navigator.push(context, RouteUtils.routeDoctorDiagnosePage());
   }
 }
