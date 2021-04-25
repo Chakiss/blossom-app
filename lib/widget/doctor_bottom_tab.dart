@@ -1,9 +1,8 @@
 import 'package:blossom_clinic/page/doctor_history/doctor_history_page.dart';
 import 'package:blossom_clinic/page/doctor_home/doctor_home_page.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
+import 'package:blossom_clinic/page/doctor_profile/doctor_profile_page.dart';
 import 'package:blossom_clinic/page/drug/drug_page.dart';
-import 'package:blossom_clinic/page/profile/profile_page.dart';
-import 'package:blossom_clinic/page/service/service_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -105,7 +104,7 @@ class _DoctorBottomTabState extends State<DoctorBottomTab> {
               behavior: HitTestBehavior.opaque,
               onTap: () {
                 if (selectedPosition != 3) {
-                  widget.mainProvider.setPage(ProfilePage());
+                  widget.mainProvider.setPage(DoctorProfilePage());
                   setBottomMenu(3);
                 }
               },

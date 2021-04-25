@@ -13,6 +13,7 @@ import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart'
 import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_page.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
+import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
@@ -179,7 +180,7 @@ class RouteManager {
               create: (BuildContext context) => ServiceProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(),
+              create: (BuildContext context) => DoctorProfileProvider(),
             ),
           ],
           child: DoctorMainPage(),

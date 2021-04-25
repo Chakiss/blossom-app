@@ -1,8 +1,9 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/page/profile/profile_provider.dart';
+import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
+import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
@@ -13,8 +14,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProfilePage extends StatelessWidget {
-  ProfileProvider _profileProvider;
+class DoctorProfilePage extends StatelessWidget {
+  DoctorProfileProvider _profileProvider;
   UserData _userData = Injector.appInstance.get();
 
   @override
@@ -42,12 +43,17 @@ class ProfilePage extends StatelessWidget {
                           // Navigator.push(context, RouteManager.routeAddCustomerInformation());
                           Navigator.push(context, RouteManager.routeDispense());
                         },
-                        child: CircleAvatar(
-                          radius: 40 * MediaQuery.of(context).size.width / 200,
-                          backgroundColor: BlossomTheme.white,
-                          backgroundImage: NetworkImage(
-                              "https://lh3.googleusercontent.com/proxy/T8Z4qU1MzCNKKx0oUZyONA74RgwWPPmUOuaINHWQFiRq7EhaSwOTsVlcp5io-Ny3Scy_cYofCuUeL4cFN6QMVEl8N-tAHBebiLuT7VyWRvmHqGFAE4f7HAb7Kgf3pZqGy7nLEs0zEA"),
-                        ),
+                        child: _userData.doctorInfoModel?.displayPhoto != null
+                            ? BlossomCircleAvatar(
+                                40 * MediaQuery.of(context).size.width / 200,
+                                fileStorePath: _userData.doctorInfoModel?.displayPhoto,
+                              )
+                            : CircleAvatar(
+                                radius: 40 * MediaQuery.of(context).size.width / 200,
+                                backgroundColor: BlossomTheme.white,
+                                backgroundImage: NetworkImage(
+                                    "https://lh3.googleusercontent.com/proxy/T8Z4qU1MzCNKKx0oUZyONA74RgwWPPmUOuaINHWQFiRq7EhaSwOTsVlcp5io-Ny3Scy_cYofCuUeL4cFN6QMVEl8N-tAHBebiLuT7VyWRvmHqGFAE4f7HAb7Kgf3pZqGy7nLEs0zEA"),
+                              ),
                       ),
                     ),
                     SizedBox(
@@ -56,28 +62,28 @@ class ProfilePage extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: BlossomText(
-                        "${_userData.userProfileModel?.firstName} ${_userData.userProfileModel?.lastName}",
+                        "${_userData.doctorInfoModel?.displayName}",
                         size: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     BlossomText(
-                      "เบอร์โทร : ${_userData.userProfileModel?.phoneNumber?.replaceAll("+66", "0")}",
+                      "${_userData.doctorInfoModel?.firstName} ${_userData.doctorInfoModel?.lastName}",
                       size: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     BlossomText(
-                      "email : ${_userData.userProfileModel?.email}",
+                      "เบอร์โทร : ${_userData.doctorInfoModel?.phoneNumber?.replaceAll("+66", "0")}",
                       size: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     BlossomText(
-                      "วัน/เดือน/ปีเกิด : ${_userData.userProfileModel?.birthDate == null ? "" : DateFormat("d MMMM yyyy", "TH").format(_userData.userProfileModel?.birthDate)}",
+                      "email : ${_userData.doctorInfoModel?.email}",
                       size: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     BlossomText(
-                      "วันที่สมัคร : ${_userData.userProfileModel?.createdAt == null ? "" : DateFormat("d MMMM yyyy", "TH").format(_userData.userProfileModel?.createdAt)}",
+                      "วันที่สมัคร : ${_userData.doctorInfoModel?.createdAt == null ? "" : DateFormat("d MMMM yyyy", "TH").format(_userData.doctorInfoModel?.createdAt)}",
                       size: 16,
                       fontWeight: FontWeight.bold,
                     ),
