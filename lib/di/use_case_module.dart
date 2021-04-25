@@ -1,3 +1,4 @@
+import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
 import 'package:blossom_clinic/usecase/check_login_use_case.dart';
 import 'package:blossom_clinic/usecase/create_appointment_order_use_case.dart';
@@ -37,5 +38,6 @@ class UseCaseModule {
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
     injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil"), injector.get()));
+    injector.registerDependency<GetProductListUseCase>(() => GetProductListUseCase());
   }
 }

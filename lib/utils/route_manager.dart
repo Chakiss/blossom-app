@@ -155,7 +155,7 @@ class RouteManager {
   static Route routeDispense() => MaterialPageRoute(builder: (BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (BuildContext context) {
-        return DispenseProvider();
+        return DispenseProvider(Injector.appInstance.get());
       },)
     ],
       child: DispensePage(),);

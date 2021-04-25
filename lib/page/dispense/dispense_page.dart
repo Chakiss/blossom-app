@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/page/dispense/dispense_provider.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
+import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dispense_item.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class DispensePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
+    _provider.getProductList(context);
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -30,15 +32,23 @@ class DispensePage extends StatelessWidget {
             Expanded(
               child: Consumer<DispenseProvider>(
                 builder: (BuildContext context, DispenseProvider value, Widget child) {
-                  // return value.list == null ? BlossomProgressIndicator() :
-                  return ListView.builder(
-                          itemCount: 3,
+                  return value.list == null
+                      ? BlossomProgressIndicator()
+                      : ListView.builder(
+                          itemCount: value.list?.length ?? 0,
                           itemBuilder: (BuildContext context, int index) {
-                            return DispenseItem();
+                            return DispenseItem(value.list[index]);
                           },
                         );
                 },
               ),
+            ),
+            ButtonPinkGradient(
+              "ยืนยัน",
+              true,
+              () {},
+              width: MediaQuery.of(context).size.width,
+              height: 60,
             )
           ],
         ),

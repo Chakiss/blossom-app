@@ -1,9 +1,15 @@
 import 'package:blossom_clinic/blossom_theme.dart';
+import 'package:blossom_clinic/model/product_model.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/text_stroke_black.dart';
 import 'package:flutter/material.dart';
 
 class DispenseItem extends StatefulWidget {
+
+  ProductModel _productModel;
+
+  DispenseItem(this._productModel);
+
   @override
   _DispenseItemState createState() => _DispenseItemState();
 }
@@ -25,7 +31,7 @@ class _DispenseItemState extends State<DispenseItem> {
                   child: AspectRatio(
                     aspectRatio: 1 / 1,
                     child: Container(
-                      color: BlossomTheme.black,
+                      child: Image.network(widget._productModel?.image ?? ""),
                     ),
                   ),
                 ),
@@ -38,14 +44,14 @@ class _DispenseItemState extends State<DispenseItem> {
                     Align(
                         alignment: Alignment.topLeft,
                         child: BlossomText(
-                          "Item Name",
+                          widget._productModel.name ?? "",
                           size: 15,
                           fontWeight: FontWeight.bold,
                         )),
                     Align(
                         alignment: Alignment.topLeft,
                         child: BlossomText(
-                          "Item Price",
+                          "${widget._productModel.price} บาท",
                           size: 15,
                         ))
                   ],
