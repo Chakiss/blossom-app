@@ -24,7 +24,8 @@ class ProfilePage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, RouteManager.routeAddCustomerInformation());
+                    // Navigator.push(context, RouteManager.routeAddCustomerInformation());
+                    Navigator.push(context, RouteManager.routeDispense());
                   },
                   child: CircleAvatar(
                     radius: 40 * MediaQuery.of(context).size.width / 200,

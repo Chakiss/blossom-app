@@ -9,17 +9,18 @@ class ButtonPinkGradient extends StatelessWidget {
   double height;
   double radius;
   double textSize;
+  FontWeight fontWeight;
   EdgeInsetsGeometry padding;
   Function() onPressed;
 
   ButtonPinkGradient(this.text, this.isEnable, this.onPressed,
-      {this.width, this.height, this.radius, this.textSize, this.padding});
+      {this.width, this.height, this.radius, this.textSize, this.padding, this.fontWeight});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? null,
-      height: height ?? null,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
           gradient: LinearGradient(
@@ -38,6 +39,7 @@ class ButtonPinkGradient extends StatelessWidget {
           text,
           size: textSize ?? 16,
           color: isEnable ? BlossomTheme.white : BlossomTheme.black,
+          fontWeight: fontWeight,
         ),
         onPressed: isEnable ? onPressed : null,
       ),

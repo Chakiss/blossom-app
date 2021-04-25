@@ -8,39 +8,35 @@ class TextStrokeBlack extends StatelessWidget {
   double height;
   double paddingStart;
   double paddingEnd;
+  double size;
+  TextAlign textAlign;
 
-  TextStrokeBlack(this.text,
-      {this.width,
-        this.height,
-        this.paddingStart,
-        this.paddingEnd,});
+  TextStrokeBlack(this.text, {this.width, this.height, this.paddingStart, this.paddingEnd, this.size, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Container(
-          width: width ?? 80 * MediaQuery
-              .of(context)
-              .size
-              .width / 100,
+          width: width ?? 80 * MediaQuery.of(context).size.width / 100,
           height: height ?? 48,
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: BlossomTheme.black), borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Container(
-              padding: EdgeInsets.only(left: paddingStart ?? 18, right: paddingEnd ?? 18),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: BlossomText(text, size: 15, color: BlossomTheme.black,),
-                    ),
-                    flex: 1,
-                  )
-                ],
-              ),
-            ),
+          decoration: BoxDecoration(
+              border: Border.all(color: BlossomTheme.black), borderRadius: BorderRadius.all(Radius.circular(5))),
+          padding: EdgeInsets.only(left: paddingStart ?? 18, right: paddingEnd ?? 18),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  child: BlossomText(
+                    text,
+                    size: size ?? 15,
+                    color: BlossomTheme.black,
+                    textAlign: textAlign,
+                  ),
+                ),
+                flex: 1,
+              )
+            ],
           )),
     );
   }

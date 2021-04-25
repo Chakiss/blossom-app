@@ -5,6 +5,8 @@ import 'package:blossom_clinic/page/add_customer_information/add_customer_inform
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
+import 'package:blossom_clinic/page/dispense/dispense_page.dart';
+import 'package:blossom_clinic/page/dispense/dispense_provider.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_page.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
 import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
@@ -148,6 +150,15 @@ class RouteManager {
       },)
     ],
       child: AddCustomerInformationPage(),);
+  });
+
+  static Route routeDispense() => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (BuildContext context) {
+        return DispenseProvider();
+      },)
+    ],
+      child: DispensePage(),);
   });
 
   ////////// Doctor //////////
