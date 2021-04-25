@@ -2,7 +2,7 @@ import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/create_new_application_user.dart';
 import 'package:blossom_clinic/model/request/create_new_application_user_request_model.dart';
 import 'package:blossom_clinic/usecase/register_use_case.dart';
-import 'package:blossom_clinic/utils/route_utils.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:flutter/material.dart';
 
 class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
@@ -47,6 +47,6 @@ class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
   }
 
   void goToLoginPage(BuildContext context) {
-    Navigator.pushAndRemoveUntil(context, RouteUtils.routeLoginPage(), (route) => false);
+    Navigator.pushAndRemoveUntil(context, RouteManager.routeLogin(), (route) => false);
   }
 }

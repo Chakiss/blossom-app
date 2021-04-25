@@ -2,7 +2,6 @@ import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_dark_pink.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'blossom_text.dart';
 import 'custom_list_dialog.dart';
 

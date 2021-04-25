@@ -1,7 +1,8 @@
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
 import 'package:blossom_clinic/model/available_slot_model.dart';
-import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
+import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_page.dart';
@@ -33,7 +34,7 @@ import 'package:provider/provider.dart';
 
 import 'no_animation_page_route.dart';
 
-class RouteUtils {
+class RouteManager {
   static Route routeSplashScreen() => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -58,7 +59,7 @@ class RouteUtils {
     );
   });
 
-  static Route routeRegisterSecondPage(Map<String, String> map) => NoAnimationPageRoute(builder: (BuildContext context) {
+  static Route routeRegisterSecond(Map<String, String> map) => NoAnimationPageRoute(builder: (BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -69,7 +70,7 @@ class RouteUtils {
     );
   });
 
-  static Route routeLoginPage() => PageRouteBuilder(
+  static Route routeLogin() => PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
           return MultiProvider(
             providers: [
@@ -89,7 +90,7 @@ class RouteUtils {
         transitionDuration: Duration(milliseconds: 1000),
       );
 
-  static Route routeMainPage() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeMain() => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -128,7 +129,7 @@ class RouteUtils {
         );
       });
 
-  static Route routeOmisePage(CustomerOrderModel customerOrderModel) =>
+  static Route routeOmise(String orderId, int price) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -136,9 +137,18 @@ class RouteUtils {
               create: (BuildContext context) => OmiseProvider(Injector.appInstance.get()),
             )
           ],
-          child: OmisePage(customerOrderModel),
+          child: OmisePage(orderId, price),
         );
       });
+  
+  static Route routeAddCustomerInformation() => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (BuildContext context) {
+        return AddCustomerInformationProvider();
+      },)
+    ],
+      child: AddCustomerInformationPage(),);
+  });
 
   ////////// Doctor //////////
 

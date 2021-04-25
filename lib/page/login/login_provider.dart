@@ -2,7 +2,7 @@ import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
-import 'package:blossom_clinic/utils/route_utils.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -48,10 +48,10 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _goToMainPage(BuildContext context) {
-      Navigator.pushReplacement(context, RouteUtils.routeMainPage());
+      Navigator.pushReplacement(context, RouteManager.routeMain());
   }
 
   void _goToDoctorMainPage(BuildContext context) {
-      Navigator.pushReplacement(context, RouteUtils.routeDoctorMainPage());
+      Navigator.pushReplacement(context, RouteManager.routeDoctorMainPage());
   }
 }

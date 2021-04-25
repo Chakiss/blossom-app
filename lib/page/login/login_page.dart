@@ -1,6 +1,6 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
-import 'package:blossom_clinic/utils/route_utils.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                   height: 1,
                 ),
                 ButtonPinkGradient("ลงทะเบียนใหม่", true, () {
-                  Navigator.push(context, RouteUtils.routeRegister());
+                  Navigator.push(context, RouteManager.routeRegister());
                 }, radius: 6, height: 40),
               ],
             ),

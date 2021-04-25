@@ -1,5 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/utils/route_utils.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,6 @@ class ProfileProvider extends BaseProvider with ChangeNotifier {
   }
 
   void goToSplashScreen(BuildContext context) {
-    Navigator.pushAndRemoveUntil(context, RouteUtils.routeSplashScreen(), (route) => false);
+    Navigator.pushAndRemoveUntil(context, RouteManager.routeSplashScreen(), (route) => false);
   }
 }

@@ -1,8 +1,12 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
+import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_one_button.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OmiseProvider extends BaseProvider with ChangeNotifier {
   OmiseChargeUseCase _chargeOmiseUseCase;
@@ -47,27 +51,6 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
     _showConfirmDialog(context, cardNo, name, expireMonth, expireYear, cvv, orderId, amount);
   }
 
-  Future<void> _callServiceOmiseCharge(BuildContext context, String cardNo, String name, String expireMonth,
-      String expireYear, String cvv, String orderId, int amount) async {
-    showProgressDialog(context);
-    final Map<String, dynamic> request = {
-      "amount": amount * 100,
-      "orderID": orderId,
-      "cardNo": cardNo,
-      "name": name,
-      "expireMonth": expireMonth,
-      "expireYear": expireYear,
-      "cvv": cvv,
-    };
-    final result = await _chargeOmiseUseCase.execute(request);
-    Navigator.pop(context);
-    result.whenWithResult((data) {
-      _showSuccessDialog(context);
-    }, (map) {
-      errorHandle.proceed(context, map);
-    });
-  }
-
   void _showConfirmDialog(BuildContext context, String cardNo, String name, String expireMonth, String expireYear,
       String cvv, String orderId, int amount) {
     showDialog(
@@ -89,6 +72,27 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
     );
   }
 
+  Future<void> _callServiceOmiseCharge(BuildContext context, String cardNo, String name, String expireMonth,
+      String expireYear, String cvv, String orderId, int amount) async {
+    showProgressDialog(context);
+    final Map<String, dynamic> request = {
+      "amount": amount * 100,
+      "orderID": orderId,
+      "cardNo": cardNo,
+      "name": name,
+      "expireMonth": expireMonth,
+      "expireYear": expireYear,
+      "cvv": cvv,
+    };
+    final result = await _chargeOmiseUseCase.execute(request);
+    Navigator.pop(context);
+    result.whenWithResult((data) {
+      _showSuccessDialog(context);
+    }, (map) {
+      errorHandle.proceed(context, map);
+    });
+  }
+
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -99,9 +103,14 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
             positiveButton: "ตกลง",
             positiveListener: () {
               Navigator.pop(dialogContext);
-              Navigator.pop(dialogContext);
+              _goToMainPage(context);
             });
       },
     );
+  }
+
+  void _goToMainPage(BuildContext context) {
+    Navigator.pushAndRemoveUntil(context, RouteManager.routeMain(), (route) => false);
+    Navigator.push(context, RouteManager.routeAddCustomerInformation());
   }
 }

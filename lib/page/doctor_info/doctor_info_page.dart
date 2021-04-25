@@ -2,7 +2,7 @@ import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/page/doctor_info/doctor_info_provider.dart';
-import 'package:blossom_clinic/utils/route_utils.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -127,6 +127,6 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
   }
 
   void _goToConfirmConsultPage(BuildContext context) {
-    Navigator.push(context, RouteUtils.routeConfirmConsult(widget._doctorInfoModel, _provider.availableSlotModel));
+    Navigator.push(context, RouteManager.routeConfirmConsult(widget._doctorInfoModel, _provider.availableSlotModel));
   }
 }

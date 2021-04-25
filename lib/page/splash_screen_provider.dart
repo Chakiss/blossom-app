@@ -1,10 +1,9 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
-import 'package:blossom_clinic/utils/route_utils.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 class SplashScreenProvider extends BaseProvider with ChangeNotifier {
   FirebaseAuth _firebaseAuth;
@@ -43,22 +42,21 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
     });
   }
 
-  void _goToLoginPage(BuildContext context) {
-    Future.delayed(const Duration(milliseconds: 1000), () async {
-      await Navigator.pushReplacement(
-          context, RouteUtils.routeLoginPage());
+  Future<void> _goToLoginPage(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      Navigator.pushReplacement(context, RouteManager.routeLogin());
     });
   }
 
-  void _goToMainPage(BuildContext context) {
-    Future.delayed(const Duration(milliseconds: 1000), () async {
-      await Navigator.pushReplacement(context, RouteUtils.routeMainPage());
+  Future<void> _goToMainPage(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 1000), () {
+      Navigator.pushReplacement(context, RouteManager.routeMain());
     });
   }
 
-  void _goToDoctorMainPage(BuildContext context) {
-    Future.delayed(const Duration(milliseconds: 1000), () async {
-      await Navigator.pushReplacement(context, RouteUtils.routeDoctorMainPage());
+  Future<void> _goToDoctorMainPage(BuildContext context) async {
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Navigator.pushReplacement(context, RouteManager.routeDoctorMainPage());
     });
   }
 }

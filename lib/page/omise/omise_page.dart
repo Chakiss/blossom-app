@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/base/base_screen.dart';
-import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/page/omise/omise_provider.dart';
 import 'package:blossom_clinic/widget/add_card_text_field.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -11,9 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class OmisePage extends StatefulWidget {
-  CustomerOrderModel _customerOrder;
 
-  OmisePage(this._customerOrder);
+  String _orderId;
+  int _price;
+
+  OmisePage(this._orderId, this._price);
 
   @override
   _OmisePageState createState() => _OmisePageState();
@@ -85,7 +86,7 @@ class _OmisePageState extends State<OmisePage> {
                         height: 20,
                       ),
                       BlossomText(
-                        "ชำระค่าจองคิวเป็นจำนวนเงิน ${widget._customerOrder.total} บาท",
+                        "ชำระค่าจองคิวเป็นจำนวนเงิน ${widget._price} บาท",
                         size: 15,
                       ),
                       SizedBox(
@@ -104,8 +105,8 @@ class _OmisePageState extends State<OmisePage> {
                                 monthExpireData,
                                 yearExpireData,
                                 cvvData,
-                                widget._customerOrder.orderId,
-                                widget._customerOrder.total);
+                                widget._orderId,
+                                widget._price);
                           },
                           width: 60 * MediaQuery.of(context).size.width / 100,
                           radius: 6,
