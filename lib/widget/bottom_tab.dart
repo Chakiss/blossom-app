@@ -13,14 +13,21 @@ import 'blossom_text.dart';
 class BottomTab extends StatefulWidget {
 
   MainProvider mainProvider;
-  BottomTab(this.mainProvider);
+  int initIndex;
+  BottomTab(this.mainProvider, {this.initIndex = 0});
 
   @override
   _BottomTabState createState() => _BottomTabState();
 }
 
 class _BottomTabState extends State<BottomTab> {
-  var selectedPosition = 0;
+  var selectedPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedPosition = widget.initIndex;
+  }
 
   void setBottomMenu(int position) {
     setState(() {

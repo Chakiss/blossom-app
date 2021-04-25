@@ -31,31 +31,27 @@ class _HistoryPageState extends State<HistoryPage> {
             SizedBox(
               height: 26,
             ),
-            Column(
-              children: [
-                Center(child: HistorySegmentControl((index) {})),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  child: Consumer<HistoryProvider>(builder: (BuildContext context, HistoryProvider value, Widget child) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: value.customerOrderList?.length ?? 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CustomerOrderItem(value.customerOrderList[index], (customerOrder) {
-                          if (customerOrder.status == 0) {
-                            _goToOmisePage(context, customerOrder);
-                          } else if (customerOrder.status == 1) {
-
-                          }
-                        });
-                      },
-                    );
-                  },)
-                )
-              ],
+            Center(child: HistorySegmentControl((index) {})),
+            SizedBox(
+              height: 20,
             ),
+            Expanded(
+              child: Consumer<HistoryProvider>(builder: (BuildContext context, HistoryProvider value, Widget child) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: value.customerOrderList?.length ?? 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CustomerOrderItem(value.customerOrderList[index], (customerOrder) {
+                      if (customerOrder.status == 0) {
+                        _goToOmisePage(context, customerOrder);
+                      } else if (customerOrder.status == 1) {
+
+                      }
+                    });
+                  },
+                );
+              },),
+            )
           ],
         ),
       ),

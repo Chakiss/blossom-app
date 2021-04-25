@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
+
+  int initIndex;
+
+  MainPage({this.initIndex = 0});
+
   @override
   Widget build(BuildContext context) {
     MainProvider provider = Provider.of(context, listen: false);
@@ -21,7 +26,7 @@ class MainPage extends StatelessWidget {
               Container(
                 color: BlossomTheme.white,
                 child: SafeArea(
-                    top: false, bottom: true, child: BottomTab(provider)),
+                    top: false, bottom: true, child: BottomTab(provider, initIndex: initIndex,)),
               )
             ],
           ),

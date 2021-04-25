@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/acne_duration_information_radio_group.dart';
 import 'package:blossom_clinic/widget/acne_information_radio_group.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -133,8 +134,8 @@ class AddCustomerInformationPage extends StatelessWidget {
                                   positiveButton: "ยืนยัน",
                                   positiveListener: () async {
                                     Navigator.pop(dialogContext);
-                                    await _provider.confirmConsult(context);
-                                    // _provider.openWebViewUrl(context, "Omise", null);
+                                    Navigator.pushAndRemoveUntil(context,
+                                        RouteManager.routeMain(initIndex: 1), (route) => false);
                                   },
                                   negativeButton: "ยกเลิก",
                                   negativeListener: () {
@@ -169,26 +170,4 @@ class AddCustomerInformationPage extends StatelessWidget {
       ],
     );
   }
-
-// showDialog(
-// context: context,
-// builder: (BuildContext dialogContext) {
-// return CustomDialogTwoButton(
-// title: "ยืนยัน",
-// description: "คุณยืนยันที่จะจองคิว ${widget._doctorInfoModel?.displayName ?? ""} " +
-// "ในวันที่ ${_dateFormat.format(widget._availableSlotModel.date)} " +
-// "เวลา ${_provider.slotModel?.title ?? ""} " +
-// "ระยะเวลา ${_provider.timeSlotModel.period} นาที " +
-// "มีค่าใช้จ่ายในการปรึกษาทั้งสิ้น ${_provider.timeSlotModel?.priceSale ?? 0} บาท",
-// positiveButton: "ตกลง",
-// positiveListener: () {
-// Navigator.pop(dialogContext);
-// _provider.callServiceCreateAppointmentOrder(context);
-// },
-// negativeButton: "ยกเลิก",
-// negativeListener: () {
-// Navigator.pop(context);
-// });
-// },
-// );
 }

@@ -90,11 +90,11 @@ class RouteManager {
         transitionDuration: Duration(milliseconds: 1000),
       );
 
-  static Route routeMain() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => MainProvider(),
+              create: (BuildContext context) => MainProvider(initIndex: initIndex),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
@@ -113,7 +113,7 @@ class RouteManager {
               create: (BuildContext context) => ProfileProvider(),
             ),
           ],
-          child: MainPage(),
+          child: MainPage(initIndex: initIndex,),
         );
       });
 
