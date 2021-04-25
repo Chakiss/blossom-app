@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
@@ -21,10 +22,15 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 40 * MediaQuery.of(context).size.width / 200,
-                  backgroundColor: Colors.white,
-                  backgroundImage: NetworkImage("url"),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, RouteManager.routeAddCustomerInformation());
+                  },
+                  child: CircleAvatar(
+                    radius: 40 * MediaQuery.of(context).size.width / 200,
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage("url"),
+                  ),
                 ),
                 Container(
                     margin: EdgeInsets.symmetric(vertical: 24),
