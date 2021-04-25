@@ -44,7 +44,7 @@ class _AcneDurationInformationRadioGroupState extends State<AcneDurationInformat
             children: [
               Radio<String>(
                 fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                value: "1",
+                value: "2",
                 groupValue: _acneLook,
                 onChanged: (String value) {
                   widget._listener.call(value);
@@ -63,7 +63,7 @@ class _AcneDurationInformationRadioGroupState extends State<AcneDurationInformat
             children: [
               Radio<String>(
                 fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                value: "1",
+                value: "3",
                 groupValue: _acneLook,
                 onChanged: (String value) {
                   widget._listener.call(value);
