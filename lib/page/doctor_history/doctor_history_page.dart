@@ -1,6 +1,6 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
-import 'package:blossom_clinic/widget/history_segment_control.dart';
+import 'package:blossom_clinic/widget/doctor_history_segment_control.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,14 +22,10 @@ class DoctorHistoryPage extends StatelessWidget {
             SizedBox(
               height: 26,
             ),
-            Column(
-              children: [
-                Center(child: HistorySegmentControl((index) {})),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
+            DoctorHistorySegmentControl((index) {}),
+            Consumer<DoctorHistoryProvider>(builder: (BuildContext context, DoctorHistoryProvider value, Widget child) {
+              return Container();
+            },)
           ],
         ),
       ),

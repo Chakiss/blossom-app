@@ -2,6 +2,7 @@ import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/button_login_facebook.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +61,11 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 6,
                 ),
-                TextFieldStrokeBlack("",
-                    textController: _passwordTextController,
-                    isPasswordType: true,),
+                TextFieldStrokeBlack(
+                  "",
+                  textController: _passwordTextController,
+                  isPasswordType: true,
+                ),
                 SizedBox(
                   height: 6,
                 ),
@@ -74,14 +77,29 @@ class LoginPage extends StatelessWidget {
                     color: BlossomTheme.black,
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 ButtonPinkGradient(
                   "เข้าสู่ระบบ",
                   true,
                   () {
                     _provider.login(context, _emailTextController.text, _passwordTextController.text);
                   },
+                  width: 56 * MediaQuery.of(context).size.width / 100,
                   radius: 6,
-                  height: 40,
+                  height: 46,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ButtonLoginFacebook(
+                  "เข้าสู่ระบบด้วย Facebook",
+                  true,
+                  () {},
+                  radius: 6,
+                  width: 56 * MediaQuery.of(context).size.width / 100,
+                  height: 46,
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 26),
@@ -90,7 +108,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 ButtonPinkGradient("ลงทะเบียนใหม่", true, () {
                   Navigator.push(context, RouteManager.routeRegister());
-                }, radius: 6, height: 40),
+                }, radius: 6, width: 56 * MediaQuery.of(context).size.width / 100, height: 46),
               ],
             ),
           ),
