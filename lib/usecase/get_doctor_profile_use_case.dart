@@ -33,7 +33,6 @@ class GetDoctorProfileUseCase extends BaseAsyncUseCase<String, DoctorInfoModel> 
         return Error({"message": "เกิดข้อผิดพลาด"});
       }
     } catch (e) {
-      print(e);
       return Error(ErrorUtils.getErrorMessage(e));
     }
   }

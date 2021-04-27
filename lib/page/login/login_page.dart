@@ -22,7 +22,10 @@ class LoginPage extends StatelessWidget {
       child: Center(
         child: SingleChildScrollView(
           child: Container(
-            width: 80 * MediaQuery.of(context).size.width / 100,
+            width: 80 * MediaQuery
+                .of(context)
+                .size
+                .width / 100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -83,10 +86,13 @@ class LoginPage extends StatelessWidget {
                 ButtonPinkGradient(
                   "เข้าสู่ระบบ",
                   true,
-                  () {
+                      () {
                     _provider.login(context, _emailTextController.text, _passwordTextController.text);
                   },
-                  width: 56 * MediaQuery.of(context).size.width / 100,
+                  width: 56 * MediaQuery
+                      .of(context)
+                      .size
+                      .width / 100,
                   radius: 6,
                   height: 46,
                 ),
@@ -96,9 +102,14 @@ class LoginPage extends StatelessWidget {
                 ButtonLoginFacebook(
                   "เข้าสู่ระบบด้วย Facebook",
                   true,
-                  () {},
+                      () {
+                    _provider.loginWithFacebook(context);
+                  },
                   radius: 6,
-                  width: 56 * MediaQuery.of(context).size.width / 100,
+                  width: 56 * MediaQuery
+                      .of(context)
+                      .size
+                      .width / 100,
                   height: 46,
                 ),
                 Container(
@@ -108,7 +119,10 @@ class LoginPage extends StatelessWidget {
                 ),
                 ButtonPinkGradient("ลงทะเบียนใหม่", true, () {
                   Navigator.push(context, RouteManager.routeRegister());
-                }, radius: 6, width: 56 * MediaQuery.of(context).size.width / 100, height: 46),
+                }, radius: 6, width: 56 * MediaQuery
+                    .of(context)
+                    .size
+                    .width / 100, height: 46),
               ],
             ),
           ),

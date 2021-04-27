@@ -1,9 +1,8 @@
-import 'package:blossom_clinic/page/register/register_provider.dart';
+import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_provider.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:blossom_clinic/widget/text_stroke_black.dart';
-import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,25 +10,34 @@ import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
-class RegisterPage extends StatefulWidget {
+class FacebookUpdateProfilePage extends StatefulWidget {
+  String _email, _name, _id;
+
+  FacebookUpdateProfilePage(this._email, this._name, this._id);
+
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _FacebookUpdateProfilePageState createState() => _FacebookUpdateProfilePageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  RegisterProvider _provider;
-  var emailTextController = TextEditingController();
-  var passwordTextController = TextEditingController();
-  var confirmPasswordTextController = TextEditingController();
-  var phoneNumberTextController = TextEditingController();
-  var nameTextController = TextEditingController();
-  var lastNameTextController = TextEditingController();
-  DateTime selectedDate;
-  final dateFormat = DateFormat("d MMM yyyy", "TH");
+class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
+  FacebookUpdateProfileProvider _provider;
+  TextEditingController _emailTextController;
+  TextEditingController _phoneNumberTextController;
+  TextEditingController _nameTextController;
+  TextEditingController _lastNameTextController;
+  DateTime _selectedDate;
+  final _dateFormat = DateFormat("d MMM yyyy", "TH");
 
   @override
   void initState() {
+    super.initState();
+    String name = widget._name.split(" ")[0] ?? "";
+    String lastName = widget._name.split(" ")[1] ?? "";
     _provider = Provider.of(context, listen: false);
+    _emailTextController = TextEditingController(text: widget._email);
+    _phoneNumberTextController = TextEditingController();
+    _nameTextController = TextEditingController(text: name);
+    _lastNameTextController = TextEditingController(text: lastName);
   }
 
   @override
@@ -47,7 +55,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Image.asset("assets/nav_bar.png"),
                 ),
               ),
-              SafeArea(child: ToolbarBack(title: "ข้อมูลผู้ใช้",)),
+              SafeArea(
+                  child: ToolbarBack(
+                title: "เพิ่มข้อมูลผู้ใช้",
+              )),
             ],
           ),
           Expanded(
@@ -68,49 +79,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     height: 6,
                   ),
-                  TextFieldStrokeBlack(
-                    "",
-                    textController: emailTextController,
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: BlossomText(
-                      "รหัสผ่าน",
-                      size: 16,
-                      color: BlossomTheme.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  TextFieldStrokeBlack(
-                    "",
-                    textController: passwordTextController,
-                    isPasswordType: true,
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: BlossomText(
-                      "ยืนยันรหัสผ่าน",
-                      size: 16,
-                      color: BlossomTheme.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  TextFieldStrokeBlack(
-                    "",
-                    textController: confirmPasswordTextController,
-                    isPasswordType: true,
+                  TextStrokeBlack(
+                    widget._email ?? "",
+                    enable: false,
                   ),
                   SizedBox(
                     height: 12,
@@ -129,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFieldStrokeBlack(
                     "",
-                    textController: phoneNumberTextController,
+                    textController: _phoneNumberTextController,
                     maxLength: 10,
                   ),
                   SizedBox(
@@ -149,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFieldStrokeBlack(
                     "",
-                    textController: nameTextController,
+                    textController: _nameTextController,
                   ),
                   SizedBox(
                     height: 12,
@@ -168,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFieldStrokeBlack(
                     "",
-                    textController: lastNameTextController,
+                    textController: _lastNameTextController,
                   ),
                   SizedBox(
                     height: 12,
@@ -210,11 +181,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           });
                       if (picked != null)
                         setState(() {
-                          selectedDate = picked;
+                          _selectedDate = picked;
                         });
                     },
                     child: TextStrokeBlack(
-                      selectedDate == null ? "" : dateFormat.format(selectedDate),
+                      _selectedDate == null ? "" : _dateFormat.format(_selectedDate),
                     ),
                   ),
                   SizedBox(
@@ -224,15 +195,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     "ต่อไป",
                     true,
                     () {
-                      _provider.goToRegisterSecondPage(
+                      _provider.goToFacebookUpdateProfileSecondPage(
                           context,
-                          emailTextController.text,
-                          passwordTextController.text,
-                          confirmPasswordTextController.text,
-                          phoneNumberTextController.text,
-                          nameTextController.text,
-                          lastNameTextController.text,
-                          selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(selectedDate));
+                          widget._id,
+                          _emailTextController.text,
+                          _phoneNumberTextController.text,
+                          _nameTextController.text,
+                          _lastNameTextController.text,
+                          _selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(_selectedDate));
                     },
                     width: 30 * MediaQuery.of(context).size.width / 100,
                     height: 40,

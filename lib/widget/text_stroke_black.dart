@@ -10,8 +10,10 @@ class TextStrokeBlack extends StatelessWidget {
   double paddingEnd;
   double size;
   TextAlign textAlign;
+  bool enable;
 
-  TextStrokeBlack(this.text, {this.width, this.height, this.paddingStart, this.paddingEnd, this.size, this.textAlign});
+  TextStrokeBlack(this.text,
+      {this.width, this.height, this.paddingStart, this.paddingEnd, this.size, this.textAlign, this.enable = true});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,8 @@ class TextStrokeBlack extends StatelessWidget {
           width: width ?? 80 * MediaQuery.of(context).size.width / 100,
           height: height ?? 48,
           decoration: BoxDecoration(
-              border: Border.all(color: BlossomTheme.black), borderRadius: BorderRadius.all(Radius.circular(5))),
+              border: Border.all(color: BlossomTheme.black), borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: enable ? BlossomTheme.white : BlossomTheme.lightGrayAlpha),
           padding: EdgeInsets.only(left: paddingStart ?? 18, right: paddingEnd ?? 18),
           child: Row(
             children: [

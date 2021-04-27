@@ -13,7 +13,7 @@ class UserProfileModel {
   String phoneNumber;
   String registeredChannel;
   String registeredNote;
-  String skinType;
+  int skinType;
   DateTime updatedAt;
 
   UserProfileModel(

@@ -1,34 +1,33 @@
-import 'package:blossom_clinic/page/register_second/register_second_provider.dart';
-import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
-import 'package:blossom_clinic/widget/acne_treat.dart';
+import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_provider.dart';
+import 'package:blossom_clinic/widget/acne_look_radio_group.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/acne_treat.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/drug_allergy.dart';
-import 'package:blossom_clinic/widget/acne_look_radio_group.dart';
+import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
-class RegisterSecondPage extends StatefulWidget {
+class FacebookUpdateProfileSecondPage extends StatefulWidget {
+  String _id;
   Map<String, String> _profileData;
 
-  RegisterSecondPage(this._profileData);
+  FacebookUpdateProfileSecondPage(this._id, this._profileData);
 
   @override
-  _RegisterSecondPageState createState() => _RegisterSecondPageState();
+  _FacebookUpdateProfileSecondPageState createState() => _FacebookUpdateProfileSecondPageState();
 }
 
-class _RegisterSecondPageState extends State<RegisterSecondPage> {
-  RegisterSecondProvider _provider;
+class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileSecondPage> {
+  FacebookUpdateProfileSecondProvider _provider;
   var _acneTreatTextController = TextEditingController();
   var _drugAllergyTextController = TextEditingController();
 
-  String skinType = "";
-  String acneTypes = "";
-  String acneCareNoted = "";
-  String drugAllergyItems = "";
+  String _skinType = "";
+  String _acneTypes = "";
 
   @override
   void initState() {
@@ -50,7 +49,10 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 child: Image.asset("assets/nav_bar.png"),
               ),
             ),
-            SafeArea(child: ToolbarBack(title: "ประวัติทั่วไป",)),
+            SafeArea(
+                child: ToolbarBack(
+              title: "ประวัติทั่วไป",
+            )),
           ],
         ),
         Expanded(
@@ -69,7 +71,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   ),
                 ),
                 SkinLookRadioGroup((skin) {
-                  skinType = skin;
+                  _skinType = skin;
                 }),
                 SizedBox(
                   height: 12,
@@ -84,7 +86,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   ),
                 ),
                 AcneLookRadioGroup((acne) {
-                  acneTypes = acne;
+                  _acneTypes = acne;
                 }),
                 SizedBox(
                   height: 12,
@@ -130,7 +132,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   "ยืนยัน",
                   true,
                   () {
-                    _provider.callServiceRegister(context, widget._profileData, skinType, acneTypes,
+                    _provider.updateUserProfileFirestore(context, widget._id, widget._profileData, _skinType, _acneTypes,
                         _acneTreatTextController.text, _drugAllergyTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,

@@ -14,6 +14,10 @@ import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_page.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
+import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_page.dart';
+import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_provider.dart';
+import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_page.dart';
+import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_provider.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
@@ -32,6 +36,7 @@ import 'package:blossom_clinic/page/splash_screen_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
@@ -51,35 +56,40 @@ class RouteManager {
       });
 
   static Route routeRegister() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) =>
-              RegisterProvider(Injector.appInstance.get(), Injector.appInstance.get()),
-        )
-      ],
-      child: RegisterPage(),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) =>
+                  RegisterProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+            )
+          ],
+          child: RegisterPage(),
+        );
+      });
 
   static Route routeRegisterSecond(Map<String, String> map) => NoAnimationPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => RegisterSecondProvider(Injector.appInstance.get()),
-        )
-      ],
-      child: RegisterSecondPage(map),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => RegisterSecondProvider(Injector.appInstance.get()),
+            )
+          ],
+          child: RegisterSecondPage(map),
+        );
+      });
 
   static Route routeLogin() => PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
           return MultiProvider(
             providers: [
               ChangeNotifierProvider(
-                  create: (BuildContext context) => LoginProvider(Injector.appInstance.get(),
-                      Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance)),
+                  create: (BuildContext context) => LoginProvider(
+                      Injector.appInstance.get(),
+                      Injector.appInstance.get(),
+                      Injector.appInstance.get(),
+                      Injector.appInstance.get(),
+                      FirebaseAuth.instance,
+                      FacebookAuth.instance)),
             ],
             child: LoginPage(),
           );
@@ -92,6 +102,28 @@ class RouteManager {
         },
         transitionDuration: Duration(milliseconds: 1000),
       );
+
+  static Route routeFacebookUpdateProfile(String email, String name, String id) => MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => FacebookUpdateProfileProvider(Injector.appInstance.get()),
+            )
+          ],
+          child: FacebookUpdateProfilePage(email, name, id),
+        );
+      });
+
+  static Route routeFacebookUpdateProfileSecond(String id, Map<String, String> map) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => FacebookUpdateProfileSecondProvider(Injector.appInstance.get()),
+        )
+      ],
+      child: FacebookUpdateProfileSecondPage(id, map),
+    );
+  });
 
   static Route routeMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
@@ -109,14 +141,12 @@ class RouteManager {
               create: (BuildContext context) => ServiceProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => LoginProvider(Injector.appInstance.get(), Injector.appInstance.get(),
-                  Injector.appInstance.get(), FirebaseAuth.instance),
-            ),
-            ChangeNotifierProvider(
               create: (BuildContext context) => ProfileProvider(),
             ),
           ],
-          child: MainPage(initIndex: initIndex,),
+          child: MainPage(
+            initIndex: initIndex,
+          ),
         );
       });
 
@@ -132,8 +162,7 @@ class RouteManager {
         );
       });
 
-  static Route routeOmise(String orderId, int price) =>
-      MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeOmise(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -143,24 +172,32 @@ class RouteManager {
           child: OmisePage(orderId, price),
         );
       });
-  
+
   static Route routeAddCustomerInformation() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (BuildContext context) {
-        return AddCustomerInformationProvider();
-      },)
-    ],
-      child: AddCustomerInformationPage(),);
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return AddCustomerInformationProvider();
+              },
+            )
+          ],
+          child: AddCustomerInformationPage(),
+        );
+      });
 
   static Route routeDispense() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (BuildContext context) {
-        return DispenseProvider(Injector.appInstance.get());
-      },)
-    ],
-      child: DispensePage(),);
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return DispenseProvider(Injector.appInstance.get());
+              },
+            )
+          ],
+          child: DispensePage(),
+        );
+      });
 
   ////////// Doctor //////////
 

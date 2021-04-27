@@ -28,8 +28,13 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
             });
           } else {
             final result = await _getUserProfileUseCase.execute(event.uid);
-            result.whenWithResult((userProfile) {
-              _goToMainPage(context);
+            result.whenWithResult((userProfile) async {
+              if (userProfile != null) {
+                _goToMainPage(context);
+              } else {
+                await FirebaseAuth.instance.signOut();
+                _goToLoginPage(context);
+              }
             }, (map) async {
               await FirebaseAuth.instance.signOut();
               _goToLoginPage(context);
