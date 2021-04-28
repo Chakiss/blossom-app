@@ -31,7 +31,11 @@ class _HistoryPageState extends State<HistoryPage> {
             SizedBox(
               height: 26,
             ),
-            Center(child: HistorySegmentControl((index) {})),
+            Center(child: HistorySegmentControl((index) {
+              if (index == 2) {
+                Navigator.push(context, RouteManager.routeCallDoctor());
+              }
+            })),
             SizedBox(
               height: 20,
             ),

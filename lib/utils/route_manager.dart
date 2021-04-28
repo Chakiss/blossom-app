@@ -3,6 +3,8 @@ import 'package:blossom_clinic/model/available_slot_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
+import 'package:blossom_clinic/page/call_doctor/call_doctor_page.dart';
+import 'package:blossom_clinic/page/call_doctor/call_doctor_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/dispense/dispense_page.dart';
@@ -198,6 +200,19 @@ class RouteManager {
           child: DispensePage(),
         );
       });
+
+  static Route routeCallDoctor() => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return CallDoctorProvider();
+          },
+        )
+      ],
+      child: CallDoctorPage(),
+    );
+  });
 
   ////////// Doctor //////////
 

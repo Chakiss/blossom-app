@@ -4,7 +4,6 @@ import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 
 class CallDoctorProvider extends BaseProvider with ChangeNotifier {
-
   RTCVideoView videoView;
   RTCVideoView videoViewSelf;
   P2PSession callSession;
@@ -18,12 +17,18 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   void signInConnectyCube(BuildContext context) {
     CubeUser cubeUser = CubeUser(
         id: 1,
-        login: "email",
-        email: "email",
-        fullName: "fullName",
-        password: "password");
+        login: "prew.sitthirat",
+        email: "prew.sitthirat@gmail.com",
+        fullName: "songkhom sitthirat",
+        password: "12345678");
 
-    _connectCubeChat(context, cubeUser);
+    createSession().then((cubeSession) {
+      signIn(cubeUser).then((cubeUser) {
+        _connectCubeChat(context, cubeUser);
+      }).catchError((error) {});
+    }).catchError((error) {});
+
+    // _connectCubeChat(context, cubeUser);
   }
 
   void _connectCubeChat(BuildContext context, CubeUser cubeUser) {
@@ -45,7 +50,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callClient.onReceiveNewSession = (incomingCallSession) {};
     callClient.onSessionClosed = (closedCallSession) {};
 
-    Set<int> opponentsIds = {0};
+    Set<int> opponentsIds = {4132679};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
     _initCallSession(context, callSession);
   }
@@ -124,8 +129,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.onSessionClosed = (callSession) {
       // called when current session was closed
       logger.d("Prew, onSessionClosed");
-      if (dataRef != null) {
-      }
+      if (dataRef != null) {}
     };
 
     callServiceStampStartVideoCall(callSession);

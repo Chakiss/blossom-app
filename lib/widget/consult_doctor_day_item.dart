@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ConsultDoctorDayItem extends StatefulWidget {
   AvailableSlotModel _data;
   String _title;
-  DateTime selectedDate;
+  String selectedDate;
   Function(AvailableSlotModel) _onPressed;
 
   ConsultDoctorDayItem(this._data, this._title, this._onPressed, {this.selectedDate});

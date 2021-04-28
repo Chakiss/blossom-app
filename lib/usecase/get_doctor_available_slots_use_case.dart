@@ -25,7 +25,7 @@ class GetDoctorAvailableSlotsUseCase extends BaseAsyncUseCase<String, List<Avail
           .map((e) => AvailableSlotModel(
               id: e.id,
               createdAt: e.data()["createdAt"].toDate(),
-              date: e.data()["date"].toDate(),
+              date: e.data()["date"],
               slotType: e.data()["slotType"],
               timeSlots: _getTimeSlotFromMap(e.data()["timeSlots"].toList()),
               updatedAt: e.data()["updatedAt"].toDate()))
@@ -56,8 +56,8 @@ class GetDoctorAvailableSlotsUseCase extends BaseAsyncUseCase<String, List<Avail
       list.add(SlotModel(
           id: slot["id"],
           isAvailable: slot["isAvailable"],
-          timeEnd: slot["timeEnd"].toDate(),
-          timeStart: slot["timeStart"].toDate(),
+          timeEnd: slot["timeEnd"],
+          timeStart: slot["timeStart"],
           title: slot["title"]));
     });
     return list;

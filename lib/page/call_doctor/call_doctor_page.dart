@@ -5,13 +5,24 @@ import 'package:provider/provider.dart';
 
 import 'call_doctor_provider.dart';
 
-class CallDoctorPage extends StatelessWidget {
+class CallDoctorPage extends StatefulWidget {
 
+  @override
+  _CallDoctorPageState createState() => _CallDoctorPageState();
+}
+
+class _CallDoctorPageState extends State<CallDoctorPage> {
   CallDoctorProvider _provider;
 
   @override
+  void initState() {
+    super.initState();
+    _provider = Provider.of(context, listen: false);
+    _provider.signInConnectyCube(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _initState(context);
     return Stack(
       children: [
         Scaffold(
@@ -95,10 +106,5 @@ class CallDoctorPage extends StatelessWidget {
         )
       ],
     );
-  }
-
-  void _initState(BuildContext context) {
-    _provider = Provider.of(context, listen: false);
-    _provider.signInConnectyCube(context);
   }
 }

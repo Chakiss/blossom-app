@@ -46,7 +46,7 @@ class ProfilePage extends StatelessWidget {
                           radius: 40 * MediaQuery.of(context).size.width / 200,
                           backgroundColor: BlossomTheme.white,
                           backgroundImage: NetworkImage(
-                              "https://lh3.googleusercontent.com/proxy/T8Z4qU1MzCNKKx0oUZyONA74RgwWPPmUOuaINHWQFiRq7EhaSwOTsVlcp5io-Ny3Scy_cYofCuUeL4cFN6QMVEl8N-tAHBebiLuT7VyWRvmHqGFAE4f7HAb7Kgf3pZqGy7nLEs0zEA"),
+                              "https://lh3.googleusercontent.com/proxy/R91b-c-f_re2Eu18ulnZmfBjyeJBBfXAIqPHZKH3tB8CFy22gv1OD42WDFyL_ZkvNuzaLRknpm3m6txzboqH44AfMhkAEYjvXMqiebu4PrrZLeJUPUz6Gh54puQPAm3A97HjCEawPg"),
                         ),
                       ),
                     ),

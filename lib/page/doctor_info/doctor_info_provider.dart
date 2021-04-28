@@ -12,7 +12,7 @@ class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
 
   List<ConsultDoctorDayItem> list;
   AvailableSlotModel availableSlotModel;
-  DateTime selectedDate = DateTime.now();
+  String selectedDate = "";
 
   Future<void> getDoctorAvailableSlots(BuildContext context, String doctorId) async {
     final result = await _getDoctorAvailableSlotsUseCase.execute(doctorId);
@@ -24,11 +24,12 @@ class DoctorInfoProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _generateConsultDoctorDayList(List<AvailableSlotModel> data) {
+    final dateFormatBefore = DateFormat("yyyy-MM-dd");
     final dateFormat = DateFormat("dd MMM", "TH");
     list = data
         .map((e) => ConsultDoctorDayItem(
               e,
-              dateFormat.format(e.date),
+              dateFormat.format(dateFormatBefore.parse(e.date)),
               (value) {
                 selectedDate = value.date;
                 availableSlotModel = value;

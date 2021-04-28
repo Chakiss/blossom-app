@@ -29,6 +29,7 @@ class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
   ConfirmConsultProvider _provider;
   List<SlotModel> _list;
   String selectedTime = "";
+  DateFormat _dateFormatBefore = DateFormat("yyyy-MM-dd");
   DateFormat _dateFormat = DateFormat("d MMMM yyyy", "TH");
 
   @override
@@ -139,7 +140,7 @@ class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
                             return CustomDialogTwoButton(
                                 title: "ยืนยัน",
                                 description: "คุณยืนยันที่จะจองคิว ${widget._doctorInfoModel?.displayName ?? ""} " +
-                                    "ในวันที่ ${_dateFormat.format(widget._availableSlotModel.date)} " +
+                                    "ในวันที่ ${_dateFormat.format(_dateFormatBefore.parse(widget._availableSlotModel.date))} " +
                                     "เวลา ${_provider.slotModel?.title ?? ""} " +
                                     "ระยะเวลา ${_provider.timeSlotModel.period} นาที " +
                                     "มีค่าใช้จ่ายในการปรึกษาทั้งสิ้น ${_provider.timeSlotModel?.priceSale ?? 0} บาท",

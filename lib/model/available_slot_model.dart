@@ -3,7 +3,7 @@ import 'package:blossom_clinic/model/time_slot_model.dart';
 class AvailableSlotModel {
   String id;
   DateTime createdAt;
-  DateTime date;
+  String date;
   int slotType;
   List<TimeSlotModel> timeSlots;
   DateTime updatedAt;

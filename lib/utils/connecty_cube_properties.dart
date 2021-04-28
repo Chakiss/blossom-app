@@ -1,8 +1,8 @@
 class ConnectyCubProperties {
 
-  static const String APP_ID = "4079";
-  static const String AUTH_KEY = "DSMpDUXpyaYfgkC";
-  static const String AUTH_SECRET = "yrHBrmsDW562HHE";
-  static const String ACCOUNT_ID = "hMwc3xLyYHS5uGyZLZ_u";
+  static const String APP_ID = "4655";
+  static const String AUTH_KEY = "88p8mWQ9NMcx4SL";
+  static const String AUTH_SECRET = "XPnwQ5uR5FFJAXj";
+  static const String ACCOUNT_ID = "3ycgHXVqrXEdLZTpadvQ";
 
 }
