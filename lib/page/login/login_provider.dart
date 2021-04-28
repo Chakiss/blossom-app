@@ -53,13 +53,14 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> loginWithFacebook(BuildContext context) async {
     final result = await _loginFacebookUseCase.execute("");
-    result.whenWithResult((userCredential) async {
+    result.whenWithResult((mapResult) async {
       showProgressDialog(context);
+      final userCredential = mapResult["userCredential"] as UserCredential;
       final profileResult = await _getUserProfileUseCase.execute(userCredential.user.uid);
       Navigator.pop(context);
       profileResult.whenWithResult((data) {
         if (data == null) {
-          _goToFacebookUpdateProfile(context, userCredential.user, userCredential.user.uid);
+          _goToFacebookUpdateProfile(context, mapResult);
         } else {
           _goToMainPage(context);
         }
@@ -79,10 +80,10 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
       Navigator.pushReplacement(context, RouteManager.routeDoctorMainPage());
   }
 
-  void _goToFacebookUpdateProfile(BuildContext context, User user, String id) async {
+  void _goToFacebookUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
     final userData = await _facebookAuth.getUserData();
     String email = userData["email"] ?? "";
     String name = userData["name"] ?? "";
-    Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, id));
+    Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
   }
 }

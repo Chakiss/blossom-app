@@ -9,7 +9,7 @@ class FacebookUpdateProfileProvider extends BaseProvider with ChangeNotifier {
 
   FacebookUpdateProfileProvider(this._validatePhoneNumberUseCase);
 
-  Future<void> goToFacebookUpdateProfileSecondPage(BuildContext context, String id, String email, String phoneNumber,
+  Future<void> goToFacebookUpdateProfileSecondPage(BuildContext context, Map<String, dynamic> mapResult, String email, String phoneNumber,
       String name, String lastName, String dateOfBirth) async {
     if (email?.isEmpty ?? true) {
       errorHandle.proceed(context, {"message": "กรุณากรอกอีเมล์"});
@@ -35,14 +35,13 @@ class FacebookUpdateProfileProvider extends BaseProvider with ChangeNotifier {
       errorHandle.proceed(context, {"message": "กรุณาเลือกวันเดือนปีเกิด"});
       return;
     }
+    mapResult["email"] = email;
+    mapResult["phoneNumber"] = phoneNumber;
+    mapResult["name"] = name;
+    mapResult["lastName"] = lastName;
+    mapResult["dateOfBirth"] = dateOfBirth;
     Navigator.push(
         context,
-        RouteManager.routeFacebookUpdateProfileSecond(id, {
-          "email": email,
-          "phoneNumber": phoneNumber,
-          "name": name,
-          "lastName": lastName,
-          "dateOfBirth": dateOfBirth,
-        }));
+        RouteManager.routeFacebookUpdateProfileSecond(mapResult));
   }
 }

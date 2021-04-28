@@ -12,10 +12,9 @@ import 'package:provider/provider.dart';
 import '../../blossom_theme.dart';
 
 class FacebookUpdateProfileSecondPage extends StatefulWidget {
-  String _id;
-  Map<String, String> _profileData;
+  Map<String, dynamic> _mapResult;
 
-  FacebookUpdateProfileSecondPage(this._id, this._profileData);
+  FacebookUpdateProfileSecondPage(this._mapResult);
 
   @override
   _FacebookUpdateProfileSecondPageState createState() => _FacebookUpdateProfileSecondPageState();
@@ -132,7 +131,7 @@ class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileS
                   "ยืนยัน",
                   true,
                   () {
-                    _provider.updateUserProfileFirestore(context, widget._id, widget._profileData, _skinType, _acneTypes,
+                    _provider.updateUserProfileFirestore(context, widget._mapResult, _skinType, _acneTypes,
                         _acneTreatTextController.text, _drugAllergyTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,

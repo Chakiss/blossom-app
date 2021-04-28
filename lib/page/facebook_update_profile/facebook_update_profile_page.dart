@@ -11,9 +11,10 @@ import 'package:provider/provider.dart';
 import '../../blossom_theme.dart';
 
 class FacebookUpdateProfilePage extends StatefulWidget {
-  String _email, _name, _id;
+  String _email, _name;
+  Map<String, dynamic> _mapResult;
 
-  FacebookUpdateProfilePage(this._email, this._name, this._id);
+  FacebookUpdateProfilePage(this._email, this._name, this._mapResult);
 
   @override
   _FacebookUpdateProfilePageState createState() => _FacebookUpdateProfilePageState();
@@ -197,7 +198,7 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
                     () {
                       _provider.goToFacebookUpdateProfileSecondPage(
                           context,
-                          widget._id,
+                          widget._mapResult,
                           _emailTextController.text,
                           _phoneNumberTextController.text,
                           _nameTextController.text,

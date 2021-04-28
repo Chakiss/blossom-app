@@ -103,25 +103,25 @@ class RouteManager {
         transitionDuration: Duration(milliseconds: 1000),
       );
 
-  static Route routeFacebookUpdateProfile(String email, String name, String id) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeFacebookUpdateProfile(String email, String name, Map<String, dynamic> mapResult) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) => FacebookUpdateProfileProvider(Injector.appInstance.get()),
             )
           ],
-          child: FacebookUpdateProfilePage(email, name, id),
+          child: FacebookUpdateProfilePage(email, name, mapResult),
         );
       });
 
-  static Route routeFacebookUpdateProfileSecond(String id, Map<String, String> map) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeFacebookUpdateProfileSecond(Map<String, dynamic> mapResult) => MaterialPageRoute(builder: (BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (BuildContext context) => FacebookUpdateProfileSecondProvider(Injector.appInstance.get()),
         )
       ],
-      child: FacebookUpdateProfileSecondPage(id, map),
+      child: FacebookUpdateProfileSecondPage(mapResult),
     );
   });
 

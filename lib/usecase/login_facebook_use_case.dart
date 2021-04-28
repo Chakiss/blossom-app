@@ -4,7 +4,7 @@ import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-class LoginFacebookUseCase extends BaseAsyncUseCase<String, UserCredential> {
+class LoginFacebookUseCase extends BaseAsyncUseCase<String, Map<String, dynamic>> {
   
   FacebookAuth _facebookAuth;
   FirebaseAuth _firebaseAuth;
@@ -12,13 +12,17 @@ class LoginFacebookUseCase extends BaseAsyncUseCase<String, UserCredential> {
   LoginFacebookUseCase(this._facebookAuth, this._firebaseAuth);
 
   @override
-  Future<Result<UserCredential>> execute(String parameter) async {
+  Future<Result<Map<String, dynamic>>> execute(String parameter) async {
     try {
       final result = await _facebookAuth.login();
       final AccessToken token = result.accessToken;
       final facebookAuthCredential = FacebookAuthProvider.credential(token.token);
       final userCredential = await _firebaseAuth.signInWithCredential(facebookAuthCredential);
-      return Success(userCredential);
+      Map<String, dynamic> mapResult = {
+        "facebookAuthCredential": facebookAuthCredential,
+        "userCredential": userCredential
+      };
+      return Success(mapResult);
     } catch(e) {
       return Error(ErrorUtils.getErrorMessage(e));
     }
