@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class DrugAllergy extends StatefulWidget {
 
   TextEditingController _textEditingController;
+  Function(bool) _listener;
 
-  DrugAllergy(this._textEditingController);
+  DrugAllergy(this._textEditingController, this._listener);
 
   @override
   _DrugAllergyState createState() => _DrugAllergyState();
@@ -32,6 +33,7 @@ class _DrugAllergyState extends State<DrugAllergy> {
                     value: "ใช่",
                     groupValue: _value,
                     onChanged: (String value) {
+                      widget._listener.call(true);
                       setState(() {
                         _value = value;
                         enable = true;
@@ -51,6 +53,7 @@ class _DrugAllergyState extends State<DrugAllergy> {
                     value: "ไม่ใช่",
                     groupValue: _value,
                     onChanged: (String value) {
+                      widget._listener.call(false);
                       setState(() {
                         _value = value;
                         enable = false;

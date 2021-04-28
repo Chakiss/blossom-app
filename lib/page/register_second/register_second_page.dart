@@ -98,7 +98,9 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                AcneTreat(_acneTreatTextController),
+                AcneTreat(_acneTreatTextController, (boolean) {
+
+                }),
                 SizedBox(
                   height: 12,
                 ),
@@ -122,7 +124,9 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                     color: BlossomTheme.black,
                   ),
                 ),
-                DrugAllergy(_drugAllergyTextController),
+                DrugAllergy(_drugAllergyTextController, (boolean) {
+
+                }),
                 SizedBox(
                   height: 40,
                 ),

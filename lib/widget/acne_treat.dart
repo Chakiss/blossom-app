@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class AcneTreat extends StatefulWidget {
 
   TextEditingController _textEditingController;
+  Function(bool) _listener;
 
-  AcneTreat(this._textEditingController);
+  AcneTreat(this._textEditingController, this._listener);
 
   @override
   _AcneTreatState createState() => _AcneTreatState();
@@ -32,6 +33,7 @@ class _AcneTreatState extends State<AcneTreat> {
                     value: "เคย",
                     groupValue: _value,
                     onChanged: (String value) {
+                      widget._listener.call(true);
                       setState(() {
                         _value = value;
                         enable = true;
@@ -51,6 +53,7 @@ class _AcneTreatState extends State<AcneTreat> {
                     value: "ไม่เคย",
                     groupValue: _value,
                     onChanged: (String value) {
+                      widget._listener.call(false);
                       setState(() {
                         _value = value;
                         enable = false;

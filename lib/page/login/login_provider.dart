@@ -52,9 +52,9 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> loginWithFacebook(BuildContext context) async {
+    showProgressDialog(context);
     final result = await _loginFacebookUseCase.execute("");
     result.whenWithResult((mapResult) async {
-      showProgressDialog(context);
       final userCredential = mapResult["userCredential"] as UserCredential;
       final profileResult = await _getUserProfileUseCase.execute(userCredential.user.uid);
       Navigator.pop(context);
@@ -68,6 +68,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
         errorHandle.proceed(context, map);
       });
     }, (map) {
+      Navigator.pop(context);
       errorHandle.proceed(context, map);
     });
   }

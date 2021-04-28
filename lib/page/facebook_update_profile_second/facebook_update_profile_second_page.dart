@@ -27,6 +27,8 @@ class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileS
 
   String _skinType = "";
   String _acneTypes = "";
+  bool isAcneTreat;
+  bool isDrugAllergy;
 
   @override
   void initState() {
@@ -99,7 +101,9 @@ class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileS
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                AcneTreat(_acneTreatTextController),
+                AcneTreat(_acneTreatTextController, (boolean) {
+                  isAcneTreat = boolean;
+                }),
                 SizedBox(
                   height: 12,
                 ),
@@ -123,7 +127,9 @@ class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileS
                     color: BlossomTheme.black,
                   ),
                 ),
-                DrugAllergy(_drugAllergyTextController),
+                DrugAllergy(_drugAllergyTextController, (boolean) {
+                  isDrugAllergy = boolean;
+                }),
                 SizedBox(
                   height: 40,
                 ),
@@ -131,8 +137,8 @@ class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileS
                   "ยืนยัน",
                   true,
                   () {
-                    _provider.updateUserProfileFirestore(context, widget._mapResult, _skinType, _acneTypes,
-                        _acneTreatTextController.text, _drugAllergyTextController.text);
+                    _provider.updateUserProfileFirestore(context, widget._mapResult, _skinType, _acneTypes, isAcneTreat,
+                        _acneTreatTextController.text, isDrugAllergy, _drugAllergyTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,

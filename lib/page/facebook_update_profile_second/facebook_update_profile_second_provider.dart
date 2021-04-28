@@ -9,13 +9,21 @@ class FacebookUpdateProfileSecondProvider extends BaseProvider with ChangeNotifi
   FacebookUpdateProfileSecondProvider(this._updateProfileFacebookLoginUseCase);
 
   Future<void> updateUserProfileFirestore(BuildContext context, Map<String, dynamic> mapResult,
-      String skinType, String acneTypes, String acneTreatText, String drugAllergyText) async {
+      String skinType, String acneTypes, bool isAcneTreat, String acneTreatText, bool isDrugAllergy, String drugAllergyText) async {
     if (skinType?.isEmpty ?? true) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะผิว"});
       return;
     }
     if (acneTypes?.isEmpty ?? true) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะสิว"});
+      return;
+    }
+    if (isAcneTreat == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกประวัติการรักษาสิว"});
+      return;
+    }
+    if (isDrugAllergy == null) {
+      errorHandle.proceed(context, {"message": "กรุณาระบุประวัติแพ้ยา"});
       return;
     }
 
