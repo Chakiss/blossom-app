@@ -51,26 +51,24 @@ class TextFieldStrokeBlack extends StatelessWidget {
                 color: enabled ? BlossomTheme.black : BlossomTheme.gray,
               ),
               borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: Container(
-            child: TextField(
-                cursorColor: BlossomTheme.darkPink,
-                keyboardType: keyboardType,
-                enabled: enabled ?? true,
-                obscureText: isPasswordType ?? false,
-                onChanged: onChange ?? (value) {},
-                controller: textController ?? TextEditingController(),
-                buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
-                maxLength: maxLength,
-                style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
-                textAlign: textAlign ?? TextAlign.left,
-                maxLines: maxLines ?? 1,
-                textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    hintText: hint,
-                    hintStyle: TextStyle(color: BlossomTheme.gray))),
-          )),
+          child: TextField(
+              cursorColor: BlossomTheme.darkPink,
+              keyboardType: keyboardType,
+              enabled: enabled ?? true,
+              obscureText: isPasswordType ?? false,
+              onChanged: onChange ?? (value) {},
+              controller: textController ?? TextEditingController(),
+              buildCounter: (BuildContext context, {int currentLength, int maxLength, bool isFocused}) => null,
+              maxLength: maxLength,
+              style: TextStyle(color: BlossomTheme.black, fontFamily: FONT_PROMPT, fontSize: 15),
+              textAlign: textAlign ?? TextAlign.left,
+              maxLines: maxLines ?? 1,
+              textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  hintText: hint,
+                  hintStyle: TextStyle(color: BlossomTheme.gray)))),
     );
   }
 }

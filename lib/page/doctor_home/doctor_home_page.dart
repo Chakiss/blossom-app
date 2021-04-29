@@ -51,6 +51,6 @@ class DoctorHomePage extends StatelessWidget {
   }
 
   void _goToDoctorDiagnosePage(BuildContext context) {
-    Navigator.push(context, RouteManager.routeDoctorDiagnosePage());
+    Navigator.push(context, RouteManager.routeDoctorDiagnose());
   }
 }

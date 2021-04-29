@@ -3,52 +3,16 @@ import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 
-class CallDoctorProvider extends BaseProvider with ChangeNotifier {
+class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   RTCVideoView videoView;
   RTCVideoView videoViewSelf;
   P2PSession callSession;
-  P2PClient callClient;
   RTCVideoRenderer streamRender;
   RTCVideoRenderer streamRenderSelf;
-  String dataRef;
   bool isMuteAudio = false;
   bool isVideoEnable = true;
 
-  void signInConnectyCube(BuildContext context) {
-    CubeUser cubeUser = CubeUser(
-        id: 4132606,
-        login: "prew.sitthirat",
-        email: "prew.sitthirat@gmail.com",
-        fullName: "songkhom sitthirat",
-        password: "12345678");
-    _connectCubeChat(context, cubeUser);
-  }
-
-  void _connectCubeChat(BuildContext context, CubeUser cubeUser) {
-    if (CubeChatConnection.instance.isAuthenticated()) {
-      _initCustomerCallClient(context);
-    } else {
-      CubeChatConnection.instance.login(cubeUser).then((value) {
-        _initCustomerCallClient(context);
-      }).catchError((error) {
-        print(error);
-      });
-    }
-  }
-
-  void _initCustomerCallClient(BuildContext context) {
-    callClient = P2PClient.instance;
-    callClient.init();
-
-    callClient.onReceiveNewSession = (incomingCallSession) {};
-    callClient.onSessionClosed = (closedCallSession) {};
-
-    Set<int> opponentsIds = {4132679};
-    callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
-    _initCallSession(context, callSession);
-  }
-
-  void _initCallSession(BuildContext context, P2PSession callSession) {
+  void initCallSession(BuildContext context, P2PSession callSession) {
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();
@@ -123,10 +87,6 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     if (streamRender != null) {
       await streamRender.dispose();
     }
-    if (callClient != null) {
-      callClient.destroy();
-      callClient.init();
-    }
     videoViewSelf = null;
     videoView = null;
     notifyListeners();
@@ -142,9 +102,6 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     }
     if (callSession != null) {
       callSession.hungUp();
-    }
-    if (callClient != null) {
-      callClient.destroy();
     }
   }
 

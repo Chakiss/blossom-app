@@ -61,7 +61,7 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> _goToDoctorMainPage(BuildContext context) async {
     Future.delayed(const Duration(milliseconds: 1000), () {
-      Navigator.pushReplacement(context, RouteManager.routeDoctorMainPage());
+      Navigator.pushReplacement(context, RouteManager.routeDoctorMain());
     });
   }
 }

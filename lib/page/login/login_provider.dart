@@ -78,7 +78,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _goToDoctorMainPage(BuildContext context) {
-      Navigator.pushReplacement(context, RouteManager.routeDoctorMainPage());
+      Navigator.pushReplacement(context, RouteManager.routeDoctorMain());
   }
 
   void _goToFacebookUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {

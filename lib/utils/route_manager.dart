@@ -3,6 +3,8 @@ import 'package:blossom_clinic/model/available_slot_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
+import 'package:blossom_clinic/page/call_customer/call_customer_page.dart';
+import 'package:blossom_clinic/page/call_customer/call_customer_provider.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_page.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
@@ -21,6 +23,8 @@ import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_prof
 import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_page.dart';
 import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_provider.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
+import 'package:blossom_clinic/page/incoming_call_page/incoming_call_page.dart';
+import 'package:blossom_clinic/page/incoming_call_page/incoming_call_provider.dart';
 import 'package:blossom_clinic/page/login/login_page.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/page/main/main_page.dart';
@@ -35,6 +39,7 @@ import 'package:blossom_clinic/page/register_second/register_second_provider.dar
 import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:blossom_clinic/page/splash_screen_page.dart';
 import 'package:blossom_clinic/page/splash_screen_provider.dart';
+import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -216,7 +221,7 @@ class RouteManager {
 
   ////////// Doctor //////////
 
-  static Route routeDoctorMainPage() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorMain() => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -239,7 +244,7 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorDiagnosePage() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorDiagnose() => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -251,4 +256,30 @@ class RouteManager {
           child: DoctorDiagnosePage(),
         );
       });
+
+  static Route routeDoctorIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return IncomingCallProvider();
+          },
+        )
+      ],
+      child: IncomingCallPage(callSession),
+    );
+  });
+
+  static Route routeCallCustomer(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return CallCustomerProvider();
+          },
+        )
+      ],
+      child: CallCustomerPage(callSession),
+    );
+  });
 }

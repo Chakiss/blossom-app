@@ -49,6 +49,7 @@ class LoginPage extends StatelessWidget {
                   "email@email.com",
                   textController: _emailTextController,
                   keyboardType: TextInputType.emailAddress,
+                  textAlignVertical: TextAlignVertical.top,
                 ),
                 SizedBox(
                   height: 10,
@@ -68,6 +69,7 @@ class LoginPage extends StatelessWidget {
                   "",
                   textController: _passwordTextController,
                   isPasswordType: true,
+                  textAlignVertical: TextAlignVertical.top,
                 ),
                 SizedBox(
                   height: 6,

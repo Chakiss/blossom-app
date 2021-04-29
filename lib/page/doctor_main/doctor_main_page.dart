@@ -9,6 +9,7 @@ class DoctorMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DoctorMainProvider provider = Provider.of(context, listen: false);
+    provider.connectConnectyCube(context);
     return Scaffold(
       body: Container(
         child: Container(
