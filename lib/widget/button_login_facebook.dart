@@ -30,17 +30,20 @@ class ButtonLoginFacebook extends StatelessWidget {
           padding: EdgeInsets.only(left: 12, right: 12),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-                margin: EdgeInsets.only(top: 8, bottom: 8),
-                child: Image.asset("assets/logo_facebook_white.png")),
             BlossomText(
               text,
               size: textSize ?? 16,
               color: isEnable ? BlossomTheme.white : BlossomTheme.black,
               fontWeight: fontWeight,
-            )
+            ),
+            SizedBox(
+              width: 12,
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 8, bottom: 8),
+                child: Image.asset("assets/logo_facebook_white.png")),
           ],
         ),
         onPressed: isEnable ? onPressed : null,

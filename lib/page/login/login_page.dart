@@ -100,7 +100,7 @@ class LoginPage extends StatelessWidget {
                   height: 16,
                 ),
                 ButtonLoginFacebook(
-                  "เข้าสู่ระบบด้วย Facebook",
+                  "เข้าสู่ระบบด้วย",
                   true,
                       () {
                     _provider.loginWithFacebook(context);
