@@ -1,23 +1,22 @@
 import 'package:blossom_clinic/base/base_async_use_case.dart';
 import 'package:blossom_clinic/model/base/result.dart';
-import 'package:blossom_clinic/model/update_profile_facebook_login_model.dart';
-import 'package:blossom_clinic/model/user_profile_model.dart';
+import 'package:blossom_clinic/model/update_profile_facebook_login_request_model.dart';
 import 'package:blossom_clinic/utils/error_utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
-class UpdateProfileFacebookLoginUseCase extends BaseAsyncUseCase<Map<String, dynamic>, UserProfileModel> {
-  FirebaseFirestore _firestore;
+class UpdateProfileFacebookLoginUseCase extends BaseAsyncUseCase<UpdateProfileFacebookLoginRequestModel, dynamic> {
+  FirebaseFunctions _firebaseFunctions;
 
-  UpdateProfileFacebookLoginUseCase(this._firestore);
+  UpdateProfileFacebookLoginUseCase(this._firebaseFunctions);
 
   @override
-  Future<Result<UserProfileModel>> execute(Map<String, dynamic> parameter) async {
+  Future<Result<dynamic>> execute(UpdateProfileFacebookLoginRequestModel parameter) async {
     try {
-      final id = parameter["id"];
-      UpdateProfileFacebookLoginModel requestModel = (parameter["requestModel"] as UpdateProfileFacebookLoginModel);
-      final data = await _firestore.collection("patients").doc(id).set(requestModel.toJson());
-      return Success(null);
+      HttpsCallable callable = _firebaseFunctions.httpsCallable("users-updateApplicationUser");
+      final result = await callable.call(parameter.toJson());
+      return Success(result.data);
     } catch (e) {
+      print(e);
       return Error(ErrorUtils.getErrorMessage(e));
     }
   }

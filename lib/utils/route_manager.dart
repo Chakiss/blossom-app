@@ -120,7 +120,7 @@ class RouteManager {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => FacebookUpdateProfileSecondProvider(Injector.appInstance.get()),
+          create: (BuildContext context) => FacebookUpdateProfileSecondProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
         )
       ],
       child: FacebookUpdateProfileSecondPage(mapResult),
