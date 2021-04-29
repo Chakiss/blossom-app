@@ -16,19 +16,12 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
   void signInConnectyCube(BuildContext context) {
     CubeUser cubeUser = CubeUser(
-        id: 1,
+        id: 4132606,
         login: "prew.sitthirat",
         email: "prew.sitthirat@gmail.com",
         fullName: "songkhom sitthirat",
         password: "12345678");
-
-    createSession().then((cubeSession) {
-      signIn(cubeUser).then((cubeUser) {
-        _connectCubeChat(context, cubeUser);
-      }).catchError((error) {});
-    }).catchError((error) {});
-
-    // _connectCubeChat(context, cubeUser);
+    _connectCubeChat(context, cubeUser);
   }
 
   void _connectCubeChat(BuildContext context, CubeUser cubeUser) {
@@ -129,13 +122,8 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.onSessionClosed = (callSession) {
       // called when current session was closed
       logger.d("Prew, onSessionClosed");
-      if (dataRef != null) {}
     };
 
-    callServiceStampStartVideoCall(callSession);
-  }
-
-  Future<void> callServiceStampStartVideoCall(P2PSession callSession) async {
     callSession.startCall();
   }
 

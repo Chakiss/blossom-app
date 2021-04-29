@@ -5,24 +5,13 @@ import 'package:provider/provider.dart';
 
 import 'call_doctor_provider.dart';
 
-class CallDoctorPage extends StatefulWidget {
-
-  @override
-  _CallDoctorPageState createState() => _CallDoctorPageState();
-}
-
-class _CallDoctorPageState extends State<CallDoctorPage> {
+class CallDoctorPage extends StatelessWidget {
   CallDoctorProvider _provider;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.signInConnectyCube(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
@@ -36,16 +25,24 @@ class _CallDoctorPageState extends State<CallDoctorPage> {
                   })),
                   Align(
                     alignment: Alignment.topRight,
-                    child: Container(
-                      width: 25 * MediaQuery.of(context).size.width / 100,
-                      margin: EdgeInsets.all(20),
-                      child: AspectRatio(
-                        aspectRatio: 9 / 16,
-                        child: Container(child: Consumer<CallDoctorProvider>(
-                            builder: (BuildContext context, CallDoctorProvider value, Widget child) {
-                          return value.videoViewSelf == null ? Container() : value.videoViewSelf;
-                        })),
-                      ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          width: 36 * MediaQuery.of(context).size.width / 100,
+                          margin: EdgeInsets.only(top: 10, right: 10),
+                          child: AspectRatio(
+                            aspectRatio: 3 / 4,
+                            child: Container(
+                                child: Consumer<CallDoctorProvider>(
+                                builder: (BuildContext context, CallDoctorProvider value, Widget child) {
+                              return value.videoViewSelf == null ? Container() : value.videoViewSelf;
+                            })),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -85,7 +82,7 @@ class _CallDoctorPageState extends State<CallDoctorPage> {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          _provider.setVideoEnableDisable();
+                          _provider.setMuteAudio();
                         },
                         behavior: HitTestBehavior.opaque,
                         child: SvgPicture.asset("assets/ic_microphone.svg")),

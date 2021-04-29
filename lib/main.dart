@@ -33,8 +33,8 @@ void _initConnectycube() {
     ConnectyCubProperties.AUTH_KEY,
     ConnectyCubProperties.AUTH_SECRET,
     onSessionRestore: () {
-
-    },
+      return createSession();
+    }
   );
 }
 
