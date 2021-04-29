@@ -10,6 +10,8 @@ class CallCustomerPage extends StatelessWidget {
 
   P2PSession _callSession;
   CallCustomerProvider _provider;
+  bool _isMuteAudio = false;
+  bool _isVideoEnable = true;
 
   CallCustomerPage(this._callSession);
 
@@ -17,7 +19,6 @@ class CallCustomerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.initCallSession(context, _callSession);
-    _callSession.acceptCall();
     return Stack(
       children: [
         Scaffold(
@@ -88,14 +89,14 @@ class CallCustomerPage extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          _provider.setMuteAudio();
+                          setMuteAudio();
                         },
                         behavior: HitTestBehavior.opaque,
                         child: SvgPicture.asset("assets/ic_microphone.svg")),
                     Spacer(),
                     GestureDetector(
                         onTap: () {
-                          _provider.setVideoEnableDisable();
+                          setVideoEnableDisable();
                         },
                         behavior: HitTestBehavior.opaque,
                         child: SvgPicture.asset("assets/ic_camera.svg")),
@@ -109,5 +110,27 @@ class CallCustomerPage extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void setMuteAudio() {
+    if (_callSession != null) {
+      if (_isMuteAudio) {
+        _isMuteAudio = false;
+      } else {
+        _isMuteAudio = true;
+      }
+      _callSession.setMicrophoneMute(_isMuteAudio);
+    }
+  }
+
+  void setVideoEnableDisable() {
+    if (_callSession != null) {
+      if (_isVideoEnable) {
+        _isVideoEnable = false;
+      } else {
+        _isVideoEnable = true;
+      }
+      _callSession.setVideoEnabled(_isVideoEnable);
+    }
   }
 }

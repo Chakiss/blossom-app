@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +8,10 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   P2PSession callSession;
   RTCVideoRenderer streamRender;
   RTCVideoRenderer streamRenderSelf;
-  bool isMuteAudio = false;
-  bool isVideoEnable = true;
 
   void initCallSession(BuildContext context, P2PSession callSession) {
+    this.callSession = callSession;
+
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();
@@ -77,9 +76,9 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    callSession.startCall();
+    callSession.acceptCall();
   }
-  
+
   Future<void> _handleRejectHangUpNoAnswer(BuildContext context) async {
     if (streamRenderSelf != null) {
       await streamRenderSelf.dispose();
@@ -102,28 +101,6 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     }
     if (callSession != null) {
       callSession.hungUp();
-    }
-  }
-
-  void setMuteAudio() {
-    if (callSession != null) {
-      if (isMuteAudio) {
-        isMuteAudio = false;
-      } else {
-        isMuteAudio = true;
-      }
-      callSession.setMicrophoneMute(isMuteAudio);
-    }
-  }
-
-  void setVideoEnableDisable() {
-    if (callSession != null) {
-      if (isVideoEnable) {
-        isVideoEnable = false;
-      } else {
-        isVideoEnable = true;
-      }
-      callSession.setVideoEnabled(isVideoEnable);
     }
   }
 }

@@ -79,6 +79,7 @@ class IncomingCallPage extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Container(
+                      margin: EdgeInsets.only(left: 7 * MediaQuery.of(context).size.width / 100),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.red
