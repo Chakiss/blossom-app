@@ -12,14 +12,13 @@ class DownloadFileFromCloudStorageUseCase extends BaseAsyncUseCase<String, Strin
   
   FirebaseStorage _firebaseStorage;
   SharedPrefUtils _sharedPrefUtils;
-  DateTime _dateTime = DateTime.now();
   
   DownloadFileFromCloudStorageUseCase(this._firebaseStorage, this._sharedPrefUtils);
 
   @override
   Future<Result<String>> execute(String parameter)  async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    File downloadToFile = File('${appDocDir.path}/${DateFormat("ddMMyyyy-HHmmssSSS").format(_dateTime)}.jpg');
+    File downloadToFile = File('${appDocDir.path}/${parameter.replaceAll("/", "")}');
     String filePath = downloadToFile.path;
 
     try {
