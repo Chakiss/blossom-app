@@ -18,7 +18,7 @@ class _RetrofitClient implements RetrofitClient {
 
   @override
   Future<Response<Map<String, dynamic>>> charge(
-      omiseSecretKey, amount, currency, tokenId, orderID) async {
+      omiseSecretKey, amount, currency, tokenId, orderID, returnUri) async {
     ArgumentError.checkNotNull(omiseSecretKey, 'omiseSecretKey');
     ArgumentError.checkNotNull(amount, 'amount');
     ArgumentError.checkNotNull(currency, 'currency');
@@ -26,7 +26,7 @@ class _RetrofitClient implements RetrofitClient {
     ArgumentError.checkNotNull(orderID, 'orderId');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {'amount': amount, 'currency': currency, 'card': tokenId, 'metadata[orderID]' : orderID};
+    final _data = {'amount': amount, 'currency': currency, 'card': tokenId, 'metadata[orderID]' : orderID, 'return_uri' : returnUri};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('charges',
         queryParameters: queryParameters,

@@ -40,7 +40,7 @@ class UseCaseModule {
     injector.registerDependency<CreateAppointmentOrderUseCase>(() => CreateAppointmentOrderUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
-    injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil"), injector.get()));
+    injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(OmiseFlutter("pkey_test_5nlyc9zxx4jbeot9l0c"), injector.get()));
     injector.registerDependency<GetProductListUseCase>(() => GetProductListUseCase());
     injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(FacebookAuth.instance, FirebaseAuth.instance));
     injector.registerDependency<UpdateProfileFacebookLoginUseCase>(() => UpdateProfileFacebookLoginUseCase(FirebaseFunctions.instance));

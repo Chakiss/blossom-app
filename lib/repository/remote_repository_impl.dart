@@ -8,7 +8,7 @@ class RemoteRepositoryImpl extends RemoteRepository {
   RemoteRepositoryImpl({this.retrofitClient});
 
   @override
-  Future<Response<Map<String, dynamic>>> omiseCharge(String omiseSecretKey, int amount, String currency, String tokenId, String orderID) async {
-    return await retrofitClient.charge(omiseSecretKey, amount, currency, tokenId, orderID);
+  Future<Response<Map<String, dynamic>>> omiseCharge(String omiseSecretKey, int amount, String currency, String tokenId, String orderID, String redirectUrl) async {
+    return await retrofitClient.charge(omiseSecretKey, amount, currency, tokenId, orderID, redirectUrl);
   }
 }

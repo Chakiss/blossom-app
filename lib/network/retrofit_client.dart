@@ -15,5 +15,6 @@ abstract class RetrofitClient {
       @Field("amount") int amount,
       @Field("currency") String currency,
       @Field("card") String tokenId,
-      @Field("metadata[orderID]") String orderID);
+      @Field("metadata[orderID]") String orderID,
+      @Field("return_uri") String returnUri);
 }
