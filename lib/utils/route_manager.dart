@@ -78,7 +78,8 @@ class RouteManager {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => RegisterSecondProvider(Injector.appInstance.get()),
+              create: (BuildContext context) => RegisterSecondProvider(Injector.appInstance.get(),
+                  Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),
             )
           ],
           child: RegisterSecondPage(map),
@@ -110,7 +111,8 @@ class RouteManager {
         transitionDuration: Duration(milliseconds: 1000),
       );
 
-  static Route routeFacebookUpdateProfile(String email, String name, Map<String, dynamic> mapResult) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeFacebookUpdateProfile(String email, String name, Map<String, dynamic> mapResult) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -121,16 +123,18 @@ class RouteManager {
         );
       });
 
-  static Route routeFacebookUpdateProfileSecond(Map<String, dynamic> mapResult) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => FacebookUpdateProfileSecondProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
-        )
-      ],
-      child: FacebookUpdateProfileSecondPage(mapResult),
-    );
-  });
+  static Route routeFacebookUpdateProfileSecond(Map<String, dynamic> mapResult) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => FacebookUpdateProfileSecondProvider(
+                  Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
+            )
+          ],
+          child: FacebookUpdateProfileSecondPage(mapResult),
+        );
+      });
 
   static Route routeMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
@@ -207,17 +211,17 @@ class RouteManager {
       });
 
   static Route routeCallDoctor() => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return CallDoctorProvider();
-          },
-        )
-      ],
-      child: CallDoctorPage(),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CallDoctorProvider();
+              },
+            )
+          ],
+          child: CallDoctorPage(),
+        );
+      });
 
   ////////// Doctor //////////
 
@@ -258,28 +262,28 @@ class RouteManager {
       });
 
   static Route routeDoctorIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return IncomingCallProvider();
-          },
-        )
-      ],
-      child: IncomingCallPage(callSession),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return IncomingCallProvider();
+              },
+            )
+          ],
+          child: IncomingCallPage(callSession),
+        );
+      });
 
   static Route routeCallCustomer(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return CallCustomerProvider();
-          },
-        )
-      ],
-      child: CallCustomerPage(callSession),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CallCustomerProvider();
+              },
+            )
+          ],
+          child: CallCustomerPage(callSession),
+        );
+      });
 }
