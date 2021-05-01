@@ -13,7 +13,6 @@ class WebViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
 
     return Scaffold(
@@ -31,6 +30,11 @@ class WebViewPage extends StatelessWidget {
                 child: WebView(
               javascriptMode: JavascriptMode.unrestricted,
               initialUrl: link,
+              onPageStarted: (String url) {
+                if (url.startsWith("https://webhook.site")) {
+                  Navigator.pop(context, true);
+                }
+              },
             ))
           ],
         ),

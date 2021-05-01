@@ -44,6 +44,6 @@ class ConfirmConsultProvider extends BaseProvider with ChangeNotifier {
   }
 
   void goToOmisePage(BuildContext context, String orderId, int price) {
-    Navigator.pushAndRemoveUntil(context, RouteManager.routeOmise(orderId, price), (route) => false);
+    Navigator.push(context, RouteManager.routeOmise(orderId, price));
   }
 }

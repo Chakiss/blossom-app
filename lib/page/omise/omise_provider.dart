@@ -1,6 +1,7 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
+import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_one_button.dart';
@@ -48,7 +49,15 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
       return;
     }
 
-    _showConfirmDialog(context, cardNo, name, expireMonth, expireYear, cvv, orderId, amount);
+    _showConfirmDialog(
+        context,
+        cardNo,
+        name,
+        expireMonth,
+        expireYear,
+        cvv,
+        orderId,
+        amount);
   }
 
   void _showConfirmDialog(BuildContext context, String cardNo, String name, String expireMonth, String expireYear,
@@ -62,7 +71,15 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
             positiveButton: "ตกลง",
             positiveListener: () {
               Navigator.pop(dialogContext);
-              _callServiceOmiseCharge(context, cardNo, name, expireMonth, expireYear, cvv, orderId, amount);
+              _callServiceOmiseCharge(
+                  context,
+                  cardNo,
+                  name,
+                  expireMonth,
+                  expireYear,
+                  cvv,
+                  orderId,
+                  amount);
             },
             negativeButton: "ยกเลิก",
             negativeListener: () {
@@ -86,8 +103,20 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
     };
     final result = await _chargeOmiseUseCase.execute(request);
     Navigator.pop(context);
-    result.whenWithResult((data) {
-      _showSuccessDialog(context);
+    result.whenWithResult((data) async {
+      final String authorizeUrl = data["authorize_uri"];
+      if (authorizeUrl.isEmpty ?? true) {
+        _showSuccessDialog(context);
+      } else {
+        bool isSuccess = await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+          return WebViewPage("Omise 3d Secure", authorizeUrl);
+        }));
+        if (isSuccess) {
+          _showSuccessDialog(context);
+        } else {
+          errorHandle.proceed(context, {"message" : "การชำระเงินล้มเหลว กรุณาลองใหม่อีกครั้ง"});
+        }
+      }
     }, (map) {
       errorHandle.proceed(context, map);
     });
