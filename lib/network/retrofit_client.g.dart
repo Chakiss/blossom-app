@@ -23,10 +23,17 @@ class _RetrofitClient implements RetrofitClient {
     ArgumentError.checkNotNull(amount, 'amount');
     ArgumentError.checkNotNull(currency, 'currency');
     ArgumentError.checkNotNull(tokenId, 'tokenId');
-    ArgumentError.checkNotNull(orderID, 'orderId');
+    ArgumentError.checkNotNull(orderID, 'orderID');
+    ArgumentError.checkNotNull(returnUri, 'returnUri');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {'amount': amount, 'currency': currency, 'card': tokenId, 'metadata[orderID]' : orderID, 'return_uri' : returnUri};
+    final _data = {
+      'amount': amount,
+      'currency': currency,
+      'card': tokenId,
+      'metadata[orderID]': orderID,
+      'return_uri': returnUri
+    };
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('charges',
         queryParameters: queryParameters,

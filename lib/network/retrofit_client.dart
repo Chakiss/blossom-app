@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 part 'retrofit_client.g.dart';
 
 @RestApi(baseUrl: "https://api.omise.co/")
-// @RestApi(baseUrl: "https://api.blossom-app.com/blossomapi/")
 abstract class RetrofitClient {
   factory RetrofitClient(Dio dio, {String baseUrl}) = _RetrofitClient;
 

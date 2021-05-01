@@ -4,7 +4,7 @@ class ProductModel {
   int product_id;
   String name;
   String code;
-  int object_price;
+  double object_price;
   int inventory;
   String description_long;
   String description_short;

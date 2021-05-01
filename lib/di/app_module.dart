@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/network/rest_client_manager.dart';
 import 'package:blossom_clinic/network/retrofit_client.dart';
+import 'package:blossom_clinic/network/shipnity_client.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
 import 'package:blossom_clinic/repository/remote_repository_impl.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
@@ -24,8 +25,12 @@ class AppModule {
       RestClientManager restClientManager = injector.get<RestClientManager>();
       return RetrofitClient(restClientManager.getDio());
     });
-    injector.registerSingleton<RemoteRepository>(
-        () => RemoteRepositoryImpl(retrofitClient: injector.get<RetrofitClient>()));
+    injector.registerSingleton<ShipnityClient>(() {
+      RestClientManager restClientManager = injector.get<RestClientManager>();
+      return ShipnityClient(restClientManager.getDio());
+    });
+    injector.registerSingleton<RemoteRepository>(() => RemoteRepositoryImpl(
+        retrofitClient: injector.get<RetrofitClient>(), shipnityClient: injector.get<ShipnityClient>()));
     injector.registerSingleton<UserData>(() => UserData(injector.get()));
   }
 }

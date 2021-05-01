@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/network/service_properties.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class DispenseProvider extends BaseProvider with ChangeNotifier {
   List<dynamic> list;
 
   Future<void> getProductList(BuildContext context) async {
-    final result = await _getProductListUseCase.execute("");
+    final result = await _getProductListUseCase.execute(ServiceProperties.SHIPNITY_TOKEN);
     result.whenWithResult((data) {
       list = data;
       notifyListeners();
