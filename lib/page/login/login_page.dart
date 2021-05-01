@@ -74,16 +74,16 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 6,
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: BlossomText(
-                    "ลืมรหัสผ่าน",
-                    size: 16,
-                    color: BlossomTheme.black,
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: BlossomText(
+                //     "ลืมรหัสผ่าน",
+                //     size: 16,
+                //     color: BlossomTheme.black,
+                //   ),
+                // ),
                 SizedBox(
-                  height: 20,
+                  height: 28,
                 ),
                 ButtonPinkGradient(
                   "เข้าสู่ระบบ",

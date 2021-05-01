@@ -11,13 +11,21 @@ class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
   RegisterSecondProvider(this._registerUseCase);
 
   Future<void> callServiceRegister(BuildContext context, Map<String, String> profileData, String skinType,
-      String acneTypes, String acneTreatText, String drugAllergyText) async {
+      String acneTypes, bool isAcneTreat, String acneTreatText, bool isDrugAllergy, String drugAllergyText) async {
     if (skinType?.isEmpty ?? true) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะผิว"});
       return;
     }
     if (acneTypes?.isEmpty ?? true) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะสิว"});
+      return;
+    }
+    if (isAcneTreat == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกประวัติการรักษาสิว"});
+      return;
+    }
+    if (isDrugAllergy == null) {
+      errorHandle.proceed(context, {"message": "กรุณาระบุประวัติแพ้ยา"});
       return;
     }
 
@@ -32,8 +40,8 @@ class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
         profileData["dateOfBirth"],
         skinType,
         acneTypes,
-        acneTreatText,
-        drugAllergyText);
+        isAcneTreat ? acneTreatText ?? "" : "",
+        isDrugAllergy ? drugAllergyText ?? "" : "");
     print(data.toJson());
     final requestModel = CreateNewApplicationUserRequestModel(data);
     final result = await _registerUseCase.execute(requestModel);

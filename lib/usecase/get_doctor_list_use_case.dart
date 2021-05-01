@@ -22,6 +22,7 @@ class GetDoctorListUseCase extends BaseAsyncUseCase<String, List<DoctorInfoModel
               firstName: e.data()["firstName"],
               lastName: e.data()["lastName"],
               phoneNumber: e.data()["phoneNumber"],
+              referenceConnectyCubeID: e.data()["referenceConnectyCubeID"],
               story: e.data()["story"],
               updatedAt: e.data()["updatedAt"].toDate(),
               doctorId: e.id))

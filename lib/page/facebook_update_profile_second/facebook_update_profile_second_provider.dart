@@ -46,8 +46,8 @@ class FacebookUpdateProfileSecondProvider extends BaseProvider with ChangeNotifi
         mapResult["dateOfBirth"],
         skinType,
         acneTypes,
-        acneTreatText,
-        drugAllergyText);
+        isAcneTreat ? acneTreatText ?? "" : "",
+        isDrugAllergy ? drugAllergyText ?? "" : "");
     final result = await _updateProfileFacebookLoginUseCase.execute(requestModel);
     Navigator.pop(context);
     result.whenWithResult((data) async {

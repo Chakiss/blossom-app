@@ -27,8 +27,8 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
 
   String skinType = "";
   String acneTypes = "";
-  String acneCareNoted = "";
-  String drugAllergyItems = "";
+  bool isAcneTreat;
+  bool isDrugAllergy;
 
   @override
   void initState() {
@@ -50,7 +50,10 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 child: Image.asset("assets/nav_bar.png"),
               ),
             ),
-            SafeArea(child: ToolbarBack(title: "ประวัติทั่วไป",)),
+            SafeArea(
+                child: ToolbarBack(
+              title: "ประวัติทั่วไป",
+            )),
           ],
         ),
         Expanded(
@@ -99,7 +102,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   ),
                 ),
                 AcneTreat(_acneTreatTextController, (boolean) {
-
+                  isAcneTreat = boolean;
                 }),
                 SizedBox(
                   height: 12,
@@ -125,7 +128,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   ),
                 ),
                 DrugAllergy(_drugAllergyTextController, (boolean) {
-
+                  isDrugAllergy = boolean;
                 }),
                 SizedBox(
                   height: 40,
@@ -134,8 +137,8 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   "ยืนยัน",
                   true,
                   () {
-                    _provider.callServiceRegister(context, widget._profileData, skinType, acneTypes,
-                        _acneTreatTextController.text, _drugAllergyTextController.text);
+                    _provider.callServiceRegister(context, widget._profileData, skinType, acneTypes, isAcneTreat,
+                        _acneTreatTextController.text, isDrugAllergy, _drugAllergyTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,

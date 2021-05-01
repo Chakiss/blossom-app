@@ -24,6 +24,7 @@ class GetDoctorProfileUseCase extends BaseAsyncUseCase<String, DoctorInfoModel> 
             firstName: snapshot.data()["firstName"],
             lastName: snapshot.data()["lastName"],
             phoneNumber: snapshot.data()["phoneNumber"],
+            referenceConnectyCubeID: snapshot.data()["referenceConnectyCubeID"],
             story: snapshot.data()["story"],
             updatedAt: snapshot.data()["updatedAt"].toDate(),
             doctorId: parameter);
