@@ -11,6 +11,7 @@ class UserProfileModel {
   String firstName;
   String lastName;
   String phoneNumber;
+  int referenceConnectyCubeID;
   String registeredChannel;
   String registeredNote;
   int skinType;
@@ -29,6 +30,7 @@ class UserProfileModel {
       this.firstName,
       this.lastName,
       this.phoneNumber,
+      this.referenceConnectyCubeID,
       this.registeredChannel,
       this.registeredNote,
       this.skinType,

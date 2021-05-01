@@ -31,6 +31,7 @@ class GetUserProfileUseCase extends BaseAsyncUseCase<String, UserProfileModel> {
          firstName: data["firstName"],
          lastName: data["lastName"],
          phoneNumber: data["phoneNumber"],
+         referenceConnectyCubeID: data["referenceConnectyCubeID"],
          registeredChannel: data["registeredChannel"],
          registeredNote: data["registeredNote"],
          skinType: data["skinType"],
