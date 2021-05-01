@@ -6,7 +6,9 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/customer_information_item.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
+import 'package:blossom_clinic/widget/slider_acne_duration.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
+import 'package:blossom_clinic/widget/true_false_product_radio_group.dart';
 import 'package:blossom_clinic/widget/true_false_radio_group.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +34,21 @@ class AddCustomerInformationPage extends StatelessWidget {
         SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: 100 * MediaQuery.of(context).size.width / 100,
-                child: Image.asset("assets/nav_bar.png"),
-              ),
+              Stack(children: [
+                Container(
+                  width: 100 * MediaQuery.of(context).size.width / 100,
+                  child: Image.asset("assets/nav_bar.png"),
+                ),
+                SafeArea(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Toolbar(
+                      title: "ข้อมูลประกอบการศึกษา",
+                    ),
+                  ],
+                ))
+              ]),
               Container(
                 width: 80 * MediaQuery.of(context).size.width / 100,
                 child: SingleChildScrollView(
@@ -47,7 +60,8 @@ class AddCustomerInformationPage extends StatelessWidget {
                         size: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      AcneDurationInformationRadioGroup((acneDuration) {}),
+                      // AcneDurationInformationRadioGroup((acneDuration) {}),
+                      SliderAcneDuration(),
                       SizedBox(
                         height: 20,
                       ),
@@ -60,7 +74,7 @@ class AddCustomerInformationPage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      TrueFalseRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", (data) {}),
+                      TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", (boolean, data) {}),
                       SizedBox(
                         height: 20,
                       ),
@@ -134,8 +148,8 @@ class AddCustomerInformationPage extends StatelessWidget {
                                   positiveButton: "ยืนยัน",
                                   positiveListener: () async {
                                     Navigator.pop(dialogContext);
-                                    Navigator.pushAndRemoveUntil(context,
-                                        RouteManager.routeMain(initIndex: 1), (route) => false);
+                                    Navigator.pushAndRemoveUntil(
+                                        context, RouteManager.routeMain(initIndex: 1), (route) => false);
                                   },
                                   negativeButton: "ยกเลิก",
                                   negativeListener: () {
@@ -158,15 +172,6 @@ class AddCustomerInformationPage extends StatelessWidget {
             ],
           ),
         ),
-        SafeArea(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Toolbar(
-              title: "ข้อมูลประกอบการศึกษา",
-            ),
-          ],
-        ))
       ],
     );
   }
