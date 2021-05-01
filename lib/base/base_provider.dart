@@ -25,3 +25,16 @@ class BaseProvider {
     showDialog(barrierDismissible: false, context: context, builder: (BuildContext context) => BlossomProgressDialog());
   }
 }
+
+extension ParamaterExtensions on String {
+
+  String convertPhoneNumberWithoutCountryCode() {
+    if (this.startsWith("+66")) {
+      return this.replaceFirst("+66", "0");
+    }
+    if (this.startsWith("66")) {
+      return this.replaceFirst("66", "0");
+    }
+    return this;
+  }
+}

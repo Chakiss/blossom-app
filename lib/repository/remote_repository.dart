@@ -1,3 +1,4 @@
+import 'package:blossom_clinic/model/request/create_shipnity_customer_request_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class RemoteRepository {
@@ -5,4 +6,8 @@ abstract class RemoteRepository {
   Future<Response<Map<String, dynamic>>> omiseCharge(String omiseSecretKey, int amount, String currency, String tokenId, String orderID, String redirectUrl);
 
   Future<Response<Map<String, dynamic>>> getProducts(String token);
+
+  Future<Response<Map<String, dynamic>>> getShipnityCustomer(String token, String phoneNumber);
+
+  Future<Response<Map<String, dynamic>>> createShipnityCustomer(String token, CreateShipnityCustomerRequestModel requestModel);
 }

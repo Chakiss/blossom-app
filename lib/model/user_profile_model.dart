@@ -35,4 +35,26 @@ class UserProfileModel {
       this.registeredNote,
       this.skinType,
       this.updatedAt});
+
+  factory UserProfileModel.fromJson(String userId, Map<String, dynamic> json) {
+    return UserProfileModel(
+      userUID: userId,
+      acneCaredNoted: json["acneCaredNoted"],
+      acneIsCared: json["acneIsCared"],
+      acneTypes: json["acneTypes"].cast<int>(),
+      birthDate: json["birthDate"].toDate(),
+      createdAt: json["createdAt"].toDate(),
+      drugAllergyItems: json["drugAllergyItems"].cast<String>(),
+      drugAllergyStatus: json["drugAllergyStatus"],
+      email: json["email"],
+      firstName: json["firstName"],
+      lastName: json["lastName"],
+      phoneNumber: json["phoneNumber"],
+      referenceConnectyCubeID: json["referenceConnectyCubeID"],
+      registeredChannel: json["registeredChannel"],
+      registeredNote: json["registeredNote"],
+      skinType: json["skinType"],
+      updatedAt: json["updatedAt"].toDate(),
+    );
+  }
 }

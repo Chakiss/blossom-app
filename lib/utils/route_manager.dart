@@ -1,6 +1,8 @@
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
 import 'package:blossom_clinic/model/available_slot_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/model/shipnity_customer_model.dart';
+import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/call_customer/call_customer_page.dart';
@@ -197,7 +199,7 @@ class RouteManager {
         );
       });
 
-  static Route routeDispense() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDispense(UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -206,7 +208,7 @@ class RouteManager {
               },
             )
           ],
-          child: DispensePage(),
+          child: DispensePage(userProfileModel, shipnityCustomerModel),
         );
       });
 
@@ -253,7 +255,7 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorDiagnoseProvider();
+                return DoctorDiagnoseProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],

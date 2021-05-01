@@ -1,4 +1,7 @@
+import 'package:blossom_clinic/usecase/create_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
+import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
+import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
 import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
 import 'package:blossom_clinic/usecase/check_login_use_case.dart';
@@ -44,5 +47,8 @@ class UseCaseModule {
     injector.registerDependency<GetProductListUseCase>(() => GetProductListUseCase(injector.get()));
     injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(FacebookAuth.instance, FirebaseAuth.instance));
     injector.registerDependency<UpdateProfileFacebookLoginUseCase>(() => UpdateProfileFacebookLoginUseCase(FirebaseFunctions.instance));
+    injector.registerDependency<GetUserProfileWithConnectyCubeIdUseCase>(() => GetUserProfileWithConnectyCubeIdUseCase(FirebaseFirestore.instance));
+    injector.registerDependency<GetShipnityCustomerUseCase>(() => GetShipnityCustomerUseCase(injector.get()));
+    injector.registerDependency<CreateShipnityCustomerUseCase>(() => CreateShipnityCustomerUseCase(injector.get()));
   }
 }

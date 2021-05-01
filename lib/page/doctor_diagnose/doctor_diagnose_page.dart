@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/acne_look_multi_choice.dart';
 import 'package:blossom_clinic/widget/advice_self_multi_choice.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -24,6 +25,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
   void initState() {
     super.initState();
     _provider = Provider.of(context, listen: false);
+    _provider.getUserProfile(context, 4155269);
   }
 
   @override
@@ -123,7 +125,9 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                 ButtonPinkGradient(
                   "ยืนยัน",
                   true,
-                  () {},
+                  () {
+                    _goToDispensePage(context);
+                  },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,
                   radius: 6,
@@ -134,6 +138,9 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
         )),
       ]),
     );
-    ;
+  }
+
+  void _goToDispensePage(BuildContext context) {
+    Navigator.push(context, RouteManager.routeDispense(_provider.userProfileModel, _provider.shipnityCustomerModel));
   }
 }

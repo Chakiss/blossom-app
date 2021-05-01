@@ -41,7 +41,8 @@ class DoctorProfilePage extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           // Navigator.push(context, RouteManager.routeAddCustomerInformation());
-                          Navigator.push(context, RouteManager.routeDispense());
+                          // Navigator.push(context, RouteManager.routeDispense());
+                          Navigator.push(context, RouteManager.routeDoctorDiagnose());
                         },
                         child: _userData.doctorInfoModel?.displayPhoto != null
                             ? BlossomCircleAvatar(
