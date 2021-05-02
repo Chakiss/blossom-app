@@ -227,11 +227,11 @@ class RouteManager {
 
   ////////// Doctor //////////
 
-  static Route routeDoctorMain() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorMainProvider(),
+              create: (BuildContext context) => DoctorMainProvider(initIndex: initIndex),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorHomeProvider(),
@@ -246,7 +246,7 @@ class RouteManager {
               create: (BuildContext context) => DoctorProfileProvider(),
             ),
           ],
-          child: DoctorMainPage(),
+          child: DoctorMainPage(initIndex: initIndex,),
         );
       });
 

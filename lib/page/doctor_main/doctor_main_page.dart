@@ -6,6 +6,11 @@ import 'package:provider/provider.dart';
 import 'doctor_main_provider.dart';
 
 class DoctorMainPage extends StatelessWidget {
+
+  int initIndex;
+
+  DoctorMainPage({this.initIndex});
+
   @override
   Widget build(BuildContext context) {
     DoctorMainProvider provider = Provider.of(context, listen: false);
@@ -23,7 +28,7 @@ class DoctorMainPage extends StatelessWidget {
               Container(
                 color: BlossomTheme.white,
                 child: SafeArea(
-                    top: false, bottom: true, child: DoctorBottomTab(provider)),
+                    top: false, bottom: true, child: DoctorBottomTab(provider, initIndex: initIndex,)),
               )
             ],
           ),

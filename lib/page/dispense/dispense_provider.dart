@@ -5,6 +5,7 @@ import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/network/service_properties.dart';
 import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:flutter/material.dart';
 
 class DispenseProvider extends BaseProvider with ChangeNotifier {
@@ -36,13 +37,15 @@ class DispenseProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> callServiceCreateOrder(
       BuildContext context, UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel) async {
+    showProgressDialog(context);
     final result = await _createShipnityOrderUseCase.execute({
       "token": ServiceProperties.SHIPNITY_TOKEN,
       "shipnityCustomerModel": shipnityCustomerModel,
       "productSelected": productSelected
     });
+    Navigator.pop(context, RouteManager.routeDoctorMain(initIndex: 1));
     result.whenWithResult((data) {
-
+      Navigator.pushAndRemoveUntil(context, RouteManager.routeDoctorMain(initIndex: 1), (route) => false);
     }, (map) {
       errorHandle.proceed(context, map);
     });

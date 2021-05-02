@@ -1,13 +1,31 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/page/doctor_history/doctor_history_page.dart';
 import 'package:blossom_clinic/page/doctor_home/doctor_home_page.dart';
+import 'package:blossom_clinic/page/doctor_profile/doctor_profile_page.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
 
 class DoctorMainProvider extends BaseProvider with ChangeNotifier {
-  Widget page = DoctorHomePage();
+  Widget page;
   P2PClient callClient;
+
+  int initIndex;
+
+  DoctorMainProvider({this.initIndex = 0}) {
+    switch (initIndex) {
+      case 0:
+        page = DoctorHomePage();
+        break;
+      case 1:
+        page = DoctorHistoryPage();
+        break;
+      case 2:
+        page = DoctorProfilePage();
+        break;
+    }
+  }
 
   void setPage(Widget page) {
     this.page = page;
@@ -43,9 +61,7 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
     callClient.onReceiveNewSession = (incomingCallSession) {
       _goToIncomingCallPage(context, incomingCallSession);
     };
-    callClient.onSessionClosed = (closedCallSession) {
-
-    };
+    callClient.onSessionClosed = (closedCallSession) {};
   }
 
   void _goToIncomingCallPage(BuildContext context, P2PSession incomingCallSession) {
