@@ -12,7 +12,7 @@ class IncomingCallProvider extends BaseProvider with ChangeNotifier {
   }
 
   void getUserDetail(P2PSession callSession) {
-    getUserById(callSession.callerId).then((cubeUser) {
+    getUserById(callSession.opponentsIds.first).then((cubeUser) {
       customerName = cubeUser.fullName ?? cubeUser.id.toString();
       notifyListeners();
     }).catchError((error) {});
