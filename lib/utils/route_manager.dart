@@ -237,7 +237,7 @@ class RouteManager {
               create: (BuildContext context) => DoctorHomeProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorHistoryProvider(),
+              create: (BuildContext context) => DoctorHistoryProvider(Injector.appInstance.get(),),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),
