@@ -74,4 +74,25 @@ class _ShipnityClient implements ShipnityClient {
     final value = _result;
     return value;
   }
+
+  @override
+  Future<Response<Map<String, dynamic>>> createShipnityOrder(
+      token, requestModel) async {
+    ArgumentError.checkNotNull(token, 'token');
+    ArgumentError.checkNotNull(requestModel, 'requestModel');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestModel?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>('orders',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result;
+    return value;
+  }
 }

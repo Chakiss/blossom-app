@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/usecase/create_shipnity_customer_use_case.dart';
+import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
@@ -50,5 +51,6 @@ class UseCaseModule {
     injector.registerDependency<GetUserProfileWithConnectyCubeIdUseCase>(() => GetUserProfileWithConnectyCubeIdUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetShipnityCustomerUseCase>(() => GetShipnityCustomerUseCase(injector.get()));
     injector.registerDependency<CreateShipnityCustomerUseCase>(() => CreateShipnityCustomerUseCase(injector.get()));
+    injector.registerDependency<CreateShipnityOrderUseCase>(() => CreateShipnityOrderUseCase(injector.get(), injector.get()));
   }
 }

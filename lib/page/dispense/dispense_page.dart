@@ -45,7 +45,9 @@ class DispensePage extends StatelessWidget {
                       : ListView.builder(
                           itemCount: value.list?.length ?? 0,
                           itemBuilder: (BuildContext context, int index) {
-                            return DispenseItem(value.list[index]);
+                            return DispenseItem(value.list[index], (product, amount) {
+                                _provider.addProductToOrder(product, amount);
+                            });
                           },
                         );
                 },
@@ -54,7 +56,9 @@ class DispensePage extends StatelessWidget {
             ButtonPinkGradient(
               "ยืนยัน",
               true,
-              () {},
+              () {
+                _provider.callServiceCreateOrder(context, _userProfileModel, _shipnityCustomerModel);
+              },
               width: MediaQuery.of(context).size.width,
               height: 60,
             )

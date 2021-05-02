@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/model/request/create_shipnity_customer_request_model.dart';
+import 'package:blossom_clinic/model/request/create_shipnity_order_request_model.dart';
 import 'package:blossom_clinic/network/retrofit_client.dart';
 import 'package:blossom_clinic/network/shipnity_client.dart';
 import 'package:blossom_clinic/repository/remote_repository.dart';
@@ -28,5 +29,10 @@ class RemoteRepositoryImpl extends RemoteRepository {
   @override
   Future<Response<Map<String, dynamic>>> createShipnityCustomer(String token, CreateShipnityCustomerRequestModel requestModel) async {
     return await shipnityClient.createShipnityCustomer(token, requestModel);
+  }
+
+  @override
+  Future<Response<Map<String, dynamic>>> createShipnityOrder(String token, CreateShipnityOrderRequestModel requestModel) async {
+    return await shipnityClient.createShipnityOrder(token, requestModel);
   }
 }

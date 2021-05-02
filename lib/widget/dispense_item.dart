@@ -5,16 +5,18 @@ import 'package:blossom_clinic/widget/text_stroke_black.dart';
 import 'package:flutter/material.dart';
 
 class DispenseItem extends StatefulWidget {
-
   ProductModel _productModel;
+  Function(ProductModel, int) _listener;
 
-  DispenseItem(this._productModel);
+  DispenseItem(this._productModel, this._listener);
 
   @override
   _DispenseItemState createState() => _DispenseItemState();
 }
 
 class _DispenseItemState extends State<DispenseItem> {
+  int amount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -71,7 +73,7 @@ class _DispenseItemState extends State<DispenseItem> {
                           width: 10,
                         ),
                         TextStrokeBlack(
-                          "0",
+                          "$amount",
                           width: 64,
                           height: 32,
                           size: 13,
@@ -94,7 +96,12 @@ class _DispenseItemState extends State<DispenseItem> {
                         ),
                         InkWell(
                           onTap: () {
-                            
+                            if (amount > 0) {
+                              setState(() {
+                                amount -= 1;
+                                widget._listener.call(widget._productModel, amount);
+                              });
+                            }
                           },
                           child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -117,7 +124,12 @@ class _DispenseItemState extends State<DispenseItem> {
                         ),
                         InkWell(
                           onTap: () {
-                            
+                            if (amount < 99) {
+                              setState(() {
+                                amount += 1;
+                                widget._listener.call(widget._productModel, amount);
+                              });
+                            }
                           },
                           child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),

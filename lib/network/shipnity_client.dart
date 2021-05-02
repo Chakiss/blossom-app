@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/model/request/create_shipnity_customer_request_model.dart';
+import 'package:blossom_clinic/model/request/create_shipnity_order_request_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
@@ -20,4 +21,8 @@ abstract class ShipnityClient {
   @POST("customers")
   Future<Response<Map<String, dynamic>>> createShipnityCustomer(
       @Header("Authorization") String token, @Body() CreateShipnityCustomerRequestModel requestModel);
+
+  @POST("orders")
+  Future<Response<Map<String, dynamic>>> createShipnityOrder(
+      @Header("Authorization") String token, @Body() CreateShipnityOrderRequestModel requestModel);
 }

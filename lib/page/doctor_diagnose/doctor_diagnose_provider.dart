@@ -60,7 +60,7 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
             tel: userProfileModel.phoneNumber.convertPhoneNumberWithoutCountryCode(),
             contact_method: "blossom_app",
             email: userProfileModel.email ?? "",
-            tag: "blossom_app"
+            tag: "app"
           ))
         }
     );

@@ -204,7 +204,7 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DispenseProvider(Injector.appInstance.get());
+                return DispenseProvider(Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],

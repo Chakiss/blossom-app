@@ -1,3 +1,5 @@
+import 'package:blossom_clinic/model/sub_product_model.dart';
+
 class ProductModel {
 
   int id;
@@ -13,9 +15,10 @@ class ProductModel {
   String image;
   String image_thumb;
   String price;
+  List<SubProductModel> subproducts;
 
   ProductModel({this.id, this.product_id, this.name, this.code, this.object_price, this.inventory, this.description_long,
-      this.description_short, this.reserved, this.object_available, this.image, this.image_thumb, this.price});
+      this.description_short, this.reserved, this.object_available, this.image, this.image_thumb, this.price, this.subproducts});
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
@@ -32,6 +35,7 @@ class ProductModel {
       image: json["image"],
       image_thumb: json["image_thumb"],
       price: json["price"],
+      subproducts: (json["subproducts"] as List).map((e) => SubProductModel.fromJson(e)).toList()
     );
   }
 }
