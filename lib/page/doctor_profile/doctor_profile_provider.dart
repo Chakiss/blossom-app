@@ -4,12 +4,10 @@ import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class DoctorProfileProvider extends BaseProvider with ChangeNotifier {
-
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    await signOut();
+    CubeChatConnection.instance.logout();
     goToSplashScreen(context);
   }
 
