@@ -1,15 +1,17 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/base/result.dart';
-import 'package:blossom_clinic/usecase/get_user_reference_from_local_storage_use_case.dart';
+import 'package:blossom_clinic/usecase/set_user_reference_to_local_storage_use_case.dart';
+import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentItem extends StatefulWidget {
   AppointmentModel _appointmentModel;
-  GetUserReferenceFromLocalStorageUseCase _getUserReferenceFromLocalStorageUseCase;
+  SharedPrefUtils _sharedPrefUtils;
+  SetUserReferenceToLocalStorageUseCase _setUserReferenceFromLocalStorageUseCase;
 
-  AppointmentItem(this._appointmentModel, this._getUserReferenceFromLocalStorageUseCase);
+  AppointmentItem(this._appointmentModel, this._sharedPrefUtils, this._setUserReferenceFromLocalStorageUseCase);
 
   @override
   _AppointmentItemState createState() => _AppointmentItemState();
@@ -70,11 +72,17 @@ class _AppointmentItemState extends State<AppointmentItem> {
   }
 
   Future<void> getUserData() async {
-    final result = await widget._getUserReferenceFromLocalStorageUseCase.execute(widget._appointmentModel.userReference);
-    if (result is Success<String>) {
+    if (widget._sharedPrefUtils.getMapUserReference().containsKey(widget._appointmentModel.userReference.path)) {
       setState(() {
-        name = "${result.data ?? ""}";
+        name = widget._sharedPrefUtils.getMapUserReference()[widget._appointmentModel.userReference.path];
       });
+    } else {
+      final result = await widget._setUserReferenceFromLocalStorageUseCase.execute(widget._appointmentModel.userReference);
+      if (result is Success<String>) {
+        setState(() {
+          name = "${result.data ?? ""}";
+        });
+      }
     }
   }
 }
