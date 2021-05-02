@@ -79,7 +79,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    userConnectyCudeId = callSession.opponentsIds.first;
+    userConnectyCudeId = callSession.callerId;
     callSession.acceptCall();
   }
 
