@@ -1,12 +1,15 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
+import 'package:blossom_clinic/model/base/result.dart';
+import 'package:blossom_clinic/usecase/get_user_reference_from_local_storage_use_case.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentItem extends StatefulWidget {
   AppointmentModel _appointmentModel;
+  GetUserReferenceFromLocalStorageUseCase _getUserReferenceFromLocalStorageUseCase;
 
-  AppointmentItem(this._appointmentModel);
+  AppointmentItem(this._appointmentModel, this._getUserReferenceFromLocalStorageUseCase);
 
   @override
   _AppointmentItemState createState() => _AppointmentItemState();
@@ -45,7 +48,7 @@ class _AppointmentItemState extends State<AppointmentItem> {
                   ),
                   BlossomText(
                     "${widget._appointmentModel.timeStart ?? ""}",
-                    size: 16,
+                    size: 14,
                   )
                 ],
               ),
@@ -67,9 +70,11 @@ class _AppointmentItemState extends State<AppointmentItem> {
   }
 
   Future<void> getUserData() async {
-    final userReference = await widget._appointmentModel.userReference.get();
-    setState(() {
-      name = "${userReference.data()["firstName"] ?? ""} ${userReference.data()["lastName"] ?? ""}";
-    });
+    final result = await widget._getUserReferenceFromLocalStorageUseCase.execute(widget._appointmentModel.userReference);
+    if (result is Success<String>) {
+      setState(() {
+        name = "${result.data ?? ""}";
+      });
+    }
   }
 }
