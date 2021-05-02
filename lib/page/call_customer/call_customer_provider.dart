@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   P2PSession callSession;
   RTCVideoRenderer streamRender;
   RTCVideoRenderer streamRenderSelf;
+  int userConnectyCudeId;
 
   void initCallSession(BuildContext context, P2PSession callSession) {
     this.callSession = callSession;
@@ -30,6 +32,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     callSession.onRemoteStreamReceived = (callSession, opponentId, mediaStream) async {
       // create video renderer and set media stream to it
       logger.d("Prew, onRemoteStreamReceived");
+      callSession.enableSpeakerphone(true);
       streamRender = RTCVideoRenderer();
       await streamRender.initialize();
       streamRender.srcObject = mediaStream;
@@ -76,7 +79,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    callSession.enableSpeakerphone(true);
+    userConnectyCudeId = callSession.callerId;
     callSession.acceptCall();
   }
 
@@ -91,9 +94,10 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     videoView = null;
     notifyListeners();
     Navigator.pop(context);
+    _goToDoctorDiagnosePage(context);
   }
 
-  Future<void> endCall() async {
+  Future<void> endCall(BuildContext context) async {
     if (streamRenderSelf != null) {
       await streamRenderSelf.dispose();
     }
@@ -103,5 +107,11 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     if (callSession != null) {
       callSession.hungUp();
     }
+    Navigator.pop(context);
+    _goToDoctorDiagnosePage(context);
+  }
+
+  void _goToDoctorDiagnosePage(BuildContext context) {
+    Navigator.push(context, RouteManager.routeDoctorDiagnose(userConnectyCudeId));
   }
 }

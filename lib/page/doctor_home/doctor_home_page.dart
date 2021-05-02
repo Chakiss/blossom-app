@@ -1,6 +1,5 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
-import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -28,7 +27,7 @@ class DoctorHomePage extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        _goToDoctorDiagnosePage(context);
+
                       },
                       child: BlossomCircleAvatar(
                         80,
@@ -48,9 +47,5 @@ class DoctorHomePage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void _goToDoctorDiagnosePage(BuildContext context) {
-    Navigator.push(context, RouteManager.routeDoctorDiagnose());
   }
 }

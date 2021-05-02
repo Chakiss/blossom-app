@@ -6,13 +6,18 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
-import 'package:blossom_clinic/widget/toolbar.dart';
+import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../blossom_theme.dart';
 
 class DoctorDiagnosePage extends StatefulWidget {
+
+  int _userConnectyCubeId;
+
+  DoctorDiagnosePage(this._userConnectyCubeId);
+
   @override
   _DoctorDiagnosePageState createState() => _DoctorDiagnosePageState();
 }
@@ -25,7 +30,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
   void initState() {
     super.initState();
     _provider = Provider.of(context, listen: false);
-    _provider.getUserProfile(context, 4155269);
+    _provider.getUserProfile(context, widget._userConnectyCubeId);
   }
 
   @override
@@ -43,7 +48,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
               ),
             ),
             SafeArea(
-                child: Toolbar(
+                child: ToolbarBack(
               title: "วินิจฉัย",
             )),
           ],

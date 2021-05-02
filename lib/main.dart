@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -16,14 +17,15 @@ Future<void> main() async {
   await registerFirebaseCloudMessage();
   initializeDateFormatting("TH");
   final sharedPref =  await SharedPreferences.getInstance();
-  _provideDependency(sharedPref);
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  _provideDependency(sharedPref, packageInfo.buildNumber);
   _initConnectycube();
   runApp(BlossomClinicApplication());
 }
 
-void _provideDependency(SharedPreferences sharedPref) {
+void _provideDependency(SharedPreferences sharedPref, String buildNumber) {
   final injector = Injector.appInstance;
-  AppModule(injector, sharedPref).provide();
+  AppModule(injector, sharedPref, buildNumber).provide();
   UseCaseModule(injector).provide();
 }
 

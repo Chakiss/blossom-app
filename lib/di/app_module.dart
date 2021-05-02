@@ -11,26 +11,27 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppModule {
-  Injector injector;
-  SharedPreferences sharedPref;
+  Injector _injector;
+  SharedPreferences _sharedPref;
+  String _buildNumber;
 
-  AppModule(this.injector, this.sharedPref);
+  AppModule(this._injector, this._sharedPref, this._buildNumber);
 
   void provide() {
-    injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils(sharedPref));
-    injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
-    injector.registerSingleton<Logger>(() => Logger());
-    injector.registerDependency<RestClientManager>(() => RestClientManager());
-    injector.registerSingleton<RetrofitClient>(() {
-      RestClientManager restClientManager = injector.get<RestClientManager>();
+    _injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils(_sharedPref, _buildNumber));
+    _injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
+    _injector.registerSingleton<Logger>(() => Logger());
+    _injector.registerDependency<RestClientManager>(() => RestClientManager());
+    _injector.registerSingleton<RetrofitClient>(() {
+      RestClientManager restClientManager = _injector.get<RestClientManager>();
       return RetrofitClient(restClientManager.getDio());
     });
-    injector.registerSingleton<ShipnityClient>(() {
-      RestClientManager restClientManager = injector.get<RestClientManager>();
+    _injector.registerSingleton<ShipnityClient>(() {
+      RestClientManager restClientManager = _injector.get<RestClientManager>();
       return ShipnityClient(restClientManager.getDio());
     });
-    injector.registerSingleton<RemoteRepository>(() => RemoteRepositoryImpl(
-        retrofitClient: injector.get<RetrofitClient>(), shipnityClient: injector.get<ShipnityClient>()));
-    injector.registerSingleton<UserData>(() => UserData(injector.get()));
+    _injector.registerSingleton<RemoteRepository>(() => RemoteRepositoryImpl(
+        retrofitClient: _injector.get<RetrofitClient>(), shipnityClient: _injector.get<ShipnityClient>()));
+    _injector.registerSingleton<UserData>(() => UserData(_injector.get()));
   }
 }

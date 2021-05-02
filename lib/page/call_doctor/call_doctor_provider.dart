@@ -76,6 +76,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.onRemoteStreamReceived = (callSession, opponentId, mediaStream) async {
       // create video renderer and set media stream to it
       logger.d("Prew, onRemoteStreamReceived");
+      callSession.enableSpeakerphone(true);
       streamRender = RTCVideoRenderer();
       await streamRender.initialize();
       streamRender.srcObject = mediaStream;
@@ -122,7 +123,6 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    callSession.enableSpeakerphone(true);
     callSession.startCall();
   }
 

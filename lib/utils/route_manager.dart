@@ -254,7 +254,7 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorDiagnose() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorDiagnose(int _userConnectyCubeId) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -263,7 +263,7 @@ class RouteManager {
               },
             )
           ],
-          child: DoctorDiagnosePage(),
+          child: DoctorDiagnosePage(_userConnectyCubeId),
         );
       });
 

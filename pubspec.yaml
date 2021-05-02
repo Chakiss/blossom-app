@@ -60,6 +60,7 @@ dependencies:
   path_provider: ^2.0.1
   omise_flutter: ^0.1.4
   url_launcher: ^6.0.3
+  package_info: ^0.4.3+4
 
 dev_dependencies:
   flutter_test:

@@ -75,8 +75,7 @@ class CallCustomerPage extends StatelessWidget {
                         size: 30,
                       ),
                       onPressed: () async {
-                        await _provider.endCall();
-                        Navigator.pop(context);
+                        await _provider.endCall(context);
                       }),
                 )),
           ),
