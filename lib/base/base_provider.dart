@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
@@ -26,8 +29,15 @@ class BaseProvider {
   }
 }
 
-extension ParamaterExtensions on String {
+extension FileExtension on File {
+  String toBase64() {
+    List<int> fileInByte = this.readAsBytesSync();
+    String fileInBase64 = base64Encode(fileInByte);
+    return Uri.dataFromString(fileInBase64, mimeType: "image/jpg").toString();
+  }
+}
 
+extension ParamaterExtensions on String {
   String convertPhoneNumberWithoutCountryCode() {
     if (this.startsWith("+66")) {
       return this.replaceFirst("+66", "0");

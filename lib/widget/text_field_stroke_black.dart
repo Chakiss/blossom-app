@@ -19,7 +19,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
 
   TextFieldStrokeBlack(this.hint,
       {this.width,
-      this.height,
+      this.height = 48,
       this.paddingStart,
       this.paddingEnd,
       this.textAlign,
@@ -43,7 +43,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
           width: width ?? null,
-          height: height ?? 48,
+          height: height,
           padding: EdgeInsets.only(left: paddingStart ?? 18, right: paddingEnd ?? 18),
           decoration: BoxDecoration(
               color: enabled ? BlossomTheme.white : BlossomTheme.lightGrayAlpha,

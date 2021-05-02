@@ -1,6 +1,4 @@
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
-import 'package:blossom_clinic/utils/route_manager.dart';
-import 'package:blossom_clinic/widget/acne_duration_information_radio_group.dart';
 import 'package:blossom_clinic/widget/acne_information_radio_group.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
@@ -17,8 +15,19 @@ import '../../blossom_theme.dart';
 
 class AddCustomerInformationPage extends StatelessWidget {
   AddCustomerInformationProvider _provider;
+  String _orderId;
 
-  AddCustomerInformationPage();
+  AddCustomerInformationPage(this._orderId);
+
+  TextEditingController _changeProductTextEditController = TextEditingController();
+  String acnePeriod = "1";
+  String acneCared;
+  bool isChangeProduct;
+  String changeProduct;
+  bool isStressed;
+  bool sleepDeprivation;
+  bool normalMenstruation;
+  bool frequencySweet;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +70,10 @@ class AddCustomerInformationPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                       // AcneDurationInformationRadioGroup((acneDuration) {}),
-                      SliderAcneDuration(),
+                      SliderAcneDuration((value) {
+                        acnePeriod = value;
+                        print("acnePeriod $acnePeriod");
+                      }),
                       SizedBox(
                         height: 20,
                       ),
@@ -70,27 +82,46 @@ class AddCustomerInformationPage extends StatelessWidget {
                         size: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      AcneInformationRadioGroup((acneInformation) {}),
+                      AcneInformationRadioGroup((value) {
+                        acneCared = value;
+                        print("acneCared $acneCared");
+                      }),
                       SizedBox(
                         height: 20,
                       ),
-                      TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", (boolean, data) {}),
+                      TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", _changeProductTextEditController,
+                          (boolean, data) {
+                        isChangeProduct = boolean;
+
+                      }),
                       SizedBox(
                         height: 20,
                       ),
-                      TrueFalseRadioGroup("มีภาวะเครียด", (data) {}),
+                      TrueFalseRadioGroup("มีภาวะเครียด", (data) {
+                        isStressed = data;
+                        print("isStressed $isStressed");
+                      }),
                       SizedBox(
                         height: 20,
                       ),
-                      TrueFalseRadioGroup("มีภาวะนอนน้อย, นอนดึก", (data) {}),
+                      TrueFalseRadioGroup("มีภาวะนอนน้อย, นอนดึก", (data) {
+                        sleepDeprivation = data;
+                        print("sleepDeprivation $sleepDeprivation");
+                      }),
                       SizedBox(
                         height: 20,
                       ),
-                      TrueFalseRadioGroup("ประจำเดือนมาปกติ", (data) {}),
+                      TrueFalseRadioGroup("ประจำเดือนมาปกติ", (data) {
+                        normalMenstruation = data;
+                        print("normalMenstruation $normalMenstruation");
+                      }),
                       SizedBox(
                         height: 20,
                       ),
-                      TrueFalseRadioGroup("ทานขนม นมเป็นประจำ", (data) {}),
+                      TrueFalseRadioGroup("ทานขนม นมเป็นประจำ", (data) {
+                        frequencySweet = data;
+                        print("frequencySweet $frequencySweet");
+                      }),
                       SizedBox(
                         height: 20,
                       ),
@@ -143,13 +174,23 @@ class AddCustomerInformationPage extends StatelessWidget {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext dialogContext) => CustomDialogTwoButton(
-                                  title: "ยืนยันการจอง",
-                                  description: "คุณต้องการจองการปรึกษาแพทย์",
+                                  title: "ยืนยัน",
+                                  description: "คุณยืนยันการส่งข้อมูลให้ทางแพทย์",
                                   positiveButton: "ยืนยัน",
                                   positiveListener: () async {
                                     Navigator.pop(dialogContext);
-                                    Navigator.pushAndRemoveUntil(
-                                        context, RouteManager.routeMain(initIndex: 1), (route) => false);
+                                    _provider.confirmPatientForm(
+                                        context,
+                                        _orderId,
+                                        acnePeriod,
+                                        acneCared,
+                                        _changeProductTextEditController.text,
+                                        isStressed,
+                                        sleepDeprivation,
+                                        normalMenstruation,
+                                        frequencySweet);
+                                    // Navigator.pushAndRemoveUntil(
+                                    //     context, RouteManager.routeMain(initIndex: 1), (route) => false);
                                   },
                                   negativeButton: "ยกเลิก",
                                   negativeListener: () {

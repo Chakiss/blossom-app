@@ -76,6 +76,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
+    callSession.enableSpeakerphone(true);
     callSession.acceptCall();
   }
 

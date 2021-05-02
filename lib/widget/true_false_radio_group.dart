@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class TrueFalseRadioGroup extends StatefulWidget {
 
   String _title;
-  Function(String) _listener;
+  Function(bool) _listener;
 
   TrueFalseRadioGroup(this._title, this._listener);
 
@@ -37,7 +37,7 @@ class _TrueFalseRadioGroupState extends State<TrueFalseRadioGroup> {
                 value: "Y",
                 groupValue: _value,
                 onChanged: (String value) {
-                  widget._listener.call(value);
+                  widget._listener.call(true);
                   setState(() {
                     _value = value;
                   });
@@ -56,7 +56,7 @@ class _TrueFalseRadioGroupState extends State<TrueFalseRadioGroup> {
                 value: "N",
                 groupValue: _value,
                 onChanged: (String value) {
-                  widget._listener.call(value);
+                  widget._listener.call(false);
                   setState(() {
                     _value = value;
                   });

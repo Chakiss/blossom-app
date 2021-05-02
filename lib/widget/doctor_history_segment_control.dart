@@ -1,4 +1,4 @@
-import 'package:blossom_clinic/widget/history_segment_item.dart';
+import 'package:blossom_clinic/widget/segment_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _DoctorHistorySegmentControlState extends State<DoctorHistorySegmentContro
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          HistorySegmentItem(
+          SegmentItem(
             "การนัดหมาย",
             selectedPosition == 0,
             () {
@@ -35,7 +35,7 @@ class _DoctorHistorySegmentControlState extends State<DoctorHistorySegmentContro
             radiusTopLeft: 6,
             radiusBottomLeft: 6,
           ),
-          HistorySegmentItem(
+          SegmentItem(
             "ใบสั่งยา",
             selectedPosition == 1,
                 () {

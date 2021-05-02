@@ -1,4 +1,6 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/model/customer_order_model.dart';
+import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
@@ -14,36 +16,43 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   bool isMuteAudio = false;
   bool isVideoEnable = true;
 
-  void signInConnectyCube(BuildContext context) {
+  UserData _userData;
+
+  CallDoctorProvider(this._userData);
+
+  Future<void> signInConnectyCube(BuildContext context, CustomerOrderModel customerOrderModel) async {
+    final snapshot = await customerOrderModel.doctorReference.get();
+    final doctorConnectyCubeId = snapshot.data()["referenceConnectyCubeID"] as int;
+
     CubeUser cubeUser = CubeUser(
-        id: 4132606,
-        login: "prew.sitthirat",
-        email: "prew.sitthirat@gmail.com",
-        fullName: "songkhom sitthirat",
-        password: "12345678");
-    _connectCubeChat(context, cubeUser);
+        id: _userData.userProfileModel.referenceConnectyCubeID,
+        login: _userData.userProfileModel.userUID,
+        email: _userData.userProfileModel.email,
+        fullName: "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
+        password: _userData.userProfileModel.email);
+    _connectCubeChat(context, cubeUser, doctorConnectyCubeId);
   }
 
-  void _connectCubeChat(BuildContext context, CubeUser cubeUser) {
+  void _connectCubeChat(BuildContext context, CubeUser cubeUser, int doctorConnectyCubeId) {
     if (CubeChatConnection.instance.isAuthenticated()) {
-      _initCustomerCallClient(context);
+      _initCustomerCallClient(context, doctorConnectyCubeId);
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
-        _initCustomerCallClient(context);
+        _initCustomerCallClient(context, doctorConnectyCubeId);
       }).catchError((error) {
         print(error);
       });
     }
   }
 
-  void _initCustomerCallClient(BuildContext context) {
+  void _initCustomerCallClient(BuildContext context, int doctorConnectyCubeId) {
     callClient = P2PClient.instance;
     callClient.init();
 
     callClient.onReceiveNewSession = (incomingCallSession) {};
     callClient.onSessionClosed = (closedCallSession) {};
 
-    Set<int> opponentsIds = {4132679};
+    Set<int> opponentsIds = {doctorConnectyCubeId};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
     _initCallSession(context, callSession);
   }
@@ -113,9 +122,10 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
+    callSession.enableSpeakerphone(true);
     callSession.startCall();
   }
-  
+
   Future<void> _handleRejectHangUpNoAnswer(BuildContext context) async {
     if (streamRenderSelf != null) {
       await streamRenderSelf.dispose();

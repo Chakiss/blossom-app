@@ -2,7 +2,7 @@ import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 
-class HistorySegmentItem extends StatelessWidget {
+class SegmentItem extends StatelessWidget {
   String text;
   bool isEnable;
   double width;
@@ -12,7 +12,7 @@ class HistorySegmentItem extends StatelessWidget {
   double radiusTopLeft, radiusTopRight, radiusBottomLeft, radiusBottomRight;
   Function() onPressed;
 
-  HistorySegmentItem(this.text, this.isEnable, this.onPressed,
+  SegmentItem(this.text, this.isEnable, this.onPressed,
       {this.width,
       this.height,
       this.textSize,

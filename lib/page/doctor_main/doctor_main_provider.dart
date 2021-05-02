@@ -3,6 +3,7 @@ import 'package:blossom_clinic/page/doctor_history/doctor_history_page.dart';
 import 'package:blossom_clinic/page/doctor_home/doctor_home_page.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_page.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
+import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,10 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
   Widget page;
   P2PClient callClient;
 
+  UserData _userData;
   int initIndex;
 
-  DoctorMainProvider({this.initIndex = 0}) {
+  DoctorMainProvider(this._userData, {this.initIndex = 0}) {
     switch (initIndex) {
       case 0:
         page = DoctorHomePage();
@@ -37,8 +39,11 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _signInConnectyCube(BuildContext context) {
-    CubeUser cubeUser =
-        CubeUser(id: 4132679, login: "prewaraiiwa", email: "prewaraiiwa@gmail.com", password: "12345678");
+    CubeUser cubeUser = CubeUser(
+        id: _userData.doctorInfoModel.referenceConnectyCubeID,
+        login: _userData.doctorInfoModel.doctorId,
+        email: "${_userData.doctorInfoModel.firstName} ${_userData.doctorInfoModel.lastName}",
+        password: _userData.doctorInfoModel.email);
     _connectCubeChat(context, cubeUser);
   }
 

@@ -32,9 +32,7 @@ class _HistoryPageState extends State<HistoryPage> {
               height: 26,
             ),
             Center(child: HistorySegmentControl((index) {
-              if (index == 2) {
-                Navigator.push(context, RouteManager.routeCallDoctor());
-              }
+
             })),
             SizedBox(
               height: 20,
@@ -47,7 +45,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return CustomerOrderItem(value.customerOrderList[index], (customerOrder) {
                       if (customerOrder.status == 0) {
-                        _goToOmisePage(context, customerOrder);
+                        Navigator.push(context, RouteManager.routeCallDoctor(customerOrder));
                       } else if (customerOrder.status == 1) {
 
                       }

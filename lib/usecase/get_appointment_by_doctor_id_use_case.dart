@@ -12,11 +12,11 @@ class GetAppointmentByDoctorIdUseCase extends BaseAsyncUseCase<String, List<Appo
   @override
   Future<Result<List<AppointmentModel>>> execute(String parameter) async {
     try {
-      final snapshop = await _firestore
+      final snapshot = await _firestore
           .collection("appointments")
           .where("doctorReference", isEqualTo: _firestore.collection("doctors").doc(parameter))
           .get();
-      final list = snapshop.docs.map((e) => AppointmentModel.fromJson(e.data())).toList();
+      final list = snapshot.docs.map((e) => AppointmentModel.fromJson(e.data())).toList();
       return Success(list);
     } catch (e) {
       return Error(ErrorUtils.getErrorMessage(e));

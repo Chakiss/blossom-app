@@ -1,13 +1,10 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/page/add_customer_information/add_customer_information_page.dart';
-import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_one_button.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class OmiseProvider extends BaseProvider with ChangeNotifier {
   OmiseChargeUseCase _chargeOmiseUseCase;
@@ -106,13 +103,13 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
     result.whenWithResult((data) async {
       final String authorizeUrl = data["authorize_uri"];
       if (authorizeUrl.isEmpty ?? true) {
-        _showSuccessDialog(context);
+        _showSuccessDialog(context, orderId);
       } else {
         bool isSuccess = await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
           return WebViewPage("Omise 3d Secure", authorizeUrl);
         }));
         if (isSuccess) {
-          _showSuccessDialog(context);
+          _showSuccessDialog(context, orderId);
         } else {
           errorHandle.proceed(context, {"message" : "การชำระเงินล้มเหลว กรุณาลองใหม่อีกครั้ง"});
         }
@@ -122,7 +119,7 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
     });
   }
 
-  void _showSuccessDialog(BuildContext context) {
+  void _showSuccessDialog(BuildContext context, String orderId) {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
@@ -132,14 +129,14 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
             positiveButton: "ตกลง",
             positiveListener: () {
               Navigator.pop(dialogContext);
-              _goToMainPage(context);
+              _goToMainPage(context, orderId);
             });
       },
     );
   }
 
-  void _goToMainPage(BuildContext context) {
+  void _goToMainPage(BuildContext context, String orderId) {
     Navigator.pushAndRemoveUntil(context, RouteManager.routeMain(), (route) => false);
-    Navigator.push(context, RouteManager.routeAddCustomerInformation());
+    Navigator.push(context, RouteManager.routeAddCustomerInformation(orderId));
   }
 }

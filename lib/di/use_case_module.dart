@@ -1,9 +1,11 @@
 import 'package:blossom_clinic/usecase/create_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_doctor_id_use_case.dart';
+import 'package:blossom_clinic/usecase/get_appointments_id_by_order_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
+import 'package:blossom_clinic/usecase/save_patient_form_use_case.dart';
 import 'package:blossom_clinic/usecase/set_user_reference_to_local_storage_use_case.dart';
 import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/usecase/omise_charge_use_case.dart';
@@ -56,5 +58,7 @@ class UseCaseModule {
     injector.registerDependency<CreateShipnityOrderUseCase>(() => CreateShipnityOrderUseCase(injector.get(), injector.get()));
     injector.registerDependency<GetAppointmentByDoctorIdUseCase>(() => GetAppointmentByDoctorIdUseCase(FirebaseFirestore.instance));
     injector.registerDependency<SetUserReferenceToLocalStorageUseCase>(() => SetUserReferenceToLocalStorageUseCase(injector.get()));
+    injector.registerDependency<SavePatientFormUseCase>(() => SavePatientFormUseCase(FirebaseFunctions.instance));
+    injector.registerDependency<GetAppointmentsIdByOrderIdUseCase>(() => GetAppointmentsIdByOrderIdUseCase(FirebaseFirestore.instance));
   }
 }

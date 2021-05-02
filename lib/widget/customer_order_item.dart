@@ -78,7 +78,7 @@ class CustomerOrderItem extends StatelessWidget {
   String _getButtonStatus(int status) {
     switch (status) {
       case 0:
-        return "ชำระเงิน";
+        return "โทร";
       case 1:
         return "สำเร็จ";
       default:

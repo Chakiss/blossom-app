@@ -2,17 +2,17 @@ import 'package:blossom_clinic/widget/segment_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HistorySegmentControl extends StatefulWidget {
+class AppointmentDetailSegmentControl extends StatefulWidget {
 
   Function(int) listener;
 
-  HistorySegmentControl(this.listener);
+  AppointmentDetailSegmentControl(this.listener);
 
   @override
-  _HistorySegmentControlState createState() => _HistorySegmentControlState();
+  _AppointmentDetailSegmentControlState createState() => _AppointmentDetailSegmentControlState();
 }
 
-class _HistorySegmentControlState extends State<HistorySegmentControl> {
+class _AppointmentDetailSegmentControlState extends State<AppointmentDetailSegmentControl> {
 
   int selectedPosition = 0;
 
@@ -23,7 +23,7 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SegmentItem(
-            "การนัดหมาย",
+            "ข้อมูล",
             selectedPosition == 0,
             () {
               widget.listener.call(0);
@@ -36,7 +36,7 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
             radiusBottomLeft: 6,
           ),
           SegmentItem(
-            "การจ่ายเงิน",
+            "คำวินิจฉัย",
             selectedPosition == 1,
             () {
               widget.listener.call(1);
@@ -47,7 +47,7 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
             width: 30 * MediaQuery.of(context).size.width / 100,
           ),
           SegmentItem(
-            "ใบสั่งยา",
+            "ยาที่สั่ง",
             selectedPosition == 2,
                 () {
               widget.listener.call(2);

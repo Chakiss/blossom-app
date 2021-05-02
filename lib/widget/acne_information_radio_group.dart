@@ -13,7 +13,8 @@ class AcneInformationRadioGroup extends StatefulWidget {
 
 class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
 
-  String _acneLook = "";
+  String _acneLook;
+  String data = "";
   var acneFirst = false;
   var acneSecond = false;
   var acneThird = false;
@@ -33,8 +34,14 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
                 value: "1",
                 groupValue: _acneLook,
                 onChanged: (String value) {
-                  widget._listener.call(value);
+                  data = "";
+                  widget._listener.call(data);
                   setState(() {
+                    acneFirst = false;
+                    acneSecond = false;
+                    acneThird = false;
+                    acneForth = false;
+                    acneFifth = false;
                     _acneLook = value;
                   });
                 },
@@ -52,7 +59,6 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
                 value: "2",
                 groupValue: _acneLook,
                 onChanged: (String value) {
-                  widget._listener.call(value);
                   setState(() {
                     _acneLook = value;
                   });
@@ -79,8 +85,11 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
               Checkbox(
                   value: acneFirst,
                   fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                  onChanged: (bool newValue) {
+                  onChanged: _acneLook == "1" ? null : (bool newValue) {
+                    data = addOrRemoveData("ใช้ยาคลีนิก");
+                    widget._listener.call(data);
                     setState(() {
+                      _acneLook = "2";
                       acneFirst = newValue;
                     });
                   }),
@@ -96,8 +105,11 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
               Checkbox(
                   value: acneSecond,
                   fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                  onChanged: (bool newValue) {
+                  onChanged: _acneLook == "1" ? null : (bool newValue) {
+                    data = addOrRemoveData("ซื้อยาใช้เอง");
+                    widget._listener.call(data);
                     setState(() {
+                      _acneLook = "2";
                       acneSecond = newValue;
                     });
                   }),
@@ -113,8 +125,11 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
               Checkbox(
                   value: acneThird,
                   fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                  onChanged: (bool newValue) {
+                  onChanged: _acneLook == "1" ? null : (bool newValue) {
+                    data = addOrRemoveData("ซื้อครีมทั่วไปในการรักษาสิว");
+                    widget._listener.call(data);
                     setState(() {
+                      _acneLook = "2";
                       acneThird = newValue;
                     });
                   }),
@@ -130,8 +145,11 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
               Checkbox(
                   value: acneForth,
                   fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                  onChanged: (bool newValue) {
+                  onChanged: _acneLook == "1" ? null : (bool newValue) {
+                    data = addOrRemoveData("Treatment, กดสิว, ฉีดสิว");
+                    widget._listener.call(data);
                     setState(() {
+                      _acneLook = "2";
                       acneForth = newValue;
                     });
                   }),
@@ -147,8 +165,11 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
               Checkbox(
                   value: acneFifth,
                   fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                  onChanged: (bool newValue) {
+                  onChanged: _acneLook == "1" ? null : (bool newValue) {
+                    data = addOrRemoveData("Laser");
+                    widget._listener.call(data);
                     setState(() {
+                      _acneLook = "2";
                       acneFifth = newValue;
                     });
                   }),
@@ -161,5 +182,13 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
         ],
       ),
     );
+  }
+
+  String addOrRemoveData(String value) {
+    if (data.contains("$value, ")) {
+      return data.replaceAll("$value, ", "");
+    } else {
+      return "$data$value, ";
+    }
   }
 }

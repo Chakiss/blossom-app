@@ -1,5 +1,7 @@
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
+import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/available_slot_model.dart';
+import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/model/shipnity_customer_model.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
@@ -19,6 +21,8 @@ import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart'
 import 'package:blossom_clinic/page/doctor_home/doctor_home_provider.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_page.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
+import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_page.dart';
+import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
 import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_page.dart';
 import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_provider.dart';
@@ -186,16 +190,16 @@ class RouteManager {
         );
       });
 
-  static Route routeAddCustomerInformation() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeAddCustomerInformation(String orderId) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return AddCustomerInformationProvider();
+                return AddCustomerInformationProvider(Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],
-          child: AddCustomerInformationPage(),
+          child: AddCustomerInformationPage(orderId),
         );
       });
 
@@ -212,16 +216,16 @@ class RouteManager {
         );
       });
 
-  static Route routeCallDoctor() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCallDoctor(CustomerOrderModel customerOrder) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CallDoctorProvider();
+                return CallDoctorProvider(Injector.appInstance.get());
               },
             )
           ],
-          child: CallDoctorPage(),
+          child: CallDoctorPage(customerOrder),
         );
       });
 
@@ -231,7 +235,7 @@ class RouteManager {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorMainProvider(initIndex: initIndex),
+              create: (BuildContext context) => DoctorMainProvider(Injector.appInstance.get(), initIndex: initIndex),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorHomeProvider(),
@@ -262,6 +266,19 @@ class RouteManager {
           child: DoctorDiagnosePage(),
         );
       });
+
+  static Route routeDoctorAppointmentDetail(AppointmentModel appointmentModel, String name, String appointmentTime) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return DoctorAppointmentDetailProvider();
+          },
+        )
+      ],
+      child: DoctorAppointmentDetailPage(appointmentModel, name, appointmentTime),
+    );
+  });
 
   static Route routeDoctorIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(

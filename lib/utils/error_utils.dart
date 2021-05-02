@@ -8,6 +8,6 @@ class ErrorUtils {
     if (e is Response) {
       message = e.data;
     }
-    return {"message" : "$message ?? $e"};
+    return {"message" : "${message ?? e}"};
   }
 }

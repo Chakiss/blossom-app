@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/blossom_theme.dart';
+import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -7,11 +8,14 @@ import 'call_doctor_provider.dart';
 
 class CallDoctorPage extends StatelessWidget {
   CallDoctorProvider _provider;
+  CustomerOrderModel _customerOrderModel;
+
+  CallDoctorPage(this._customerOrderModel);
 
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.signInConnectyCube(context);
+    _provider.signInConnectyCube(context, _customerOrderModel);
     return Stack(
       children: [
         Scaffold(
