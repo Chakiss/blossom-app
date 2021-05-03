@@ -46,9 +46,10 @@ class _AppointmentItemState extends State<AppointmentItem> {
           children: [
             Row(
               children: [
-                Icon(
-                  Icons.person,
-                  size: 60,
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: BlossomTheme.white,
+                  backgroundImage: AssetImage("assets/profile_place_holder.png"),
                 ),
                 SizedBox(
                   width: 12,
@@ -80,7 +81,7 @@ class _AppointmentItemState extends State<AppointmentItem> {
             Container(
               height: 1,
               color: BlossomTheme.black,
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 16),
             )
           ],
         ),

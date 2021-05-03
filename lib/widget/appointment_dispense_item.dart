@@ -1,165 +1,87 @@
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/model/product_model.dart';
+import 'package:blossom_clinic/model/shipnity_order_model.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
-import 'package:blossom_clinic/widget/text_stroke_black.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentDispenseItem extends StatefulWidget {
-  ProductModel _productModel;
-  Function(ProductModel, int) _listener;
+  Purchase _purchase;
+  Function(Purchase) _listener;
 
-  AppointmentDispenseItem(this._productModel, this._listener);
+  AppointmentDispenseItem(this._purchase, this._listener);
 
   @override
   _AppointmentDispenseItemState createState() => _AppointmentDispenseItemState();
 }
 
 class _AppointmentDispenseItemState extends State<AppointmentDispenseItem> {
-  int amount = 0;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: BlossomTheme.white,
-      child: Padding(
-        // padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
-        padding: EdgeInsets.symmetric(horizontal: 8 * MediaQuery.of(context).size.width / 100),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 70,
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Container(
-                      child: Image.network(widget._productModel?.image ?? ""),
-                    ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 70,
+                child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Container(
+                    child: Image.network(widget._purchase.thumb ?? ""),
                   ),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                    child: Column(
-                  children: [
-                    Align(
-                        alignment: Alignment.topLeft,
-                        child: BlossomText(
-                          widget._productModel.name ?? "",
-                          size: 15,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Align(
-                        alignment: Alignment.topLeft,
-                        child: BlossomText(
-                          "${widget._productModel.price} บาท",
-                          size: 15,
-                        ))
-                  ],
-                )),
-                SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        BlossomText(
-                          "จำนวน",
-                          size: 14,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        TextStrokeBlack(
-                          "$amount",
-                          width: 64,
-                          height: 32,
-                          size: 13,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: Column(
+                children: [
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: BlossomText(
+                        widget._purchase.name ?? "",
+                        size: 15,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: BlossomText(
+                        "${widget._purchase.price} บาท",
+                        size: 15,
+                      ))
+                ],
+              )),
+              Row(
+                children: [
+                  BlossomText(
+                    "จำนวน",
+                    size: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: BlossomText(
+                      "${widget._purchase.quantity}",
+                      size: 15,
                     ),
-                    SizedBox(
-                      height: 7,
-                    ),
-                    Row(
-                      children: [
-                        BlossomText(
-                          "จำนวน",
-                          size: 14,
-                          color: BlossomTheme.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (amount > 0) {
-                              setState(() {
-                                amount -= 1;
-                                widget._listener.call(widget._productModel, amount);
-                              });
-                            }
-                          },
-                          child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                                  gradient: LinearGradient(
-                                    colors: [Color(0xFFEF567E), Color(0xFFE8A872)],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  )),
-                              child: BlossomText(
-                                "-",
-                                size: 15,
-                                color: BlossomTheme.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (amount < 99) {
-                              setState(() {
-                                amount += 1;
-                                widget._listener.call(widget._productModel, amount);
-                              });
-                            }
-                          },
-                          child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                                  gradient: LinearGradient(
-                                    colors: [Color(0xFFEF567E), Color(0xFFE8A872)],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  )),
-                              child: BlossomText(
-                                "+",
-                                size: 15,
-                                color: BlossomTheme.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-            Container(
-              color: BlossomTheme.black,
-              margin: EdgeInsets.symmetric(vertical: 12),
-              height: 1,
-            )
-          ],
-        ),
+                  ),
+                  BlossomText(
+                    "ชิ้น",
+                    size: 15,
+                    fontWeight: FontWeight.bold,
+                  )
+                ],
+              )
+            ],
+          ),
+          Container(
+            color: BlossomTheme.black,
+            margin: EdgeInsets.symmetric(vertical: 12),
+            height: 1,
+          )
+        ],
       ),
     );
   }

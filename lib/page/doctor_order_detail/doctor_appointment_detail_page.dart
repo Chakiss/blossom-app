@@ -95,7 +95,7 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
                   _provider.setPage(Container(
                     child: Center(
                       child: BlossomText(
-                        "ยังไม่มีข้อมูลสั่งยา",
+                        "ไม่พบข้อมูลสั่งยา",
                         size: 20,
                       ),
                     ),

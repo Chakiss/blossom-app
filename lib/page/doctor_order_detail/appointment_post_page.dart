@@ -13,7 +13,7 @@ class AppointmentPostPage extends StatelessWidget {
         ? Container(
             child: Center(
               child: BlossomText(
-                "ยังไม่มีข้อมูลการวินิจฉัย",
+                "ไม่พบข้อมูลการวินิจฉัย",
                 size: 20,
               ),
             ),
