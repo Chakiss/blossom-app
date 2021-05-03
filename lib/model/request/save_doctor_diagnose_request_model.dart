@@ -8,8 +8,15 @@ class SaveDoctorDiagnoseRequestModel {
   String productsRecommendation;
   String nextAppointment;
 
-  SaveDoctorDiagnoseRequestModel(this.appointmentID, this.skinOverview, this.skinType, this.diagnose, this.carePlan,
-      this.careRecommendation, this.productsRecommendation, this.nextAppointment);
+  SaveDoctorDiagnoseRequestModel(
+      {this.appointmentID,
+      this.skinOverview,
+      this.skinType,
+      this.diagnose,
+      this.carePlan,
+      this.careRecommendation,
+      this.productsRecommendation,
+      this.nextAppointment});
 
   Map<String, dynamic> toJson() {
     return {

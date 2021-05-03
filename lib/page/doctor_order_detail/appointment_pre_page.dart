@@ -150,6 +150,6 @@ class AppointmentPrePage extends StatelessWidget {
   }
 
   List<BlossomImage> loadImageFromStorage() {
-    return _pre.images.map((e) => BlossomImage(fileStorePath: e.path,)).toList();
+    return _pre.images.map((e) => BlossomImage(fileStorePath: e,)).toList();
   }
 }

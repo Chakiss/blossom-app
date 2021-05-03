@@ -1,5 +1,3 @@
-import 'package:blossom_clinic/model/shipnity_customer_model.dart';
-import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/page/dispense/dispense_provider.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
@@ -11,11 +9,6 @@ import 'package:provider/provider.dart';
 import '../../blossom_theme.dart';
 
 class DispensePage extends StatelessWidget {
-
-  UserProfileModel _userProfileModel;
-  ShipnityCustomerModel _shipnityCustomerModel;
-
-  DispensePage(this._userProfileModel, this._shipnityCustomerModel);
 
   DispenseProvider _provider;
 
@@ -57,7 +50,7 @@ class DispensePage extends StatelessWidget {
               "ยืนยัน",
               true,
               () {
-                _provider.callServiceCreateOrder(context, _userProfileModel, _shipnityCustomerModel);
+                _provider.callServiceCreateOrder(context);
               },
               width: MediaQuery.of(context).size.width,
               height: 60,

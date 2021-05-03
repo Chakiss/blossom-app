@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
@@ -20,8 +21,8 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
   CallDoctorProvider(this._userData);
 
-  Future<void> signInConnectyCube(BuildContext context, CustomerOrderModel customerOrderModel) async {
-    final snapshot = await customerOrderModel.doctorReference.get();
+  Future<void> signInConnectyCube(BuildContext context, AppointmentModel appointmentModel) async {
+    final snapshot = await appointmentModel.doctorReference.get();
     final doctorConnectyCubeId = snapshot.data()["referenceConnectyCubeID"] as int;
 
     CubeUser cubeUser = CubeUser(
@@ -30,22 +31,22 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
         email: _userData.userProfileModel.email,
         fullName: "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
         password: _userData.userProfileModel.email);
-    _connectCubeChat(context, cubeUser, doctorConnectyCubeId);
+    _connectCubeChat(context, cubeUser, doctorConnectyCubeId, appointmentModel.id);
   }
 
-  void _connectCubeChat(BuildContext context, CubeUser cubeUser, int doctorConnectyCubeId) {
+  void _connectCubeChat(BuildContext context, CubeUser cubeUser, int doctorConnectyCubeId, String appointmentId) {
     if (CubeChatConnection.instance.isAuthenticated()) {
-      _initCustomerCallClient(context, doctorConnectyCubeId);
+      _initCustomerCallClient(context, doctorConnectyCubeId, appointmentId);
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
-        _initCustomerCallClient(context, doctorConnectyCubeId);
+        _initCustomerCallClient(context, doctorConnectyCubeId, appointmentId);
       }).catchError((error) {
         print(error);
       });
     }
   }
 
-  void _initCustomerCallClient(BuildContext context, int doctorConnectyCubeId) {
+  void _initCustomerCallClient(BuildContext context, int doctorConnectyCubeId, String appointmentId) {
     callClient = P2PClient.instance;
     callClient.init();
 
@@ -54,10 +55,10 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
     Set<int> opponentsIds = {doctorConnectyCubeId};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
-    _initCallSession(context, callSession);
+    _initCallSession(context, callSession, appointmentId);
   }
 
-  void _initCallSession(BuildContext context, P2PSession callSession) {
+  void _initCallSession(BuildContext context, P2PSession callSession, String appointmentId) {
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();
@@ -123,7 +124,9 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    callSession.startCall();
+    callSession.startCall({
+      "appointmentId": appointmentId
+    });
   }
 
   Future<void> _handleRejectHangUpNoAnswer(BuildContext context) async {

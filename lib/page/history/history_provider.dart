@@ -1,21 +1,21 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/model/customer_order_model.dart';
-import 'package:blossom_clinic/usecase/get_customer_order_use_case.dart';
+import 'package:blossom_clinic/model/appointment_model.dart';
+import 'package:blossom_clinic/usecase/get_appointment_by_user_id_use_case.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:flutter/material.dart';
 
 class HistoryProvider extends BaseProvider with ChangeNotifier {
 
-  GetCustomerOrderUseCase _getCustomerOrderUseCase;
+  GetAppointmentByUserIdUseCase _getAppointmentByUserIdUseCase;
   UserData _userData;
-  List<CustomerOrderModel> customerOrderList;
+  List<AppointmentModel> appointmentList;
 
-  HistoryProvider(this._getCustomerOrderUseCase, this._userData);
+  HistoryProvider(this._getAppointmentByUserIdUseCase, this._userData);
 
-  Future<void> getCustomerOrder(BuildContext context) async {
-    final result = await _getCustomerOrderUseCase.execute(_userData.userProfileModel.userUID);
+  Future<void> getAppointmentList(BuildContext context) async {
+    final result = await _getAppointmentByUserIdUseCase.execute(_userData.userProfileModel.userUID);
     result.whenWithResult((data) {
-      customerOrderList = data;
+      appointmentList = data;
       notifyListeners();
     }, (map) {
       errorHandle.proceed(context, map);

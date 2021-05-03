@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
-import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/advice_self_multi_choice.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
@@ -23,9 +22,10 @@ class DoctorDiagnosePage extends StatefulWidget {
 
 class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
   DoctorDiagnoseProvider _provider;
-  final treatPlanTextController = TextEditingController();
-  final productAdviceTextController = TextEditingController();
-  final nextAppointmentTextController = TextEditingController();
+  final _acneOverviewTextController = TextEditingController();
+  final _treatPlanTextController = TextEditingController();
+  final _productAdviceTextController = TextEditingController();
+  final _nextAppointmentTextController = TextEditingController();
 
   @override
   void initState() {
@@ -60,6 +60,26 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
             width: 80 * MediaQuery.of(context).size.width / 100,
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: BlossomText(
+                    "ลักษณะสภาพสิว",
+                    size: 16,
+                    color: BlossomTheme.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFieldStrokeBlack(
+                  "ลักษณะสภาพสิว",
+                  textAlignVertical: TextAlignVertical.top,
+                  textController: _acneOverviewTextController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
@@ -105,12 +125,12 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   height: 12,
                 ),
                 TextFieldStrokeBlack(
-                  "",
+                  "แผนการรักษา",
                   height: 100,
                   textAlignVertical: TextAlignVertical.top,
                   // keyboardType: TextInputType.multiline,
                   maxLines: 2,
-                  textController: treatPlanTextController,
+                  textController: _treatPlanTextController,
                 ),
                 SizedBox(
                   height: 20,
@@ -125,8 +145,8 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   ),
                 ),
                 AdviceSelfMultiChoice((value) {
-                  _provider.adviceRecommend = value;
-                  print(_provider.adviceRecommend);
+                  _provider.careRecommend = value;
+                  print(_provider.careRecommend);
                 }),
                 SizedBox(
                   height: 12,
@@ -144,11 +164,10 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   height: 12,
                 ),
                 TextFieldStrokeBlack(
-                  "",
+                  "แนะนำผลิตภัณฑ์ที่ควรใช้",
                   textAlignVertical: TextAlignVertical.top,
                   // keyboardType: TextInputType.multiline,
-                  maxLines: 2,
-                  textController: productAdviceTextController,
+                  textController: _productAdviceTextController,
                 ),
                 SizedBox(
                   height: 20,
@@ -172,7 +191,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                       width: 40,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
-                      textController: nextAppointmentTextController,
+                      textController: _nextAppointmentTextController,
                     ),
                     SizedBox(
                       width: 12,
@@ -189,27 +208,31 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   height: 12,
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 24,
                 ),
                 ButtonPinkGradient(
                   "ยืนยัน",
                   true,
                   () {
-                    // _goToDispensePage(context);
+                    _provider.callSaveDoctorDiagnoseForm(
+                        context,
+                        _acneOverviewTextController.text,
+                        _treatPlanTextController.text,
+                        _productAdviceTextController.text,
+                        _nextAppointmentTextController.text);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,
                   radius: 6,
-                )
+                ),
+                SizedBox(
+                  height: 24,
+                ),
               ],
             ),
           ),
         )),
       ]),
     );
-  }
-
-  void _goToDispensePage(BuildContext context) {
-    Navigator.push(context, RouteManager.routeDispense(_provider.userProfileModel, _provider.shipnityCustomerModel));
   }
 }

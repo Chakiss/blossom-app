@@ -10,6 +10,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   RTCVideoRenderer streamRender;
   RTCVideoRenderer streamRenderSelf;
   int userConnectyCudeId;
+  String _appointmentId;
 
   void initCallSession(BuildContext context, P2PSession callSession) {
     this.callSession = callSession;
@@ -79,6 +80,7 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
+    _appointmentId = callSession.cubeSdp.userInfo["appointmentId"];
     userConnectyCudeId = callSession.callerId;
     callSession.acceptCall();
   }
@@ -112,6 +114,9 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   }
 
   void _goToDoctorDiagnosePage(BuildContext context) {
-    Navigator.push(context, RouteManager.routeDoctorDiagnose(userConnectyCudeId));
+    if (_appointmentId?.isNotEmpty ?? false) {
+      print("appointmentId: $_appointmentId");
+      Navigator.push(context, RouteManager.routeDoctorDiagnose(userConnectyCudeId, _appointmentId));
+    }
   }
 }

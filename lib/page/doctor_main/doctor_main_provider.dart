@@ -64,7 +64,7 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
     callClient.init();
 
     callClient.onReceiveNewSession = (incomingCallSession) {
-      _goToIncomingCallPage(context, incomingCallSession);
+      _goToIncomingCallPage(context, incomingCallSession,);
     };
     callClient.onSessionClosed = (closedCallSession) {};
   }

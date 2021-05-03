@@ -1,7 +1,6 @@
 import 'package:blossom_clinic/doctor/doctor_provider.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/available_slot_model.dart';
-import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/model/shipnity_customer_model.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
@@ -203,20 +202,21 @@ class RouteManager {
         );
       });
 
-  static Route routeDispense(UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDispense(UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel, String appointmentId) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DispenseProvider(Injector.appInstance.get(), Injector.appInstance.get());
+                return DispenseProvider(Injector.appInstance.get(), Injector.appInstance.get(), shipnityCustomerModel, appointmentId);
               },
             )
           ],
-          child: DispensePage(userProfileModel, shipnityCustomerModel),
+          child: DispensePage(),
         );
       });
 
-  static Route routeCallDoctor(CustomerOrderModel customerOrder) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCallDoctor(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -225,7 +225,7 @@ class RouteManager {
               },
             )
           ],
-          child: CallDoctorPage(customerOrder),
+          child: CallDoctorPage(appointmentModel),
         );
       });
 
@@ -241,7 +241,9 @@ class RouteManager {
               create: (BuildContext context) => DoctorHomeProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorHistoryProvider(Injector.appInstance.get(),),
+              create: (BuildContext context) => DoctorHistoryProvider(
+                Injector.appInstance.get(),
+              ),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),
@@ -250,35 +252,40 @@ class RouteManager {
               create: (BuildContext context) => DoctorProfileProvider(),
             ),
           ],
-          child: DoctorMainPage(initIndex: initIndex,),
+          child: DoctorMainPage(
+            initIndex: initIndex,
+          ),
         );
       });
 
-  static Route routeDoctorDiagnose(int _userConnectyCubeId) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorDiagnose(int userConnectyCubeId, String appointmentId) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorDiagnoseProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get());
+                return DoctorDiagnoseProvider(Injector.appInstance.get(), Injector.appInstance.get(),
+                    Injector.appInstance.get(), Injector.appInstance.get(), appointmentId);
               },
             )
           ],
-          child: DoctorDiagnosePage(_userConnectyCubeId),
+          child: DoctorDiagnosePage(userConnectyCubeId),
         );
       });
 
-  static Route routeDoctorAppointmentDetail(AppointmentModel appointmentModel, String name, String appointmentTime) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return DoctorAppointmentDetailProvider();
-          },
-        )
-      ],
-      child: DoctorAppointmentDetailPage(appointmentModel, name, appointmentTime),
-    );
-  });
+  static Route routeDoctorAppointmentDetail(AppointmentModel appointmentModel, String name, String appointmentTime) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return DoctorAppointmentDetailProvider();
+              },
+            )
+          ],
+          child: DoctorAppointmentDetailPage(appointmentModel, name, appointmentTime),
+        );
+      });
 
   static Route routeDoctorIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(

@@ -1,7 +1,6 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/product_model.dart';
 import 'package:blossom_clinic/model/shipnity_customer_model.dart';
-import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/network/service_properties.dart';
 import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
@@ -11,8 +10,10 @@ import 'package:flutter/material.dart';
 class DispenseProvider extends BaseProvider with ChangeNotifier {
   GetProductListUseCase _getProductListUseCase;
   CreateShipnityOrderUseCase _createShipnityOrderUseCase;
+  ShipnityCustomerModel _shipnityCustomerModel;
+  String _appointmentId;
 
-  DispenseProvider(this._getProductListUseCase, this._createShipnityOrderUseCase);
+  DispenseProvider(this._getProductListUseCase, this._createShipnityOrderUseCase, this._shipnityCustomerModel, this._appointmentId);
 
   List<dynamic> list;
   Map<ProductModel, int> productSelected = {};
@@ -36,11 +37,11 @@ class DispenseProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> callServiceCreateOrder(
-      BuildContext context, UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel) async {
+      BuildContext context) async {
     showProgressDialog(context);
     final result = await _createShipnityOrderUseCase.execute({
       "token": ServiceProperties.SHIPNITY_TOKEN,
-      "shipnityCustomerModel": shipnityCustomerModel,
+      "shipnityCustomerModel": _shipnityCustomerModel,
       "productSelected": productSelected
     });
     Navigator.pop(context, RouteManager.routeDoctorMain(initIndex: 1));

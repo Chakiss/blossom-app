@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppointmentModel {
+  String id;
   String date;
   DocumentReference doctorReference;
   Form form;
@@ -10,7 +11,8 @@ class AppointmentModel {
   DocumentReference userReference;
 
   AppointmentModel(
-      {this.date,
+      {this.id,
+      this.date,
       this.doctorReference,
       this.form,
       this.orderReference,
@@ -18,8 +20,9 @@ class AppointmentModel {
       this.timeStart,
       this.userReference});
 
-  factory AppointmentModel.fromJson(Map<String, dynamic> json) {
+  factory AppointmentModel.fromJson(String id, Map<String, dynamic> json) {
     return AppointmentModel(
+      id: id,
       date: json["date"],
       doctorReference: json["doctorReference"],
       form: Form.fromJson(json["form"]),
@@ -88,7 +91,7 @@ class Pre {
   String changeProduct;
   Timestamp createdAt;
   bool frequenceSweet;
-  List<DocumentReference> images;
+  List<String> images;
   bool isCompleted;
   bool isStressed;
   bool normalMenstruation;
@@ -115,7 +118,7 @@ class Pre {
       changeProduct: json["changeProduct"],
       createdAt: json["createdAt"],
       frequenceSweet: json["frequenceSweet"],
-      images: (json["images"] as List).map((e) => e as DocumentReference).toList(),
+      images: (json["images"] as List).map((e) => e as String).toList(),
       isCompleted: json["isCompleted"],
       isStressed: json["isStressed"],
       normalMenstruation: json["normalMenstruation"],

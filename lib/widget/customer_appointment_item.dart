@@ -1,17 +1,20 @@
-import 'package:blossom_clinic/model/customer_order_model.dart';
+import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CustomerOrderItem extends StatelessWidget {
-  CustomerOrderModel _customerOrderModel;
-  Function(CustomerOrderModel) _listener;
+class CustomerAppointmentItem extends StatelessWidget {
+  AppointmentModel _appointmentModel;
+  Function(AppointmentModel) _listener;
+  DateFormat _dateFormat;
+  DateFormat _dateFormatParse;
+  DateFormat _timeFormat;
+  DateFormat _timeFormatParse;
 
-  CustomerOrderItem(this._customerOrderModel, this._listener);
-
-  DateFormat _dateFormat = DateFormat("dd MMMM yyyy", "TH");
+  CustomerAppointmentItem(this._appointmentModel, this._dateFormat, this._dateFormatParse, this._timeFormat,
+      this._timeFormatParse, this._listener);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class CustomerOrderItem extends StatelessWidget {
               children: [
                 BlossomCircleAvatar(
                   30,
-                  imageKey: _customerOrderModel.doctorReference.id,
+                  imageKey: _appointmentModel.doctorReference.id,
                 ),
                 Expanded(
                     child: Container(
@@ -33,19 +36,23 @@ class CustomerOrderItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlossomText(
-                        _dateFormat.format(_customerOrderModel.createdAt),
+                        _dateFormatParse.format(_dateFormat.parse(_appointmentModel.date)),
                         size: 12,
                         fontWeight: FontWeight.bold,
                       ),
-                      BlossomText(_getStatusDescription(_customerOrderModel.status), size: 12)
+                      BlossomText(
+                          "${_timeFormatParse.format(_timeFormat.parse(_appointmentModel.timeStart))} น." +
+                          " - "
+                          "${_timeFormatParse.format(_timeFormat.parse(_appointmentModel.timeEnd))} น.",
+                          size: 12)
                     ],
                   ),
                 )),
                 ButtonPinkGradient(
-                  _getButtonStatus(_customerOrderModel.status),
+                  "โทร",
                   true,
                   () {
-                    _listener.call(_customerOrderModel);
+                    _listener.call(_appointmentModel);
                   },
                   radius: 6,
                   height: 32,
@@ -62,27 +69,5 @@ class CustomerOrderItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _getStatusDescription(int status) {
-    switch (status) {
-      case 0:
-        return "ชำระเงินเพื่อยืนยันการจอง";
-      case 1:
-        return "จองเรียบร้อยแล้ว";
-      default:
-        return "ยกเลิกรายการ";
-    }
-  }
-
-  String _getButtonStatus(int status) {
-    switch (status) {
-      case 0:
-        return "โทร";
-      case 1:
-        return "สำเร็จ";
-      default:
-        return "ยกเลิก";
-    }
   }
 }
