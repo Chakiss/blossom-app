@@ -188,10 +188,11 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   children: [
                     TextFieldStrokeBlack(
                       "0",
-                      width: 40,
+                      width: 60,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       textController: _nextAppointmentTextController,
+                      maxLength: 2,
                     ),
                     SizedBox(
                       width: 12,

@@ -44,7 +44,7 @@ class CreateShipnityOrderUseCase extends BaseAsyncUseCase<Map<String, dynamic>, 
       final requestModel = CreateShipnityOrderRequestModel(order: orderModel);
       final response = await _remoteRepository.createShipnityOrder(token, requestModel);
       if (response.isSuccess()) {
-        return Success({});
+        return Success(response.data);
       } else {
         return Error(ErrorUtils.getErrorMessage(response));
       }

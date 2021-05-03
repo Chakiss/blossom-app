@@ -202,13 +202,15 @@ class RouteManager {
         );
       });
 
-  static Route routeDispense(UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel, String appointmentId) =>
+  static Route routeDispense(
+          UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel, String appointmentId) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DispenseProvider(Injector.appInstance.get(), Injector.appInstance.get(), shipnityCustomerModel, appointmentId);
+                return DispenseProvider(Injector.appInstance.get(), Injector.appInstance.get(),
+                    Injector.appInstance.get(), shipnityCustomerModel, appointmentId);
               },
             )
           ],

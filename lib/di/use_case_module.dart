@@ -22,6 +22,7 @@ import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/usecase/register_use_case.dart';
 import 'package:blossom_clinic/usecase/update_profile_facebook_login_use_case.dart';
+import 'package:blossom_clinic/usecase/update_shipnity_reference_use_case.dart';
 import 'package:blossom_clinic/usecase/validate_email_use_case.dart';
 import 'package:blossom_clinic/usecase/validate_phone_number_use_case.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -64,5 +65,6 @@ class UseCaseModule {
     injector.registerDependency<SavePatientFormUseCase>(() => SavePatientFormUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetAppointmentsIdByOrderIdUseCase>(() => GetAppointmentsIdByOrderIdUseCase(FirebaseFirestore.instance));
     injector.registerDependency<SaveDoctorDiagnoseFormUseCase>(() => SaveDoctorDiagnoseFormUseCase(FirebaseFunctions.instance));
+    injector.registerDependency<UpdateShipnityReferenceUseCase>(() => UpdateShipnityReferenceUseCase(FirebaseFunctions.instance));
   }
 }
