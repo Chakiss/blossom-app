@@ -2,7 +2,7 @@ class SaveDoctorDiagnoseRequestModel {
   String appointmentID;
   String skinOverview;
   String skinType;
-  String diagnose;
+  String diagnoses;
   String carePlan;
   String careRecommendation;
   String productsRecommendation;
@@ -12,7 +12,7 @@ class SaveDoctorDiagnoseRequestModel {
       {this.appointmentID,
       this.skinOverview,
       this.skinType,
-      this.diagnose,
+      this.diagnoses,
       this.carePlan,
       this.careRecommendation,
       this.productsRecommendation,
@@ -23,7 +23,7 @@ class SaveDoctorDiagnoseRequestModel {
       "appointmentID": appointmentID,
       "skinOverview": skinOverview,
       "skinType": skinType,
-      "diagnose": diagnose,
+      "diagnoses": diagnoses,
       "carePlan": carePlan,
       "careRecommendation": careRecommendation,
       "productsRecommendation": productsRecommendation,

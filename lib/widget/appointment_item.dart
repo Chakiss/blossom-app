@@ -36,54 +36,54 @@ class _AppointmentItemState extends State<AppointmentItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100, vertical: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.person,
-                size: 60,
-              ),
-              SizedBox(
-                width: 12,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlossomText(
-                    "${name ?? ""}",
-                    size: 18,
-                  ),
-                  BlossomText(
-                    appointmentTime,
-                    size: 14,
-                  )
-                ],
-              ),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  widget._listener.call(widget._appointmentModel, name, appointmentTime);
-                },
-                child: Padding(
+    return InkWell(
+      onTap: () {
+        widget._listener.call(widget._appointmentModel, name, appointmentTime);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100, vertical: 10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.person,
+                  size: 60,
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BlossomText(
+                      "${name ?? ""}",
+                      size: 18,
+                    ),
+                    BlossomText(
+                      appointmentTime,
+                      size: 14,
+                    )
+                  ],
+                ),
+                Spacer(),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Icon(
                     Icons.navigate_next,
                     color: BlossomTheme.darkPink,
                     size: 32,
                   ),
-                ),
-              )
-            ],
-          ),
-          Container(
-            height: 1,
-            color: BlossomTheme.black,
-            margin: EdgeInsets.only(top: 20),
-          )
-        ],
+                )
+              ],
+            ),
+            Container(
+              height: 1,
+              color: BlossomTheme.black,
+              margin: EdgeInsets.only(top: 20),
+            )
+          ],
+        ),
       ),
     );
   }

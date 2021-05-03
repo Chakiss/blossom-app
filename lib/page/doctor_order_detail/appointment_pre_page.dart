@@ -20,14 +20,6 @@ class AppointmentPrePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           BlossomText(
-            DateFormat("วันที่ d MMMM yyyy", "TH").format(_pre.createdAt.toDate()),
-            fontWeight: FontWeight.bold,
-            size: 18,
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          BlossomText(
             "ระยะเวลาที่เป็นสิว",
             fontWeight: FontWeight.bold,
             size: 18,

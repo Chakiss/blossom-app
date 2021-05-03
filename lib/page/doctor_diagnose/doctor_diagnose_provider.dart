@@ -78,7 +78,7 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
         appointmentID: _appointmentId,
         skinOverview: acneOverview,
         skinType: skinType,
-        diagnose: diagnose.substring(0, diagnose.length - 2),
+        diagnoses: diagnose.substring(0, diagnose.length - 2),
         carePlan: carePlan,
         careRecommendation: careRecommend.substring(0, careRecommend.length - 2),
         productsRecommendation: productRecommend,

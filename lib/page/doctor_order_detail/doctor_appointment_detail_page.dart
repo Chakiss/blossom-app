@@ -1,4 +1,3 @@
-import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_post_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
@@ -9,6 +8,7 @@ import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../blossom_theme.dart';
 import 'appointment_pre_page.dart';
 
 class DoctorAppointmentDetailPage extends StatelessWidget {
@@ -24,20 +24,29 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.initialPage(_appointmentModel);
-    return BaseScreen(
-      child: Column(
-        children: [
-          ToolbarBack(
-            title: _name,
+    return Scaffold(
+        backgroundColor: BlossomTheme.white,
+        body: Column(children: [
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 100 * MediaQuery.of(context).size.width / 100,
+                  child: Image.asset("assets/nav_bar.png"),
+                ),
+              ),
+              SafeArea(
+                  child: ToolbarBack(
+                title: _name,
+              )),
+            ],
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+            padding: EdgeInsets.symmetric(horizontal: 7 * MediaQuery.of(context).size.width / 100),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 28,
-                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,7 +78,7 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 6 * MediaQuery.of(context).size.height / 100,
+            height: 4 * MediaQuery.of(context).size.height / 100,
           ),
           AppointmentDetailSegmentControl((index) {
             switch (index) {
@@ -93,8 +102,6 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
               }
             },
           )),
-        ],
-      ),
-    );
+        ]));
   }
 }
