@@ -10,12 +10,13 @@ import 'package:flutter/material.dart';
 
 class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
 
-  String skinType;
-  String acneTypes;
   GetUserProfileWithConnectyCubeIdUseCase _getUserProfileWithConnectyCubeIdUseCase;
   GetShipnityCustomerUseCase _getShipnityCustomerUseCase;
   CreateShipnityCustomerUseCase _createShipnityCustomerUseCase;
 
+  String skinType;
+  String diagnose;
+  String adviceRecommend;
   UserProfileModel userProfileModel;
   ShipnityCustomerModel shipnityCustomerModel;
 
@@ -69,5 +70,9 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
     }, (map) {
       errorHandle.proceed(context, map);
     });
+  }
+
+  Future<void> callSaveDoctorDiagnoseForm() {
+
   }
 }

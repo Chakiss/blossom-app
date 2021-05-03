@@ -11,4 +11,9 @@ class DoctorAppointmentDetailProvider extends BaseProvider with ChangeNotifier {
     page = AppointmentPrePage(appointmentModel.form.pre);
     notifyListeners();
   }
+
+  void setPage(Widget page) {
+    this.page = page;
+    notifyListeners();
+  }
 }

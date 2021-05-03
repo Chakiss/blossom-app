@@ -26,10 +26,12 @@ class _AppointmentDetailSegmentControlState extends State<AppointmentDetailSegme
             "ข้อมูล",
             selectedPosition == 0,
             () {
-              widget.listener.call(0);
-              setState(() {
-                selectedPosition = 0;
-              });
+              if (selectedPosition != 0) {
+                widget.listener.call(0);
+                setState(() {
+                  selectedPosition = 0;
+                });
+              }
             },
             width: 30 * MediaQuery.of(context).size.width / 100,
             radiusTopLeft: 6,
@@ -39,10 +41,12 @@ class _AppointmentDetailSegmentControlState extends State<AppointmentDetailSegme
             "คำวินิจฉัย",
             selectedPosition == 1,
             () {
-              widget.listener.call(1);
-              setState(() {
-                selectedPosition = 1;
-              });
+              if (selectedPosition != 1) {
+                widget.listener.call(1);
+                setState(() {
+                  selectedPosition = 1;
+                });
+              }
             },
             width: 30 * MediaQuery.of(context).size.width / 100,
           ),
@@ -50,10 +54,12 @@ class _AppointmentDetailSegmentControlState extends State<AppointmentDetailSegme
             "ยาที่สั่ง",
             selectedPosition == 2,
                 () {
-              widget.listener.call(2);
-              setState(() {
-                selectedPosition = 2;
-              });
+              if (selectedPosition != 2) {
+                widget.listener.call(2);
+                setState(() {
+                  selectedPosition = 2;
+                });
+              }
             },
             width: 30 * MediaQuery.of(context).size.width / 100,
             radiusTopRight: 6,

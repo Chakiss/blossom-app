@@ -1,6 +1,7 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
@@ -39,7 +40,7 @@ class DoctorProfilePage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: InkWell(
                         onTap: () {
-
+                          Navigator.push(context, RouteManager.routeDoctorDiagnose(4163663));
                         },
                         child: _userData.doctorInfoModel?.displayPhoto != null
                             ? BlossomCircleAvatar(

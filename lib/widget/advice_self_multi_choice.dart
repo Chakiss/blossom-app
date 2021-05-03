@@ -12,11 +12,13 @@ class AdviceSelfMultiChoice extends StatefulWidget {
 }
 
 class AdviceSelfMultiChoiceState extends State<AdviceSelfMultiChoice> {
-  var adviceFirst = false;
-  var adviceSecond = false;
-  var adviceThird = false;
-  var adviceForth = false;
-  var adviceFifth = false;
+
+  String data = "";
+  var acneFirst = false;
+  var acneSecond = false;
+  var acneThird = false;
+  var acneForth = false;
+  var acneFifth = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,42 +28,50 @@ class AdviceSelfMultiChoiceState extends State<AdviceSelfMultiChoice> {
         children: [
           Row(
             children: [
-              Row(
-                children: [
-                  Checkbox(
-                      value: adviceFirst,
-                      fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                      onChanged: (bool newValue) {
-                        setState(() {
-                          adviceFirst = newValue;
-                        });
-                      }),
-                  BlossomText(
-                    "เลี่ยงเครื่องสำอางค์",
-                    size: 15,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                      value: adviceSecond,
-                      fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                      onChanged: (bool newValue) {
-                        setState(() {
-                          adviceSecond = newValue;
-                        });
-                      }),
-                  BlossomText(
-                    "งดนอนดึก",
-                    size: 15,
-                  )
-                ],
+              Checkbox(
+                  value: acneFirst,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    data = addOrRemoveData("เลี่ยงเครื่องสำอางค์");
+                    widget._listener.call(data);
+                    setState(() {
+                      acneFirst = newValue;
+                    });
+                  }),
+              BlossomText(
+                "เลี่ยงเครื่องสำอางค์",
+                size: 15,
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Checkbox(
+                  value: acneSecond,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    data = addOrRemoveData("งดนอนดึก");
+                    widget._listener.call(data);
+                    setState(() {
+                      acneSecond = newValue;
+                    });
+                  }),
+              BlossomText(
+                "งดนอนดึก",
+                size: 15,
               )
             ],
           ),
         ],
       ),
     );
+  }
+
+  String addOrRemoveData(String value) {
+    if (data.contains("$value, ")) {
+      return data.replaceAll("$value, ", "");
+    } else {
+      return "$data$value, ";
+    }
   }
 }

@@ -1,10 +1,10 @@
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
-import 'package:blossom_clinic/widget/acne_look_multi_choice.dart';
 import 'package:blossom_clinic/widget/advice_self_multi_choice.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
-import 'package:blossom_clinic/widget/skin_look_radio_group.dart';
+import 'package:blossom_clinic/widget/diagnose_multi_check_box.dart';
+import 'package:blossom_clinic/widget/skin_look_diagnose_radio_group.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 import '../../blossom_theme.dart';
 
 class DoctorDiagnosePage extends StatefulWidget {
-
   int _userConnectyCubeId;
 
   DoctorDiagnosePage(this._userConnectyCubeId);
@@ -25,6 +24,8 @@ class DoctorDiagnosePage extends StatefulWidget {
 class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
   DoctorDiagnoseProvider _provider;
   final treatPlanTextController = TextEditingController();
+  final productAdviceTextController = TextEditingController();
+  final nextAppointmentTextController = TextEditingController();
 
   @override
   void initState() {
@@ -68,8 +69,9 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SkinLookRadioGroup((skin) {
+                SkinLookDiagnoseRadioGroup((skin) {
                   _provider.skinType = skin;
+                  print(_provider.skinType);
                 }),
                 SizedBox(
                   height: 12,
@@ -77,14 +79,15 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
-                    "วินิจฉัยโรค",
+                    "วินิจฉัยโรค (เลือกได้มากกว่า 1 ข้อ)",
                     size: 16,
                     color: BlossomTheme.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                AcneMultiChoice((acne) {
-                  _provider.acneTypes = acne;
+                DiagnoseMultiCheckBox((value) {
+                  _provider.diagnose = value;
+                  print(_provider.diagnose);
                 }),
                 SizedBox(
                   height: 12,
@@ -110,10 +113,10 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   textController: treatPlanTextController,
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.topLeft,
                   child: BlossomText(
                     "ข้อแนะนำวิธีการดูแลตัวเอง",
                     size: 16,
@@ -122,8 +125,69 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   ),
                 ),
                 AdviceSelfMultiChoice((value) {
-
+                  _provider.adviceRecommend = value;
+                  print(_provider.adviceRecommend);
                 }),
+                SizedBox(
+                  height: 12,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: BlossomText(
+                    "แนะนำผลิตภัณฑ์ที่ควรใช้",
+                    size: 16,
+                    color: BlossomTheme.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFieldStrokeBlack(
+                  "",
+                  textAlignVertical: TextAlignVertical.top,
+                  // keyboardType: TextInputType.multiline,
+                  maxLines: 2,
+                  textController: productAdviceTextController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: BlossomText(
+                    "นัดครั้งถัดไป",
+                    size: 16,
+                    color: BlossomTheme.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    TextFieldStrokeBlack(
+                      "0",
+                      width: 40,
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      textController: nextAppointmentTextController,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    BlossomText(
+                      "วัน",
+                      size: 16,
+                      color: BlossomTheme.black,
+                      fontWeight: FontWeight.bold,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 12,
+                ),
                 SizedBox(
                   height: 40,
                 ),
@@ -131,7 +195,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   "ยืนยัน",
                   true,
                   () {
-                    _goToDispensePage(context);
+                    // _goToDispensePage(context);
                   },
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,
