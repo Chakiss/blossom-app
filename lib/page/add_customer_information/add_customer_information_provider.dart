@@ -16,7 +16,7 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
   AddCustomerInformationProvider(this._savePatientFormUseCase, this._getAppointmentsIdByOrderIdUseCase);
 
   Future<void> openCamera(int index) async {
-    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 600, maxHeight: 600, imageQuality: 70);
+    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 600, maxHeight: 600, imageQuality: 80);
     listFile[index] = imageFile;
     notifyListeners();
   }
@@ -54,9 +54,10 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
       bool frequenceSweet) async {
     
     List<String> images = [];
-    listFile.forEach((element) { 
+    listFile.forEach((element) async {
       if (element != null) {
-        images.add(element.toBase64());
+        final base64String = element.toBase64();
+        images.add(base64String);
       }
     });
     
@@ -74,7 +75,7 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
     final result = await _savePatientFormUseCase.execute(requestModel);
     Navigator.pop(context);
     result.whenWithResult((data) {
-      Navigator.push(context, RouteManager.routeDoctorMain(initIndex: 1));
+      Navigator.push(context, RouteManager.routeMain(initIndex: 1));
     }, (map) {
       errorHandle.proceed(context, map);
     });

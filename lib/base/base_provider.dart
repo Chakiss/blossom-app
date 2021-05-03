@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/services.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
@@ -31,9 +33,8 @@ class BaseProvider {
 
 extension FileExtension on File {
   String toBase64() {
-    List<int> fileInByte = this.readAsBytesSync();
-    String fileInBase64 = base64Encode(fileInByte);
-    return Uri.dataFromString(fileInBase64, mimeType: "image/jpg").toString();
+    Uint8List bytes = this.readAsBytesSync();
+    return Uri.dataFromBytes(bytes, mimeType: "image/jpg").toString();
   }
 }
 
