@@ -17,7 +17,9 @@ class GetShipnityOrderByInvoiceIdUseCase extends BaseAsyncUseCase<Map<String, dy
       final invoiceId = parameter["invoiceId"];
       final response = await _remoteRepository.getShipnityOrderByInvoiceId(token, invoiceId);
       if (response.isSuccess()) {
-        return Success(ShipnityOrderModel.fromJson(response.data));
+        final order = response.data["orders"] as List;
+        final data = ShipnityOrderModel.fromJson(Map<String, dynamic>.from(order.first));
+        return Success(data);
       } else {
         return Error(ErrorUtils.getErrorMessage(response));
       }

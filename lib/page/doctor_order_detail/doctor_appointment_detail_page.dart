@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/model/appointment_model.dart';
+import 'package:blossom_clinic/page/doctor_order_detail/appointment_dispense_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_post_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
 import 'package:blossom_clinic/widget/appointment_detail_segment_control.dart';
@@ -100,7 +101,7 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
                     ),
                   ));
                 } else {
-
+                  _provider.setPage(AppointmentDispensePage(_provider.shipnityOrderModel));
                 }
                 break;
             }
