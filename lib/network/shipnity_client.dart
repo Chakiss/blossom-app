@@ -25,4 +25,8 @@ abstract class ShipnityClient {
   @POST("orders")
   Future<Response<Map<String, dynamic>>> createShipnityOrder(
       @Header("Authorization") String token, @Body() CreateShipnityOrderRequestModel requestModel);
+
+  @GET("orders")
+  Future<Response<Map<String, dynamic>>> getOrdersByInvoiceId(
+      @Header("Authorization") String token, @Query("terms") String invoiceId);
 }

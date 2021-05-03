@@ -35,4 +35,9 @@ class RemoteRepositoryImpl extends RemoteRepository {
   Future<Response<Map<String, dynamic>>> createShipnityOrder(String token, CreateShipnityOrderRequestModel requestModel) async {
     return await shipnityClient.createShipnityOrder(token, requestModel);
   }
+
+  @override
+  Future<Response<Map<String, dynamic>>> getShipnityOrderByInvoiceId(String token, String invoiceId) async {
+    return await shipnityClient.getOrdersByInvoiceId(token, invoiceId);
+  }
 }

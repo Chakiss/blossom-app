@@ -6,6 +6,7 @@ class AppointmentModel {
   DocumentReference doctorReference;
   Form form;
   DocumentReference orderReference;
+  String referenceShipnity;
   String timeEnd;
   String timeStart;
   DocumentReference userReference;
@@ -16,6 +17,7 @@ class AppointmentModel {
       this.doctorReference,
       this.form,
       this.orderReference,
+      this.referenceShipnity,
       this.timeEnd,
       this.timeStart,
       this.userReference});
@@ -27,6 +29,7 @@ class AppointmentModel {
       doctorReference: json["doctorReference"],
       form: Form.fromJson(json["form"]),
       orderReference: json["orderReference"],
+      referenceShipnity: json["referenceShipnity"],
       timeEnd: json["timeEnd"],
       timeStart: json["timeStart"],
       userReference: json["userReference"],

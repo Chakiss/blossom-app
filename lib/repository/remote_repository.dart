@@ -13,4 +13,6 @@ abstract class RemoteRepository {
   Future<Response<Map<String, dynamic>>> createShipnityCustomer(String token, CreateShipnityCustomerRequestModel requestModel);
 
   Future<Response<Map<String, dynamic>>> createShipnityOrder(String token, CreateShipnityOrderRequestModel requestModel);
+
+  Future<Response<Map<String, dynamic>>> getShipnityOrderByInvoiceId(String token, String invoiceId);
 }

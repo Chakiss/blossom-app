@@ -24,6 +24,7 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.initialPage(_appointmentModel);
+    _provider.callServiceGetShipnityOrderByInvoiceId(_appointmentModel.referenceShipnity);
     return Scaffold(
         backgroundColor: BlossomTheme.white,
         body: Column(children: [
@@ -87,6 +88,20 @@ class DoctorAppointmentDetailPage extends StatelessWidget {
                 break;
               case 1:
                 _provider.setPage(AppointmentPostPage(_appointmentModel.form.post));
+                break;
+              case 2:
+                if (_appointmentModel.referenceShipnity?.isEmpty ?? true) {
+                  _provider.setPage(Container(
+                    child: Center(
+                      child: BlossomText(
+                        "ยังไม่มีข้อมูลสั่งยา",
+                        size: 20,
+                      ),
+                    ),
+                  ));
+                } else {
+
+                }
                 break;
             }
           }),
