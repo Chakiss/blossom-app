@@ -9,6 +9,7 @@ class SharedPrefUtils {
 
   static const String _keyMapFilePath = "keyMapFilePath";
   static const String _keyMapUserReference = "keyMapUserReference";
+  static const String _keyMapDoctorReference = "keyMapDoctorReference";
 
   Future<void> setMapFilePath(Map<String, String> mapFilePath) async {
     await _sharedPref.setString(_keyMapFilePath + _buildNumber, json.encode(mapFilePath) ?? "{}");
@@ -25,6 +26,15 @@ class SharedPrefUtils {
 
   Map<String, String> getMapUserReference() {
     final mapFilePathString = _sharedPref.getString(_keyMapUserReference) ?? "{}";
+    return Map<String, String>.from(json.decode(mapFilePathString));
+  }
+
+  Future<void> setMapDoctorReference(Map<String, String> mapUserReference) async {
+    await _sharedPref.setString(_keyMapDoctorReference, json.encode(mapUserReference) ?? "{}");
+  }
+
+  Map<String, String> getMapDoctorReference() {
+    final mapFilePathString = _sharedPref.getString(_keyMapDoctorReference) ?? "{}";
     return Map<String, String>.from(json.decode(mapFilePathString));
   }
 }

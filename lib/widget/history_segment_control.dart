@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class HistorySegmentControl extends StatefulWidget {
 
   Function(int) listener;
+  int selectedPosition;
 
-  HistorySegmentControl(this.listener);
+  HistorySegmentControl(this.listener,{this.selectedPosition = 0});
 
   @override
   _HistorySegmentControlState createState() => _HistorySegmentControlState();
@@ -14,7 +15,13 @@ class HistorySegmentControl extends StatefulWidget {
 
 class _HistorySegmentControlState extends State<HistorySegmentControl> {
 
-  int selectedPosition = 0;
+  int selectedPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedPosition = widget.selectedPosition;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +43,12 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
             radiusBottomLeft: 6,
           ),
           SegmentItem(
-            "การจ่ายเงิน",
+            "ใบสั่งยา",
             selectedPosition == 1,
-            () {
+                () {
               widget.listener.call(1);
               setState(() {
                 selectedPosition = 1;
-              });
-            },
-            width: 30 * MediaQuery.of(context).size.width / 100,
-          ),
-          SegmentItem(
-            "ใบสั่งยา",
-            selectedPosition == 2,
-                () {
-              widget.listener.call(2);
-              setState(() {
-                selectedPosition = 2;
               });
             },
             width: 30 * MediaQuery.of(context).size.width / 100,

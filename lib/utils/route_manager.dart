@@ -151,7 +151,7 @@ class RouteManager {
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),

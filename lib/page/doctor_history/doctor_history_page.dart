@@ -35,7 +35,7 @@ class DoctorHistoryPage extends StatelessWidget {
             SizedBox(
               height: 26,
             ),
-            DoctorHistorySegmentControl((index) {}),
+            // DoctorHistorySegmentControl((index) {}),
             Expanded(
               child: Consumer<DoctorHistoryProvider>(
                 builder: (BuildContext context, DoctorHistoryProvider value, Widget child) {

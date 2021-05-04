@@ -3,9 +3,11 @@ import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_doctor_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_user_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointments_id_by_order_id_use_case.dart';
+import 'package:blossom_clinic/usecase/get_doctor_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_order_by_invoice_id_use_case.dart';
+import 'package:blossom_clinic/usecase/get_shipnity_order_list_by_phone_number_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
 import 'package:blossom_clinic/usecase/save_doctor_diagnose_form_use_case.dart';
 import 'package:blossom_clinic/usecase/save_patient_form_use_case.dart';
@@ -52,6 +54,7 @@ class UseCaseModule {
     injector.registerDependency<CreateAppointmentOrderUseCase>(() => CreateAppointmentOrderUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
+    injector.registerDependency<GetDoctorProfileByIdUseCase>(() => GetDoctorProfileByIdUseCase(FirebaseFirestore.instance, injector.get()));
     injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil"), injector.get()));
     injector.registerDependency<GetProductListUseCase>(() => GetProductListUseCase(injector.get()));
     injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(FacebookAuth.instance, FirebaseAuth.instance));
@@ -68,5 +71,6 @@ class UseCaseModule {
     injector.registerDependency<SaveDoctorDiagnoseFormUseCase>(() => SaveDoctorDiagnoseFormUseCase(FirebaseFunctions.instance));
     injector.registerDependency<UpdateShipnityReferenceUseCase>(() => UpdateShipnityReferenceUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetShipnityOrderByInvoiceIdUseCase>(() => GetShipnityOrderByInvoiceIdUseCase(injector.get()));
+    injector.registerDependency<GetShipnityOrderListByPhoneNumberUseCase>(() => GetShipnityOrderListByPhoneNumberUseCase(injector.get()));
   }
 }

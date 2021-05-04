@@ -1,11 +1,16 @@
 import 'package:blossom_clinic/base/base_screen.dart';
-import 'package:blossom_clinic/model/customer_order_model.dart';
+import 'package:blossom_clinic/model/appointment_model.dart';
+import 'package:blossom_clinic/model/shipnity_order_model.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
+import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
+import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/customer_appointment_item.dart';
 import 'package:blossom_clinic/widget/history_segment_control.dart';
+import 'package:blossom_clinic/widget/shipnity_order_item.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -35,24 +40,24 @@ class _HistoryPageState extends State<HistoryPage> {
             SizedBox(
               height: 26,
             ),
-            Center(child: HistorySegmentControl((index) {})),
+            Center(
+                child: HistorySegmentControl(
+              (index) {
+                _provider.setSelectedIndex(context, index);
+              },
+              selectedPosition: _provider.selectedIndex,
+            )),
             SizedBox(
               height: 20,
             ),
             Expanded(
               child: Consumer<HistoryProvider>(
                 builder: (BuildContext context, HistoryProvider value, Widget child) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.appointmentList?.length ?? 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CustomerAppointmentItem(
-                          value.appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat, _timeFormatParse,
-                          (appointment) {
-                        Navigator.push(context, RouteManager.routeCallDoctor(appointment));
-                      });
-                    },
-                  );
+                  if (value.selectedIndex == 0) {
+                    return _showAppointmentList(context, value.appointmentList);
+                  } else {
+                    return _showShipnityOrderList(context, value.orderList);
+                  }
                 },
               ),
             )
@@ -62,7 +67,60 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Future<void> _goToOmisePage(BuildContext context, CustomerOrderModel customerOrder) async {
-    Navigator.push(context, RouteManager.routeOmise(customerOrder.orderId, customerOrder.total));
+  Widget _showAppointmentList(BuildContext context, List<AppointmentModel> appointmentList) {
+    if (appointmentList == null) {
+      return Container(
+          child: Center(
+        child: BlossomProgressIndicator(),
+      ));
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: appointmentList?.length ?? 0,
+        itemBuilder: (BuildContext context, int index) {
+          return CustomerAppointmentItem(
+              appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat, _timeFormatParse, (appointment) {
+            Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+          });
+        },
+      );
+    }
+  }
+
+  Widget _showShipnityOrderList(BuildContext context, List<ShipnityOrderModel> orderList) {
+    if (orderList == null) {
+      return Container(
+          child: Center(
+        child: BlossomProgressIndicator(),
+      ));
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: orderList?.length ?? 0,
+        itemBuilder: (BuildContext context, int index) {
+          return ShipnityOrderItem(
+              orderList[index], Injector.appInstance.get(), Injector.appInstance.get(), (shipnityOrder) {
+              goToShipnityOrder(context, shipnityOrder);
+          });
+        },
+      );
+    }
+  }
+
+  void goToShipnityOrder(BuildContext context, ShipnityOrderModel shipnityOrder) {
+    final String url = _extractLinkFromString(shipnityOrder.summary_text);
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return WebViewPage("เลขที่ใบสั่งซื้อ: ${shipnityOrder.invoice_number}", url);
+    }));
+  }
+
+  String _extractLinkFromString(String text) {
+    final regex = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+    Iterable<RegExpMatch> matches = regex.allMatches(text);
+    if (matches.isNotEmpty) {
+      return text.substring(matches.first.start, matches.first.end);
+    } else {
+      return "";
+    }
   }
 }
