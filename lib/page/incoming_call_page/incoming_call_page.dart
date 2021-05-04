@@ -1,22 +1,37 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'incoming_call_provider.dart';
 
-class IncomingCallPage extends StatelessWidget {
+class IncomingCallPage extends StatefulWidget {
   P2PSession callSession;
 
   IncomingCallPage(this.callSession);
 
   @override
+  _IncomingCallPageState createState() => _IncomingCallPageState();
+}
+
+class _IncomingCallPageState extends State<IncomingCallPage> {
+  FlutterSound _flutterSound = FlutterSound();
+  Timer _timer;
+
+  @override
   Widget build(BuildContext context) {
     IncomingCallProvider provider = Provider.of(context, listen: false);
-    provider.handleHangUpCall(context, callSession);
-    provider.getUserDetail(callSession);
+    provider.handleHangUpCall(context, widget.callSession);
+    provider.getUserDetail(widget.callSession);
+    _playSound();
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -75,7 +90,7 @@ class IncomingCallPage extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      callSession.reject();
+                      widget.callSession.reject();
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -94,7 +109,7 @@ class IncomingCallPage extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(context, RouteManager.routeCallCustomer(callSession));
+                      Navigator.pushReplacement(context, RouteManager.routeCallCustomer(widget.callSession));
                     },
                     child: Image.asset(
                       "assets/animation_calling.gif",
@@ -110,5 +125,30 @@ class IncomingCallPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _playSound() async {
+    var data = await rootBundle.load("assets/incoming_call.wav");
+    Directory tempDir = await getTemporaryDirectory();
+    File tempFile = File('${tempDir.path}/demo.mp3');
+    await tempFile.writeAsBytes(data.buffer.asUint8List(), flush: true);
+    await _flutterSound.setVolume(100);
+    String url = tempFile.uri.toString();
+    _flutterSound.startPlayer(url);
+    _repeatSound(url);
+  }
+
+  void _repeatSound(String url) {
+    _timer = new Timer(const Duration(milliseconds: 3000), () {
+      _flutterSound.stopPlayer();
+      _flutterSound.startPlayer(url);
+      _repeatSound(url);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
   }
 }

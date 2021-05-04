@@ -1,7 +1,6 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'call_customer_provider.dart';

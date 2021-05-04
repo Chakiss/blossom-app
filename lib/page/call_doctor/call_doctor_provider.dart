@@ -124,7 +124,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    sendPushNotification(doctorConnectyCubeId, appointmentId);
+    // sendPushNotification(doctorConnectyCubeId, appointmentId);
     callSession.startCall({"appointmentId": appointmentId});
   }
 
