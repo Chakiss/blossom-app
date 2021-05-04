@@ -8,6 +8,7 @@ import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_order_by_invoice_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_order_list_by_phone_number_use_case.dart';
+import 'package:blossom_clinic/usecase/get_user_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
 import 'package:blossom_clinic/usecase/save_doctor_diagnose_form_use_case.dart';
 import 'package:blossom_clinic/usecase/save_patient_form_use_case.dart';
@@ -46,6 +47,7 @@ class UseCaseModule {
     injector.registerDependency<LoginUseCase>(() => LoginUseCase(FirebaseAuth.instance, injector.get()));
     injector.registerDependency<CheckLoginUseCase>(() => CheckLoginUseCase(FirebaseAuth.instance));
     injector.registerDependency<GetUserProfileUseCase>(() => GetUserProfileUseCase(FirebaseFirestore.instance, injector.get()));
+    injector.registerDependency<GetUserProfileByIdUseCase>(() => GetUserProfileByIdUseCase(FirebaseFirestore.instance));
     injector.registerSingleton<GetDoctorListUseCase>(() => GetDoctorListUseCase(FirebaseFirestore.instance));
     injector.registerDependency<ValidateEmailUseCase>(() => ValidateEmailUseCase());
     injector.registerDependency<ValidatePhoneNumberUseCase>(() => ValidatePhoneNumberUseCase());

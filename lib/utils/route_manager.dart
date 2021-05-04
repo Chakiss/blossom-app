@@ -281,7 +281,7 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorAppointmentDetailProvider(Injector.appInstance.get());
+                return DoctorAppointmentDetailProvider(Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],
