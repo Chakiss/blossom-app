@@ -40,7 +40,7 @@ class DoctorProfilePage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push(context, RouteManager.routeDoctorDiagnose(4163663, "Jo3iFE51KStQv0XUZEiz"));
+                          Navigator.push(context, RouteManager.routeDoctorDiagnose(4163663, "Jo3iFE51KStQv0XUZEiz"));
                         },
                         child: _userData.doctorInfoModel?.displayPhoto != null
                             ? BlossomCircleAvatar(

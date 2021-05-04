@@ -131,6 +131,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   // keyboardType: TextInputType.multiline,
                   maxLines: 2,
                   textController: _treatPlanTextController,
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 20,
@@ -215,6 +216,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                   "ยืนยัน",
                   true,
                   () {
+                    FocusManager.instance.primaryFocus.unfocus();
                     _provider.callSaveDoctorDiagnoseForm(
                         context,
                         _acneOverviewTextController.text,
