@@ -58,7 +58,7 @@ class AppointmentPrePage extends StatelessWidget {
             height: 10,
           ),
           BlossomText(
-            "${_pre.changeProduct.isEmpty ? "-" : _pre.acneCared}",
+            "${_pre.changeProduct.isEmpty ? "-" : _pre.changeProduct}",
             size: 16,
           ),
           SizedBox(
@@ -132,7 +132,11 @@ class AppointmentPrePage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          _pre.images.isEmpty ? BlossomText("-") : Row(),
+          _pre.images.isEmpty
+              ? BlossomText("-")
+              : Column(
+                  children: loadImageFromStorage(),
+                ),
           SizedBox(
             height: 20,
           ),
@@ -142,6 +146,10 @@ class AppointmentPrePage extends StatelessWidget {
   }
 
   List<BlossomImage> loadImageFromStorage() {
-    return _pre.images.map((e) => BlossomImage(fileStorePath: e,)).toList();
+    return _pre.images
+        .map((e) => BlossomImage(
+              fileStorePath: e,
+            ))
+        .toList();
   }
 }

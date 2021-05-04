@@ -73,6 +73,37 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> callSaveDoctorDiagnoseForm(BuildContext context, String acneOverview, String carePlan,
       String productRecommend, String nextAppointment) async {
+
+    if (acneOverview?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณากรอกลักษณะสภาพผิว"});
+      return;
+    }
+
+    if (skinType?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะผิว"});
+      return;
+    }
+
+    if (diagnose?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกวินิจฉัยโรค"});
+      return;
+    }
+
+    if (carePlan?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณากรอกแผนการรักษา"});
+      return;
+    }
+
+    if (careRecommend?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกวินิจฉัยโรค"});
+      return;
+    }
+
+    if (nextAppointment?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณากรอกนัดครั้งถัดไป"});
+      return;
+    }
+
     showProgressDialog(context);
     final requestModel = SaveDoctorDiagnoseRequestModel(
         appointmentID: _appointmentId,

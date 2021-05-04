@@ -34,7 +34,16 @@ class _BlossomImageState extends State<BlossomImage> {
 
   @override
   Widget build(BuildContext context) {
-    return Image.file(File(imagePath));
+    return Column(
+      children: [
+        Container(
+            width: 50 * MediaQuery.of(context).size.width / 100,
+            child: Image.file(File(imagePath))),
+        SizedBox(
+          height: 20,
+        )
+      ],
+    );
   }
 
   String _getLocalUrlPath() {

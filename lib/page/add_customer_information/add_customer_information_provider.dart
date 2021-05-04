@@ -16,7 +16,8 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
   AddCustomerInformationProvider(this._savePatientFormUseCase, this._getAppointmentsIdByOrderIdUseCase);
 
   Future<void> openCamera(int index) async {
-    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 600, maxHeight: 600, imageQuality: 80);
+    File imageFile =
+        await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 600, maxHeight: 600, imageQuality: 80);
     listFile[index] = imageFile;
     notifyListeners();
   }
@@ -32,7 +33,6 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
       bool sleepDeprivation,
       bool normalMenstruation,
       bool frequenceSweet) async {
-
     if (acneCared == null) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกเคยรักษาสิวมาก่อนหรือไม่"});
       return;
@@ -84,7 +84,6 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
       bool sleepDeprivation,
       bool normalMenstruation,
       bool frequenceSweet) async {
-    
     List<String> images = [];
     listFile.forEach((element) async {
       if (element != null) {
@@ -92,11 +91,11 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
         images.add(base64String);
       }
     });
-    
+
     final requestModel = SavePatientFormRequestModel(
       appointmentID: appointmentId,
       acnePeriod: acnePeriod,
-      acneCared: acneCared,
+      acneCared: acneCared.isEmpty ? "" : acneCared.substring(0, acneCared.length - 2),
       changeProduct: changeProduct,
       isStressed: isStressed,
       sleepDeprivation: sleepDeprivation,

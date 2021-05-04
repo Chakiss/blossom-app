@@ -6,7 +6,7 @@ import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/appointment_item.dart';
-import 'package:blossom_clinic/widget/doctor_history_segment_control.dart';
+import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
@@ -40,7 +40,10 @@ class DoctorHistoryPage extends StatelessWidget {
               child: Consumer<DoctorHistoryProvider>(
                 builder: (BuildContext context, DoctorHistoryProvider value, Widget child) {
                   if (value.list == null) {
-                    return Container();
+                    return Container(
+                        child: Center(
+                          child: BlossomProgressIndicator(),
+                        ));
                   } else {
                     if (value.list is List<AppointmentModel>) {
                       return ListView.builder(
