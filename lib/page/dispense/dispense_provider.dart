@@ -40,6 +40,11 @@ class DispenseProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> callServiceCreateOrder(BuildContext context) async {
+    if (productSelected?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณาเพิ่มยาที่สั่งให้ลูกค้า"});
+      return;
+    }
+
     showProgressDialog(context);
     final result = await _createShipnityOrderUseCase.execute({
       "token": ServiceProperties.SHIPNITY_TOKEN,
