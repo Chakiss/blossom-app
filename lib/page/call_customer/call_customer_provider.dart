@@ -11,6 +11,8 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   RTCVideoRenderer streamRenderSelf;
   int userConnectyCudeId;
   String _appointmentId;
+  bool isMuteAudio = false;
+  bool isVideoEnable = true;
 
   void initCallSession(BuildContext context, P2PSession callSession) {
     this.callSession = callSession;
@@ -111,6 +113,30 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     }
     Navigator.pop(context);
     _goToDoctorDiagnosePage(context);
+  }
+
+  void setMuteAudio() {
+    if (callSession != null) {
+      if (isMuteAudio) {
+        isMuteAudio = false;
+      } else {
+        isMuteAudio = true;
+      }
+      callSession.setMicrophoneMute(isMuteAudio);
+      notifyListeners();
+    }
+  }
+
+  void setVideoEnableDisable() {
+    if (callSession != null) {
+      if (isVideoEnable) {
+        isVideoEnable = false;
+      } else {
+        isVideoEnable = true;
+      }
+      callSession.setVideoEnabled(isVideoEnable);
+      notifyListeners();
+    }
   }
 
   void _goToDoctorDiagnosePage(BuildContext context) {

@@ -43,8 +43,7 @@ class ProfilePage extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 40 * MediaQuery.of(context).size.width / 200,
                           backgroundColor: BlossomTheme.white,
-                          backgroundImage: NetworkImage(
-                              "https://lh3.googleusercontent.com/proxy/R91b-c-f_re2Eu18ulnZmfBjyeJBBfXAIqPHZKH3tB8CFy22gv1OD42WDFyL_ZkvNuzaLRknpm3m6txzboqH44AfMhkAEYjvXMqiebu4PrrZLeJUPUz6Gh54puQPAm3A97HjCEawPg"),
+                          backgroundImage: AssetImage("assets/profile_place_holder.png"),
                         ),
                       ),
                     ),

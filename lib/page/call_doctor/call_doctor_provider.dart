@@ -55,10 +55,10 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
     Set<int> opponentsIds = {doctorConnectyCubeId};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
-    _initCallSession(context, callSession, appointmentId);
+    _initCallSession(context, callSession, doctorConnectyCubeId, appointmentId);
   }
 
-  void _initCallSession(BuildContext context, P2PSession callSession, String appointmentId) {
+  void _initCallSession(BuildContext context, P2PSession callSession, int doctorConnectyCubeId, String appointmentId) {
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();
@@ -124,9 +124,8 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       logger.d("Prew, onSessionClosed");
     };
 
-    callSession.startCall({
-      "appointmentId": appointmentId
-    });
+    sendPushNotification(doctorConnectyCubeId, appointmentId);
+    callSession.startCall({"appointmentId": appointmentId});
   }
 
   Future<void> _handleRejectHangUpNoAnswer(BuildContext context) async {
@@ -169,6 +168,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
         isMuteAudio = true;
       }
       callSession.setMicrophoneMute(isMuteAudio);
+      notifyListeners();
     }
   }
 
@@ -180,6 +180,28 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
         isVideoEnable = true;
       }
       callSession.setVideoEnabled(isVideoEnable);
+      notifyListeners();
     }
+  }
+
+  void sendPushNotification(int doctorConnectyCubeId, String appointmentId) {
+    bool isProduction = bool.fromEnvironment('dart.vm.product');
+
+    CreateEventParams params = CreateEventParams();
+    params.parameters = {
+      'message': "มีการโทรเข้าจาก " + "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
+      // 'message' field is required
+      'custom_parameter1': appointmentId,
+      'ios_voip': 1
+      // to send VoIP push notification to iOS
+      //more standard parameters you can found by link https://developers.connectycube.com/server/push_notifications?id=universal-push-notifications
+    };
+
+    params.notificationType = NotificationType.PUSH;
+    params.environment = isProduction ? CubeEnvironment.PRODUCTION : CubeEnvironment.DEVELOPMENT;
+    params.usersIds = [doctorConnectyCubeId, _userData.userProfileModel.referenceConnectyCubeID];
+
+    createEvent(params.getEventForRequest()).then((cubeEvent) {}).catchError((error) {
+    });
   }
 }
