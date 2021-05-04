@@ -26,11 +26,43 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
       String orderId,
       String acnePeriod,
       String acneCared,
+      bool isChangeProduct,
       String changeProduct,
       bool isStressed,
       bool sleepDeprivation,
       bool normalMenstruation,
       bool frequenceSweet) async {
+
+    if (acneCared == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกเคยรักษาสิวมาก่อนหรือไม่"});
+      return;
+    }
+
+    if (isChangeProduct == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกมีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่"});
+      return;
+    }
+
+    if (isStressed == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกมีภาวะเครียด"});
+      return;
+    }
+
+    if (sleepDeprivation == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกมีภาวะนอนน้อย, นอนดึก"});
+      return;
+    }
+
+    if (normalMenstruation == null) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกประจำเดือนมาปกติ"});
+      return;
+    }
+
+    if (frequenceSweet == null) {
+      errorHandle.proceed(context, {"message": "ทานขนม นมเป็นประจำ"});
+      return;
+    }
+
     showProgressDialog(context);
     final appointmentsIdResult = await _getAppointmentsIdByOrderIdUseCase.execute(orderId);
     appointmentsIdResult.whenWithResult((appointmentsId) async {

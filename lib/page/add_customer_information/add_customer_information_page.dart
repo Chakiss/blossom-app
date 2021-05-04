@@ -90,7 +90,7 @@ class AddCustomerInformationPage extends StatelessWidget {
                         height: 20,
                       ),
                       TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", _changeProductTextEditController,
-                          (boolean, data) {
+                          (boolean) {
                         isChangeProduct = boolean;
 
                       }),
@@ -184,6 +184,7 @@ class AddCustomerInformationPage extends StatelessWidget {
                                         _orderId,
                                         acnePeriod,
                                         acneCared,
+                                        isChangeProduct,
                                         _changeProductTextEditController.text,
                                         isStressed,
                                         sleepDeprivation,

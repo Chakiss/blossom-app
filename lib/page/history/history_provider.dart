@@ -24,7 +24,7 @@ class HistoryProvider extends BaseProvider with ChangeNotifier {
       appointmentList = data;
       notifyListeners();
     }, (map) {
-      errorHandle.proceed(context, map);
+      // errorHandle.proceed(context, map);
     });
   }
 
@@ -37,7 +37,7 @@ class HistoryProvider extends BaseProvider with ChangeNotifier {
       orderList = data;
       notifyListeners();
     }, (map) {
-      errorHandle.proceed(context, map);
+      // errorHandle.proceed(context, map);
     });
   }
 

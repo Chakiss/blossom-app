@@ -56,7 +56,7 @@ class _ShipnityOrderItemState extends State<ShipnityOrderItem> {
                           Align(
                               alignment: Alignment.topLeft,
                               child: BlossomText(
-                                "เลขที่ใบสั่งซ้ือ: ${widget._shipnityOrderModel.invoice_number}",
+                                "เลขที่ใบสั่งซื้อ: ${widget._shipnityOrderModel.invoice_number}",
                                 size: 15,
                                 fontWeight: FontWeight.bold,
                               )),

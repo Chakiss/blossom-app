@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 class TrueFalseProductRadioGroup extends StatefulWidget {
   String _title;
   TextEditingController _textEditingController;
-  Function(bool, String) _listener;
+  Function(bool) _listener;
 
   TrueFalseProductRadioGroup(this._title, this._textEditingController, this._listener);
 
@@ -41,7 +41,7 @@ class _TrueFalseProductRadioGroupState extends State<TrueFalseProductRadioGroup>
                 value: "Y",
                 groupValue: _value,
                 onChanged: (String value) {
-                  widget._listener.call(true, "");
+                  widget._listener.call(true);
                   setState(() {
                     _value = value;
                   });
@@ -71,7 +71,7 @@ class _TrueFalseProductRadioGroupState extends State<TrueFalseProductRadioGroup>
                 value: "N",
                 groupValue: _value,
                 onChanged: (String value) {
-                  widget._listener.call(false, "");
+                  widget._listener.call(false);
                   setState(() {
                     _value = value;
                   });
