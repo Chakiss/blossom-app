@@ -1,20 +1,42 @@
 import 'package:blossom_clinic/model/appointment_model.dart';
+import 'package:blossom_clinic/model/base/result.dart';
+import 'package:blossom_clinic/usecase/get_doctor_profile_by_id_use_case.dart';
+import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CustomerAppointmentItem extends StatelessWidget {
+class CustomerAppointmentItem extends StatefulWidget {
   AppointmentModel _appointmentModel;
   Function(AppointmentModel) _listener;
   DateFormat _dateFormat;
   DateFormat _dateFormatParse;
   DateFormat _timeFormat;
   DateFormat _timeFormatParse;
+  GetDoctorProfileByIdUseCase _getDoctorProfileByIdUseCase;
+  SharedPrefUtils _sharedPrefUtils;
 
   CustomerAppointmentItem(this._appointmentModel, this._dateFormat, this._dateFormatParse, this._timeFormat,
-      this._timeFormatParse, this._listener);
+      this._timeFormatParse, this._getDoctorProfileByIdUseCase, this._sharedPrefUtils, this._listener);
+
+  @override
+  _CustomerAppointmentItemState createState() => _CustomerAppointmentItemState();
+}
+
+class _CustomerAppointmentItemState extends State<CustomerAppointmentItem> {
+
+  String doctorName;
+
+  @override
+  void initState() {
+    if (widget._sharedPrefUtils.getMapDoctorReference().containsKey(widget._appointmentModel.doctorReference.id)) {
+      doctorName = widget._sharedPrefUtils.getMapDoctorReference()[widget._appointmentModel.doctorReference.id];
+    } else {
+      _getDoctorNameByAnnotation();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +49,7 @@ class CustomerAppointmentItem extends StatelessWidget {
               children: [
                 BlossomCircleAvatar(
                   30,
-                  imageKey: _appointmentModel.doctorReference.id,
+                  imageKey: widget._appointmentModel.doctorReference.id,
                 ),
                 Expanded(
                     child: Container(
@@ -36,14 +58,18 @@ class CustomerAppointmentItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BlossomText(
-                        _dateFormatParse.format(_dateFormat.parse(_appointmentModel.date)),
+                        doctorName ?? "",
+                        size: 14,
+                      ),
+                      BlossomText(
+                        widget._dateFormatParse.format(widget._dateFormat.parse(widget._appointmentModel.date)),
                         size: 12,
                         fontWeight: FontWeight.bold,
                       ),
                       BlossomText(
-                          "${_timeFormatParse.format(_timeFormat.parse(_appointmentModel.timeStart))} น." +
-                          " - "
-                          "${_timeFormatParse.format(_timeFormat.parse(_appointmentModel.timeEnd))} น.",
+                          "${widget._timeFormatParse.format(widget._timeFormat.parse(widget._appointmentModel.timeStart))} น." +
+                              " - "
+                                  "${widget._timeFormatParse.format(widget._timeFormat.parse(widget._appointmentModel.timeEnd))} น.",
                           size: 12)
                     ],
                   ),
@@ -52,7 +78,7 @@ class CustomerAppointmentItem extends StatelessWidget {
                   "โทร",
                   true,
                   () {
-                    _listener.call(_appointmentModel);
+                    widget._listener.call(widget._appointmentModel);
                   },
                   radius: 6,
                   height: 32,
@@ -69,5 +95,14 @@ class CustomerAppointmentItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _getDoctorNameByAnnotation() async {
+    final result = await widget._getDoctorProfileByIdUseCase.execute(widget._appointmentModel.doctorReference.id);
+    if (result is Success<String>) {
+      setState(() {
+        doctorName = result.data;
+      });
+    }
   }
 }

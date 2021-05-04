@@ -3,6 +3,8 @@ import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/shipnity_order_model.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
+import 'package:blossom_clinic/utils/error_handle.dart';
+import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/customer_appointment_item.dart';
@@ -25,6 +27,7 @@ class _HistoryPageState extends State<HistoryPage> {
   DateFormat _dateFormatParse = DateFormat("d MMMM yyyy", "TH");
   DateFormat _timeFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   DateFormat _timeFormatParse = DateFormat("HH:mm");
+  ErrorHandle _errorHandle = Injector.appInstance.get();
 
   @override
   Widget build(BuildContext context) {
@@ -78,12 +81,23 @@ class _HistoryPageState extends State<HistoryPage> {
         shrinkWrap: true,
         itemCount: appointmentList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
-          return CustomerAppointmentItem(
-              appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat, _timeFormatParse, (appointment) {
-            Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+          return CustomerAppointmentItem(appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat,
+              _timeFormatParse, Injector.appInstance.get(), Injector.appInstance.get(), (appointment) {
+            _goToCallDoctorPage(context, appointment);
           });
         },
       );
+    }
+  }
+
+  void _goToCallDoctorPage(BuildContext context, AppointmentModel appointment) {
+    final timeNow = DateTime.now().millisecondsSinceEpoch;
+    final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    if (timeNow >= startTime && timeNow <= endTime) {
+      Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+    } else {
+      _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
     }
   }
 
@@ -98,9 +112,9 @@ class _HistoryPageState extends State<HistoryPage> {
         shrinkWrap: true,
         itemCount: orderList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
-          return ShipnityOrderItem(
-              orderList[index], Injector.appInstance.get(), Injector.appInstance.get(), (shipnityOrder) {
-              goToShipnityOrder(context, shipnityOrder);
+          return ShipnityOrderItem(orderList[index], Injector.appInstance.get(), Injector.appInstance.get(),
+              (shipnityOrder) {
+            goToShipnityOrder(context, shipnityOrder);
           });
         },
       );
