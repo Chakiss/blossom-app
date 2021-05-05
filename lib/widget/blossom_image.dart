@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
+import 'package:blossom_clinic/widget/dialog/image_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 
@@ -36,9 +37,18 @@ class _BlossomImageState extends State<BlossomImage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-            width: 50 * MediaQuery.of(context).size.width / 100,
-            child: Image.file(File(imagePath))),
+        InkWell(
+          onTap: () {
+            if (imagePath.isNotEmpty) {
+              showDialog(context: context, builder: (BuildContext context) {
+                return ImageDialog(imagePath);
+              },);
+            }
+          },
+          child: Container(
+              width: 50 * MediaQuery.of(context).size.width / 100,
+              child: Image.file(File(imagePath))),
+        ),
         SizedBox(
           height: 20,
         )
