@@ -12,11 +12,11 @@ class SharedPrefUtils {
   static const String _keyMapDoctorReference = "keyMapDoctorReference";
 
   Future<void> setMapFilePath(Map<String, String> mapFilePath) async {
-    await _sharedPref.setString(_keyMapFilePath + _buildNumber, json.encode(mapFilePath) ?? "{}");
+    await _sharedPref.setString(_keyMapFilePath + _buildNumber + "1", json.encode(mapFilePath) ?? "{}");
   }
 
   Map<String, String> getMapFilePath() {
-    final mapFilePathString = _sharedPref.getString(_keyMapFilePath + _buildNumber) ?? "{}";
+    final mapFilePathString = _sharedPref.getString(_keyMapFilePath + _buildNumber + "1") ?? "{}";
     return Map<String, String>.from(json.decode(mapFilePathString));
   }
 

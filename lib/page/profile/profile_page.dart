@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context, RouteManager.routePayment(null, null));
+                          // Navigator.push(context, RouteManager.routePayment(null, null));
                         },
                         child: CircleAvatar(
                           radius: 40 * MediaQuery.of(context).size.width / 200,

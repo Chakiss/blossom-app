@@ -30,7 +30,7 @@ class DoctorHistoryPage extends StatelessWidget {
         child: Column(
           children: [
             Toolbar(
-              title: "รายการ",
+              title: "รายการนัดหมาย",
             ),
             SizedBox(
               height: 26,
