@@ -16,4 +16,14 @@ abstract class RetrofitClient {
       @Field("card") String tokenId,
       @Field("metadata[orderID]") String orderID,
       @Field("return_uri") String returnUri);
+
+  @FormUrlEncoded()
+  @POST("charges")
+  Future<Response<Map<String, dynamic>>> internetBankingCharge(
+      @Header("Authorization") String omiseSecretKey,
+      @Field("amount") int amount,
+      @Field("currency") String currency,
+      @Field("source[type]") String sourceType,
+      @Field("metadata[orderID]") String orderID,
+      @Field("return_uri") String returnUri);
 }

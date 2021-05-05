@@ -106,7 +106,7 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
     final result = await _savePatientFormUseCase.execute(requestModel);
     Navigator.pop(context);
     result.whenWithResult((data) {
-      showToast("บันทึกข้อมูลประกอบการศึกษาเรียบร้อยแล้ว");
+      showToast("บันทึกข้อมูลประกอบการรักษาเรียบร้อยแล้ว");
       Navigator.pushAndRemoveUntil(context, RouteManager.routeMain(initIndex: 1), (route) => false);
     }, (map) {
       errorHandle.proceed(context, map);

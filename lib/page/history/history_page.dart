@@ -4,7 +4,6 @@ import 'package:blossom_clinic/model/shipnity_order_model.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
-import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/customer_appointment_item.dart';

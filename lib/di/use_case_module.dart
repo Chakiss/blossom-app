@@ -10,6 +10,7 @@ import 'package:blossom_clinic/usecase/get_shipnity_order_by_invoice_id_use_case
 import 'package:blossom_clinic/usecase/get_shipnity_order_list_by_phone_number_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
+import 'package:blossom_clinic/usecase/omise_internet_banking_charge_use_case.dart';
 import 'package:blossom_clinic/usecase/save_doctor_diagnose_form_use_case.dart';
 import 'package:blossom_clinic/usecase/save_patient_form_use_case.dart';
 import 'package:blossom_clinic/usecase/set_user_reference_to_local_storage_use_case.dart';
@@ -42,6 +43,8 @@ class UseCaseModule {
 
   UseCaseModule(this.injector);
 
+  final omise = OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil");
+
   void provide() {
     injector.registerDependency<RegisterUseCase>(() => RegisterUseCase(FirebaseFunctions.instance));
     injector.registerDependency<LoginUseCase>(() => LoginUseCase(FirebaseAuth.instance, injector.get()));
@@ -57,7 +60,8 @@ class UseCaseModule {
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
     injector.registerDependency<GetDoctorProfileByIdUseCase>(() => GetDoctorProfileByIdUseCase(FirebaseFirestore.instance, injector.get()));
-    injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil"), injector.get()));
+    injector.registerDependency<OmiseChargeUseCase>(() => OmiseChargeUseCase(omise, injector.get()));
+    injector.registerDependency<OmiseInternetBankingChargeUseCase>(() => OmiseInternetBankingChargeUseCase(omise, injector.get()));
     injector.registerDependency<GetProductListUseCase>(() => GetProductListUseCase(injector.get()));
     injector.registerDependency<LoginFacebookUseCase>(() => LoginFacebookUseCase(FacebookAuth.instance, FirebaseAuth.instance));
     injector.registerDependency<UpdateProfileFacebookLoginUseCase>(() => UpdateProfileFacebookLoginUseCase(FirebaseFunctions.instance));

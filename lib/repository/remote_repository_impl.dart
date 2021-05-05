@@ -12,8 +12,16 @@ class RemoteRepositoryImpl extends RemoteRepository {
   RemoteRepositoryImpl({this.retrofitClient, this.shipnityClient});
 
   @override
-  Future<Response<Map<String, dynamic>>> omiseCharge(String omiseSecretKey, int amount, String currency, String tokenId, String orderID, String redirectUrl) async {
+  Future<Response<Map<String, dynamic>>> omiseCharge(
+      String omiseSecretKey, int amount, String currency, String tokenId, String orderID, String redirectUrl) async {
     return await retrofitClient.charge(omiseSecretKey, amount, currency, tokenId, orderID, redirectUrl);
+  }
+
+  @override
+  Future<Response<Map<String, dynamic>>> omiseInternetBankingCharge(
+      String omiseSecretKey, int amount, String currency, String sourceType, String orderID, String redirectUrl) async {
+    return await retrofitClient.internetBankingCharge(
+        omiseSecretKey, amount, currency, sourceType, orderID, redirectUrl);
   }
 
   @override
@@ -27,12 +35,14 @@ class RemoteRepositoryImpl extends RemoteRepository {
   }
 
   @override
-  Future<Response<Map<String, dynamic>>> createShipnityCustomer(String token, CreateShipnityCustomerRequestModel requestModel) async {
+  Future<Response<Map<String, dynamic>>> createShipnityCustomer(
+      String token, CreateShipnityCustomerRequestModel requestModel) async {
     return await shipnityClient.createShipnityCustomer(token, requestModel);
   }
 
   @override
-  Future<Response<Map<String, dynamic>>> createShipnityOrder(String token, CreateShipnityOrderRequestModel requestModel) async {
+  Future<Response<Map<String, dynamic>>> createShipnityOrder(
+      String token, CreateShipnityOrderRequestModel requestModel) async {
     return await shipnityClient.createShipnityOrder(token, requestModel);
   }
 

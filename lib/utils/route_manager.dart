@@ -36,6 +36,8 @@ import 'package:blossom_clinic/page/main/main_page.dart';
 import 'package:blossom_clinic/page/main/main_provider.dart';
 import 'package:blossom_clinic/page/omise/omise_page.dart';
 import 'package:blossom_clinic/page/omise/omise_provider.dart';
+import 'package:blossom_clinic/page/payment/payment_page.dart';
+import 'package:blossom_clinic/page/payment/payment_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/page/register/register_page.dart';
 import 'package:blossom_clinic/page/register/register_provider.dart';
@@ -177,6 +179,17 @@ class RouteManager {
           child: ConfirmConsultPage(doctorInfoModel, availableSlotModel),
         );
       });
+
+  static Route routePayment(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => PaymentProvider(Injector.appInstance.get()),
+        )
+      ],
+      child: PaymentPage(orderId, price),
+    );
+  });
 
   static Route routeOmise(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(

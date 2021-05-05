@@ -47,4 +47,36 @@ class _RetrofitClient implements RetrofitClient {
     final value = _result;
     return value;
   }
+
+  @override
+  Future<Response<Map<String, dynamic>>> internetBankingCharge(
+      omiseSecretKey, amount, currency, sourceType, orderID, returnUri) async {
+    ArgumentError.checkNotNull(omiseSecretKey, 'omiseSecretKey');
+    ArgumentError.checkNotNull(amount, 'amount');
+    ArgumentError.checkNotNull(currency, 'currency');
+    ArgumentError.checkNotNull(sourceType, 'sourceType');
+    ArgumentError.checkNotNull(orderID, 'orderID');
+    ArgumentError.checkNotNull(returnUri, 'returnUri');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {
+      'amount': amount,
+      'currency': currency,
+      'source[type]': sourceType,
+      'metadata[orderID]': orderID,
+      'return_uri': returnUri
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('charges',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': omiseSecretKey},
+            extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result;
+    return value;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
@@ -38,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push(context, RouteManager.routeAddCustomerInformation());
+                          Navigator.push(context, RouteManager.routePayment(null, null));
                         },
                         child: CircleAvatar(
                           radius: 40 * MediaQuery.of(context).size.width / 200,

@@ -6,6 +6,8 @@ abstract class RemoteRepository {
 
   Future<Response<Map<String, dynamic>>> omiseCharge(String omiseSecretKey, int amount, String currency, String tokenId, String orderID, String redirectUrl);
 
+  Future<Response<Map<String, dynamic>>> omiseInternetBankingCharge(String omiseSecretKey, int amount, String currency,String sourceType, String orderID, String redirectUrl);
+
   Future<Response<Map<String, dynamic>>> getProducts(String token);
 
   Future<Response<Map<String, dynamic>>> getShipnityCustomer(String token, String phoneNumber);

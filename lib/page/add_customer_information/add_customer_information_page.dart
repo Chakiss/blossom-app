@@ -53,7 +53,7 @@ class AddCustomerInformationPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Toolbar(
-                      title: "ข้อมูลประกอบการศึกษา",
+                      title: "ข้อมูลประกอบการรักษา",
                     ),
                   ],
                 ))
