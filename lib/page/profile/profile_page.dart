@@ -6,6 +6,7 @@ import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
+import 'package:blossom_clinic/widget/text_stroke_pink.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
@@ -85,31 +86,83 @@ class ProfilePage extends StatelessWidget {
               SizedBox(
                 height: 24,
               ),
+              // Container(
+              //   child: ButtonPinkGradient(
+              //     "ออกจากระบบ",
+              //     true,
+              //     () {
+              //       showDialog(
+              //           context: context,
+              //           builder: (BuildContext context) => CustomDialogTwoButton(
+              //                 title: "ออกจากระบบ",
+              //                 description: "ยืนยันการออกจากระบบ",
+              //                 positiveButton: "ตกลง",
+              //                 positiveListener: () {
+              //                   _profileProvider.logout(context);
+              //                 },
+              //                 negativeButton: "ยกเลิก",
+              //                 negativeListener: () {
+              //                   Navigator.pop(context);
+              //                 },
+              //               ));
+              //     },
+              //     width: 60 * MediaQuery.of(context).size.width / 100,
+              //     radius: 4,
+              //     textSize: 14,
+              //   ),
+              // ),
               Container(
-                child: ButtonPinkGradient(
-                  "ออกจากระบบ",
-                  true,
-                  () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => CustomDialogTwoButton(
-                              title: "ออกจากระบบ",
-                              description: "ยืนยันการออกจากระบบ",
-                              positiveButton: "ตกลง",
-                              positiveListener: () {
-                                _profileProvider.logout(context);
-                              },
-                              negativeButton: "ยกเลิก",
-                              negativeListener: () {
-                                Navigator.pop(context);
-                              },
-                            ));
-                  },
-                  width: 60 * MediaQuery.of(context).size.width / 100,
-                  radius: 4,
-                  textSize: 14,
+                padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: TextStrokePink("ประวัติการรักษา", () {},
+                          size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Expanded(
+                      child: TextStrokePink("แผนการรักษา", () {},
+                          size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
+                    ),
+                  ],
                 ),
               ),
+              SizedBox(
+                height: 6,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: TextStrokePink("ออกจากระบบ", () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => CustomDialogTwoButton(
+                                  title: "ออกจากระบบ",
+                                  description: "ยืนยันการออกจากระบบ",
+                                  positiveButton: "ตกลง",
+                                  positiveListener: () {
+                                    _profileProvider.logout(context);
+                                  },
+                                  negativeButton: "ยกเลิก",
+                                  negativeListener: () {
+                                    Navigator.pop(context);
+                                  },
+                                ));
+                      }, size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Spacer()
+                  ],
+                ),
+              )
             ],
           ),
           Spacer(),
