@@ -88,6 +88,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 ),
                 AcneLookRadioGroup((acne) {
                   acneTypes = acne;
+                  print(acneTypes);
                 }),
                 SizedBox(
                   height: 12,

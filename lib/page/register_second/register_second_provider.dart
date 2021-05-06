@@ -45,7 +45,7 @@ class RegisterSecondProvider extends BaseProvider with ChangeNotifier {
         profileData["lastName"],
         profileData["dateOfBirth"],
         skinType,
-        acneTypes,
+        acneTypes.substring(0, acneTypes.length - 1),
         isAcneTreat ? acneTreatText ?? "" : "",
         isDrugAllergy ? drugAllergyText ?? "" : "");
     print(data.toJson());

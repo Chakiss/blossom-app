@@ -14,6 +14,11 @@ class AcneLookRadioGroup extends StatefulWidget {
 
 class AcneLookGroupRadioGroupState extends State<AcneLookRadioGroup> {
   String _acneLook = "";
+  bool acneFirst = false;
+  bool acneSecond = false;
+  bool acneThird = false;
+  bool acneForth = false;
+  bool acneFifth = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,113 +28,104 @@ class AcneLookGroupRadioGroupState extends State<AcneLookRadioGroup> {
         children: [
           Row(
             children: [
-              Row(
-                children: [
-                  Radio<String>(
-                    fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "1",
-                    groupValue: _acneLook,
-                    onChanged: (String value) {
-                      widget._listener.call(value);
-                      setState(() {
-                        _acneLook = value;
-                      });
-                    },
-                  ),
-                  BlossomText(
-                    'สิวอุดตัน',
-                    size: 15,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Radio<String>(
-                    fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "2",
-                    groupValue: _acneLook,
-                    onChanged: (String value) {
-                      widget._listener.call(value);
-                      setState(() {
-                        _acneLook = value;
-                      });
-                    },
-                  ),
-                  BlossomText(
-                    'สิวอักเสบ',
-                    size: 15,
-                  ),
-                ],
-              ),
+              Checkbox(
+                  value: acneFirst,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    _acneLook = addOrRemoveData("1");
+                    widget._listener.call(_acneLook);
+                    setState(() {
+                      acneFirst = newValue;
+                    });
+                  }),
+              BlossomText(
+                "สิวอุดตัน",
+                size: 15,
+              )
             ],
           ),
           Row(
             children: [
-              Row(
-                children: [
-                  Radio<String>(
-                    fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "3",
-                    groupValue: _acneLook,
-                    onChanged: (String value) {
-                      widget._listener.call(value);
-                      setState(() {
-                        _acneLook = value;
-                      });
-                    },
-                  ),
-                  BlossomText(
-                    'สิวอักเสบ สัมพันธ์กับรอบเดือน',
-                    size: 15,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Radio<String>(
-                    fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "4",
-                    groupValue: _acneLook,
-                    onChanged: (String value) {
-                      widget._listener.call(value);
-                      setState(() {
-                        _acneLook = value;
-                      });
-                    },
-                  ),
-                  BlossomText(
-                    'รอยสิว',
-                    size: 15,
-                  ),
-                ],
-              ),
+              Checkbox(
+                  value: acneSecond,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    _acneLook = addOrRemoveData("2");
+                    widget._listener.call(_acneLook);
+                    setState(() {
+                      acneSecond = newValue;
+                    });
+                  }),
+              BlossomText(
+                "สิวอักเสบ",
+                size: 15,
+              )
             ],
           ),
           Row(
             children: [
-              Row(
-                children: [
-                  Radio<String>(
-                    fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
-                    value: "5",
-                    groupValue: _acneLook,
-                    onChanged: (String value) {
-                      widget._listener.call(value);
-                      setState(() {
-                        _acneLook = value;
-                      });
-                    },
-                  ),
-                  BlossomText(
-                    'หลุมสิว',
-                    size: 15,
-                  ),
-                ],
-              ),
+              Checkbox(
+                  value: acneThird,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    _acneLook = addOrRemoveData("3");
+                    widget._listener.call(_acneLook);
+                    setState(() {
+                      acneThird = newValue;
+                    });
+                  }),
+              BlossomText(
+                "สิวอักเสบ สัมพันธ์กับรอบเดือน",
+                size: 15,
+              )
             ],
-          )
+          ),
+          Row(
+            children: [
+              Checkbox(
+                  value: acneForth,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    _acneLook = addOrRemoveData("4");
+                    widget._listener.call(_acneLook);
+                    setState(() {
+                      acneForth = newValue;
+                    });
+                  }),
+              BlossomText(
+                "รอยสิว",
+                size: 15,
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Checkbox(
+                  value: acneFifth,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    _acneLook = addOrRemoveData("5");
+                    widget._listener.call(_acneLook);
+                    setState(() {
+                      acneFifth = newValue;
+                    });
+                  }),
+              BlossomText(
+                "หลุมสิว",
+                size: 15,
+              )
+            ],
+          ),
         ],
       ),
     );
+  }
+
+  String addOrRemoveData(String value) {
+    if (_acneLook.contains("$value,")) {
+      return _acneLook.replaceAll("$value,", "");
+    } else {
+      return "$_acneLook$value,";
+    }
   }
 }

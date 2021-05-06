@@ -16,6 +16,7 @@ class SliderAcneDuration extends StatefulWidget {
 class _SliderAcneDurationState extends State<SliderAcneDuration> {
 
   double _currentSliderValue = 1;
+  bool checkBoxFirst = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +32,35 @@ class _SliderAcneDurationState extends State<SliderAcneDuration> {
             max: 12,
             divisions: 11,
             label: _currentSliderValue.round().toString(),
-            onChanged: (double value) {
+            onChanged: checkBoxFirst ? null : (double value) {
               widget._listener.call(value.floor().toString());
               setState(() {
                 _currentSliderValue = value;
               });
             },
           ),
-          BlossomText("${_currentSliderValue.floor()} เดือน", size: 14,)
+          BlossomText("${_currentSliderValue.floor()} เดือน", size: 14,),
+          Row(
+            children: [
+              Checkbox(
+                  value: checkBoxFirst,
+                  fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
+                  onChanged: (bool newValue) {
+                    if (newValue) {
+                      widget._listener.call("13");
+                    } else {
+                      widget._listener.call(_currentSliderValue.floor().toString());
+                    }
+                    setState(() {
+                      checkBoxFirst = newValue;
+                    });
+                  }),
+              BlossomText(
+                "มากกว่า 12 เดือน",
+                size: 15,
+              )
+            ],
+          )
         ],
       ),
     );
