@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
+import 'package:blossom_clinic/page/add_customer_information/image_picker_dialog.dart';
 import 'package:blossom_clinic/widget/acne_information_radio_group.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
@@ -92,7 +93,6 @@ class AddCustomerInformationPage extends StatelessWidget {
                       TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", _changeProductTextEditController,
                           (boolean) {
                         isChangeProduct = boolean;
-
                       }),
                       SizedBox(
                         height: 20,
@@ -141,21 +141,21 @@ class AddCustomerInformationPage extends StatelessWidget {
                                 value.listFile[0],
                                 isFirstItem: true,
                                 listener: () {
-                                  _provider.openCamera(0);
+                                  _showImagePickerDialog(context, 0);
                                 },
                               ),
                               CustomerInformationItem(
                                 value.listFile[1],
                                 isFirstItem: false,
                                 listener: () {
-                                  _provider.openCamera(1);
+                                  _showImagePickerDialog(context, 1);
                                 },
                               ),
                               CustomerInformationItem(
                                 value.listFile[2],
                                 isFirstItem: false,
                                 listener: () {
-                                  _provider.openCamera(2);
+                                  _showImagePickerDialog(context, 2);
                                 },
                               ),
                             ],
@@ -215,6 +215,22 @@ class AddCustomerInformationPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _showImagePickerDialog(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return ImagePickerDialog((type) {
+          Navigator.pop(context);
+          if (type == 0) {
+            _provider.openGallery(index);
+          } else {
+            _provider.openCamera(index);
+          }
+        });
+      },
     );
   }
 }

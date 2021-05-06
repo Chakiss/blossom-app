@@ -86,7 +86,7 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
                   value: acneFirst,
                   fillColor: MaterialStateProperty.all(BlossomTheme.darkPink),
                   onChanged: _acneLook == "1" ? null : (bool newValue) {
-                    data = addOrRemoveData("ใช้ยาคลีนิก");
+                    data = addOrRemoveData("ใช้ยาคลินิก");
                     widget._listener.call(data);
                     setState(() {
                       _acneLook = "2";
@@ -94,7 +94,7 @@ class _AcneInformationRadioGroupState extends State<AcneInformationRadioGroup> {
                     });
                   }),
               BlossomText(
-                "ใช้ยาคลีนิก",
+                "ใช้ยาคลินิก",
                 size: 15,
               )
             ],

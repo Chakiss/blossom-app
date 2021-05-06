@@ -90,7 +90,7 @@ class OmiseProvider extends BaseProvider with ChangeNotifier {
       String expireYear, String cvv, String orderId, int amount) async {
     showProgressDialog(context);
     final Map<String, dynamic> request = {
-      "amount": amount * 100 * 100,
+      "amount": amount * 100,
       "orderID": orderId,
       "cardNo": cardNo,
       "name": name,

@@ -22,6 +22,13 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> openGallery(int index) async {
+    File imageFile =
+    await ImagePicker.pickImage(source: ImageSource.gallery, maxWidth: 600, maxHeight: 600, imageQuality: 80);
+    listFile[index] = imageFile;
+    notifyListeners();
+  }
+
   Future<void> confirmPatientForm(
       BuildContext context,
       String orderId,
