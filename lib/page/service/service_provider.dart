@@ -11,12 +11,14 @@ class ServiceProvider extends BaseProvider with ChangeNotifier {
   List<Map<String, String>> list;
 
   Future<void> callServiceGetReview() async {
-    final result = await _getBlossomReviewUseCase.execute(null);
-    result.whenWithResult((data) {
-      list = data;
-      notifyListeners();
-    }, (map) {
+    if (list == null) {
+      final result = await _getBlossomReviewUseCase.execute(null);
+      result.whenWithResult((data) {
+        list = data;
+        notifyListeners();
+      }, (map) {
 
-    });
+      });
+    }
   }
 }
