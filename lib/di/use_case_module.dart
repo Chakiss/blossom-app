@@ -1,3 +1,4 @@
+import 'package:blossom_clinic/usecase/create_appointment_without_payment_use_case.dart';
 import 'package:blossom_clinic/usecase/create_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_doctor_id_use_case.dart';
@@ -57,6 +58,7 @@ class UseCaseModule {
     injector.registerDependency<GetDoctorAvailableSlotsUseCase>(() => GetDoctorAvailableSlotsUseCase(FirebaseFirestore.instance));
     injector.registerDependency<DownloadFileFromCloudStorageUseCase>(() => DownloadFileFromCloudStorageUseCase(FirebaseStorage.instance, injector.get()));
     injector.registerDependency<CreateAppointmentOrderUseCase>(() => CreateAppointmentOrderUseCase(FirebaseFunctions.instance));
+    injector.registerDependency<CreateAppointmentWithoutPaymentUseCase>(() => CreateAppointmentWithoutPaymentUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetDoctorProfileUseCase>(() => GetDoctorProfileUseCase(FirebaseFirestore.instance, injector.get()));
     injector.registerDependency<GetDoctorProfileByIdUseCase>(() => GetDoctorProfileByIdUseCase(FirebaseFirestore.instance, injector.get()));

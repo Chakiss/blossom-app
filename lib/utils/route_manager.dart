@@ -153,7 +153,8 @@ class RouteManager {
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) =>
+                  HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(),
@@ -173,23 +174,23 @@ class RouteManager {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-                create: (BuildContext context) =>
-                    ConfirmConsultProvider(Injector.appInstance.get(), Injector.appInstance.get()))
+                create: (BuildContext context) => ConfirmConsultProvider(
+                    Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()))
           ],
           child: ConfirmConsultPage(doctorInfoModel, availableSlotModel),
         );
       });
 
   static Route routePayment(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => PaymentProvider(Injector.appInstance.get()),
-        )
-      ],
-      child: PaymentPage(orderId, price),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) => PaymentProvider(Injector.appInstance.get()),
+            )
+          ],
+          child: PaymentPage(orderId, price),
+        );
+      });
 
   static Route routeOmise(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
