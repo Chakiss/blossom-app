@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:blossom_clinic/usecase/download_fire_from_cloud_storage_use_case.dart';
-import 'package:blossom_clinic/utils/user_data.dart';
+import 'package:blossom_clinic/utils/shared_pref_utils.dart';
 import 'package:blossom_clinic/widget/dialog/image_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 
 class BlossomImage extends StatefulWidget {
   String fileStorePath;
-  String imageKey;
+  double width;
 
-  BlossomImage({this.fileStorePath, this.imageKey});
+  BlossomImage({this.fileStorePath, this.width});
 
   @override
   _BlossomImageState createState() => _BlossomImageState();
@@ -19,17 +19,17 @@ class BlossomImage extends StatefulWidget {
 class _BlossomImageState extends State<BlossomImage> {
   String imagePath = "";
   DownloadFileFromCloudStorageUseCase _downloadFileFromCloudStorageUseCase = Injector.appInstance.get();
-  UserData _userData = Injector.appInstance.get();
+  SharedPrefUtils _sharedPrefUtils = Injector.appInstance.get();
 
   @override
   void initState() {
     super.initState();
-    if (widget.imageKey != null) {
-      imagePath = _getLocalUrlPath();
-    }
-    if (widget.fileStorePath != null) {
-      imagePath = _userData.getImagePathFromLocal(widget.fileStorePath);
-      _downloadFileFromCloudStorage();
+    if (_sharedPrefUtils.getMapFilePath().containsKey(widget.fileStorePath)) {
+        imagePath = _sharedPrefUtils.getMapFilePath()[widget.fileStorePath];
+    } else {
+      if (widget.fileStorePath != null) {
+        _downloadFileFromCloudStorage();
+      }
     }
   }
 
@@ -46,7 +46,7 @@ class _BlossomImageState extends State<BlossomImage> {
             }
           },
           child: Container(
-              width: 50 * MediaQuery.of(context).size.width / 100,
+              width: widget.width ?? 50 * MediaQuery.of(context).size.width / 100,
               child: Image.file(File(imagePath))),
         ),
         SizedBox(
@@ -54,11 +54,6 @@ class _BlossomImageState extends State<BlossomImage> {
         )
       ],
     );
-  }
-
-  String _getLocalUrlPath() {
-    final map = _userData.getMapFilePath().entries.firstWhere((element) => element.key.contains(widget.imageKey));
-    return map.value;
   }
 
   Future<void> _downloadFileFromCloudStorage() async {

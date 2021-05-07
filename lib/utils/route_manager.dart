@@ -163,7 +163,7 @@ class RouteManager {
                   HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => ServiceProvider(),
+              create: (BuildContext context) => ServiceProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => ProfileProvider(),
@@ -278,18 +278,19 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerReviewDoctor(DoctorInfoModel doctorInfoModel) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return CustomerReviewDoctorProvider();
-          },
-        )
-      ],
-      child: CustomerReviewDoctorPage(doctorInfoModel),
-    );
-  });
+  static Route routeCustomerReviewDoctor(DoctorInfoModel doctorInfoModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CustomerReviewDoctorProvider();
+              },
+            )
+          ],
+          child: CustomerReviewDoctorPage(doctorInfoModel),
+        );
+      });
 
   ////////// Doctor //////////
 
@@ -306,9 +307,6 @@ class RouteManager {
               create: (BuildContext context) => DoctorHistoryProvider(
                 Injector.appInstance.get(),
               ),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => ServiceProvider(),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorProfileProvider(),
