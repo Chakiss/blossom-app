@@ -6,7 +6,7 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/customer_information_item.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/slider_acne_duration.dart';
-import 'package:blossom_clinic/widget/toolbar.dart';
+import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:blossom_clinic/widget/true_false_product_radio_group.dart';
 import 'package:blossom_clinic/widget/true_false_radio_group.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class AddCustomerInformationPage extends StatelessWidget {
                     child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Toolbar(
+                    ToolbarBack(
                       title: "ข้อมูลประกอบการรักษา",
                     ),
                   ],

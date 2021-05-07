@@ -117,27 +117,14 @@ class ProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: TextStrokePink("ประวัติการรักษา", () {},
+                      child: TextStrokePink("ประวัติการรักษา", () {
+                        Navigator.push(context, RouteManager.routeCustomerHistory());
+                      },
                           size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
                     ),
                     SizedBox(
                       width: 6,
                     ),
-                    Expanded(
-                      child: TextStrokePink("แผนการรักษา", () {},
-                          size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
                     Expanded(
                       child: TextStrokePink("ออกจากระบบ", () {
                         showDialog(
@@ -156,13 +143,9 @@ class ProfilePage extends StatelessWidget {
                                 ));
                       }, size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
                     ),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Spacer()
                   ],
                 ),
-              )
+              ),
             ],
           ),
           Spacer(),

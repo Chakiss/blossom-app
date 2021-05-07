@@ -12,6 +12,10 @@ import 'package:blossom_clinic/page/call_doctor/call_doctor_page.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
+import 'package:blossom_clinic/page/customer_history_detail/customer_history_detail_page.dart';
+import 'package:blossom_clinic/page/customer_history_detail/doctor_appointment_detail_provider.dart';
+import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_page.dart';
+import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_provider.dart';
 import 'package:blossom_clinic/page/dispense/dispense_page.dart';
 import 'package:blossom_clinic/page/dispense/dispense_provider.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_page.dart';
@@ -229,6 +233,33 @@ class RouteManager {
             )
           ],
           child: DispensePage(),
+        );
+      });
+
+  static Route routeCustomerHistory() => MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CustomerTreatHistoryProvider(Injector.appInstance.get(), Injector.appInstance.get());
+              },
+            )
+          ],
+          child: CustomerTreatHistoryPage(),
+        );
+      });
+
+  static Route routeCustomerHistoryDetail(AppointmentModel appointmentModel, String name, String appointmentTime) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CustomerHistoryDetailProvider(Injector.appInstance.get(), Injector.appInstance.get());
+              },
+            )
+          ],
+          child: CustomerHistoryDetailPage(appointmentModel, name, appointmentTime),
         );
       });
 
