@@ -14,6 +14,8 @@ import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/customer_history_detail/customer_history_detail_page.dart';
 import 'package:blossom_clinic/page/customer_history_detail/doctor_appointment_detail_provider.dart';
+import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_page.dart';
+import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_provider.dart';
 import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_page.dart';
 import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_provider.dart';
 import 'package:blossom_clinic/page/dispense/dispense_page.dart';
@@ -275,6 +277,19 @@ class RouteManager {
           child: CallDoctorPage(appointmentModel),
         );
       });
+
+  static Route routeCustomerReviewDoctor() => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return CustomerReviewDoctorProvider();
+          },
+        )
+      ],
+      child: CustomerReviewDoctorPage(),
+    );
+  });
 
   ////////// Doctor //////////
 

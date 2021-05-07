@@ -1,6 +1,7 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/customer_order_model.dart';
+import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
@@ -23,6 +24,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> signInConnectyCube(BuildContext context, AppointmentModel appointmentModel) async {
     final snapshot = await appointmentModel.doctorReference.get();
+    final DoctorInfoModel doctorInfoModel = DoctorInfoModel.fromJson(snapshot.id, snapshot.data());
     final doctorConnectyCubeId = snapshot.data()["referenceConnectyCubeID"] as int;
 
     CubeUser cubeUser = CubeUser(
@@ -31,34 +33,34 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
         email: _userData.userProfileModel.email,
         fullName: "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
         password: _userData.userProfileModel.email);
-    _connectCubeChat(context, cubeUser, doctorConnectyCubeId, appointmentModel.id);
+    _connectCubeChat(context, cubeUser, doctorInfoModel, appointmentModel.id);
   }
 
-  void _connectCubeChat(BuildContext context, CubeUser cubeUser, int doctorConnectyCubeId, String appointmentId) {
+  void _connectCubeChat(BuildContext context, CubeUser cubeUser, DoctorInfoModel doctorInfoModel, String appointmentId) {
     if (CubeChatConnection.instance.isAuthenticated()) {
-      _initCustomerCallClient(context, doctorConnectyCubeId, appointmentId);
+      _initCustomerCallClient(context, doctorInfoModel, appointmentId);
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
-        _initCustomerCallClient(context, doctorConnectyCubeId, appointmentId);
+        _initCustomerCallClient(context, doctorInfoModel, appointmentId);
       }).catchError((error) {
         print(error);
       });
     }
   }
 
-  void _initCustomerCallClient(BuildContext context, int doctorConnectyCubeId, String appointmentId) {
+  void _initCustomerCallClient(BuildContext context, DoctorInfoModel doctorInfoModel, String appointmentId) {
     callClient = P2PClient.instance;
     callClient.init();
 
     callClient.onReceiveNewSession = (incomingCallSession) {};
     callClient.onSessionClosed = (closedCallSession) {};
 
-    Set<int> opponentsIds = {doctorConnectyCubeId};
+    Set<int> opponentsIds = {doctorInfoModel.referenceConnectyCubeID};
     callSession = callClient.createCallSession(CallType.VIDEO_CALL, opponentsIds);
-    _initCallSession(context, callSession, doctorConnectyCubeId, appointmentId);
+    _initCallSession(context, callSession, doctorInfoModel, appointmentId);
   }
 
-  void _initCallSession(BuildContext context, P2PSession callSession, int doctorConnectyCubeId, String appointmentId) {
+  void _initCallSession(BuildContext context, P2PSession callSession, DoctorInfoModel doctorInfoModel, String appointmentId) {
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();

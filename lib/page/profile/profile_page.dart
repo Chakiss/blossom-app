@@ -4,7 +4,6 @@ import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
-import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/text_stroke_pink.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
@@ -40,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context, RouteManager.routeRegisterSecond({}));
+                          Navigator.push(context, RouteManager.routeCustomerReviewDoctor());
                         },
                         child: CircleAvatar(
                           radius: 40 * MediaQuery.of(context).size.width / 200,
@@ -86,31 +85,6 @@ class ProfilePage extends StatelessWidget {
               SizedBox(
                 height: 24,
               ),
-              // Container(
-              //   child: ButtonPinkGradient(
-              //     "ออกจากระบบ",
-              //     true,
-              //     () {
-              //       showDialog(
-              //           context: context,
-              //           builder: (BuildContext context) => CustomDialogTwoButton(
-              //                 title: "ออกจากระบบ",
-              //                 description: "ยืนยันการออกจากระบบ",
-              //                 positiveButton: "ตกลง",
-              //                 positiveListener: () {
-              //                   _profileProvider.logout(context);
-              //                 },
-              //                 negativeButton: "ยกเลิก",
-              //                 negativeListener: () {
-              //                   Navigator.pop(context);
-              //                 },
-              //               ));
-              //     },
-              //     width: 60 * MediaQuery.of(context).size.width / 100,
-              //     radius: 4,
-              //     textSize: 14,
-              //   ),
-              // ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
                 child: Row(
