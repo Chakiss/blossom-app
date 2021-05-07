@@ -157,7 +157,7 @@ class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
                         );
                       },
                       height: 40,
-                      radius: 4,
+                      radius: 6,
                       padding: EdgeInsets.only(left: 32, right: 32),
                     )
                   ],

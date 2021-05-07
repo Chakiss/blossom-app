@@ -113,7 +113,7 @@ class DoctorProfilePage extends StatelessWidget {
                             ));
                   },
                   width: 60 * MediaQuery.of(context).size.width / 100,
-                  radius: 4,
+                  radius: 6,
                   textSize: 14,
                 ),
               ),

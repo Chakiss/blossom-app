@@ -278,7 +278,7 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerReviewDoctor() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCustomerReviewDoctor(DoctorInfoModel doctorInfoModel) => MaterialPageRoute(builder: (BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -287,7 +287,7 @@ class RouteManager {
           },
         )
       ],
-      child: CustomerReviewDoctorPage(),
+      child: CustomerReviewDoctorPage(doctorInfoModel),
     );
   });
 

@@ -67,9 +67,8 @@ class CallDoctorPage extends StatelessWidget {
                           color: Colors.white,
                           size: 30,
                         ),
-                        onPressed: () async {
-                          await _provider.endCall();
-                          Navigator.pop(context);
+                        onPressed: () {
+                          _provider.endCall(context);
                         }),
                   )),
             ),

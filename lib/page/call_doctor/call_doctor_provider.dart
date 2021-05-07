@@ -2,6 +2,7 @@ import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/customer_order_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
@@ -17,6 +18,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   String dataRef;
   bool isMuteAudio = false;
   bool isVideoEnable = true;
+  DoctorInfoModel doctorInfoModel;
 
   UserData _userData;
 
@@ -25,7 +27,6 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   Future<void> signInConnectyCube(BuildContext context, AppointmentModel appointmentModel) async {
     final snapshot = await appointmentModel.doctorReference.get();
     final DoctorInfoModel doctorInfoModel = DoctorInfoModel.fromJson(snapshot.id, snapshot.data());
-    final doctorConnectyCubeId = snapshot.data()["referenceConnectyCubeID"] as int;
 
     CubeUser cubeUser = CubeUser(
         id: _userData.userProfileModel.referenceConnectyCubeID,
@@ -79,6 +80,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.onRemoteStreamReceived = (callSession, opponentId, mediaStream) async {
       // create video renderer and set media stream to it
       logger.d("Prew, onRemoteStreamReceived");
+      this.doctorInfoModel = doctorInfoModel;
       callSession.enableSpeakerphone(true);
       streamRender = RTCVideoRenderer();
       await streamRender.initialize();
@@ -101,13 +103,13 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.onUserNoAnswer = (callSession, opponentId) async {
       // called when did not receive an answer from opponent during timeout (default timeout is 60 seconds)
       logger.d("Prew, onUserNoAnswer");
-      await _handleRejectHangUpNoAnswer(context);
+      await _handleRejectNoAnswer(context);
     };
 
     callSession.onCallRejectedByUser = (callSession, opponentId, [userInfo]) async {
       // called when received 'reject' signal from opponent
       logger.d("Prew, onCallRejectedByUser");
-      await _handleRejectHangUpNoAnswer(context);
+      await _handleRejectNoAnswer(context);
     };
 
     callSession.onCallAcceptedByUser = (callSession, opponentId, [userInfo]) {
@@ -118,7 +120,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.onReceiveHungUpFromUser = (callSession, opponentId, [userInfo]) async {
       // called when received 'hungUp' signal from opponent
       logger.d("Prew, onReceiveHungUpFromUser");
-      await _handleRejectHangUpNoAnswer(context);
+      await _handleHungUp(context, doctorInfoModel);
     };
 
     callSession.onSessionClosed = (callSession) {
@@ -130,7 +132,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     callSession.startCall({"appointmentId": appointmentId});
   }
 
-  Future<void> _handleRejectHangUpNoAnswer(BuildContext context) async {
+  Future<void> _handleRejectNoAnswer(BuildContext context) async {
     if (streamRenderSelf != null) {
       await streamRenderSelf.dispose();
     }
@@ -147,7 +149,21 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     Navigator.pop(context);
   }
 
-  Future<void> endCall() async {
+  Future<void> _handleHungUp(BuildContext context, DoctorInfoModel doctorInfoModel) async {
+    if (streamRenderSelf != null) {
+      await streamRenderSelf.dispose();
+    }
+    if (streamRender != null) {
+      await streamRender.dispose();
+    }
+    if (callClient != null) {
+      callClient.destroy();
+    }
+    Navigator.pop(context);
+    Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel));
+  }
+
+  Future<void> endCall(BuildContext context) async {
     if (streamRenderSelf != null) {
       await streamRenderSelf.dispose();
     }
@@ -159,6 +175,10 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     }
     if (callClient != null) {
       callClient.destroy();
+    }
+    Navigator.pop(context);
+    if (doctorInfoModel != null) {
+      Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel));
     }
   }
 
