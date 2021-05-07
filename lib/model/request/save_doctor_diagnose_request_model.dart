@@ -2,6 +2,7 @@ class SaveDoctorDiagnoseRequestModel {
   String appointmentID;
   String skinOverview;
   String skinType;
+  String previousFeedback;
   String diagnoses;
   String carePlan;
   String careRecommendation;
@@ -13,6 +14,7 @@ class SaveDoctorDiagnoseRequestModel {
       this.skinOverview,
       this.skinType,
       this.diagnoses,
+      this.previousFeedback,
       this.carePlan,
       this.careRecommendation,
       this.productsRecommendation,
@@ -23,6 +25,7 @@ class SaveDoctorDiagnoseRequestModel {
       "appointmentID": appointmentID,
       "skinOverview": skinOverview,
       "skinType": skinType,
+      "previousFeedback" : previousFeedback,
       "diagnoses": diagnoses,
       "carePlan": carePlan,
       "careRecommendation": careRecommendation,

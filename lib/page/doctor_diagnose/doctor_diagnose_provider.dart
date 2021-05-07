@@ -71,7 +71,7 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> callSaveDoctorDiagnoseForm(BuildContext context, String acneOverview, String carePlan,
+  Future<void> callSaveDoctorDiagnoseForm(BuildContext context, String previousFeedback, String acneOverview, String carePlan,
       String productRecommend, String nextAppointment) async {
 
     if (acneOverview?.isEmpty ?? true) {
@@ -81,6 +81,11 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
 
     if (skinType?.isEmpty ?? true) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกลักษณะผิว"});
+      return;
+    }
+
+    if (previousFeedback?.isEmpty ?? true) {
+      errorHandle.proceed(context, {"message": "กรุณากรอกปัญหาของการรักษาครั้งก่อน"});
       return;
     }
 
@@ -109,6 +114,7 @@ class DoctorDiagnoseProvider extends BaseProvider with ChangeNotifier {
         appointmentID: _appointmentId,
         skinOverview: acneOverview,
         skinType: skinType,
+        previousFeedback: previousFeedback,
         diagnoses: diagnose.substring(0, diagnose.length - 2),
         carePlan: carePlan,
         careRecommendation: careRecommend.substring(0, careRecommend.length - 2),

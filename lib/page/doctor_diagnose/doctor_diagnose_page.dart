@@ -22,6 +22,7 @@ class DoctorDiagnosePage extends StatefulWidget {
 
 class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
   DoctorDiagnoseProvider _provider;
+  final _previousFeedbackTextController = TextEditingController();
   final _acneOverviewTextController = TextEditingController();
   final _treatPlanTextController = TextEditingController();
   final _productAdviceTextController = TextEditingController();
@@ -95,6 +96,26 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                 }),
                 SizedBox(
                   height: 12,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: BlossomText(
+                    "ปัญหาของการรักษาครั้งก่อน",
+                    size: 16,
+                    color: BlossomTheme.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFieldStrokeBlack(
+                  "ปัญหาของการรักษาครั้งก่อน",
+                  textAlignVertical: TextAlignVertical.top,
+                  textController: _previousFeedbackTextController,
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -219,6 +240,7 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
                     FocusManager.instance.primaryFocus.unfocus();
                     _provider.callSaveDoctorDiagnoseForm(
                         context,
+                        _previousFeedbackTextController.text,
                         _acneOverviewTextController.text,
                         _treatPlanTextController.text,
                         _productAdviceTextController.text,
