@@ -169,7 +169,7 @@ class RouteManager {
               create: (BuildContext context) => ServiceProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(),
+              create: (BuildContext context) => ProfileProvider(FacebookAuth.instance, FirebaseAuth.instance),
             ),
           ],
           child: MainPage(
@@ -295,8 +295,7 @@ class RouteManager {
         );
       });
 
-  static Route routeQrScan(String orderId, String base64String) =>
-      MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeQrScan(String orderId, String base64String) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -308,8 +307,6 @@ class RouteManager {
           child: QrScanPage(base64String),
         );
       });
-
-
 
   ////////// Doctor //////////
 

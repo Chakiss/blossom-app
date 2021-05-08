@@ -4,6 +4,7 @@ import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/button_login_facebook.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/text_stroke_pink.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
@@ -93,8 +94,7 @@ class ProfilePage extends StatelessWidget {
                     Expanded(
                       child: TextStrokePink("ประวัติการรักษา", () {
                         Navigator.push(context, RouteManager.routeCustomerHistory());
-                      },
-                          size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
+                      }, size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
                     ),
                     SizedBox(
                       width: 6,
@@ -121,6 +121,21 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+            child: ButtonLoginFacebook(
+              "Sync บัญชีกับ Facebook",
+              true,
+              () {
+                _profileProvider.syncAccountWithFacebook(context);
+              },
+              radius: 6,
+              height: 46,
+            ),
           ),
           Spacer(),
           Padding(
