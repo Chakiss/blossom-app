@@ -13,6 +13,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainProvider provider = Provider.of(context, listen: false);
+    provider.connectConnectyCube(context);
     return Scaffold(
       body: Container(
         child: Container(

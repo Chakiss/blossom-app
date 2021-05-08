@@ -14,12 +14,16 @@ import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/customer_history_detail/customer_history_detail_page.dart';
 import 'package:blossom_clinic/page/customer_history_detail/doctor_appointment_detail_provider.dart';
+import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_page.dart';
+import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_provider.dart';
 import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_page.dart';
 import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_provider.dart';
 import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_page.dart';
 import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_provider.dart';
 import 'package:blossom_clinic/page/dispense/dispense_page.dart';
 import 'package:blossom_clinic/page/dispense/dispense_provider.dart';
+import 'package:blossom_clinic/page/doctor_call_customer/doctor_call_customer_page.dart';
+import 'package:blossom_clinic/page/doctor_call_customer/doctor_call_customer_provider.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_page.dart';
 import 'package:blossom_clinic/page/doctor_diagnose/doctor_diagnose_provider.dart';
 import 'package:blossom_clinic/page/doctor_history/doctor_history_provider.dart';
@@ -156,7 +160,7 @@ class RouteManager {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => MainProvider(initIndex: initIndex),
+              create: (BuildContext context) => MainProvider(Injector.appInstance.get(), initIndex: initIndex),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
@@ -308,6 +312,19 @@ class RouteManager {
         );
       });
 
+  static Route routeCustomerIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return CustomerIncomingCallProvider();
+          },
+        )
+      ],
+      child: CustomerIncomingCallPage(callSession),
+    );
+  });
+
   ////////// Doctor //////////
 
   static Route routeDoctorMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
@@ -388,4 +405,17 @@ class RouteManager {
           child: CallCustomerPage(callSession),
         );
       });
+
+  static Route routeDoctorCallCustomer(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return DoctorCallCustomerProvider(Injector.appInstance.get());
+          },
+        )
+      ],
+      child: DoctorCallCustomerPage(appointmentModel),
+    );
+  });
 }

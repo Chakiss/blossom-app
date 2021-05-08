@@ -42,7 +42,7 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
     CubeUser cubeUser = CubeUser(
         id: _userData.doctorInfoModel.referenceConnectyCubeID,
         login: _userData.doctorInfoModel.doctorId,
-        email: "${_userData.doctorInfoModel.firstName} ${_userData.doctorInfoModel.lastName}",
+        email: _userData.doctorInfoModel.email,
         password: _userData.doctorInfoModel.email);
     _connectCubeChat(context, cubeUser);
   }
@@ -64,7 +64,10 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
     callClient.init();
 
     callClient.onReceiveNewSession = (incomingCallSession) {
-      _goToIncomingCallPage(context, incomingCallSession,);
+      _goToIncomingCallPage(
+        context,
+        incomingCallSession,
+      );
     };
     callClient.onSessionClosed = (closedCallSession) {};
   }

@@ -13,9 +13,11 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   String _appointmentId;
   bool isMuteAudio = false;
   bool isVideoEnable = true;
+  P2PClient _callClient;
 
   void initCallSession(BuildContext context, P2PSession callSession) {
     this.callSession = callSession;
+    this._callClient = P2PClient.instance;
 
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
@@ -57,12 +59,14 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     callSession.onUserNoAnswer = (callSession, opponentId) async {
       // called when did not receive an answer from opponent during timeout (default timeout is 60 seconds)
       logger.d("Prew, onUserNoAnswer");
+      _callClient.removeSession(callSession);
       await _handleRejectHangUpNoAnswer(context);
     };
 
     callSession.onCallRejectedByUser = (callSession, opponentId, [userInfo]) async {
       // called when received 'reject' signal from opponent
       logger.d("Prew, onCallRejectedByUser");
+      _callClient.removeSession(callSession);
       await _handleRejectHangUpNoAnswer(context);
     };
 
@@ -74,12 +78,14 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     callSession.onReceiveHungUpFromUser = (callSession, opponentId, [userInfo]) async {
       // called when received 'hungUp' signal from opponent
       logger.d("Prew, onReceiveHungUpFromUser");
+      _callClient.removeSession(callSession);
       await _handleRejectHangUpNoAnswer(context);
     };
 
     callSession.onSessionClosed = (callSession) {
       // called when current session was closed
       logger.d("Prew, onSessionClosed");
+      _callClient.removeSession(callSession);
     };
 
     _appointmentId = callSession.cubeSdp.userInfo["appointmentId"];
