@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/page/webview/web_view_page.dart';
+import 'package:blossom_clinic/usecase/generate_scb_qr_prompt_pay_use_case.dart';
 import 'package:blossom_clinic/usecase/omise_internet_banking_charge_use_case.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_one_button.dart';
@@ -8,8 +9,23 @@ import 'package:flutter/material.dart';
 class PaymentProvider extends BaseProvider with ChangeNotifier {
 
   OmiseInternetBankingChargeUseCase _omiseInternetBankingChargeUseCase;
+  GenerateScbQrPromptPayUseCase _generateScbQrPromptPayUseCase;
 
-  PaymentProvider(this._omiseInternetBankingChargeUseCase);
+  PaymentProvider(this._omiseInternetBankingChargeUseCase, this._generateScbQrPromptPayUseCase);
+
+  Future<void> callServiceGenerateScbQrPromptPayUseCase(BuildContext context, String orderId, int amount) async {
+    showProgressDialog(context);
+    final result = await _generateScbQrPromptPayUseCase.execute({
+      "amount": "${amount + .0}",
+      "orderID": orderId
+    });
+    Navigator.pop(context);
+    result.whenWithResult((data) {
+      Navigator.push(context, RouteManager.routeQrScan(orderId, data["image"]));
+    }, (map) {
+      errorHandle.proceed(context, map);
+    });
+  }
 
   Future<void> callServiceOmiseCharge(BuildContext context, String sourceType, String orderId, int amount) async {
     showProgressDialog(context);

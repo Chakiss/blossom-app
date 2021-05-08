@@ -14,6 +14,7 @@ class ServicePage extends StatelessWidget {
     _provider = Provider.of(context, listen: false);
     _provider.callServiceGetReview();
     return BaseScreenSecond(
+      false,
       title: "รีวิว",
       child: Consumer<ServiceProvider>(
         builder: (BuildContext context, ServiceProvider value, Widget child) {

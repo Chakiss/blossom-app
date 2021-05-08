@@ -22,6 +22,7 @@ class CustomerReviewDoctorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     return BaseScreenSecond(
+      true,
       title: "รีวิวแพทย์",
       child: SingleChildScrollView(
         child: Container(

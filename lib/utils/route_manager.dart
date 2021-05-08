@@ -45,6 +45,8 @@ import 'package:blossom_clinic/page/omise/omise_provider.dart';
 import 'package:blossom_clinic/page/payment/payment_page.dart';
 import 'package:blossom_clinic/page/payment/payment_provider.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
+import 'package:blossom_clinic/page/qr_scan/qr_scan_page.dart';
+import 'package:blossom_clinic/page/qr_scan/qr_scan_provider.dart';
 import 'package:blossom_clinic/page/register/register_page.dart';
 import 'package:blossom_clinic/page/register/register_provider.dart';
 import 'package:blossom_clinic/page/register_second/register_second_page.dart';
@@ -52,6 +54,7 @@ import 'package:blossom_clinic/page/register_second/register_second_provider.dar
 import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:blossom_clinic/page/splash_screen_page.dart';
 import 'package:blossom_clinic/page/splash_screen_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -191,7 +194,7 @@ class RouteManager {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => PaymentProvider(Injector.appInstance.get()),
+              create: (BuildContext context) => PaymentProvider(Injector.appInstance.get(), Injector.appInstance.get()),
             )
           ],
           child: PaymentPage(orderId, price),
@@ -291,6 +294,22 @@ class RouteManager {
           child: CustomerReviewDoctorPage(doctorInfoModel),
         );
       });
+
+  static Route routeQrScan(String orderId, String base64String) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return QrScanProvider(orderId, FirebaseFirestore.instance);
+              },
+            )
+          ],
+          child: QrScanPage(base64String),
+        );
+      });
+
+
 
   ////////// Doctor //////////
 
