@@ -16,6 +16,8 @@ import 'package:blossom_clinic/page/customer_history_detail/customer_history_det
 import 'package:blossom_clinic/page/customer_history_detail/doctor_appointment_detail_provider.dart';
 import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_page.dart';
 import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_provider.dart';
+import 'package:blossom_clinic/page/customer_receive_call_doctor/customer_receive_call_doctor_page.dart';
+import 'package:blossom_clinic/page/customer_receive_call_doctor/customer_receive_call_doctor_provider.dart';
 import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_page.dart';
 import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_provider.dart';
 import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_page.dart';
@@ -322,6 +324,19 @@ class RouteManager {
         )
       ],
       child: CustomerIncomingCallPage(callSession),
+    );
+  });
+
+  static Route routeCustomerReceiveCallDoctor(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return CustomerReceiveCallDoctorProvider();
+          },
+        )
+      ],
+      child: CustomerReceiveCallDoctorPage(callSession),
     );
   });
 
