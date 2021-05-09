@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,14 +6,13 @@ import 'call_doctor_provider.dart';
 
 class CallDoctorPage extends StatelessWidget {
   CallDoctorProvider _provider;
-  AppointmentModel _appointmentModel;
 
-  CallDoctorPage(this._appointmentModel);
+  CallDoctorPage();
 
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.signInConnectyCube(context, _appointmentModel);
+    _provider.signInConnectyCube(context);
     return Container(
         child: Consumer<CallDoctorProvider>(builder: (BuildContext context, CallDoctorProvider value, Widget child) {
       return Stack(

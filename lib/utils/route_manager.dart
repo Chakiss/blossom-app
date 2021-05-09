@@ -279,21 +279,21 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CallDoctorProvider(Injector.appInstance.get());
+                return CallDoctorProvider(Injector.appInstance.get(), appointmentModel);
               },
             )
           ],
-          child: CallDoctorPage(appointmentModel),
+          child: CallDoctorPage(),
         );
       });
 
-  static Route routeCustomerReviewDoctor(DoctorInfoModel doctorInfoModel) =>
+  static Route routeCustomerReviewDoctor(DoctorInfoModel doctorInfoModel, AppointmentModel appointmentModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CustomerReviewDoctorProvider();
+                return CustomerReviewDoctorProvider(Injector.appInstance.get(), Injector.appInstance.get(), doctorInfoModel, appointmentModel);
               },
             )
           ],

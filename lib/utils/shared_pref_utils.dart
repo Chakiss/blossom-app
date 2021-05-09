@@ -3,21 +3,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefUtils {
   SharedPreferences _sharedPref;
-  String _buildNumber;
 
-  SharedPrefUtils(this._sharedPref, this._buildNumber);
+  SharedPrefUtils(this._sharedPref);
 
-  static const int _buildVersion = 3;
+  static const int _buildVersion = 1;
   static const String _keyMapFilePath = "keyMapFilePath$_buildVersion";
   static const String _keyMapUserReference = "keyMapUserReference";
   static const String _keyMapDoctorReference = "keyMapDoctorReference";
 
   Future<void> setMapFilePath(Map<String, String> mapFilePath) async {
-    await _sharedPref.setString(_keyMapFilePath + _buildNumber, json.encode(mapFilePath) ?? "{}");
+    await _sharedPref.setString(_keyMapFilePath, json.encode(mapFilePath) ?? "{}");
   }
 
   Map<String, String> getMapFilePath() {
-    final mapFilePathString = _sharedPref.getString(_keyMapFilePath + _buildNumber) ?? "{}";
+    final mapFilePathString = _sharedPref.getString(_keyMapFilePath) ?? "{}";
     return Map<String, String>.from(json.decode(mapFilePathString));
   }
 

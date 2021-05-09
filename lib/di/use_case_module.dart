@@ -14,6 +14,7 @@ import 'package:blossom_clinic/usecase/get_shipnity_order_list_by_phone_number_u
 import 'package:blossom_clinic/usecase/get_user_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
 import 'package:blossom_clinic/usecase/omise_internet_banking_charge_use_case.dart';
+import 'package:blossom_clinic/usecase/review_appointment_use_case.dart';
 import 'package:blossom_clinic/usecase/save_doctor_diagnose_form_use_case.dart';
 import 'package:blossom_clinic/usecase/save_patient_form_use_case.dart';
 import 'package:blossom_clinic/usecase/set_user_reference_to_local_storage_use_case.dart';
@@ -84,6 +85,6 @@ class UseCaseModule {
     injector.registerDependency<GetShipnityOrderListByPhoneNumberUseCase>(() => GetShipnityOrderListByPhoneNumberUseCase(injector.get()));
     injector.registerDependency<GetBlossomReviewUseCase>(() => GetBlossomReviewUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GenerateScbQrPromptPayUseCase>(() => GenerateScbQrPromptPayUseCase(FirebaseFunctions.instance));
-
+    injector.registerDependency<ReviewAppointmentUseCase>(() => ReviewAppointmentUseCase(FirebaseFunctions.instance));
   }
 }

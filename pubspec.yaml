@@ -60,7 +60,6 @@ dependencies:
   path_provider: ^2.0.1
   omise_flutter: ^0.1.4
   url_launcher: ^6.0.3
-  package_info: ^0.4.3+4
   device_info: ^2.0.0
   flutter_local_notifications: ^4.0.1+2
   flutter_countdown_timer: ^4.1.0

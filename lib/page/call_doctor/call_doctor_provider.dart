@@ -19,12 +19,13 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
   bool isVideoEnable = true;
   DoctorInfoModel doctorInfoModel;
 
+  AppointmentModel _appointmentModel;
   UserData _userData;
 
-  CallDoctorProvider(this._userData);
+  CallDoctorProvider(this._userData, this._appointmentModel);
 
-  Future<void> signInConnectyCube(BuildContext context, AppointmentModel appointmentModel) async {
-    final snapshot = await appointmentModel.doctorReference.get();
+  Future<void> signInConnectyCube(BuildContext context) async {
+    final snapshot = await _appointmentModel.doctorReference.get();
     final DoctorInfoModel doctorInfoModel = DoctorInfoModel.fromJson(snapshot.id, snapshot.data());
 
     CubeUser cubeUser = CubeUser(
@@ -33,7 +34,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
         email: _userData.userProfileModel.email,
         fullName: "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
         password: _userData.userProfileModel.email);
-    _connectCubeChat(context, cubeUser, doctorInfoModel, appointmentModel.id);
+    _connectCubeChat(context, cubeUser, doctorInfoModel, _appointmentModel.id);
   }
 
   void _connectCubeChat(BuildContext context, CubeUser cubeUser, DoctorInfoModel doctorInfoModel, String appointmentId) {
@@ -159,7 +160,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
       callClient.destroy();
     }
     Navigator.pop(context);
-    Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel));
+    Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel, _appointmentModel));
   }
 
   Future<void> endCall(BuildContext context) async {
@@ -177,7 +178,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     }
     Navigator.pop(context);
     if (doctorInfoModel != null) {
-      Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel));
+      Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel, _appointmentModel));
     }
   }
 

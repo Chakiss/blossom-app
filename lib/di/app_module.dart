@@ -13,12 +13,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppModule {
   Injector _injector;
   SharedPreferences _sharedPref;
-  String _buildNumber;
 
-  AppModule(this._injector, this._sharedPref, this._buildNumber);
+  AppModule(this._injector, this._sharedPref);
 
   void provide() {
-    _injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils(_sharedPref, _buildNumber));
+    _injector.registerDependency<SharedPrefUtils>(() => SharedPrefUtils(_sharedPref));
     _injector.registerSingleton<ErrorHandle>(() => ErrorHandle());
     _injector.registerSingleton<Logger>(() => Logger());
     _injector.registerDependency<RestClientManager>(() => RestClientManager());

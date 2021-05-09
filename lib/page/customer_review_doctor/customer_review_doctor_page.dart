@@ -17,6 +17,7 @@ class CustomerReviewDoctorPage extends StatelessWidget {
 
   final _commentTextEditController = TextEditingController();
   CustomerReviewDoctorProvider _provider;
+  String rating;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class CustomerReviewDoctorPage extends StatelessWidget {
                 height: 16,
               ),
               RatingView((rating) {
-
+                this.rating = "$rating";
               }),
               SizedBox(
                 height: 36,
@@ -79,7 +80,7 @@ class CustomerReviewDoctorPage extends StatelessWidget {
                 height: 30,
               ),
               ButtonPinkGradient("บันทึก", true, () {
-
+                _provider.callServiceReviewAppointment(context, rating, _commentTextEditController.text);
               },
               width: 100, radius: 6,),
               SizedBox(
