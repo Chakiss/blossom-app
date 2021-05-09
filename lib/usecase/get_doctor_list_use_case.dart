@@ -14,18 +14,7 @@ class GetDoctorListUseCase extends BaseAsyncUseCase<String, List<DoctorInfoModel
     try {
       final snapshot = await _firestore.collection("doctors").get();
       final list = snapshot.docs
-          .map((e) => DoctorInfoModel(
-              createdAt: e.data()["createdAt"].toDate(),
-              displayName: e.data()["displayName"],
-              displayPhoto: e.data()["displayPhoto"],
-              email: e.data()["email"],
-              firstName: e.data()["firstName"],
-              lastName: e.data()["lastName"],
-              phoneNumber: e.data()["phoneNumber"],
-              referenceConnectyCubeID: e.data()["referenceConnectyCubeID"],
-              story: e.data()["story"],
-              updatedAt: e.data()["updatedAt"].toDate(),
-              doctorId: e.id))
+          .map((e) => DoctorInfoModel.fromJson(e.id, e.data()))
           .toList();
       print(list);
       return Success(list ?? []);

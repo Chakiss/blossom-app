@@ -35,6 +35,8 @@ import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
+import 'package:blossom_clinic/page/doctor_review/doctor_review_page.dart';
+import 'package:blossom_clinic/page/doctor_review/doctor_review_provider.dart';
 import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_page.dart';
 import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_provider.dart';
 import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_page.dart';
@@ -337,6 +339,19 @@ class RouteManager {
         )
       ],
       child: CustomerReceiveCallDoctorPage(callSession),
+    );
+  });
+
+  static Route routeDoctorReview(String doctorId) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return DoctorReviewProvider(Injector.appInstance.get(), doctorId);
+          },
+        )
+      ],
+      child: DoctorReviewPage(),
     );
   });
 

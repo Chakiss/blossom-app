@@ -7,6 +7,7 @@ import 'package:blossom_clinic/usecase/get_appointment_by_user_id_use_case.dart'
 import 'package:blossom_clinic/usecase/get_appointments_id_by_order_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_blossom_review_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_by_id_use_case.dart';
+import 'package:blossom_clinic/usecase/get_doctor_review_by_doctor_id.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_order_by_invoice_id_use_case.dart';
@@ -86,5 +87,6 @@ class UseCaseModule {
     injector.registerDependency<GetBlossomReviewUseCase>(() => GetBlossomReviewUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GenerateScbQrPromptPayUseCase>(() => GenerateScbQrPromptPayUseCase(FirebaseFunctions.instance));
     injector.registerDependency<ReviewAppointmentUseCase>(() => ReviewAppointmentUseCase(FirebaseFunctions.instance));
+    injector.registerDependency<GetDoctorReviewByDoctorIdUseCase>(() => GetDoctorReviewByDoctorIdUseCase(FirebaseFirestore.instance));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -72,17 +73,46 @@ class _DoctorCardState extends State<DoctorCard> {
                               SizedBox(
                                 height: 6,
                               ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: BlossomTheme.darkPink),
-                                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                                child: BlossomText(
-                                  "Review",
-                                  size: 13,
-                                  color: BlossomTheme.darkPink,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(context, RouteManager.routeDoctorReview(widget.doctorInfo.doctorId));
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: BlossomTheme.darkPink),
+                                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                                      child: BlossomText(
+                                        "รีวิว",
+                                        size: 13,
+                                        color: BlossomTheme.darkPink,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: BlossomTheme.darkPink),
+                                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                                      child: BlossomText(
+                                        "ประวัติ",
+                                        size: 13,
+                                        color: BlossomTheme.darkPink,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               )
                             ],
                           ),
