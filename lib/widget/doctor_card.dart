@@ -97,7 +97,7 @@ class _DoctorCardState extends State<DoctorCard> {
                                   ),
                                   InkWell(
                                     onTap: () {
-
+                                      Navigator.push(context, RouteManager.routeDoctorInfoProfile(widget.doctorInfo));
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
