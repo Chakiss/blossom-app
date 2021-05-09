@@ -59,6 +59,8 @@ class _PaymentPageState extends State<PaymentPage> {
                     InkWell(
                       onTap: () {
                         _provider.callServiceGenerateScbQrPromptPayUseCase(context, widget._orderId, widget._price);
+                        // _provider.callServiceOmiseCharge(
+                        //     context, "promptpay", widget._orderId, widget._price);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
@@ -66,177 +68,176 @@ class _PaymentPageState extends State<PaymentPage> {
                         child: Row(
                           children: [
                             Image.asset(
-                              "assets/ic_logo_scb.png",
+                              "assets/ic_logo_prompt_pay.jpg",
                               width: 42,
                               height: 42,
-                              color: BlossomTheme.pink,
                             ),
                             SizedBox(
                               width: 16,
                             ),
                             Expanded(
                                 child: BlossomText(
-                              "Scb PromptPay",
-                              size: 15,
-                            ))
+                                  "Prompt Pay",
+                                  size: 15,
+                                ))
                           ],
                         ),
                       ),
                     ),
                   ],
                 ),
-                // Container(
-                //   color: BlossomTheme.white,
-                //   height: 1,
-                // ),
-                // custom.ExpansionTile(
-                //   backgroundColor: BlossomTheme.pink,
-                //   headerBackgroundColor: BlossomTheme.pink,
-                //   iconColor: BlossomTheme.white,
-                //   title: BlossomText(
-                //     "InternetBanking",
-                //     size: 16,
-                //     color: BlossomTheme.white,
-                //   ),
-                //   children: [
-                //     Column(
-                //       children: [
-                //         InkWell(
-                //           onTap: () {
-                //             _provider.callServiceOmiseCharge(
-                //                 context, "internet_banking_scb", widget._orderId, widget._price);
-                //           },
-                //           child: Container(
-                //             padding: const EdgeInsets.all(10),
-                //             color: BlossomTheme.white,
-                //             child: Row(
-                //               children: [
-                //                 Image.asset(
-                //                   "assets/ic_logo_scb.png",
-                //                   width: 42,
-                //                   height: 42,
-                //                 ),
-                //                 SizedBox(
-                //                   width: 16,
-                //                 ),
-                //                 Expanded(
-                //                     child: BlossomText(
-                //                   "Siam Commercial Bank",
-                //                   size: 15,
-                //                 ))
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           color: BlossomTheme.pink,
-                //           height: 1,
-                //         )
-                //       ],
-                //     ),
-                //     Column(
-                //       children: [
-                //         InkWell(
-                //           onTap: () {
-                //             _provider.callServiceOmiseCharge(
-                //                 context, "internet_banking_bbl", widget._orderId, widget._price);
-                //           },
-                //           child: Container(
-                //             padding: const EdgeInsets.all(10),
-                //             color: BlossomTheme.white,
-                //             child: Row(
-                //               children: [
-                //                 Image.asset(
-                //                   "assets/ic_logo_bbl.png",
-                //                   width: 42,
-                //                   height: 42,
-                //                 ),
-                //                 SizedBox(
-                //                   width: 16,
-                //                 ),
-                //                 Expanded(
-                //                     child: BlossomText(
-                //                   "Bangkok Bank Public Company Limited",
-                //                   size: 15,
-                //                 ))
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           color: BlossomTheme.pink,
-                //           height: 1,
-                //         )
-                //       ],
-                //     ),
-                //     Column(
-                //       children: [
-                //         InkWell(
-                //           onTap: () {
-                //             _provider.callServiceOmiseCharge(
-                //                 context, "internet_banking_ktb", widget._orderId, widget._price);
-                //           },
-                //           child: Container(
-                //             padding: const EdgeInsets.all(10),
-                //             color: BlossomTheme.white,
-                //             child: Row(
-                //               children: [
-                //                 Image.asset(
-                //                   "assets/ic_logo_ktb.png",
-                //                   width: 42,
-                //                   height: 42,
-                //                 ),
-                //                 SizedBox(
-                //                   width: 16,
-                //                 ),
-                //                 Expanded(
-                //                     child: BlossomText(
-                //                   "Krungthai Bank Public Company Limited",
-                //                   size: 15,
-                //                 ))
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           color: BlossomTheme.pink,
-                //           height: 1,
-                //         )
-                //       ],
-                //     ),
-                //     Column(
-                //       children: [
-                //         InkWell(
-                //           onTap: () {
-                //             _provider.callServiceOmiseCharge(
-                //                 context, "internet_banking_bay", widget._orderId, widget._price);
-                //           },
-                //           child: Container(
-                //             padding: const EdgeInsets.all(10),
-                //             color: BlossomTheme.white,
-                //             child: Row(
-                //               children: [
-                //                 Image.asset(
-                //                   "assets/ic_logo_bay.png",
-                //                   width: 42,
-                //                   height: 42,
-                //                 ),
-                //                 SizedBox(
-                //                   width: 16,
-                //                 ),
-                //                 Expanded(
-                //                     child: BlossomText(
-                //                   "Bank of Ayudhya Public Company Limited",
-                //                   size: 15,
-                //                 ))
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ],
-                // ),
+                Container(
+                  color: BlossomTheme.white,
+                  height: 1,
+                ),
+                custom.ExpansionTile(
+                  backgroundColor: BlossomTheme.pink,
+                  headerBackgroundColor: BlossomTheme.pink,
+                  iconColor: BlossomTheme.white,
+                  title: BlossomText(
+                    "InternetBanking",
+                    size: 16,
+                    color: BlossomTheme.white,
+                  ),
+                  children: [
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _provider.callServiceOmiseCharge(
+                                context, "internet_banking_scb", widget._orderId, widget._price);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            color: BlossomTheme.white,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/ic_logo_scb.png",
+                                  width: 42,
+                                  height: 42,
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                    child: BlossomText(
+                                  "Siam Commercial Bank",
+                                  size: 15,
+                                ))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: BlossomTheme.pink,
+                          height: 1,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _provider.callServiceOmiseCharge(
+                                context, "internet_banking_bbl", widget._orderId, widget._price);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            color: BlossomTheme.white,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/ic_logo_bbl.png",
+                                  width: 42,
+                                  height: 42,
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                    child: BlossomText(
+                                  "Bangkok Bank Public Company Limited",
+                                  size: 15,
+                                ))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: BlossomTheme.pink,
+                          height: 1,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _provider.callServiceOmiseCharge(
+                                context, "internet_banking_ktb", widget._orderId, widget._price);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            color: BlossomTheme.white,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/ic_logo_ktb.png",
+                                  width: 42,
+                                  height: 42,
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                    child: BlossomText(
+                                  "Krungthai Bank Public Company Limited",
+                                  size: 15,
+                                ))
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: BlossomTheme.pink,
+                          height: 1,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _provider.callServiceOmiseCharge(
+                                context, "internet_banking_bay", widget._orderId, widget._price);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            color: BlossomTheme.white,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/ic_logo_bay.png",
+                                  width: 42,
+                                  height: 42,
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                    child: BlossomText(
+                                  "Bank of Ayudhya Public Company Limited",
+                                  size: 15,
+                                ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
                 Container(
                   color: BlossomTheme.white,
                   height: 1,

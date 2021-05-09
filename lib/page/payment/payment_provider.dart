@@ -21,7 +21,7 @@ class PaymentProvider extends BaseProvider with ChangeNotifier {
     });
     Navigator.pop(context);
     result.whenWithResult((data) {
-      Navigator.push(context, RouteManager.routeQrScan(orderId, data["image"]));
+      Navigator.push(context, RouteManager.routeQrScan(orderId, data["image"], null));
     }, (map) {
       errorHandle.proceed(context, map);
     });
@@ -37,17 +37,21 @@ class PaymentProvider extends BaseProvider with ChangeNotifier {
     final result = await _omiseInternetBankingChargeUseCase.execute(request);
     Navigator.pop(context);
     result.whenWithResult((data) async {
-      final String authorizeUrl = data["authorize_uri"];
-      if (authorizeUrl.isEmpty ?? true) {
-        _showSuccessDialog(context, orderId);
+      if (sourceType == "promptpay") {
+        Navigator.push(context, RouteManager.routeQrScan(orderId, null, data["source"]["scannable_code"]["image"]["download_uri"]));
       } else {
-        bool isSuccess = await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-          return WebViewPage("Omise 3d Secure", authorizeUrl);
-        }));
-        if (isSuccess) {
+        final String authorizeUrl = data["authorize_uri"];
+        if (authorizeUrl.isEmpty ?? true) {
           _showSuccessDialog(context, orderId);
         } else {
-          errorHandle.proceed(context, {"message" : "การชำระเงินล้มเหลว กรุณาลองใหม่อีกครั้ง"});
+          bool isSuccess = await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+            return WebViewPage("Omise 3d Secure", authorizeUrl);
+          }));
+          if (isSuccess) {
+            _showSuccessDialog(context, orderId);
+          } else {
+            errorHandle.proceed(context, {"message" : "การชำระเงินล้มเหลว กรุณาลองใหม่อีกครั้ง"});
+          }
         }
       }
     }, (map) {

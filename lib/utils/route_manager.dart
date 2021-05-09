@@ -305,7 +305,7 @@ class RouteManager {
         );
       });
 
-  static Route routeQrScan(String orderId, String base64String) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeQrScan(String orderId, String base64String, String linkQr) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -314,7 +314,7 @@ class RouteManager {
               },
             )
           ],
-          child: QrScanPage(base64String),
+          child: QrScanPage(base64String, linkQr),
         );
       });
 

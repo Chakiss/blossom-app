@@ -61,6 +61,7 @@ dependencies:
   omise_flutter: ^0.1.4
   url_launcher: ^6.0.3
   device_info: ^2.0.0
+  image_downloader: ^0.30.0
   flutter_local_notifications: ^4.0.1+2
   flutter_countdown_timer: ^4.1.0
   flutter_sound:
