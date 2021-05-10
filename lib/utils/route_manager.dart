@@ -10,6 +10,8 @@ import 'package:blossom_clinic/page/call_customer/call_customer_page.dart';
 import 'package:blossom_clinic/page/call_customer/call_customer_provider.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_page.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_provider.dart';
+import 'package:blossom_clinic/page/chat/chat_page.dart';
+import 'package:blossom_clinic/page/chat/chat_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/customer_history_detail/customer_history_detail_page.dart';
@@ -466,6 +468,20 @@ class RouteManager {
             )
           ],
           child: DoctorCallCustomerPage(appointmentModel),
+        );
+      });
+
+  static Route routeChat(AppointmentModel appointmentModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return ChatProvider(appointmentModel, Injector.appInstance.get());
+              },
+            )
+          ],
+          child: ChatPage(),
         );
       });
 }

@@ -16,6 +16,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
   Function(String) onChange;
   TextInputType keyboardType;
   bool enabled = true;
+  Color strokeColor;
 
   TextFieldStrokeBlack(this.hint,
       {this.width,
@@ -30,7 +31,8 @@ class TextFieldStrokeBlack extends StatelessWidget {
       this.textController,
       this.keyboardType,
       this.maxLines,
-      this.enabled = true});
+      this.enabled = true,
+      this.strokeColor = BlossomTheme.black});
 
   String getText() => textController.text;
 
@@ -48,7 +50,7 @@ class TextFieldStrokeBlack extends StatelessWidget {
           decoration: BoxDecoration(
               color: enabled ? BlossomTheme.white : BlossomTheme.lightGrayAlpha,
               border: Border.all(
-                color: enabled ? BlossomTheme.black : BlossomTheme.gray,
+                color: enabled ? strokeColor : BlossomTheme.gray,
               ),
               borderRadius: BorderRadius.all(Radius.circular(5))),
           child: TextField(

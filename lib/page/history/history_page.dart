@@ -7,6 +7,7 @@ import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
 import 'package:blossom_clinic/widget/customer_appointment_item.dart';
+import 'package:blossom_clinic/widget/dialog/call_type_dialog.dart';
 import 'package:blossom_clinic/widget/history_segment_control.dart';
 import 'package:blossom_clinic/widget/shipnity_order_item.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
@@ -82,7 +83,7 @@ class _HistoryPageState extends State<HistoryPage> {
         itemBuilder: (BuildContext context, int index) {
           return CustomerAppointmentItem(appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat,
               _timeFormatParse, Injector.appInstance.get(), Injector.appInstance.get(), (appointment) {
-            _goToCallDoctorPage(context, appointment);
+                _showCallTypeDialog(context, appointment);
           });
         },
       );
@@ -136,5 +137,27 @@ class _HistoryPageState extends State<HistoryPage> {
     } else {
       return "";
     }
+  }
+
+  void _goToChatPage(BuildContext context, AppointmentModel appointmentModel) {
+    Navigator.push(context, RouteManager.routeChat(appointmentModel));
+  }
+
+  void _showCallTypeDialog(BuildContext context, AppointmentModel appointmentModel) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return CallTypeDialog((type) {
+          Navigator.pop(context);
+          if (type == 0) {
+            _goToChatPage(context, appointmentModel);
+          } else if (type == 1) {
+
+          } else {
+            _goToCallDoctorPage(context, appointmentModel);
+          }
+        });
+      },
+    );
   }
 }

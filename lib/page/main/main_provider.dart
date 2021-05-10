@@ -50,20 +50,31 @@ class MainProvider extends BaseProvider with ChangeNotifier {
         id: _userData.userProfileModel.referenceConnectyCubeID,
         login: _userData.userProfileModel.userUID,
         email: _userData.userProfileModel.email,
+        fullName: "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
         password: _userData.userProfileModel.email);
     _connectCubeChat(context, cubeUser);
   }
 
   void _connectCubeChat(BuildContext context, CubeUser cubeUser) {
     if (CubeChatConnection.instance.isAuthenticated()) {
+      _signIn(context, cubeUser);
       _initCallClient(context);
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
+        _signIn(context, cubeUser);
         _initCallClient(context);
       }).catchError((error) {
         print(error);
       });
     }
+  }
+
+  void _signIn(BuildContext context, CubeUser cubeUser) {
+    signIn(cubeUser).then((cubeUser) {
+      print(cubeUser);
+    }).catchError((error) {
+      print(error);
+    });
   }
 
   void _initCallClient(BuildContext context) {
