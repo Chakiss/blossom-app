@@ -4,8 +4,10 @@ import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart'
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/button_login_facebook.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
+import 'package:blossom_clinic/widget/text_stroke_pink.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
@@ -92,13 +94,15 @@ class DoctorProfilePage extends StatelessWidget {
                 height: 24,
               ),
               Container(
-                child: ButtonPinkGradient(
-                  "ออกจากระบบ",
-                  true,
-                  () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => CustomDialogTwoButton(
+                padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: TextStrokePink("ออกจากระบบ", () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => CustomDialogTwoButton(
                               title: "ออกจากระบบ",
                               description: "ยืนยันการออกจากระบบ",
                               positiveButton: "ตกลง",
@@ -110,13 +114,27 @@ class DoctorProfilePage extends StatelessWidget {
                                 Navigator.pop(context);
                               },
                             ));
-                  },
-                  width: 60 * MediaQuery.of(context).size.width / 100,
-                  radius: 6,
-                  textSize: 14,
+                      }, size: 20, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
+                    ),
+                  ],
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+            child: ButtonLoginFacebook(
+              "Sync บัญชีกับ Facebook",
+              true,
+                  () {
+                _profileProvider.syncAccountWithFacebook(context);
+              },
+              radius: 6,
+              height: 46,
+            ),
           ),
           Spacer(),
           Padding(

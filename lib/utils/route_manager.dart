@@ -297,7 +297,8 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CustomerReviewDoctorProvider(Injector.appInstance.get(), Injector.appInstance.get(), doctorInfoModel, appointmentModel);
+                return CustomerReviewDoctorProvider(
+                    Injector.appInstance.get(), Injector.appInstance.get(), doctorInfoModel, appointmentModel);
               },
             )
           ],
@@ -305,7 +306,8 @@ class RouteManager {
         );
       });
 
-  static Route routeQrScan(String orderId, String base64String, String linkQr) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeQrScan(String orderId, String base64String, String linkQr) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -319,56 +321,58 @@ class RouteManager {
       });
 
   static Route routeCustomerIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return CustomerIncomingCallProvider();
-          },
-        )
-      ],
-      child: CustomerIncomingCallPage(callSession),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CustomerIncomingCallProvider();
+              },
+            )
+          ],
+          child: CustomerIncomingCallPage(callSession),
+        );
+      });
 
-  static Route routeCustomerReceiveCallDoctor(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return CustomerReceiveCallDoctorProvider();
-          },
-        )
-      ],
-      child: CustomerReceiveCallDoctorPage(callSession),
-    );
-  });
+  static Route routeCustomerReceiveCallDoctor(P2PSession callSession) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CustomerReceiveCallDoctorProvider();
+              },
+            )
+          ],
+          child: CustomerReceiveCallDoctorPage(callSession),
+        );
+      });
 
   static Route routeDoctorReview(String doctorId) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return DoctorReviewProvider(Injector.appInstance.get(), doctorId);
-          },
-        )
-      ],
-      child: DoctorReviewPage(),
-    );
-  });
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return DoctorReviewProvider(Injector.appInstance.get(), doctorId);
+              },
+            )
+          ],
+          child: DoctorReviewPage(),
+        );
+      });
 
-  static Route routeDoctorInfoProfile(DoctorInfoModel doctorInfoModel) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return DoctorInfoProfileProvider();
-          },
-        )
-      ],
-      child: DoctorInfoProfilePage(doctorInfoModel),
-    );
-  });
+  static Route routeDoctorInfoProfile(DoctorInfoModel doctorInfoModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return DoctorInfoProfileProvider();
+              },
+            )
+          ],
+          child: DoctorInfoProfilePage(doctorInfoModel),
+        );
+      });
 
   ////////// Doctor //////////
 
@@ -387,7 +391,7 @@ class RouteManager {
               ),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorProfileProvider(),
+              create: (BuildContext context) => DoctorProfileProvider(FacebookAuth.instance, FirebaseAuth.instance),
             ),
           ],
           child: DoctorMainPage(
@@ -451,16 +455,17 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorCallCustomer(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return DoctorCallCustomerProvider(Injector.appInstance.get());
-          },
-        )
-      ],
-      child: DoctorCallCustomerPage(appointmentModel),
-    );
-  });
+  static Route routeDoctorCallCustomer(AppointmentModel appointmentModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return DoctorCallCustomerProvider(Injector.appInstance.get());
+              },
+            )
+          ],
+          child: DoctorCallCustomerPage(appointmentModel),
+        );
+      });
 }
