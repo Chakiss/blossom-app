@@ -35,7 +35,12 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
   }
 
   void connectConnectyCube(BuildContext context) {
-    _signInConnectyCube(context);
+    try {
+      CubeChatConnection.instance.logout();
+      
+    } catch (e) {
+      _signInConnectyCube(context);
+    }
   }
 
   void _signInConnectyCube(BuildContext context) {
@@ -49,14 +54,24 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
 
   void _connectCubeChat(BuildContext context, CubeUser cubeUser) {
     if (CubeChatConnection.instance.isAuthenticated()) {
+      _signIn(context, cubeUser);
       _initCallClient(context);
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
+        _signIn(context, cubeUser);
         _initCallClient(context);
       }).catchError((error) {
         print(error);
       });
     }
+  }
+
+  void _signIn(BuildContext context, CubeUser cubeUser) {
+    signIn(cubeUser).then((cubeUser) {
+      print(cubeUser);
+    }).catchError((error) {
+      print(error);
+    });
   }
 
   void _initCallClient(BuildContext context) {

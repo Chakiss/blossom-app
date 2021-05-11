@@ -18,25 +18,7 @@ class GetUserProfileUseCase extends BaseAsyncUseCase<String, UserProfileModel> {
      final snapshot = await _firestore.collection("patients").doc(parameter).get();
      if (snapshot.exists) {
        final data = snapshot;
-       UserProfileModel userProfileModel = UserProfileModel(
-         userUID: parameter,
-         acneCaredNoted: data["acneCaredNoted"],
-         acneIsCared: data["acneIsCared"],
-         acneTypes: data["acneTypes"].cast<int>(),
-         birthDate: data["birthDate"].toDate(),
-         createdAt: data["createdAt"].toDate(),
-         drugAllergyItems: data["drugAllergyItems"].cast<String>(),
-         drugAllergyStatus: data["drugAllergyStatus"],
-         email: data["email"],
-         firstName: data["firstName"],
-         lastName: data["lastName"],
-         phoneNumber: data["phoneNumber"],
-         referenceConnectyCubeID: data["referenceConnectyCubeID"],
-         registeredChannel: data["registeredChannel"],
-         registeredNote: data["registeredNote"],
-         skinType: data["skinType"],
-         updatedAt: data["updatedAt"].toDate(),
-       );
+       UserProfileModel userProfileModel = UserProfileModel.fromJson(data.id, data.data());
        _userData.userProfileModel = userProfileModel;
        return Success(userProfileModel);
      } else {

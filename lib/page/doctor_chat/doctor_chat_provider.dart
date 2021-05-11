@@ -1,33 +1,33 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
-import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 
-class ChatProvider extends BaseProvider with ChangeNotifier {
+class DoctorChatProvider extends BaseProvider with ChangeNotifier {
   AppointmentModel _appointmentModel;
   UserData _userData;
 
-  ChatProvider(this._appointmentModel, this._userData);
+  DoctorChatProvider(this._appointmentModel, this._userData);
 
-  DoctorInfoModel doctorInfoModel;
+  UserProfileModel userProfileModel;
   CubeDialog _cubeDialog;
   List<CubeDialog> _list;
   List<CubeMessage> chatList;
 
   Future<void> signInConnectyCube(BuildContext context) async {
-    final snapshot = await _appointmentModel.doctorReference.get();
-    doctorInfoModel = DoctorInfoModel.fromJson(snapshot.id, snapshot.data());
+    final snapshot = await _appointmentModel.userReference.get();
+    userProfileModel = UserProfileModel.fromJson(snapshot.id, snapshot.data());
     notifyListeners();
 
     CubeUser cubeUser = CubeUser(
-        id: _userData.userProfileModel.referenceConnectyCubeID,
-        login: _userData.userProfileModel.userUID,
-        email: _userData.userProfileModel.email,
-        fullName: "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
-        password: _userData.userProfileModel.email);
+        id: _userData.doctorInfoModel.referenceConnectyCubeID,
+        login: _userData.doctorInfoModel.doctorId,
+        email: _userData.doctorInfoModel.email,
+        fullName: "${_userData.doctorInfoModel.firstName} ${_userData.doctorInfoModel.lastName}",
+        password: _userData.doctorInfoModel.email);
     _connectCubeChat(context, cubeUser);
   }
 
@@ -47,7 +47,7 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
 
   void _createOneByOneChatDialog() {
     CubeDialog newDialog = CubeDialog(CubeDialogType.PRIVATE,
-        occupantsIds: [_userData.userProfileModel.referenceConnectyCubeID, doctorInfoModel.referenceConnectyCubeID]);
+        occupantsIds: [_userData.doctorInfoModel.referenceConnectyCubeID, userProfileModel.referenceConnectyCubeID]);
     createDialog(newDialog).then((createdDialog) {
       _cubeDialog = createdDialog;
     }).catchError((error) {
@@ -68,8 +68,8 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
   void _getDialogFromUserIdAndDoctorId() {
     final filterList = _list
         .where((element) =>
-            element.occupantsIds.contains(_userData.userProfileModel.referenceConnectyCubeID) &&
-            element.occupantsIds.contains(doctorInfoModel.referenceConnectyCubeID) &&
+            element.occupantsIds.contains(_userData.doctorInfoModel.referenceConnectyCubeID) &&
+            element.occupantsIds.contains(userProfileModel.referenceConnectyCubeID) &&
             element.occupantsCount == 2)
         .toList();
     if (filterList?.isEmpty ?? true) {
@@ -84,16 +84,14 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
     CubeMessage message = CubeMessage();
     message.body = text;
     message.dateSent = DateTime.now().millisecondsSinceEpoch;
-    message.senderId = _userData.userProfileModel.referenceConnectyCubeID;
+    message.senderId = _userData.doctorInfoModel.referenceConnectyCubeID;
     message.markable = true;
     message.saveToHistory = true;
 
     _cubeDialog.sendMessage(message).then((cubeMessage) {
       chatList.insert(0, cubeMessage);
       notifyListeners();
-    }).catchError((error) {
-
-    });
+    }).catchError((error) {});
   }
 
   void _getChatHistory() {

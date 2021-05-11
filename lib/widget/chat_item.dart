@@ -34,7 +34,26 @@ class ChatItem extends StatelessWidget {
         ],
       );
     } else {
-      return Container();
+      return Row(
+        children: [
+          Container(
+            // width: 60 * MediaQuery.of(context).size.width / 100,
+            constraints: BoxConstraints(maxWidth: 60 * MediaQuery.of(context).size.width / 100),
+            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                border: Border.all(color: BlossomTheme.darkPink),
+                borderRadius: BorderRadius.all(Radius.circular(6)),
+                color: BlossomTheme.white),
+            child: BlossomText(
+              _cubeMessage.body ?? "",
+              size: 14,
+              color: BlossomTheme.darkPink,
+            ),
+          ),
+          Spacer(),
+        ],
+      );
     }
   }
 }

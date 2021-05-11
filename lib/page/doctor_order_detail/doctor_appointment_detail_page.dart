@@ -137,6 +137,10 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
     });
   }
 
+  void _goToChatPage(BuildContext context, AppointmentModel appointmentModel) {
+    Navigator.push(context, RouteManager.routeDoctorChat(appointmentModel));
+  }
+
   void _showCallTypeDialog(BuildContext context, String url) {
     showDialog(
       context: context,
@@ -144,7 +148,7 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
         return CallTypeDialog((type) {
           Navigator.pop(context);
           if (type == 0) {
-
+            _goToChatPage(context, widget._appointmentModel);
           } else if (type == 1) {
 
           } else {

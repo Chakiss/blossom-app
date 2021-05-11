@@ -2,7 +2,7 @@ class UserProfileModel {
   String userUID;
   String acneCaredNoted;
   bool acneIsCared;
-  List<int> acneTypes;
+  List<String> acneTypes;
   DateTime birthDate;
   DateTime createdAt;
   List<String> drugAllergyItems;
@@ -41,10 +41,11 @@ class UserProfileModel {
       userUID: userId,
       acneCaredNoted: json["acneCaredNoted"],
       acneIsCared: json["acneIsCared"],
-      acneTypes: json["acneTypes"].cast<int>(),
+      acneTypes: (json["acneTypes"] as List).map((e) => e as String).toList(),
       birthDate: json["birthDate"].toDate(),
       createdAt: json["createdAt"].toDate(),
-      drugAllergyItems: json["drugAllergyItems"].cast<String>(),
+      // drugAllergyItems: json["drugAllergyItems"].cast<String>(),
+      drugAllergyItems: (json["drugAllergyItems"] as List).map((e) => e as String).toList(),
       drugAllergyStatus: json["drugAllergyStatus"],
       email: json["email"],
       firstName: json["firstName"],
