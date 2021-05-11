@@ -42,7 +42,12 @@ class MainProvider extends BaseProvider with ChangeNotifier {
   }
 
   void connectConnectyCube(BuildContext context) {
-    _signInConnectyCube(context);
+    try {
+      CubeChatConnection.instance.logout();
+      _signInConnectyCube(context);
+    } catch (e) {
+      _signInConnectyCube(context);
+    }
   }
 
   void _signInConnectyCube(BuildContext context) {
