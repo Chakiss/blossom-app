@@ -15,7 +15,7 @@ class GetDoctorProfileUseCase extends BaseAsyncUseCase<String, DoctorInfoModel> 
   Future<Result<DoctorInfoModel>> execute(String parameter) async {
     try {
       final snapshot = await _firestore.collection("doctors").doc(parameter).get();
-      if (snapshot.data() != null) {
+      if (snapshot.exists) {
         final result = DoctorInfoModel(
             createdAt: snapshot.data()["createdAt"].toDate(),
             displayName: snapshot.data()["displayName"],

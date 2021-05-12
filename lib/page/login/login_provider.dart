@@ -56,16 +56,31 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
     final result = await _loginFacebookUseCase.execute("");
     result.whenWithResult((mapResult) async {
       final userCredential = mapResult["userCredential"] as UserCredential;
-      final profileResult = await _getUserProfileUseCase.execute(userCredential.user.uid);
-      Navigator.pop(context);
-      profileResult.whenWithResult((data) {
-        if (data == null) {
-          _goToFacebookUpdateProfile(context, mapResult);
+      userCredential.user.getIdTokenResult().then((idTokenResult) async {
+        if (idTokenResult.claims["role"] != "patient") {
+          final getDoctorProfileResult = await _getDoctorProfileUseCase.execute(userCredential.user.uid);
+          Navigator.pop(context);
+          getDoctorProfileResult.whenWithResult((userProfile) {
+            _goToDoctorMainPage(context);
+          }, (map) async {
+            await _firebaseAuth.signOut();
+            errorHandle.proceed(context, map);
+          });
         } else {
-          _goToMainPage(context);
+          final profileResult = await _getUserProfileUseCase.execute(userCredential.user.uid);
+          Navigator.pop(context);
+          profileResult.whenWithResult((data) {
+            if (data == null) {
+              _goToFacebookUpdateProfile(context, mapResult);
+            } else {
+              _goToMainPage(context);
+            }
+          }, (map) {
+            errorHandle.proceed(context, map);
+          });
         }
-      }, (map) {
-        errorHandle.proceed(context, map);
+      }).catchError((error) async {
+        errorHandle.proceed(context, error);
       });
     }, (map) {
       Navigator.pop(context);
