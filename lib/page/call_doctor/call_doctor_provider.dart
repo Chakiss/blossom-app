@@ -159,8 +159,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     if (callClient != null) {
       callClient.destroy();
     }
-    Navigator.pop(context);
-    Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel, _appointmentModel));
+    Navigator.pushReplacement(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel, _appointmentModel));
   }
 
   Future<void> endCall(BuildContext context) async {
@@ -176,9 +175,10 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     if (callClient != null) {
       callClient.destroy();
     }
-    Navigator.pop(context);
     if (doctorInfoModel != null) {
-      Navigator.push(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel, _appointmentModel));
+      Navigator.pushReplacement(context, RouteManager.routeCustomerReviewDoctor(doctorInfoModel, _appointmentModel));
+    } else {
+      Navigator.pop(context);
     }
   }
 

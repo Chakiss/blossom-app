@@ -103,7 +103,6 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     videoViewSelf = null;
     videoView = null;
     notifyListeners();
-    Navigator.pop(context);
     _goToDoctorDiagnosePage(context);
   }
 
@@ -117,7 +116,6 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
     if (callSession != null) {
       callSession.hungUp();
     }
-    Navigator.pop(context);
     _goToDoctorDiagnosePage(context);
   }
 
@@ -148,7 +146,9 @@ class CallCustomerProvider extends BaseProvider with ChangeNotifier {
   void _goToDoctorDiagnosePage(BuildContext context) {
     if (_appointmentId?.isNotEmpty ?? false) {
       print("appointmentId: $_appointmentId");
-      Navigator.push(context, RouteManager.routeDoctorDiagnose(userConnectyCudeId, _appointmentId));
+      Navigator.pushReplacement(context, RouteManager.routeDoctorDiagnose(userConnectyCudeId, _appointmentId));
+    } else {
+      Navigator.pop(context);
     }
   }
 }

@@ -83,23 +83,11 @@ class _HistoryPageState extends State<HistoryPage> {
         itemBuilder: (BuildContext context, int index) {
           return CustomerAppointmentItem(appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat,
               _timeFormatParse, Injector.appInstance.get(), Injector.appInstance.get(), (appointment) {
-                _showCallTypeDialog(context, appointment);
+            _showCallTypeDialog(context, appointment);
           });
         },
       );
     }
-  }
-
-  void _goToCallDoctorPage(BuildContext context, AppointmentModel appointment) {
-    // final timeNow = DateTime.now().millisecondsSinceEpoch;
-    // final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
-    // final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
-    // if (timeNow >= startTime && timeNow <= endTime) {
-    //   Navigator.push(context, RouteManager.routeCallDoctor(appointment));
-    // } else {
-    //   _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
-    // }
-    Navigator.push(context, RouteManager.routeCallDoctor(appointment));
   }
 
   Widget _showShipnityOrderList(BuildContext context, List<ShipnityOrderModel> orderList) {
@@ -143,6 +131,30 @@ class _HistoryPageState extends State<HistoryPage> {
     Navigator.push(context, RouteManager.routeChat(appointmentModel));
   }
 
+  void _goToVoiceCallDoctorPage(BuildContext context, AppointmentModel appointment) {
+    // final timeNow = DateTime.now().millisecondsSinceEpoch;
+    // final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    // final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    // if (timeNow >= startTime && timeNow <= endTime) {
+    //   Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+    // } else {
+    //   _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
+    // }
+    Navigator.push(context, RouteManager.routeVoiceCallDoctor(appointment));
+  }
+
+  void _goToCallDoctorPage(BuildContext context, AppointmentModel appointment) {
+    // final timeNow = DateTime.now().millisecondsSinceEpoch;
+    // final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    // final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    // if (timeNow >= startTime && timeNow <= endTime) {
+    //   Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+    // } else {
+    //   _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
+    // }
+    Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+  }
+
   void _showCallTypeDialog(BuildContext context, AppointmentModel appointmentModel) {
     showDialog(
       context: context,
@@ -152,7 +164,7 @@ class _HistoryPageState extends State<HistoryPage> {
           if (type == 0) {
             _goToChatPage(context, appointmentModel);
           } else if (type == 1) {
-
+            _goToVoiceCallDoctorPage(context, appointmentModel);
           } else {
             _goToCallDoctorPage(context, appointmentModel);
           }

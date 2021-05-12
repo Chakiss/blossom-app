@@ -1,6 +1,7 @@
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
+import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -15,6 +16,7 @@ class ProfileProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
+    CubeChatConnection.instance.destroy();
     goToSplashScreen(context);
   }
 

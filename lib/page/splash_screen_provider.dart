@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
@@ -9,6 +11,7 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
   FirebaseAuth _firebaseAuth;
   GetUserProfileUseCase _getUserProfileUseCase;
   GetDoctorProfileUseCase _getDoctorProfileUseCase;
+  Timer _timer;
 
   SplashScreenProvider(this._firebaseAuth, this._getUserProfileUseCase, this._getDoctorProfileUseCase);
 
@@ -48,20 +51,26 @@ class SplashScreenProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> _goToLoginPage(BuildContext context) async {
-    await Future.delayed(const Duration(milliseconds: 1000), () {
+    _timer = Timer(const Duration(milliseconds: 1000), () {
       Navigator.pushReplacement(context, RouteManager.routeLogin());
     });
   }
 
   Future<void> _goToMainPage(BuildContext context) async {
-    await Future.delayed(const Duration(milliseconds: 1000), () {
+    _timer = new Timer(const Duration(milliseconds: 1000), () {
       Navigator.pushReplacement(context, RouteManager.routeMain());
     });
   }
 
   Future<void> _goToDoctorMainPage(BuildContext context) async {
-    Future.delayed(const Duration(milliseconds: 1000), () {
+    _timer = new Timer(const Duration(milliseconds: 1000), () {
       Navigator.pushReplacement(context, RouteManager.routeDoctorMain());
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
   }
 }

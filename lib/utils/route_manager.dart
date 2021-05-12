@@ -70,6 +70,8 @@ import 'package:blossom_clinic/page/register_second/register_second_provider.dar
 import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:blossom_clinic/page/splash_screen_page.dart';
 import 'package:blossom_clinic/page/splash_screen_provider.dart';
+import 'package:blossom_clinic/page/voice_call_doctor/voice_call_doctor_page.dart';
+import 'package:blossom_clinic/page/voice_call_doctor/voice_call_doctor_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -283,6 +285,19 @@ class RouteManager {
           child: CustomerHistoryDetailPage(appointmentModel, name, appointmentTime),
         );
       });
+
+  static Route routeVoiceCallDoctor(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return VoiceCallDoctorProvider(Injector.appInstance.get(), appointmentModel);
+          },
+        )
+      ],
+      child: VoiceCallDoctorPage(appointmentModel),
+    );
+  });
 
   static Route routeCallDoctor(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
