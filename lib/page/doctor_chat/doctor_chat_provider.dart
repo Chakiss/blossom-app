@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/fcm/fcm_manager.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
@@ -89,6 +90,12 @@ class DoctorChatProvider extends BaseProvider with ChangeNotifier {
     message.saveToHistory = true;
 
     _cubeDialog.sendMessage(message).then((cubeMessage) {
+      FCMManager.sendPushNotificationFromChat(
+          _cubeDialog.dialogId,
+          "${_userData.doctorInfoModel?.firstName ?? ""} : $text",
+          _userData.doctorInfoModel.referenceConnectyCubeID,
+          userProfileModel.referenceConnectyCubeID,
+          "${_userData.doctorInfoModel?.firstName ?? ""} ${_userData.doctorInfoModel?.lastName ?? ""}");
       chatList.insert(0, cubeMessage);
       notifyListeners();
     }).catchError((error) {});

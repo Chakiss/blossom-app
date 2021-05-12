@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/page/doctor_history/doctor_history_page.dart';
 import 'package:blossom_clinic/page/doctor_home/doctor_home_page.dart';
@@ -7,6 +9,9 @@ import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../../main.dart';
 
 class DoctorMainProvider extends BaseProvider with ChangeNotifier {
   Widget page;
@@ -69,6 +74,8 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
   void _signIn(BuildContext context, CubeUser cubeUser) {
     signIn(cubeUser).then((cubeUser) {
       print(cubeUser);
+      subscribeNotification();
+      _initFlutterNotification(context);
     }).catchError((error) {
       print(error);
     });
@@ -89,5 +96,42 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
 
   void _goToIncomingCallPage(BuildContext context, P2PSession incomingCallSession) {
     Navigator.push(context, RouteManager.routeDoctorIncomingCall(incomingCallSession));
+  }
+
+  void _initFlutterNotification(BuildContext context) {
+    var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
+
+    var initializationSettingsIOS =
+        IOSInitializationSettings(onDidReceiveLocalNotification: (id, title, body, payload) {
+      return;
+    });
+    var initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (payload) {
+      // when user tap on notification.
+      Map<String, dynamic> json = Map<String, dynamic>.from(jsonDecode(payload));
+      print(json);
+      String type = json["notificationType"] as String;
+      if (type != null) {
+        switch (type) {
+          case "chat":
+            final String dialogId = json["dialogId"] as String;
+            final String fullName = json["fullName"] as String;
+            int senderId;
+            if (json["senderId"] is String) {
+              senderId = int.parse(json["senderId"] as String);
+            } else if (json["senderId"] is int)
+            senderId = json["senderId"] as int;
+            Navigator.push(context, RouteManager.routeChatFromNotification(dialogId, fullName, senderId));
+            break;
+          case "voice":
+            break;
+          case "video":
+            break;
+        }
+      }
+      return;
+    });
   }
 }

@@ -12,6 +12,8 @@ import 'package:blossom_clinic/page/call_doctor/call_doctor_page.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_provider.dart';
 import 'package:blossom_clinic/page/chat/chat_page.dart';
 import 'package:blossom_clinic/page/chat/chat_provider.dart';
+import 'package:blossom_clinic/page/chat_from_notification/chat_from_notification_page.dart';
+import 'package:blossom_clinic/page/chat_from_notification/chat_from_notification_provider.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/customer_history_detail/customer_history_detail_page.dart';
@@ -473,8 +475,7 @@ class RouteManager {
         );
       });
 
-  static Route routeChat(AppointmentModel appointmentModel) =>
-      MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeChat(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -487,8 +488,7 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorChat(AppointmentModel appointmentModel) =>
-      MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorChat(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -498,6 +498,20 @@ class RouteManager {
             )
           ],
           child: DoctorChatPage(),
+        );
+      });
+
+  static Route routeChatFromNotification(String dialogId, String fullName, int senderId) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return ChatFromNotificationProvider(dialogId, fullName, senderId, Injector.appInstance.get());
+              },
+            )
+          ],
+          child: ChatFromNotificationPage(fullName),
         );
       });
 }

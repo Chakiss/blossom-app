@@ -1,3 +1,4 @@
+
 import 'package:blossom_clinic/page/splash_screen_page.dart';
 import 'package:blossom_clinic/page/splash_screen_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,6 @@ class BlossomClinicApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         accentColor: BlossomTheme.white,
       ),
