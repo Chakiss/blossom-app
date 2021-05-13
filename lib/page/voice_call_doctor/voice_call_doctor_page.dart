@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'voice_call_doctor_provider.dart';
 
 class VoiceCallDoctorPage extends StatefulWidget {
-
   AppointmentModel _appointmentModel;
 
   VoiceCallDoctorPage(this._appointmentModel);
@@ -132,12 +131,16 @@ class _VoiceCallDoctorPageState extends State<VoiceCallDoctorPage> {
                             height: 60,
                           )),
                       Spacer(),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       _provider.setVideoEnableDisable();
-                      //     },
-                      //     behavior: HitTestBehavior.opaque,
-                      //     child: Image.asset(value.isVideoEnable ? "assets/ic_camera_unmute.png" : "assets/ic_camera_mute.png", width: 60, height: 60,)),
+                      GestureDetector(
+                          onTap: () {
+                            _provider.setSpeakerEnableDisable();
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: Image.asset(
+                            value.isSpeakerEnable ? "assets/ic_volumn_unmute.png" : "assets/ic_volumn_mute.png",
+                            width: 60,
+                            height: 60,
+                          )),
                     ],
                   ),
                 ),

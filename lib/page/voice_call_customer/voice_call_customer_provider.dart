@@ -16,7 +16,8 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
   RTCVideoRenderer streamRenderSelf;
   String dataRef;
   bool isMuteAudio = false;
-  bool isVideoEnable = true;
+  bool isSpeakerEnable = true;
+  bool isCanSetSpeaker = false;
 
   UserData _userData;
   AppointmentModel _appointmentModel;
@@ -85,6 +86,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
       // create video renderer and set media stream to it
       logger.d("Prew, onRemoteStreamReceived");
       callSession.enableSpeakerphone(true);
+      isCanSetSpeaker = true;
       streamRender = RTCVideoRenderer();
       await streamRender.initialize();
       streamRender.srcObject = mediaStream;
@@ -205,15 +207,17 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     }
   }
 
-  void setVideoEnableDisable() {
+  void setSpeakerEnableDisable() {
     if (callSession != null) {
-      if (isVideoEnable) {
-        isVideoEnable = false;
-      } else {
-        isVideoEnable = true;
+      if (isCanSetSpeaker) {
+        if (isSpeakerEnable) {
+          isSpeakerEnable = false;
+        } else {
+          isSpeakerEnable = true;
+        }
+        callSession.enableSpeakerphone(isSpeakerEnable);
+        notifyListeners();
       }
-      callSession.setVideoEnabled(isVideoEnable);
-      notifyListeners();
     }
   }
 

@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'voice_call_customer_provider.dart';
 
 class VoiceCallCustomerPage extends StatefulWidget {
-
   AppointmentModel _appointmentModel;
 
   VoiceCallCustomerPage(this._appointmentModel);
@@ -24,8 +23,8 @@ class _VoiceCallCustomerPageState extends State<VoiceCallCustomerPage> {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.signInConnectyCube(context);
-    return Container(child:
-        Consumer<VoiceCallCustomerProvider>(builder: (BuildContext context, VoiceCallCustomerProvider value, Widget child) {
+    return Container(child: Consumer<VoiceCallCustomerProvider>(
+        builder: (BuildContext context, VoiceCallCustomerProvider value, Widget child) {
       return Stack(
         children: [
           Scaffold(
@@ -133,12 +132,16 @@ class _VoiceCallCustomerPageState extends State<VoiceCallCustomerPage> {
                             height: 60,
                           )),
                       Spacer(),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       _provider.setVideoEnableDisable();
-                      //     },
-                      //     behavior: HitTestBehavior.opaque,
-                      //     child: Image.asset(value.isVideoEnable ? "assets/ic_camera_unmute.png" : "assets/ic_camera_mute.png", width: 60, height: 60,)),
+                      GestureDetector(
+                          onTap: () {
+                            _provider.setSpeakerEnableDisable();
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: Image.asset(
+                            value.isSpeakerEnable ? "assets/ic_volumn_unmute.png" : "assets/ic_volumn_mute.png",
+                            width: 60,
+                            height: 60,
+                          )),
                     ],
                   ),
                 ),
