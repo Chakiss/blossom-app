@@ -24,6 +24,8 @@ import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incomin
 import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_provider.dart';
 import 'package:blossom_clinic/page/customer_receive_call_doctor/customer_receive_call_doctor_page.dart';
 import 'package:blossom_clinic/page/customer_receive_call_doctor/customer_receive_call_doctor_provider.dart';
+import 'package:blossom_clinic/page/customer_receive_voice_call_doctor/customer_receive_voice_call_doctor_page.dart';
+import 'package:blossom_clinic/page/customer_receive_voice_call_doctor/customer_receive_voice_call_doctor_provider.dart';
 import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_page.dart';
 import 'package:blossom_clinic/page/customer_review_doctor/customer_review_doctor_provider.dart';
 import 'package:blossom_clinic/page/customer_treat_history/customer_treat_history_page.dart';
@@ -350,7 +352,7 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CustomerIncomingCallProvider();
+                return CustomerIncomingCallProvider(Injector.appInstance.get());
               },
             )
           ],
@@ -358,7 +360,21 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerReceiveCallDoctor(P2PSession callSession) =>
+  static Route routeCustomerReceiveVoiceCallDoctor(P2PSession callSession, DoctorInfoModel doctorInfoModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return CustomerReceiveVoiceCallDoctorProvider();
+              },
+            )
+          ],
+          child: CustomerReceiveVoiceCallDoctorPage(callSession, doctorInfoModel),
+        );
+      });
+
+  static Route routeCustomerReceiveCallDoctor(P2PSession callSession, DoctorInfoModel doctorInfoModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -368,7 +384,7 @@ class RouteManager {
               },
             )
           ],
-          child: CustomerReceiveCallDoctorPage(callSession),
+          child: CustomerReceiveCallDoctorPage(callSession, doctorInfoModel),
         );
       });
 

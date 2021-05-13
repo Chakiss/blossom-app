@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/base/base_provider.dart';
-import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
@@ -174,5 +173,11 @@ class CallCustomerVoiceProvider extends BaseProvider with ChangeNotifier {
     } else {
       Navigator.pop(context);
     }
+  }
+
+  @override
+  Future<void> dispose() async {
+    super.dispose();
+    await _stopWatchTimer.dispose();
   }
 }

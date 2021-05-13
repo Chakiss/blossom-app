@@ -1,33 +1,38 @@
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
+import 'package:blossom_clinic/widget/blossom_circle_avatar.dart';
+import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'customer_receive_call_doctor_provider.dart';
+import 'customer_receive_voice_call_doctor_provider.dart';
 
-class CustomerReceiveCallDoctorPage extends StatelessWidget {
+class CustomerReceiveVoiceCallDoctorPage extends StatelessWidget {
 
   P2PSession _callSession;
   DoctorInfoModel _doctorInfoModel;
-  CustomerReceiveCallDoctorProvider _provider;
+  CustomerReceiveVoiceCallDoctorProvider _provider;
 
-  CustomerReceiveCallDoctorPage(this._callSession, this._doctorInfoModel);
+  CustomerReceiveVoiceCallDoctorPage(this._callSession, this._doctorInfoModel);
 
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.initCallSession(context, _callSession);
-    return Consumer<CustomerReceiveCallDoctorProvider>(
-        builder: (BuildContext context, CustomerReceiveCallDoctorProvider value, Widget child) {
+    return Consumer<CustomerReceiveVoiceCallDoctorProvider>(
+        builder: (BuildContext context, CustomerReceiveVoiceCallDoctorProvider value, Widget child) {
           return Stack(
             children: [
               Scaffold(
+                backgroundColor: Colors.black,
                 body: SafeArea(
                   child: Container(
                     child: Stack(
                       children: [
-                        Container(child: value.videoView == null ? Container() : value.videoView),
+                        Container(
+                          child: value.videoView == null ? Container() : value.videoView,
+                        ),
                         Align(
                           alignment: Alignment.topRight,
                           child: Row(
@@ -40,13 +45,44 @@ class CustomerReceiveCallDoctorPage extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 10, right: 10),
                                 child: AspectRatio(
                                   aspectRatio: 3 / 4,
-                                  child: Container(
-                                      child: value.videoViewSelf == null ? Container() : value.videoViewSelf),
+                                  child: Container(child: value.videoViewSelf == null ? Container() : value.videoViewSelf),
                                 ),
                               ),
                             ],
                           ),
                         ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              BlossomCircleAvatar(
+                                40,
+                                fileStorePath: _doctorInfoModel.displayPhoto,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              BlossomText(
+                                "${_doctorInfoModel?.firstName ?? ""} ${_doctorInfoModel?.lastName ?? ""}",
+                                size: 20,
+                                color: BlossomTheme.white,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              BlossomText(
+                                "${value.minute?.padLeft(2, '0') ?? "00"} : ${value.second?.padLeft(2, '0') ?? "00"}",
+                                size: 20,
+                                color: BlossomTheme.white,
+                              ),
+                              SizedBox(
+                                height: 30 * MediaQuery.of(context).size.height / 100,
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -69,8 +105,8 @@ class CustomerReceiveCallDoctorPage extends StatelessWidget {
                               color: Colors.white,
                               size: 30,
                             ),
-                            onPressed: () async {
-                              await _provider.endCall(context);
+                            onPressed: () {
+                              _provider.endCall(context);
                             }),
                       )),
                 ),
@@ -86,14 +122,18 @@ class CustomerReceiveCallDoctorPage extends StatelessWidget {
                                 _provider.setMuteAudio();
                               },
                               behavior: HitTestBehavior.opaque,
-                              child: Image.asset(_provider.isMuteAudio ? "assets/ic_mic_mute.png" : "assets/ic_mic_unmute.png", width: 60, height: 60,)),
+                              child: Image.asset(
+                                value.isMuteAudio ? "assets/ic_mic_mute.png" : "assets/ic_mic_unmute.png",
+                                width: 60,
+                                height: 60,
+                              )),
                           Spacer(),
-                          GestureDetector(
-                              onTap: () {
-                                _provider.setVideoEnableDisable();
-                              },
-                              behavior: HitTestBehavior.opaque,
-                              child: Image.asset(_provider.isVideoEnable ? "assets/ic_camera_unmute.png" : "assets/ic_camera_mute.png", width: 60, height: 60,)),
+                          // GestureDetector(
+                          //     onTap: () {
+                          //       _provider.setVideoEnableDisable();
+                          //     },
+                          //     behavior: HitTestBehavior.opaque,
+                          //     child: Image.asset(value.isVideoEnable ? "assets/ic_camera_unmute.png" : "assets/ic_camera_mute.png", width: 60, height: 60,)),
                         ],
                       ),
                     ),
