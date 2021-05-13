@@ -49,7 +49,7 @@ class _CustomerAppointmentItemState extends State<CustomerAppointmentItem> {
               children: [
                 BlossomCircleAvatar(
                   30,
-                  imageKey: widget._appointmentModel.doctorReference.id,
+                  imageKey: "users/${widget._appointmentModel.doctorReference.id}/avatar.jpg",
                 ),
                 Expanded(
                     child: Container(

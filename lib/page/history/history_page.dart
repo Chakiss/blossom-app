@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_screen.dart';
+import 'package:blossom_clinic/base/base_screen_second.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/shipnity_order_model.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
@@ -33,39 +34,33 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.getAppointmentList(context);
-    return BaseScreen(
-      child: Container(
-        child: Column(
-          children: [
-            Toolbar(
-              title: "รายการ",
-            ),
-            SizedBox(
-              height: 26,
-            ),
-            Center(
-                child: HistorySegmentControl(
-              (index) {
-                _provider.setSelectedIndex(context, index);
+    return BaseScreenSecond(
+      false,
+      title: "รายการ",
+      child: Column(
+        children: [
+          Center(
+              child: HistorySegmentControl(
+            (index) {
+              _provider.setSelectedIndex(context, index);
+            },
+            selectedPosition: _provider.selectedIndex,
+          )),
+          SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: Consumer<HistoryProvider>(
+              builder: (BuildContext context, HistoryProvider value, Widget child) {
+                if (value.selectedIndex == 0) {
+                  return _showAppointmentList(context, value.appointmentList);
+                } else {
+                  return _showShipnityOrderList(context, value.orderList);
+                }
               },
-              selectedPosition: _provider.selectedIndex,
-            )),
-            SizedBox(
-              height: 20,
             ),
-            Expanded(
-              child: Consumer<HistoryProvider>(
-                builder: (BuildContext context, HistoryProvider value, Widget child) {
-                  if (value.selectedIndex == 0) {
-                    return _showAppointmentList(context, value.appointmentList);
-                  } else {
-                    return _showShipnityOrderList(context, value.orderList);
-                  }
-                },
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -78,6 +73,7 @@ class _HistoryPageState extends State<HistoryPage> {
       ));
     } else {
       return ListView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: appointmentList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
@@ -98,6 +94,7 @@ class _HistoryPageState extends State<HistoryPage> {
       ));
     } else {
       return ListView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: orderList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {

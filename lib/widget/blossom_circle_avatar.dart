@@ -38,13 +38,16 @@ class _BlossomCircleAvatarState extends State<BlossomCircleAvatar> {
     return CircleAvatar(
       radius: widget._radius,
       backgroundColor: Colors.white,
-      backgroundImage: FileImage(File(imagePath)),
+      backgroundImage: imagePath?.isEmpty ?? true ? AssetImage("assets/profile_place_holder.png") : FileImage(File(imagePath)),
     );
   }
 
   String _getLocalUrlPath() {
-    final map = _userData.getMapFilePath().entries.firstWhere((element) => element.key.contains(widget.imageKey));
-    return map.value;
+    if (_userData.getMapFilePath().containsKey(widget.imageKey)) {
+      return _userData.getMapFilePath()[widget.imageKey];
+    } else {
+      return "";
+    }
   }
 
   Future<void> _downloadFileFromCloudStorage() async {
