@@ -70,6 +70,8 @@ import 'package:blossom_clinic/page/register_second/register_second_provider.dar
 import 'package:blossom_clinic/page/service/service_provider.dart';
 import 'package:blossom_clinic/page/splash_screen_page.dart';
 import 'package:blossom_clinic/page/splash_screen_provider.dart';
+import 'package:blossom_clinic/page/voice_call_customer/voice_call_customer_page.dart';
+import 'package:blossom_clinic/page/voice_call_customer/voice_call_customer_provider.dart';
 import 'package:blossom_clinic/page/voice_call_doctor/voice_call_doctor_page.dart';
 import 'package:blossom_clinic/page/voice_call_doctor/voice_call_doctor_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -529,4 +531,17 @@ class RouteManager {
           child: ChatFromNotificationPage(fullName),
         );
       });
+
+  static Route routeVoiceCallCustomer(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return VoiceCallCustomerProvider(Injector.appInstance.get(), appointmentModel);
+          },
+        )
+      ],
+      child: VoiceCallCustomerPage(appointmentModel),
+    );
+  });
 }

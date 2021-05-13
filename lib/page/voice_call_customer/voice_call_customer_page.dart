@@ -5,27 +5,27 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'voice_call_doctor_provider.dart';
+import 'voice_call_customer_provider.dart';
 
-class VoiceCallDoctorPage extends StatefulWidget {
+class VoiceCallCustomerPage extends StatefulWidget {
 
   AppointmentModel _appointmentModel;
 
-  VoiceCallDoctorPage(this._appointmentModel);
+  VoiceCallCustomerPage(this._appointmentModel);
 
   @override
-  _VoiceCallDoctorPageState createState() => _VoiceCallDoctorPageState();
+  _VoiceCallCustomerPageState createState() => _VoiceCallCustomerPageState();
 }
 
-class _VoiceCallDoctorPageState extends State<VoiceCallDoctorPage> {
-  VoiceCallDoctorProvider _provider;
+class _VoiceCallCustomerPageState extends State<VoiceCallCustomerPage> {
+  VoiceCallCustomerProvider _provider;
 
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.signInConnectyCube(context);
     return Container(child:
-        Consumer<VoiceCallDoctorProvider>(builder: (BuildContext context, VoiceCallDoctorProvider value, Widget child) {
+        Consumer<VoiceCallCustomerProvider>(builder: (BuildContext context, VoiceCallCustomerProvider value, Widget child) {
       return Stack(
         children: [
           Scaffold(
@@ -61,15 +61,16 @@ class _VoiceCallDoctorPageState extends State<VoiceCallDoctorPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          BlossomCircleAvatar(
-                            40 * MediaQuery.of(context).size.width / 200,
-                            imageKey: widget._appointmentModel.doctorReference.id,
+                          CircleAvatar(
+                            radius: 40 * MediaQuery.of(context).size.width / 200,
+                            backgroundColor: BlossomTheme.white,
+                            backgroundImage: AssetImage("assets/profile_place_holder.png"),
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           BlossomText(
-                            value.doctorFullName ?? "",
+                            value.customerFullName ?? "",
                             size: 20,
                             color: BlossomTheme.white,
                           ),

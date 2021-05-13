@@ -150,7 +150,7 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
           if (type == 0) {
             _goToChatPage(context, widget._appointmentModel);
           } else if (type == 1) {
-
+            Navigator.push(context, RouteManager.routeVoiceCallCustomer(widget._appointmentModel));
           } else {
             Navigator.push(context, RouteManager.routeDoctorCallCustomer(widget._appointmentModel));
           }
