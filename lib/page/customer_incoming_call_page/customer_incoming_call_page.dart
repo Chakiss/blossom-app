@@ -109,7 +109,11 @@ class _CustomerIncomingCallPageState extends State<CustomerIncomingCallPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(context, RouteManager.routeCustomerReceiveCallDoctor(widget.callSession));
+                      if (widget.callSession.callType == CallType.AUDIO_CALL) {
+
+                      } else {
+                        Navigator.pushReplacement(context, RouteManager.routeCustomerReceiveCallDoctor(widget.callSession));
+                      }
                     },
                     child: Image.asset(
                       "assets/animation_calling.gif",

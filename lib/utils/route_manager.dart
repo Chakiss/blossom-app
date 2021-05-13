@@ -8,6 +8,8 @@ import 'package:blossom_clinic/page/add_customer_information/add_customer_inform
 import 'package:blossom_clinic/page/add_customer_information/add_customer_information_provider.dart';
 import 'package:blossom_clinic/page/call_customer/call_customer_page.dart';
 import 'package:blossom_clinic/page/call_customer/call_customer_provider.dart';
+import 'package:blossom_clinic/page/call_customer_voice/call_customer_voice_page.dart';
+import 'package:blossom_clinic/page/call_customer_voice/call_customer_voice_provider.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_page.dart';
 import 'package:blossom_clinic/page/call_doctor/call_doctor_provider.dart';
 import 'package:blossom_clinic/page/chat/chat_page.dart';
@@ -457,7 +459,7 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return IncomingCallProvider();
+                return IncomingCallProvider(Injector.appInstance.get());
               },
             )
           ],
@@ -465,7 +467,7 @@ class RouteManager {
         );
       });
 
-  static Route routeCallCustomer(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCallCustomer(P2PSession callSession, UserProfileModel userProfileModel) => MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -474,9 +476,22 @@ class RouteManager {
               },
             )
           ],
-          child: CallCustomerPage(callSession),
+          child: CallCustomerPage(callSession, userProfileModel),
         );
       });
+
+  static Route routeCallCustomerVoice(P2PSession callSession, UserProfileModel userProfileModel) => MaterialPageRoute(builder: (BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) {
+            return CallCustomerVoiceProvider();
+          },
+        )
+      ],
+      child: CallCustomerVoicePage(callSession, userProfileModel),
+    );
+  });
 
   static Route routeDoctorCallCustomer(AppointmentModel appointmentModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
