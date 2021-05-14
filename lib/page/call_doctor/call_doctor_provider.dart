@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/fcm/fcm_manager.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/doctor_info_model.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
@@ -129,6 +130,11 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
     };
 
     // sendPushNotification(doctorConnectyCubeId, appointmentId);
+    FCMManager.sendPushNotificationFromCall(
+        "${_userData.userProfileModel?.firstName ?? ""} ${_userData.userProfileModel?.lastName ?? ""} : กำลังโทรหาคุณ}",
+        _userData.userProfileModel.referenceConnectyCubeID,
+        doctorInfoModel.referenceConnectyCubeID,
+        "${_userData.userProfileModel?.firstName ?? ""} ${_userData.userProfileModel?.lastName ?? ""}");
     callSession.startCall({"appointmentId": appointmentId});
   }
 

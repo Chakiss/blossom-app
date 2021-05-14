@@ -125,6 +125,7 @@ class CustomerReceiveVoiceCallDoctorProvider extends BaseProvider with ChangeNot
     videoViewSelf = null;
     videoView = null;
     notifyListeners();
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     Navigator.pop(context);
   }
 
@@ -138,6 +139,7 @@ class CustomerReceiveVoiceCallDoctorProvider extends BaseProvider with ChangeNot
     if (callSession != null) {
       callSession.hungUp();
     }
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     Navigator.pop(context);
   }
 

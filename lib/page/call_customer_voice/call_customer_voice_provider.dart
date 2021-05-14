@@ -128,6 +128,7 @@ class CallCustomerVoiceProvider extends BaseProvider with ChangeNotifier {
     videoViewSelf = null;
     videoView = null;
     notifyListeners();
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     _goToDoctorDiagnosePage(context);
   }
 
@@ -141,6 +142,7 @@ class CallCustomerVoiceProvider extends BaseProvider with ChangeNotifier {
     if (callSession != null) {
       callSession.hungUp();
     }
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     _goToDoctorDiagnosePage(context);
   }
 

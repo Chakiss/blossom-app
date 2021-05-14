@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/fcm/fcm_manager.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
@@ -156,6 +157,11 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     };
 
     // sendPushNotification(doctorConnectyCubeId, appointmentId);
+    FCMManager.sendPushNotificationFromCall(
+        "${_userData.doctorInfoModel?.firstName ?? ""} ${_userData.doctorInfoModel?.lastName ?? ""} : กำลังโทรหาคุณ}",
+        _userData.doctorInfoModel.referenceConnectyCubeID,
+        userProfileModel.referenceConnectyCubeID,
+        "${_userData.doctorInfoModel?.firstName ?? ""} ${_userData.doctorInfoModel?.lastName ?? ""}");
     callSession.startCall({"appointmentId": _appointmentModel.id});
   }
 
@@ -168,6 +174,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     }
     videoViewSelf = null;
     videoView = null;
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     notifyListeners();
     Navigator.pop(context);
   }
@@ -179,6 +186,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     if (streamRender != null) {
       await streamRender.dispose();
     }
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     Navigator.pop(context);
   }
 
@@ -192,6 +200,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     if (callSession != null) {
       callSession.hungUp();
     }
+    _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     Navigator.pop(context);
   }
 

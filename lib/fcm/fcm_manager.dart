@@ -22,4 +22,24 @@ class FCMManager {
     createEvent(params.getEventForRequest()).then((cubeEvent) {}).catchError((error) {
     });
   }
+
+  static void sendPushNotificationFromCall(String message, int senderId, int targetId, String fullName) {
+    CreateEventParams params = CreateEventParams();
+    params.parameters = {
+      "message": message,
+      "notificationType": "call",
+      "fullName": fullName,
+      "senderId" : senderId
+      // 'ios_voip': 1
+      // to send VoIP push notification to iOS
+      //more standard parameters you can found by link https://developers.connectycube.com/server/push_notifications?id=universal-push-notifications
+    };
+
+    params.notificationType = NotificationType.PUSH;
+    params.environment = CubeEnvironment.PRODUCTION;
+    params.usersIds = [targetId];
+
+    createEvent(params.getEventForRequest()).then((cubeEvent) {}).catchError((error) {
+    });
+  }
 }

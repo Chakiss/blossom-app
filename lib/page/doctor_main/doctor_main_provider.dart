@@ -120,13 +120,14 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
             int senderId;
             if (json["senderId"] is String) {
               senderId = int.parse(json["senderId"] as String);
-            } else if (json["senderId"] is int)
-            senderId = json["senderId"] as int;
+            } else if (json["senderId"] is int) senderId = json["senderId"] as int;
             Navigator.push(context, RouteManager.routeChatFromNotification(dialogId, fullName, senderId));
             break;
           case "voice":
             break;
           case "video":
+            break;
+          default:
             break;
         }
       }

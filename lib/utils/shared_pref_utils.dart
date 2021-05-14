@@ -6,7 +6,7 @@ class SharedPrefUtils {
 
   SharedPrefUtils(this._sharedPref);
 
-  static const int _buildVersion = 4;
+  static const int _buildVersion = 5;
   static const String _keyMapFilePath = "keyMapFilePath$_buildVersion";
   static const String _keyMapUserReference = "keyMapUserReference";
   static const String _keyMapDoctorReference = "keyMapDoctorReference";

@@ -80,15 +80,24 @@ class _DoctorCardState extends State<DoctorCard> {
                                       Navigator.push(context, RouteManager.routeDoctorReview(widget.doctorInfo.doctorId));
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                      padding: EdgeInsets.only(top: 2, bottom: 2, left: widget.doctorInfo.currentScore != null ? 4 : 8, right: 8),
                                       decoration: BoxDecoration(
                                           border: Border.all(color: BlossomTheme.darkPink),
                                           borderRadius: BorderRadius.all(Radius.circular(5))),
-                                      child: BlossomText(
-                                        "รีวิว",
-                                        size: 13,
-                                        color: BlossomTheme.darkPink,
-                                        fontWeight: FontWeight.bold,
+                                      child: Row(
+                                        children: [
+                                          widget.doctorInfo.currentScore != null ? Icon(
+                                            Icons.star_rate_rounded,
+                                            size: 18,
+                                            color: Colors.yellow,
+                                          ) : Container(),
+                                          BlossomText(
+                                            "${widget.doctorInfo.currentScore != null ? "${widget.doctorInfo.currentScore} " : ""}รีวิว",
+                                            size: 13,
+                                            color: BlossomTheme.darkPink,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
