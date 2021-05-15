@@ -49,7 +49,7 @@ class UseCaseModule {
 
   UseCaseModule(this.injector);
 
-  final omise = OmiseFlutter("pkey_test_5mmq1gnwqw4n78r3sil");
+  final omise = OmiseFlutter("pkey_5ngemrt9grz0ail7cj0");
 
   void provide() {
     injector.registerDependency<RegisterUseCase>(() => RegisterUseCase(FirebaseFunctions.instance));

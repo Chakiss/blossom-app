@@ -5,6 +5,7 @@ import 'package:blossom_clinic/model/slot_model.dart';
 import 'package:blossom_clinic/model/time_slot_model.dart';
 import 'package:blossom_clinic/utils/error_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class GetDoctorAvailableSlotsUseCase extends BaseAsyncUseCase<String, List<AvailableSlotModel>> {
   FirebaseFirestore _firestore;
@@ -19,6 +20,7 @@ class GetDoctorAvailableSlotsUseCase extends BaseAsyncUseCase<String, List<Avail
           .doc(parameter)
           .collection("availableSlots")
           .where("slotType", isEqualTo: 1)
+          .where("date", isGreaterThan: DateFormat("yyyy-MM-dd").format(DateTime.now()))
           .orderBy("date")
           .get();
       final list = snapshot.docs

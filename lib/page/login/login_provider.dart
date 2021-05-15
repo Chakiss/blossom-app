@@ -57,7 +57,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
     result.whenWithResult((mapResult) async {
       final userCredential = mapResult["userCredential"] as UserCredential;
       userCredential.user.getIdTokenResult().then((idTokenResult) async {
-        if (idTokenResult.claims["role"] != "patient") {
+        if ("doctor" == idTokenResult?.claims["role"] ?? "") {
           final getDoctorProfileResult = await _getDoctorProfileUseCase.execute(userCredential.user.uid);
           Navigator.pop(context);
           getDoctorProfileResult.whenWithResult((userProfile) {

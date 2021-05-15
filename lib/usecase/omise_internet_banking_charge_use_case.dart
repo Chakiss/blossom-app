@@ -20,6 +20,7 @@ class OmiseInternetBankingChargeUseCase extends BaseAsyncUseCase<Map<String, dyn
       final String sourceType = parameter["sourceType"] as String;
       final result = await _remoteRepository.omiseInternetBankingCharge(
           "Basic " + base64Encode(utf8.encode("skey_test_5n0xzn4kpsvxizlhvox" + ":")),
+          // "Basic " + base64Encode(utf8.encode("skey_5nglm3jbzrogirtdtf7" + ":")),
           amount,
           "THB",
           sourceType,
