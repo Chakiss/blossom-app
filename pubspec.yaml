@@ -67,7 +67,12 @@ dependencies:
   stop_watch_timer: ^1.1.0+1
   connectivity: ^3.0.3
   carousel_slider: ^3.0.0
+  flutter_launcher_icons: ^0.7.4
   flutter_sound:
+
+flutter_icons:
+  ios: true
+  image_path: "assets/icon.png"
 
 dev_dependencies:
   flutter_test:
