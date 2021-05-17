@@ -131,7 +131,7 @@ class CallDoctorProvider extends BaseProvider with ChangeNotifier {
 
     // sendPushNotification(doctorConnectyCubeId, appointmentId);
     FCMManager.sendPushNotificationFromCall(
-        "${_userData.userProfileModel?.firstName ?? ""} ${_userData.userProfileModel?.lastName ?? ""} : กำลังโทรหาคุณ}",
+        "${_userData.userProfileModel?.firstName ?? ""} ${_userData.userProfileModel?.lastName ?? ""} : กำลังโทรหาคุณ",
         _userData.userProfileModel.referenceConnectyCubeID,
         doctorInfoModel.referenceConnectyCubeID,
         "${_userData.userProfileModel?.firstName ?? ""} ${_userData.userProfileModel?.lastName ?? ""}");

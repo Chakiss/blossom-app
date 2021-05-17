@@ -158,7 +158,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
 
     // sendPushNotification(doctorConnectyCubeId, appointmentId);
     FCMManager.sendPushNotificationFromCall(
-        "${_userData.doctorInfoModel?.firstName ?? ""} ${_userData.doctorInfoModel?.lastName ?? ""} : กำลังโทรหาคุณ}",
+        "${_userData.doctorInfoModel?.firstName ?? ""} ${_userData.doctorInfoModel?.lastName ?? ""} : กำลังโทรหาคุณ",
         _userData.doctorInfoModel.referenceConnectyCubeID,
         userProfileModel.referenceConnectyCubeID,
         "${_userData.doctorInfoModel?.firstName ?? ""} ${_userData.doctorInfoModel?.lastName ?? ""}");

@@ -6,6 +6,7 @@ import 'package:blossom_clinic/page/doctor_home/doctor_home_page.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_page.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:connectycube_sdk/connectycube_calls.dart';
 import 'package:connectycube_sdk/connectycube_chat.dart';
 import 'package:flutter/material.dart';
@@ -60,14 +61,34 @@ class DoctorMainProvider extends BaseProvider with ChangeNotifier {
     if (CubeChatConnection.instance.isAuthenticated()) {
       _signIn(context, cubeUser);
       _initCallClient(context);
+      _handleReloginState();
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
         _signIn(context, cubeUser);
         _initCallClient(context);
+        _handleReloginState();
       }).catchError((error) {
         print(error);
       });
     }
+  }
+
+  void _handleReloginState() {
+    CubeChatConnection.instance.connectionStateStream.listen((state) {
+      if (state == CubeChatConnectionState.Closed) {
+        Connectivity().checkConnectivity().then((connectivityType) {
+          if (connectivityType != ConnectivityResult.none) {
+            if (CubeChatConnection.instance.currentUser != null) {
+              CubeChatConnection.instance.relogin();
+            }
+          }
+        });
+      }
+    });
+
+    CubeChatConnectionSettings chatConnectionSettings = CubeChatConnectionSettings.instance;
+    chatConnectionSettings.totalReconnections = 5;     // set 0 to disable internal reconnection manager or value more than 0 to set quantity of times to try to reconnect, default 5 times
+    chatConnectionSettings.reconnectionTimeout = 10000; // timeout in milliseconds between reconnection attempts, default 5000 milliseconds
   }
 
   void _signIn(BuildContext context, CubeUser cubeUser) {

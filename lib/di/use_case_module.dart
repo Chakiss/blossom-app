@@ -5,6 +5,7 @@ import 'package:blossom_clinic/usecase/generate_scb_qr_prompt_pay_use_case.dart'
 import 'package:blossom_clinic/usecase/get_appointment_by_doctor_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_user_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointments_id_by_order_id_use_case.dart';
+import 'package:blossom_clinic/usecase/get_banner_use_case.dart';
 import 'package:blossom_clinic/usecase/get_blossom_review_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_with_connecty_cube_id_use_case.dart';
@@ -90,5 +91,6 @@ class UseCaseModule {
     injector.registerDependency<GenerateScbQrPromptPayUseCase>(() => GenerateScbQrPromptPayUseCase(FirebaseFunctions.instance));
     injector.registerDependency<ReviewAppointmentUseCase>(() => ReviewAppointmentUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetDoctorReviewByDoctorIdUseCase>(() => GetDoctorReviewByDoctorIdUseCase(FirebaseFirestore.instance));
+    injector.registerDependency<GetBannerUseCase>(() => GetBannerUseCase(FirebaseFirestore.instance));
   }
 }

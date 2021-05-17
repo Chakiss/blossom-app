@@ -20,6 +20,8 @@ import 'package:blossom_clinic/page/confirm_consult/confirm_consult_page.dart';
 import 'package:blossom_clinic/page/confirm_consult/confirm_consult_provider.dart';
 import 'package:blossom_clinic/page/customer_history_detail/customer_history_detail_page.dart';
 import 'package:blossom_clinic/page/customer_history_detail/doctor_appointment_detail_provider.dart';
+import 'package:blossom_clinic/page/customer_home/customer_home_page.dart';
+import 'package:blossom_clinic/page/customer_home/customer_home_provider.dart';
 import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_page.dart';
 import 'package:blossom_clinic/page/customer_incoming_call_page/customer_incoming_call_provider.dart';
 import 'package:blossom_clinic/page/customer_receive_call_doctor/customer_receive_call_doctor_page.dart';
@@ -53,6 +55,7 @@ import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_prof
 import 'package:blossom_clinic/page/facebook_update_profile/facebook_update_profile_provider.dart';
 import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_page.dart';
 import 'package:blossom_clinic/page/facebook_update_profile_second/facebook_update_profile_second_provider.dart';
+import 'package:blossom_clinic/page/history/history_page.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
 import 'package:blossom_clinic/page/incoming_call_page/incoming_call_page.dart';
 import 'package:blossom_clinic/page/incoming_call_page/incoming_call_provider.dart';
@@ -64,6 +67,7 @@ import 'package:blossom_clinic/page/omise/omise_page.dart';
 import 'package:blossom_clinic/page/omise/omise_provider.dart';
 import 'package:blossom_clinic/page/payment/payment_page.dart';
 import 'package:blossom_clinic/page/payment/payment_provider.dart';
+import 'package:blossom_clinic/page/profile/profile_page.dart';
 import 'package:blossom_clinic/page/profile/profile_provider.dart';
 import 'package:blossom_clinic/page/qr_scan/qr_scan_page.dart';
 import 'package:blossom_clinic/page/qr_scan/qr_scan_provider.dart';
@@ -183,17 +187,13 @@ class RouteManager {
               create: (BuildContext context) => MainProvider(Injector.appInstance.get(), initIndex: initIndex),
             ),
             ChangeNotifierProvider(
+              create: (BuildContext context) => CustomerHomeProvider(),
+            ),
+            ChangeNotifierProvider(
               create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
-            ),
-            ChangeNotifierProvider(
               create: (BuildContext context) => ServiceProvider(Injector.appInstance.get()),
-            ),
-            ChangeNotifierProvider(
-              create: (BuildContext context) => ProfileProvider(FacebookAuth.instance, FirebaseAuth.instance),
             ),
           ],
           child: MainPage(
@@ -412,6 +412,34 @@ class RouteManager {
             )
           ],
           child: DoctorInfoProfilePage(doctorInfoModel),
+        );
+      });
+
+  static Route routeHistory() =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return HistoryProvider(Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get());
+              },
+            )
+          ],
+          child: HistoryPage(),
+        );
+      });
+
+  static Route routeProfile() =>
+      MaterialPageRoute(builder: (BuildContext context) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return ProfileProvider(FacebookAuth.instance, FirebaseAuth.instance);
+              },
+            )
+          ],
+          child: ProfilePage(),
         );
       });
 

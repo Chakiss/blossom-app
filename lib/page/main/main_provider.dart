@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/doctor/doctor_page.dart';
+import 'package:blossom_clinic/page/customer_home/customer_home_page.dart';
 import 'package:blossom_clinic/page/drug/drug_page.dart';
-import 'package:blossom_clinic/page/history/history_page.dart';
-import 'package:blossom_clinic/page/profile/profile_page.dart';
 import 'package:blossom_clinic/page/service/service_page.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -24,19 +24,16 @@ class MainProvider extends BaseProvider with ChangeNotifier {
   MainProvider(this._userData, {this.initIndex = 0}) {
     switch (initIndex) {
       case 0:
-        page = DoctorPage();
+        page = CustomerHomePage();
         break;
       case 1:
-        page = HistoryPage();
+        page = DoctorPage();
         break;
       case 2:
         page = ServicePage();
         break;
       case 3:
         page = DrugPage();
-        break;
-      case 4:
-        page = ProfilePage();
         break;
     }
   }
@@ -64,14 +61,34 @@ class MainProvider extends BaseProvider with ChangeNotifier {
     if (CubeChatConnection.instance.isAuthenticated()) {
       _signIn(context, cubeUser);
       _initCallClient(context);
+      _handleReloginState();
     } else {
       CubeChatConnection.instance.login(cubeUser).then((value) {
         _signIn(context, cubeUser);
         _initCallClient(context);
+        _handleReloginState();
       }).catchError((error) {
         print(error);
       });
     }
+  }
+
+  void _handleReloginState() {
+    CubeChatConnection.instance.connectionStateStream.listen((state) {
+      if (state == CubeChatConnectionState.Closed) {
+        Connectivity().checkConnectivity().then((connectivityType) {
+          if (connectivityType != ConnectivityResult.none) {
+            if (CubeChatConnection.instance.currentUser != null) {
+              CubeChatConnection.instance.relogin();
+            }
+          }
+        });
+      }
+    });
+
+    CubeChatConnectionSettings chatConnectionSettings = CubeChatConnectionSettings.instance;
+    chatConnectionSettings.totalReconnections = 5;     // set 0 to disable internal reconnection manager or value more than 0 to set quantity of times to try to reconnect, default 5 times
+    chatConnectionSettings.reconnectionTimeout = 10000; // timeout in milliseconds between reconnection attempts, default 5000 milliseconds
   }
 
   void _signIn(BuildContext context, CubeUser cubeUser) {

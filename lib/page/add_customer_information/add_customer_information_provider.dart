@@ -114,7 +114,7 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
     Navigator.pop(context);
     result.whenWithResult((data) {
       showToast("บันทึกข้อมูลประกอบการรักษาเรียบร้อยแล้ว");
-      Navigator.pushAndRemoveUntil(context, RouteManager.routeMain(initIndex: 1), (route) => false);
+      Navigator.pushAndRemoveUntil(context, RouteManager.routeMain(), (route) => false);
     }, (map) {
       errorHandle.proceed(context, map);
     });

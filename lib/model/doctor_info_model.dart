@@ -1,7 +1,7 @@
 class DoctorInfoModel {
 
   DateTime createdAt;
-  int currentScore;
+  double currentScore;
   String displayName;
   String displayPhoto;
   String email;
@@ -20,7 +20,7 @@ class DoctorInfoModel {
     return DoctorInfoModel(
         doctorId: id,
         createdAt: json["createdAt"].toDate(),
-        currentScore: json["currentScore"],
+        currentScore: json["currentScore"] != null ? double.parse("${json["currentScore"]}") : null,
         displayName: json["displayName"],
         displayPhoto: json["displayPhoto"],
         email: json["email"],
