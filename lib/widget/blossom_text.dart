@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/blossom_theme.dart';
+import 'package:blossom_clinic/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class BlossomText extends StatelessWidget {
@@ -17,13 +18,15 @@ class BlossomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Text(
       text,
       overflow: maxLines != null ? TextOverflow.ellipsis : null,
       maxLines: maxLines ?? null,
       style: TextStyle(
           decoration: TextDecoration.none,
-          fontSize: size ?? 10,
+          fontSize: ((size ?? 10) * SizeConfig.screenWidth) / 448,
+          // fontSize: size ?? 10,
           color: color ?? BlossomTheme.black,
           fontWeight: fontWeight ?? FontWeight.normal,
           fontFamily: font ?? FONT_PROMPT),

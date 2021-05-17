@@ -35,7 +35,7 @@ class _HistoryPageState extends State<HistoryPage> {
     _provider = Provider.of(context, listen: false);
     _provider.getAppointmentList(context);
     return BaseScreenSecond(
-      false,
+      true,
       title: "รายการ",
       child: Column(
         children: [

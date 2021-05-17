@@ -8,6 +8,7 @@ import 'package:blossom_clinic/widget/button_login_facebook.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/text_stroke_pink.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
+import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +26,7 @@ class ProfilePage extends StatelessWidget {
       child: BaseScreen(
         child: Column(
           children: [
-            Toolbar(title: "ข้อมูลส่วนตัว"),
+            ToolbarBack(title: "ข้อมูลส่วนตัว"),
             SizedBox(
               height: 50,
             ),
