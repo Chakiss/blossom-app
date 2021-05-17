@@ -25,7 +25,7 @@ class _BlossomImageState extends State<BlossomImage> {
   void initState() {
     super.initState();
     if (_sharedPrefUtils.getMapFilePath().containsKey(widget.fileStorePath)) {
-        imagePath = _sharedPrefUtils.getMapFilePath()[widget.fileStorePath];
+      imagePath = _sharedPrefUtils.getMapFilePath()[widget.fileStorePath];
     } else {
       if (widget.fileStorePath != null) {
         _downloadFileFromCloudStorage();
@@ -40,14 +40,17 @@ class _BlossomImageState extends State<BlossomImage> {
         InkWell(
           onTap: () {
             if (imagePath.isNotEmpty) {
-              showDialog(context: context, builder: (BuildContext context) {
-                return ImageDialog(imagePath);
-              },);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return ImageDialog(imagePath);
+                },
+              );
             }
           },
           child: Container(
               width: widget.width ?? 50 * MediaQuery.of(context).size.width / 100,
-              child: Image.file(File(imagePath))),
+              child: imagePath?.isEmpty ?? true ? Container() : Image.file(File(imagePath))),
         ),
         SizedBox(
           height: 20,
