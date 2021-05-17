@@ -47,7 +47,9 @@ class _BlossomImageRatioState extends State<BlossomImageRatio> {
               );
             }
           },
-          child: AspectRatio(aspectRatio: 1.2 / 1, child: Image.file(File(imagePath), fit: BoxFit.fill)),
+          child: AspectRatio(
+              aspectRatio: 1.2 / 1,
+              child: imagePath?.isEmpty ?? true ? Container() : Image.file(File(imagePath), fit: BoxFit.fill)),
         ),
       ],
     );
