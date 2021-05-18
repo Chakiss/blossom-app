@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACNE</string>
+    <string name="app_name">ACNE.</string>
     <string name="facebook_app_id">970331946708122</string>
     <string name="fb_login_protocol_scheme">fb970331946708122</string>
 </resources>
