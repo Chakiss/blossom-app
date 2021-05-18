@@ -67,7 +67,7 @@ class _BottomTabState extends State<BottomTab> {
                     width: 36,
                     height: 36,
                   ),
-                  BlossomText("พบแพทย์", color: selectedPosition == 0 ? BlossomTheme.colorPrimary : BlossomTheme.black)
+                  BlossomText("หน้าแรก", color: selectedPosition == 0 ? BlossomTheme.colorPrimary : BlossomTheme.black)
                 ],
               ),
             )),

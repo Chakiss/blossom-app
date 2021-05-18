@@ -24,7 +24,7 @@ class OmiseChargeUseCase extends BaseAsyncUseCase<Map<String, dynamic>, dynamic>
       final int amount = parameter["amount"] as int;
       final token = await _omise.token.create(name, cardNo, expireMonth, expireYear, cvv);
       final result = await _remoteRepository.omiseCharge(
-          "Basic " + base64Encode(utf8.encode("skey_test_5n0xzn4kpsvxizlhvox" + ":")),
+          "Basic " + base64Encode(utf8.encode("skey_5nglm3jbzrogirtdtf7" + ":")),
           // "Basic " + base64Encode(utf8.encode("skey_5nglm3jbzrogirtdtf7" + ":")),
           amount,
           "THB",
