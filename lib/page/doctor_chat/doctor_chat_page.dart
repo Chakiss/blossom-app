@@ -1,5 +1,4 @@
 import 'package:blossom_clinic/blossom_theme.dart';
-import 'package:blossom_clinic/page/chat/chat_provider.dart';
 import 'package:blossom_clinic/page/doctor_chat/doctor_chat_provider.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';

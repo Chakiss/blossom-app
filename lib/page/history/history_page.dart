@@ -129,27 +129,27 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   void _goToVoiceCallDoctorPage(BuildContext context, AppointmentModel appointment) {
-    // final timeNow = DateTime.now().millisecondsSinceEpoch;
-    // final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
-    // final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
-    // if (timeNow >= startTime && timeNow <= endTime) {
-    //   Navigator.push(context, RouteManager.routeCallDoctor(appointment));
-    // } else {
-    //   _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
-    // }
-    Navigator.push(context, RouteManager.routeVoiceCallDoctor(appointment));
+    final timeNow = DateTime.now().millisecondsSinceEpoch;
+    final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    if (timeNow >= startTime && timeNow <= endTime) {
+      Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+    } else {
+      _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
+    }
+    // Navigator.push(context, RouteManager.routeVoiceCallDoctor(appointment));
   }
 
   void _goToCallDoctorPage(BuildContext context, AppointmentModel appointment) {
-    // final timeNow = DateTime.now().millisecondsSinceEpoch;
-    // final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
-    // final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
-    // if (timeNow >= startTime && timeNow <= endTime) {
-    //   Navigator.push(context, RouteManager.routeCallDoctor(appointment));
-    // } else {
-    //   _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
-    // }
-    Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+    final timeNow = DateTime.now().millisecondsSinceEpoch;
+    final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    if (timeNow >= startTime && timeNow <= endTime) {
+      Navigator.push(context, RouteManager.routeCallDoctor(appointment));
+    } else {
+      _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
+    }
+    // Navigator.push(context, RouteManager.routeCallDoctor(appointment));
   }
 
   void _showCallTypeDialog(BuildContext context, AppointmentModel appointmentModel) {

@@ -37,7 +37,7 @@ class ChatPage extends StatelessWidget {
                     padding: 8,
                   ),
                   Expanded(
-                      child: value.chatList?.isEmpty ?? true
+                      child: value.chatList == null
                           ? Container(
                         color: BlossomTheme.white,
                         child: Center(
