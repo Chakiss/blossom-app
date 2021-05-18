@@ -68,8 +68,8 @@ dependencies:
   connectivity: ^3.0.3
   carousel_slider: ^3.0.0
   flutter_launcher_icons: ^0.7.4
-  firebase_crashlytics: ^0.4.0+1
-  firebase_analytics: ^7.0.1
+#  firebase_crashlytics: ^0.4.0+1
+#  firebase_analytics: ^7.0.1
   flutter_sound:
 
 flutter_icons:
