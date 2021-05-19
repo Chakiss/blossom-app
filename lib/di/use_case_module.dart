@@ -16,6 +16,7 @@ import 'package:blossom_clinic/usecase/get_shipnity_order_by_invoice_id_use_case
 import 'package:blossom_clinic/usecase/get_shipnity_order_list_by_phone_number_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_with_connecty_cube_id_use_case.dart';
+import 'package:blossom_clinic/usecase/login_apple_use_case.dart';
 import 'package:blossom_clinic/usecase/omise_internet_banking_charge_use_case.dart';
 import 'package:blossom_clinic/usecase/review_appointment_use_case.dart';
 import 'package:blossom_clinic/usecase/save_doctor_diagnose_form_use_case.dart';
@@ -92,5 +93,6 @@ class UseCaseModule {
     injector.registerDependency<ReviewAppointmentUseCase>(() => ReviewAppointmentUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetDoctorReviewByDoctorIdUseCase>(() => GetDoctorReviewByDoctorIdUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetBannerUseCase>(() => GetBannerUseCase(FirebaseFirestore.instance));
+    injector.registerDependency<LoginAppleUseCase>(() => LoginAppleUseCase(FirebaseAuth.instance));
   }
 }

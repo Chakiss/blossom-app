@@ -140,6 +140,7 @@ class RouteManager {
                       Injector.appInstance.get(),
                       Injector.appInstance.get(),
                       Injector.appInstance.get(),
+                      Injector.appInstance.get(),
                       FirebaseAuth.instance,
                       FacebookAuth.instance)),
             ],
