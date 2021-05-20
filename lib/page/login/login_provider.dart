@@ -115,7 +115,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
           Navigator.pop(context);
           profileResult.whenWithResult((data) {
             if (data == null) {
-              _goToFacebookUpdateProfile(context, mapResult);
+              _goToAppleUpdateProfile(context, mapResult);
             } else {
               _goToMainPage(context);
             }
@@ -138,6 +138,13 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
 
   void _goToDoctorMainPage(BuildContext context) {
       Navigator.pushReplacement(context, RouteManager.routeDoctorMain());
+  }
+
+  void _goToAppleUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
+    final appleCredential = mapResult["appleCredential"] as AuthorizationCredentialAppleID;
+    String email = appleCredential.email;
+    String name = "";
+    Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
   }
 
   void _goToFacebookUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
