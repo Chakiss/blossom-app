@@ -90,7 +90,8 @@ class LoginPage extends StatelessWidget {
                         () {
                       _provider.login(context, _emailTextController.text, _passwordTextController.text);
                     },
-                    width: 56 * MediaQuery.of(context).size.width / 100,
+                    width: MediaQuery.of(context).size.width,
+                    // width: 56 * MediaQuery.of(context).size.width / 100,
                     radius: 6,
                     height: 46,
                   ),
@@ -105,7 +106,8 @@ class LoginPage extends StatelessWidget {
                       _provider.loginWithFacebook(context);
                     },
                     radius: 6,
-                    width: 56 * MediaQuery.of(context).size.width / 100,
+                    width: MediaQuery.of(context).size.width,
+                    // width: 56 * MediaQuery.of(context).size.width / 100,
                     height: 46,
                   ),
                   Container(
