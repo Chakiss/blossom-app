@@ -39,7 +39,7 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
       lastName = widget._name.split(" ")[1] ?? "";
     }
     _provider = Provider.of(context, listen: false);
-    _emailTextController = TextEditingController(text: widget._email);
+    _emailTextController = TextEditingController(text: widget._email ?? "");
     _phoneNumberTextController = TextEditingController();
     _nameTextController = TextEditingController(text: name);
     _lastNameTextController = TextEditingController(text: lastName);
@@ -84,10 +84,15 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
                   SizedBox(
                     height: 6,
                   ),
-                  TextStrokeBlack(
-                    widget._email ?? "",
-                    enable: widget._email?.isEmpty ?? true,
-                  ),
+                  widget._email?.isEmpty ?? true
+                      ? TextFieldStrokeBlack(
+                          "",
+                          textController: _emailTextController,
+                        )
+                      : TextStrokeBlack(
+                          widget._email ?? "",
+                          enable: false,
+                        ),
                   SizedBox(
                     height: 12,
                   ),
