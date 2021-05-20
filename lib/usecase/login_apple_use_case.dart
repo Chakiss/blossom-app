@@ -23,8 +23,6 @@ class LoginAppleUseCase extends BaseAsyncUseCase<String, Map<String, dynamic>> {
             'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
           ),
         ),
-        nonce: 'example-nonce',
-        state: 'example-state',
       );
 
       final AuthCredential credential = OAuthProvider("apple.com")
