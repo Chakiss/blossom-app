@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/model/update_profile_facebook_login_request_model.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
+import 'package:blossom_clinic/usecase/login_apple_use_case.dart';
 import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/usecase/update_profile_facebook_login_use_case.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
@@ -13,9 +14,10 @@ class FacebookUpdateProfileSecondProvider extends BaseProvider with ChangeNotifi
   UpdateProfileFacebookLoginUseCase _updateProfileFacebookLoginUseCase;
   GetUserProfileUseCase _getUserProfileUseCase;
   LoginFacebookUseCase _loginFacebookUseCase;
+  LoginAppleUseCase _loginAppleUseCase;
   Timer _timer;
 
-  FacebookUpdateProfileSecondProvider(this._updateProfileFacebookLoginUseCase, this._getUserProfileUseCase, this._loginFacebookUseCase);
+  FacebookUpdateProfileSecondProvider(this._updateProfileFacebookLoginUseCase, this._getUserProfileUseCase, this._loginFacebookUseCase, this._loginAppleUseCase);
 
   Future<void> updateUserProfileFirestore(BuildContext context, Map<String, dynamic> mapResult, String skinType,
       String acneTypes, bool isAcneTreat, String acneTreatText, bool isDrugAllergy, String drugAllergyText) async {
@@ -52,8 +54,32 @@ class FacebookUpdateProfileSecondProvider extends BaseProvider with ChangeNotifi
     Navigator.pop(context);
     result.whenWithResult((data) async {
       showToast("อัพเดทข้อมูลผู้ใช้สำเร็จ");
-      loginWithFacebook(context);
+      if (mapResult.containsKey("appleCredential")) {
+        loginWithApple(context);
+      } else {
+        loginWithFacebook(context);
+      }
     }, (map) {
+      errorHandle.proceed(context, map);
+    });
+  }
+
+  Future<void> loginWithApple(BuildContext context) async {
+    showProgressDialog(context);
+    final result = await _loginAppleUseCase.execute("");
+    result.whenWithResult((mapResult) async {
+      final userCredential = mapResult["userCredential"] as UserCredential;
+      final profileResult = await _getUserProfileUseCase.execute(userCredential.user.uid);
+      Navigator.pop(context);
+      profileResult.whenWithResult((data) {
+        if (data != null) {
+          _goToMainPage(context);
+        }
+      }, (map) {
+        errorHandle.proceed(context, map);
+      });
+    }, (map) {
+      Navigator.pop(context);
       errorHandle.proceed(context, map);
     });
   }
