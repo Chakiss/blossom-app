@@ -142,7 +142,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
 
   void _goToAppleUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
     final appleCredential = mapResult["appleCredential"] as AuthorizationCredentialAppleID;
-    String email = appleCredential.email;
+    String email = appleCredential.email ?? "";
     String name = "";
     Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
   }

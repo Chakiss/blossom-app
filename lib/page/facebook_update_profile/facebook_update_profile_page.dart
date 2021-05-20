@@ -86,7 +86,7 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
                   ),
                   TextStrokeBlack(
                     widget._email ?? "",
-                    enable: false,
+                    enable: widget._email?.isEmpty ?? true,
                   ),
                   SizedBox(
                     height: 12,
