@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
@@ -5,9 +7,11 @@ import 'package:blossom_clinic/usecase/login_apple_use_case.dart';
 import 'package:blossom_clinic/usecase/login_facebook_use_case.dart';
 import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginProvider extends BaseProvider with ChangeNotifier {
   LoginUseCase _loginUseCase;
@@ -17,6 +21,7 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   GetDoctorProfileUseCase _getDoctorProfileUseCase;
   FirebaseAuth _firebaseAuth;
   FacebookAuth _facebookAuth;
+  Widget signInAppleButton;
 
   LoginProvider(this._loginUseCase, this._loginFacebookUseCase, this._loginAppleUseCase, this._getUserProfileUseCase, this._getDoctorProfileUseCase, this._firebaseAuth, this._facebookAuth);
 
@@ -140,5 +145,35 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
     String email = userData["email"] ?? "";
     String name = userData["name"] ?? "";
     Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
+  }
+
+  Future<void> getSignInAppleButton(BuildContext context) async {
+    if (Platform.isIOS) {
+      var iosInfo = await DeviceInfoPlugin().iosInfo;
+      var version = iosInfo.systemVersion;
+      try {
+        if (double.parse(version) >= 13.0) {
+          signInAppleButton = Column(
+            children: [
+              SizedBox(
+                height: 16,
+              ),
+              Container(
+                child: SignInWithAppleButton(
+                  height: 46,
+                  onPressed: () {
+                    loginWithApple(context);
+                  },
+                ),
+              ),
+            ],
+          );
+          notifyListeners();
+        }
+      } catch (e) {
+       signInAppleButton = Container();
+       notifyListeners();
+      }
+    }
   }
 }
