@@ -32,8 +32,12 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
   @override
   void initState() {
     super.initState();
-    String name = widget._name.split(" ")[0] ?? "";
-    String lastName = widget._name.split(" ")[1] ?? "";
+    String name = "";
+    String lastName = "";
+    if (widget._name?.isNotEmpty ?? false) {
+      name = widget._name.split(" ")[0] ?? "";
+      lastName = widget._name.split(" ")[1] ?? "";
+    }
     _provider = Provider.of(context, listen: false);
     _emailTextController = TextEditingController(text: widget._email);
     _phoneNumberTextController = TextEditingController();
