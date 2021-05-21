@@ -96,6 +96,16 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> loginWithApple(BuildContext context) async {
+    var iosInfo = await DeviceInfoPlugin().iosInfo;
+    var version = iosInfo.systemVersion;
+    try {
+      if (double.parse(version) < 13.0) {
+        errorHandle.proceed(context, {"message": "กรุณาอัพเดทเวอร์ชั่น iOS เพื่อใช้งานฟังก์ชั่น"});
+        return;
+      }
+    } catch (e) {
+
+    }
     showProgressDialog(context);
     final result = await _loginAppleUseCase.execute("");
     result.whenWithResult((mapResult) async {
@@ -154,33 +164,33 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
     Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
   }
 
-  Future<void> getSignInAppleButton(BuildContext context) async {
-    if (Platform.isIOS) {
-      var iosInfo = await DeviceInfoPlugin().iosInfo;
-      var version = iosInfo.systemVersion;
-      try {
-        if (double.parse(version) >= 13.0) {
-          signInAppleButton = Column(
-            children: [
-              SizedBox(
-                height: 16,
-              ),
-              Container(
-                child: SignInWithAppleButton(
-                  height: 46,
-                  onPressed: () {
-                    loginWithApple(context);
-                  },
-                ),
-              ),
-            ],
-          );
-          notifyListeners();
-        }
-      } catch (e) {
-       signInAppleButton = Container();
-       notifyListeners();
-      }
-    }
-  }
+  // Future<void> getSignInAppleButton(BuildContext context) async {
+  //   if (Platform.isIOS) {
+  //     var iosInfo = await DeviceInfoPlugin().iosInfo;
+  //     var version = iosInfo.systemVersion;
+  //     try {
+  //       if (double.parse(version) >= 13.0) {
+  //         signInAppleButton = Column(
+  //           children: [
+  //             SizedBox(
+  //               height: 16,
+  //             ),
+  //             Container(
+  //               child: SignInWithAppleButton(
+  //                 height: 46,
+  //                 onPressed: () {
+  //                   loginWithApple(context);
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         );
+  //         notifyListeners();
+  //       }
+  //     } catch (e) {
+  //      signInAppleButton = Container();
+  //      notifyListeners();
+  //     }
+  //   }
+  // }
 }

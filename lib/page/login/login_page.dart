@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
@@ -8,6 +11,7 @@ import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginPage extends StatelessWidget {
   LoginProvider _provider;
@@ -17,7 +21,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    _provider.getSignInAppleButton(context);
     return Consumer<LoginProvider>(builder: (BuildContext context, LoginProvider value, Widget child) {
       return Container(
         color: BlossomTheme.white,
@@ -95,7 +98,7 @@ class LoginPage extends StatelessWidget {
                     radius: 6,
                     height: 46,
                   ),
-                  value.signInAppleButton ?? Container(),
+                  getSignInAppleButton(context),
                   SizedBox(
                     height: 16,
                   ),
@@ -125,5 +128,27 @@ class LoginPage extends StatelessWidget {
         ),
       );
     },);
+  }
+
+  Widget getSignInAppleButton(BuildContext context) {
+    if (Platform.isIOS) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            child: SignInWithAppleButton(
+              height: 46,
+              onPressed: () {
+                _provider.loginWithApple(context);
+              },
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 }
