@@ -48,6 +48,7 @@ class _CustomerHistoryDetailPageState extends State<CustomerHistoryDetailPage> {
                 //   ),
                 // ),
                 SafeArea(
+                  bottom: false,
                     child: ToolbarBack(
                   title: widget._name,
                 )),

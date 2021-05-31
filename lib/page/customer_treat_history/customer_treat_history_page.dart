@@ -34,6 +34,7 @@ class CustomerTreatHistoryPage extends StatelessWidget {
           Stack(
             children: [
               SafeArea(
+                bottom: false,
                 child: ToolbarBack(
                   title: "ประวัติการรักษา",
                 ),

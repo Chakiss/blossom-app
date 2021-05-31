@@ -36,6 +36,7 @@ class _HistoryPageState extends State<HistoryPage> {
     _provider.getAppointmentList(context);
     return BaseScreenSecond(
       true,
+      safeAreaBottom: false,
       title: "รายการ",
       child: Column(
         children: [
