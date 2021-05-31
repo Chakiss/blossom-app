@@ -35,64 +35,73 @@ class _CustomerHistoryDetailPageState extends State<CustomerHistoryDetailPage> {
     _provider.callServiceGetUserProfileById(widget._appointmentModel);
     return Consumer<CustomerHistoryDetailProvider>(
         builder: (BuildContext context, CustomerHistoryDetailProvider value, Widget child) {
-          return Scaffold(
-              backgroundColor: BlossomTheme.white,
-              body: Column(children: [
-                Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        width: 100 * MediaQuery.of(context).size.width / 100,
-                        child: Image.asset("assets/nav_bar.png"),
-                      ),
-                    ),
-                    SafeArea(
-                        child: ToolbarBack(
-                          title: widget._name,
-                        )),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 7 * MediaQuery.of(context).size.width / 100),
-                  child: Column(
+      return Scaffold(
+          backgroundColor: BlossomTheme.darkPink,
+          body: Column(children: [
+            Stack(
+              children: [
+                // Align(
+                //   alignment: Alignment.topCenter,
+                //   child: Container(
+                //     width: 100 * MediaQuery.of(context).size.width / 100,
+                //     child: Image.asset("assets/nav_bar.png"),
+                //   ),
+                // ),
+                SafeArea(
+                    child: ToolbarBack(
+                  title: widget._name,
+                )),
+              ],
+            ),
+            Container(
+              color: BlossomTheme.white,
+              padding: EdgeInsets.symmetric(horizontal: 7 * MediaQuery.of(context).size.width / 100),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              BlossomText(
-                                widget._name,
-                                size: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              Row(
-                                children: [
-                                  BlossomText("อายุ : ", size: 18, fontWeight: FontWeight.bold),
-                                  BlossomText("${_provider.age} ปี", size: 18)
-                                ],
-                              )
-                            ],
+                          BlossomText(
+                            widget._name,
+                            size: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Spacer(),
+                          Row(
+                            children: [
+                              BlossomText("อายุ : ", size: 18, fontWeight: FontWeight.bold),
+                              BlossomText("${_provider.age} ปี", size: 18)
+                            ],
+                          )
                         ],
                       ),
-                      Row(
-                        children: [
-                          BlossomText("เวลานัด : ", size: 18, fontWeight: FontWeight.bold),
-                          BlossomText("${widget._appointmentTime}", size: 18),
-                        ],
-                      )
+                      Spacer(),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 4 * MediaQuery.of(context).size.height / 100,
-                ),
-                AppointmentDetailSegmentControl((index) {
+                  Row(
+                    children: [
+                      BlossomText("เวลานัด : ", size: 18, fontWeight: FontWeight.bold),
+                      BlossomText("${widget._appointmentTime}", size: 18),
+                    ],
+                  ),
+                  Container(
+                    color: BlossomTheme.white,
+                    height: 4 * MediaQuery.of(context).size.height / 100,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: BlossomTheme.white,
+              child: Center(
+                child: AppointmentDetailSegmentControl((index) {
                   switch (index) {
                     case 0:
                       _provider.setPage(CustomerHistoryPrePage(widget._appointmentModel.form.pre));
@@ -116,12 +125,15 @@ class _CustomerHistoryDetailPageState extends State<CustomerHistoryDetailPage> {
                       break;
                   }
                 }),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(child: value.page == null ? Container() : value.page),
-              ]));
-        });
+              ),
+            ),
+            Container(
+              color: BlossomTheme.white,
+              height: 20,
+            ),
+            Expanded(child: Container(color: BlossomTheme.white, child: value.page == null ? Container() : value.page)),
+          ]));
+    });
   }
 
   _launchURL(String url) async {

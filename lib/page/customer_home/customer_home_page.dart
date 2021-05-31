@@ -10,21 +10,23 @@ class CustomerHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlossomTheme.white,
+      backgroundColor: BlossomTheme.darkPink,
       body: Column(
         children: [
           Stack(children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                width: 100 * MediaQuery.of(context).size.width / 100,
-                child: Image.asset("assets/nav_bar.png"),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.topCenter,
+            //   child: Container(
+            //     width: 100 * MediaQuery.of(context).size.width / 100,
+            //     child: Image.asset("assets/nav_bar.png"),
+            //   ),
+            // ),
             SafeArea(
               bottom: false,
               child: Container(
-                padding: EdgeInsets.all(16),
+                color: BlossomTheme.darkPink,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                height: 60,
                 child: Row(
                   children: [
                     InkWell(
@@ -33,8 +35,8 @@ class CustomerHomePage extends StatelessWidget {
                       },
                       child: SvgPicture.asset(
                         "assets/ic_new_user.svg",
-                        width: 42,
-                        height: 42,
+                        width: 36,
+                        height: 36,
                       ),
                     ),
                     Spacer(),
@@ -49,120 +51,126 @@ class CustomerHomePage extends StatelessWidget {
             )
           ]),
           Expanded(
-              child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 5 * MediaQuery.of(context).size.width / 100,
-                  vertical: 2 * MediaQuery.of(context).size.height / 100),
-              child: Column(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1.2 / 1,
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      child: CustomerHomeBanner(),
-                      elevation: 6,
+              child: Container(
+            color: BlossomTheme.white,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 5 * MediaQuery.of(context).size.width / 100,
+                    vertical: 2 * MediaQuery.of(context).size.height / 100),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 48,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context, RouteManager.routeHistory());
-                        },
-                        child: Container(
-                            width: 25 * MediaQuery.of(context).size.width / 100,
-                            height: 30 * MediaQuery.of(context).size.width / 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                gradient: LinearGradient(
-                                  colors: [Color(0xFFED6283), Color(0xFFEA827E)],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                )),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset("assets/ic_new_calendar.svg"),
-                                SizedBox(
-                                  height: 6,
-                                ),
-                                BlossomText(
-                                  "ตารางนัดหมาย",
-                                  size: 14,
-                                  color: BlossomTheme.white,
-                                )
-                              ],
-                            )),
+                    AspectRatio(
+                      aspectRatio: 1.2 / 1,
+                      child: Card(
+                        margin: EdgeInsets.zero,
+                        child: CustomerHomeBanner(),
+                        elevation: 6,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context, RouteManager.routeCustomerHistory());
-                        },
-                        child: Container(
-                            width: 25 * MediaQuery.of(context).size.width / 100,
-                            height: 30 * MediaQuery.of(context).size.width / 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                gradient: LinearGradient(
-                                  colors: [Color(0xFFED6283), Color(0xFFEA827E)],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                )),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset("assets/ic_new_history.svg"),
-                                SizedBox(
-                                  height: 6,
-                                ),
-                                BlossomText(
-                                  "ประวัติการรักษา",
-                                  size: 14,
-                                  color: BlossomTheme.white,
-                                )
-                              ],
-                            )),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context, RouteManager.routeProfile());
-                        },
-                        child: Container(
-                            width: 25 * MediaQuery.of(context).size.width / 100,
-                            height: 30 * MediaQuery.of(context).size.width / 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                gradient: LinearGradient(
-                                  colors: [Color(0xFFED6283), Color(0xFFEA827E)],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                )),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset("assets/ic_new_member.svg"),
-                                SizedBox(
-                                  height: 6,
-                                ),
-                                BlossomText(
-                                  "สมาชิก",
-                                  size: 14,
-                                  color: BlossomTheme.white,
-                                )
-                              ],
-                            )),
-                      )
-                    ],
-                  )
-                ],
+                    ),
+                    SizedBox(
+                      height: 48,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context, RouteManager.routeHistory());
+                          },
+                          child: Container(
+                              width: 25 * MediaQuery.of(context).size.width / 100,
+                              height: 30 * MediaQuery.of(context).size.width / 100,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFFED6283), Color(0xFFEA827E)],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  )),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset("assets/ic_new_calendar.svg"),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  BlossomText(
+                                    "ตารางนัดหมาย",
+                                    size: 14,
+                                    color: BlossomTheme.white,
+                                  )
+                                ],
+                              )),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context, RouteManager.routeCustomerHistory());
+                          },
+                          child: Container(
+                              width: 25 * MediaQuery.of(context).size.width / 100,
+                              height: 30 * MediaQuery.of(context).size.width / 100,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFFED6283), Color(0xFFEA827E)],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  )),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset("assets/ic_new_history.svg"),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  BlossomText(
+                                    "ประวัติการรักษา",
+                                    size: 14,
+                                    color: BlossomTheme.white,
+                                  )
+                                ],
+                              )),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context, RouteManager.routeProfile());
+                          },
+                          child: Container(
+                              width: 25 * MediaQuery.of(context).size.width / 100,
+                              height: 30 * MediaQuery.of(context).size.width / 100,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFFED6283), Color(0xFFEA827E)],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  )),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset("assets/ic_new_member.svg"),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  BlossomText(
+                                    "สมาชิก",
+                                    size: 14,
+                                    color: BlossomTheme.white,
+                                  )
+                                ],
+                              )),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ))

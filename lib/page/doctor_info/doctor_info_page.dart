@@ -42,6 +42,9 @@ class _DoctorInfoPageState extends State<DoctorInfoPage> {
               ToolbarBack(
                 title: widget._doctorInfoModel?.displayName ?? "",
               ),
+              SizedBox(
+                height: 20,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(

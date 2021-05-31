@@ -59,7 +59,7 @@ class _ConfirmConsultPageState extends State<ConfirmConsultPage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
                       Align(
                         alignment: Alignment.topLeft,

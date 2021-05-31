@@ -33,188 +33,194 @@ class AddCustomerInformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: BlossomTheme.white,
-        ),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(children: [
-                Container(
-                  width: 100 * MediaQuery.of(context).size.width / 100,
-                  child: Image.asset("assets/nav_bar.png"),
-                ),
-                SafeArea(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ToolbarBack(
-                      title: "ข้อมูลประกอบการรักษา",
-                    ),
-                  ],
-                ))
-              ]),
-              Container(
-                width: 80 * MediaQuery.of(context).size.width / 100,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: BlossomTheme.darkPink,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(children: [
+                //   Container(
+                //     width: 100 * MediaQuery.of(context).size.width / 100,
+                //     child: Image.asset("assets/nav_bar.png"),
+                //   ),
+                  SafeArea(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      BlossomText(
-                        "ระยะเวลาที่เป็นสิว",
-                        size: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      // AcneDurationInformationRadioGroup((acneDuration) {}),
-                      SliderAcneDuration((value) {
-                        acnePeriod = value;
-                        print("acnePeriod $acnePeriod");
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      BlossomText(
-                        "เคยรักษาสิวมาก่อนหรือไม่",
-                        size: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      AcneInformationRadioGroup((value) {
-                        acneCared = value;
-                        print("acneCared $acneCared");
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", _changeProductTextEditController,
-                          (boolean) {
-                        isChangeProduct = boolean;
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TrueFalseRadioGroup("มีภาวะเครียด", (data) {
-                        isStressed = data;
-                        print("isStressed $isStressed");
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TrueFalseRadioGroup("มีภาวะนอนน้อย, นอนดึก", (data) {
-                        sleepDeprivation = data;
-                        print("sleepDeprivation $sleepDeprivation");
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TrueFalseRadioGroup("ประจำเดือนมาปกติ", (data) {
-                        normalMenstruation = data;
-                        print("normalMenstruation $normalMenstruation");
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TrueFalseRadioGroup("ทานขนม นมเป็นประจำ", (data) {
-                        frequencySweet = data;
-                        print("frequencySweet $frequencySweet");
-                      }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      BlossomText(
-                        "รูป",
-                        size: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Consumer<AddCustomerInformationProvider>(
-                        builder: (BuildContext context, AddCustomerInformationProvider value, Widget child) {
-                          return Row(
-                            children: [
-                              CustomerInformationItem(
-                                value.listFile[0],
-                                isFirstItem: true,
-                                listener: () {
-                                  _showImagePickerDialog(context, 0);
-                                },
-                              ),
-                              CustomerInformationItem(
-                                value.listFile[1],
-                                isFirstItem: false,
-                                listener: () {
-                                  _showImagePickerDialog(context, 1);
-                                },
-                              ),
-                              CustomerInformationItem(
-                                value.listFile[2],
-                                isFirstItem: false,
-                                listener: () {
-                                  _showImagePickerDialog(context, 2);
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      Align(
-                          alignment: Alignment.center,
-                          child: ButtonPinkGradient(
-                            "ยืนยัน",
-                            true,
-                            () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext dialogContext) => CustomDialogTwoButton(
-                                  title: "ยืนยัน",
-                                  description: "คุณยืนยันการส่งข้อมูลให้ทางแพทย์",
-                                  positiveButton: "ยืนยัน",
-                                  positiveListener: () async {
-                                    Navigator.pop(dialogContext);
-                                    _provider.confirmPatientForm(
-                                        context,
-                                        _orderId,
-                                        acnePeriod,
-                                        acneCared,
-                                        isChangeProduct,
-                                        _changeProductTextEditController.text,
-                                        isStressed,
-                                        sleepDeprivation,
-                                        normalMenstruation,
-                                        frequencySweet);
-                                    // Navigator.pushAndRemoveUntil(
-                                    //     context, RouteManager.routeMain(initIndex: 1), (route) => false);
-                                  },
-                                  negativeButton: "ยกเลิก",
-                                  negativeListener: () {
-                                    Navigator.pop(dialogContext);
-                                  },
-                                ),
-                              );
-                            },
-                            width: 40 * MediaQuery.of(context).size.width / 100,
-                            radius: 6,
-                            padding: EdgeInsets.only(left: 30, right: 30),
-                          )),
-                      SizedBox(
-                        height: 32,
+                      ToolbarBack(
+                        title: "ข้อมูลประกอบการรักษา",
                       ),
                     ],
+                  ))
+                ]),
+                Container(
+                  color: BlossomTheme.white,
+                  padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        BlossomText(
+                          "ระยะเวลาที่เป็นสิว",
+                          size: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        // AcneDurationInformationRadioGroup((acneDuration) {}),
+                        SliderAcneDuration((value) {
+                          acnePeriod = value;
+                          print("acnePeriod $acnePeriod");
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        BlossomText(
+                          "เคยรักษาสิวมาก่อนหรือไม่",
+                          size: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        AcneInformationRadioGroup((value) {
+                          acneCared = value;
+                          print("acneCared $acneCared");
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", _changeProductTextEditController,
+                            (boolean) {
+                          isChangeProduct = boolean;
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TrueFalseRadioGroup("มีภาวะเครียด", (data) {
+                          isStressed = data;
+                          print("isStressed $isStressed");
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TrueFalseRadioGroup("มีภาวะนอนน้อย, นอนดึก", (data) {
+                          sleepDeprivation = data;
+                          print("sleepDeprivation $sleepDeprivation");
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TrueFalseRadioGroup("ประจำเดือนมาปกติ", (data) {
+                          normalMenstruation = data;
+                          print("normalMenstruation $normalMenstruation");
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TrueFalseRadioGroup("ทานขนม นมเป็นประจำ", (data) {
+                          frequencySweet = data;
+                          print("frequencySweet $frequencySweet");
+                        }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        BlossomText(
+                          "รูป",
+                          size: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Consumer<AddCustomerInformationProvider>(
+                          builder: (BuildContext context, AddCustomerInformationProvider value, Widget child) {
+                            return Row(
+                              children: [
+                                CustomerInformationItem(
+                                  value.listFile[0],
+                                  isFirstItem: true,
+                                  listener: () {
+                                    _showImagePickerDialog(context, 0);
+                                  },
+                                ),
+                                CustomerInformationItem(
+                                  value.listFile[1],
+                                  isFirstItem: false,
+                                  listener: () {
+                                    _showImagePickerDialog(context, 1);
+                                  },
+                                ),
+                                CustomerInformationItem(
+                                  value.listFile[2],
+                                  isFirstItem: false,
+                                  listener: () {
+                                    _showImagePickerDialog(context, 2);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 32,
+                        ),
+                        Align(
+                            alignment: Alignment.center,
+                            child: ButtonPinkGradient(
+                              "ยืนยัน",
+                              true,
+                              () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext dialogContext) => CustomDialogTwoButton(
+                                    title: "ยืนยัน",
+                                    description: "คุณยืนยันการส่งข้อมูลให้ทางแพทย์",
+                                    positiveButton: "ยืนยัน",
+                                    positiveListener: () async {
+                                      Navigator.pop(dialogContext);
+                                      _provider.confirmPatientForm(
+                                          context,
+                                          _orderId,
+                                          acnePeriod,
+                                          acneCared,
+                                          isChangeProduct,
+                                          _changeProductTextEditController.text,
+                                          isStressed,
+                                          sleepDeprivation,
+                                          normalMenstruation,
+                                          frequencySweet);
+                                      // Navigator.pushAndRemoveUntil(
+                                      //     context, RouteManager.routeMain(initIndex: 1), (route) => false);
+                                    },
+                                    negativeButton: "ยกเลิก",
+                                    negativeListener: () {
+                                      Navigator.pop(dialogContext);
+                                    },
+                                  ),
+                                );
+                              },
+                              width: 40 * MediaQuery.of(context).size.width / 100,
+                              radius: 6,
+                              padding: EdgeInsets.only(left: 30, right: 30),
+                            )),
+                        SizedBox(
+                          height: 32,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

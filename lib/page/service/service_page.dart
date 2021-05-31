@@ -30,7 +30,14 @@ class ServicePage extends StatelessWidget {
               color: BlossomTheme.white,
               child: SingleChildScrollView(
                 child: Column(
-                  children: value.list.map((e) => _createReviewItem(context, e)).toList(),
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      children: value.list.map((e) => _createReviewItem(context, e)).toList(),
+                    ),
+                  ],
                 ),
               ),
             );

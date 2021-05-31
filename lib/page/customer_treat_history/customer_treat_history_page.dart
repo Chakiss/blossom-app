@@ -55,21 +55,46 @@ class CustomerTreatHistoryPage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemCount: value.list?.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
-                        return CustomerHistoryItem(
-                            value.list[index],
-                            _dateFormat,
-                            _dateFormatParse,
-                            _timeFormat,
-                            _timeFormatParse,
-                            _getDoctorProfileByIdUseCase,
-                            _sharedPrefUtils, (appointment, appointmentTime) {
-                          Navigator.push(
-                              context,
-                              RouteManager.routeCustomerHistoryDetail(
-                                  appointment,
-                                  "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
-                                  appointmentTime));
-                        });
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomerHistoryItem(
+                                  value.list[index],
+                                  _dateFormat,
+                                  _dateFormatParse,
+                                  _timeFormat,
+                                  _timeFormatParse,
+                                  _getDoctorProfileByIdUseCase,
+                                  _sharedPrefUtils, (appointment, appointmentTime) {
+                                Navigator.push(
+                                    context,
+                                    RouteManager.routeCustomerHistoryDetail(
+                                        appointment,
+                                        "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
+                                        appointmentTime));
+                              }),
+                            ],
+                          );
+                        } else {
+                          return CustomerHistoryItem(
+                              value.list[index],
+                              _dateFormat,
+                              _dateFormatParse,
+                              _timeFormat,
+                              _timeFormatParse,
+                              _getDoctorProfileByIdUseCase,
+                              _sharedPrefUtils, (appointment, appointmentTime) {
+                            Navigator.push(
+                                context,
+                                RouteManager.routeCustomerHistoryDetail(
+                                    appointment,
+                                    "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
+                                    appointmentTime));
+                          });
+                        }
                       },
                     );
                   }

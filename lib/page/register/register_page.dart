@@ -36,18 +36,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BlossomTheme.white,
+      backgroundColor: BlossomTheme.darkPink,
       body: Column(
         children: [
           Stack(
             children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  width: 100 * MediaQuery.of(context).size.width / 100,
-                  child: Image.asset("assets/nav_bar.png"),
-                ),
-              ),
               SafeArea(
                   child: ToolbarBack(
                 title: "ข้อมูลผู้ใช้",
@@ -57,9 +50,13 @@ class _RegisterPageState extends State<RegisterPage> {
           Expanded(
               child: SingleChildScrollView(
             child: Container(
-              width: 80 * MediaQuery.of(context).size.width / 100,
+              color: BlossomTheme.white,
+              padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: BlossomText(

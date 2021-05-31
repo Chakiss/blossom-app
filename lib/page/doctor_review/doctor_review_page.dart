@@ -35,7 +35,18 @@ class DoctorReviewPage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 itemCount:  value.list?.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
-                  return DoctorReviewItem(value.list[index]);
+                  if (index == 0) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        DoctorReviewItem(value.list[index]),
+                      ],
+                    );
+                  } else {
+                    return DoctorReviewItem(value.list[index]);
+                  }
                 },
               );
             }
