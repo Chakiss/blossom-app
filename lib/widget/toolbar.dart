@@ -8,6 +8,7 @@ class Toolbar extends StatelessWidget {
   Color backgroundColor;
   double titleSize;
   double padding;
+
   Toolbar({this.title, this.titleColor, this.backgroundColor, this.titleSize, this.padding});
 
   @override

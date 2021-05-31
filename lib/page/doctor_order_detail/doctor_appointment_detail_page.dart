@@ -37,17 +37,17 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
     return Consumer<DoctorAppointmentDetailProvider>(
         builder: (BuildContext context, DoctorAppointmentDetailProvider value, Widget child) {
       return Scaffold(
-          backgroundColor: BlossomTheme.white,
+          backgroundColor: BlossomTheme.darkPink,
           body: Column(children: [
             Stack(
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: 100 * MediaQuery.of(context).size.width / 100,
-                    child: Image.asset("assets/nav_bar.png"),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.topCenter,
+                //   child: Container(
+                //     width: 100 * MediaQuery.of(context).size.width / 100,
+                //     child: Image.asset("assets/nav_bar.png"),
+                //   ),
+                // ),
                 SafeArea(
                     child: ToolbarBack(
                   title: widget._name,
@@ -55,10 +55,12 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
               ],
             ),
             Container(
+              color: BlossomTheme.white,
               padding: EdgeInsets.symmetric(horizontal: 7 * MediaQuery.of(context).size.width / 100),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 20),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -102,37 +104,45 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
                 ],
               ),
             ),
-            SizedBox(
+            Container(
+              color: BlossomTheme.white,
               height: 4 * MediaQuery.of(context).size.height / 100,
             ),
-            AppointmentDetailSegmentControl((index) {
-              switch (index) {
-                case 0:
-                  _provider.setPage(AppointmentPrePage(widget._appointmentModel.form.pre));
-                  break;
-                case 1:
-                  _provider.setPage(AppointmentPostPage(widget._appointmentModel.form.post));
-                  break;
-                case 2:
-                  if (widget._appointmentModel.referenceShipnity?.isEmpty ?? true) {
-                    _provider.setPage(Container(
-                      child: Center(
-                        child: BlossomText(
-                          "ไม่พบข้อมูลสั่งยา",
-                          size: 20,
-                        ),
-                      ),
-                    ));
-                  } else {
-                    _provider.setPage(AppointmentDispensePage(_provider.shipnityOrderModel));
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: BlossomTheme.white,
+              child: Center(
+                child: AppointmentDetailSegmentControl((index) {
+                  switch (index) {
+                    case 0:
+                      _provider.setPage(AppointmentPrePage(widget._appointmentModel.form.pre));
+                      break;
+                    case 1:
+                      _provider.setPage(AppointmentPostPage(widget._appointmentModel.form.post));
+                      break;
+                    case 2:
+                      if (widget._appointmentModel.referenceShipnity?.isEmpty ?? true) {
+                        _provider.setPage(Container(
+                          child: Center(
+                            child: BlossomText(
+                              "ไม่พบข้อมูลสั่งยา",
+                              size: 20,
+                            ),
+                          ),
+                        ));
+                      } else {
+                        _provider.setPage(AppointmentDispensePage(_provider.shipnityOrderModel));
+                      }
+                      break;
                   }
-                  break;
-              }
-            }),
-            SizedBox(
+                }),
+              ),
+            ),
+            Container(
+              color: BlossomTheme.white,
               height: 20,
             ),
-            Expanded(child: value.page == null ? Container() : value.page),
+            Expanded(child: Container(color: BlossomTheme.white, child: value.page == null ? Container() : value.page)),
           ]));
     });
   }

@@ -18,6 +18,7 @@ class DoctorPage extends StatelessWidget {
     _provider = Provider.of(context, listen: false);
     _provider.getDoctorList(context);
     return BaseScreen(
+      safeAreaBottom: false,
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

@@ -27,7 +27,7 @@ class DoctorProfilePage extends StatelessWidget {
         children: [
           Toolbar(title: "ข้อมูลส่วนตัว"),
           SizedBox(
-            height: 50,
+            height: 20,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
