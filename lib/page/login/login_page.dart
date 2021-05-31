@@ -5,6 +5,7 @@ import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/page/login/login_provider.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_text.dart';
+import 'package:blossom_clinic/widget/button_login_apple.dart';
 import 'package:blossom_clinic/widget/button_login_facebook.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
@@ -96,14 +97,14 @@ class LoginPage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     // width: 56 * MediaQuery.of(context).size.width / 100,
                     radius: 6,
-                    height: 46,
+                    height: 44,
                   ),
                   getSignInAppleButton(context),
                   SizedBox(
                     height: 16,
                   ),
                   ButtonLoginFacebook(
-                    "เข้าสู่ระบบด้วย",
+                    "Sign in with Facebook",
                     true,
                         () {
                       _provider.loginWithFacebook(context);
@@ -111,7 +112,7 @@ class LoginPage extends StatelessWidget {
                     radius: 6,
                     width: MediaQuery.of(context).size.width,
                     // width: 56 * MediaQuery.of(context).size.width / 100,
-                    height: 46,
+                    height: 44,
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 26),
@@ -138,11 +139,16 @@ class LoginPage extends StatelessWidget {
             height: 16,
           ),
           Container(
-            child: SignInWithAppleButton(
-              height: 46,
-              onPressed: () {
+            child: ButtonLoginApple(
+              "Sign in with Apple",
+              true,
+              () {
                 _provider.loginWithApple(context);
               },
+              radius: 6,
+              width: MediaQuery.of(context).size.width,
+              // width: 56 * MediaQuery.of(context).size.width / 100,
+              height: 44,
             ),
           ),
         ],
