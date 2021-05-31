@@ -28,18 +28,11 @@ class CustomerTreatHistoryPage extends StatelessWidget {
     _provider = Provider.of(context, listen: false);
     _provider.callServiceGetAppointmentList();
     return Scaffold(
-      backgroundColor: BlossomTheme.white,
+      backgroundColor: BlossomTheme.darkPink,
       body: Column(
         children: [
           Stack(
             children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  width: 100 * MediaQuery.of(context).size.width / 100,
-                  child: Image.asset("assets/nav_bar.png"),
-                ),
-              ),
               SafeArea(
                 child: ToolbarBack(
                   title: "ประวัติการรักษา",
@@ -48,37 +41,40 @@ class CustomerTreatHistoryPage extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: Consumer<CustomerTreatHistoryProvider>(
-              builder: (BuildContext context, CustomerTreatHistoryProvider value, Widget child) {
-                if (value.list == null) {
-                  return Container(
-                      child: Center(
-                    child: BlossomProgressIndicator(),
-                  ));
-                } else {
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: value.list?.length ?? 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CustomerHistoryItem(
-                          value.list[index],
-                          _dateFormat,
-                          _dateFormatParse,
-                          _timeFormat,
-                          _timeFormatParse,
-                          _getDoctorProfileByIdUseCase,
-                          _sharedPrefUtils, (appointment, appointmentTime) {
-                        Navigator.push(
-                            context,
-                            RouteManager.routeCustomerHistoryDetail(
-                                appointment,
-                                "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
-                                appointmentTime));
-                      });
-                    },
-                  );
-                }
-              },
+            child: Container(
+              color: BlossomTheme.white,
+              child: Consumer<CustomerTreatHistoryProvider>(
+                builder: (BuildContext context, CustomerTreatHistoryProvider value, Widget child) {
+                  if (value.list == null) {
+                    return Container(
+                        child: Center(
+                      child: BlossomProgressIndicator(),
+                    ));
+                  } else {
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: value.list?.length ?? 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        return CustomerHistoryItem(
+                            value.list[index],
+                            _dateFormat,
+                            _dateFormatParse,
+                            _timeFormat,
+                            _timeFormatParse,
+                            _getDoctorProfileByIdUseCase,
+                            _sharedPrefUtils, (appointment, appointmentTime) {
+                          Navigator.push(
+                              context,
+                              RouteManager.routeCustomerHistoryDetail(
+                                  appointment,
+                                  "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
+                                  appointmentTime));
+                        });
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           )
         ],

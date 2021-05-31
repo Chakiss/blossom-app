@@ -21,7 +21,6 @@ class DrugPage extends StatelessWidget {
               title: "ยา",
               backgroundColor: BlossomTheme.darkPink,
               titleSize: 24,
-              padding: 12,
             ),
             Expanded(
                 child: WebviewScaffold(

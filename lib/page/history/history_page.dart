@@ -39,6 +39,9 @@ class _HistoryPageState extends State<HistoryPage> {
       title: "รายการ",
       child: Column(
         children: [
+          SizedBox(
+            height: 20,
+          ),
           Center(
               child: HistorySegmentControl(
             (index) {

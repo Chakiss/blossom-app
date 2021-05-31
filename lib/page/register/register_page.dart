@@ -6,6 +6,7 @@ import 'package:blossom_clinic/widget/text_stroke_black.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +48,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Image.asset("assets/nav_bar.png"),
                 ),
               ),
-              SafeArea(child: ToolbarBack(title: "ข้อมูลผู้ใช้",)),
+              SafeArea(
+                  child: ToolbarBack(
+                title: "ข้อมูลผู้ใช้",
+              )),
             ],
           ),
           Expanded(
@@ -188,30 +192,46 @@ class _RegisterPageState extends State<RegisterPage> {
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () async {
-                      final DateTime picked = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          // Refer step 1
-                          firstDate: DateTime(1970),
-                          lastDate: DateTime.now(),
-                          builder: (BuildContext context, Widget child) {
-                            return Theme(
-                              data: ThemeData.dark().copyWith(
-                                colorScheme: ColorScheme.dark(
-                                  primary: BlossomTheme.pink,
-                                  onPrimary: BlossomTheme.black,
-                                  surface: BlossomTheme.darkPink,
-                                  onSurface: BlossomTheme.black,
-                                ),
-                                dialogBackgroundColor: BlossomTheme.white,
-                              ),
-                              child: child,
-                            );
-                          });
-                      if (picked != null)
+                      var currentTime = DateTime.now();
+                      DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: DateTime(1970),
+                          maxTime: DateTime(currentTime.year, currentTime.month, currentTime.day),
+                          theme: DatePickerTheme(
+                              headerColor: BlossomTheme.white,
+                              backgroundColor: BlossomTheme.white,
+                              itemStyle:
+                                  TextStyle(color: BlossomTheme.darkPink, fontWeight: FontWeight.bold, fontSize: 18),
+                              doneStyle: TextStyle(color: BlossomTheme.darkPink, fontSize: 16)),
+                          onChanged: (date) {}, onConfirm: (date) {
                         setState(() {
-                          selectedDate = picked;
+                          selectedDate = date;
                         });
+                      }, currentTime: selectedDate ?? DateTime.now(), locale: LocaleType.th);
+                      // final DateTime picked = await showDatePicker(
+                      //     context: context,
+                      //     initialDate: DateTime.now(),
+                      //     // Refer step 1
+                      //     firstDate: DateTime(1970),
+                      //     lastDate: DateTime.now(),
+                      //     builder: (BuildContext context, Widget child) {
+                      //       return Theme(
+                      //         data: ThemeData.dark().copyWith(
+                      //           colorScheme: ColorScheme.dark(
+                      //             primary: BlossomTheme.pink,
+                      //             onPrimary: BlossomTheme.black,
+                      //             surface: BlossomTheme.darkPink,
+                      //             onSurface: BlossomTheme.black,
+                      //           ),
+                      //           dialogBackgroundColor: BlossomTheme.white,
+                      //         ),
+                      //         child: child,
+                      //       );
+                      //     });
+                      // if (picked != null)
+                      //   setState(() {
+                      //     selectedDate = picked;
+                      //   });
                     },
                     child: TextStrokeBlack(
                       selectedDate == null ? "" : dateFormat.format(selectedDate),
@@ -237,7 +257,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: 30 * MediaQuery.of(context).size.width / 100,
                     height: 40,
                     radius: 6,
-                  )
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
                 ],
               ),
             ),

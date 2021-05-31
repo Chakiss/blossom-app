@@ -13,8 +13,10 @@ class Toolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor ?? Colors.transparent,
-      padding: EdgeInsets.all(padding ?? 16),
+      // color: backgroundColor ?? Colors.transparent,
+      color: backgroundColor ?? BlossomTheme.darkPink,
+      padding: EdgeInsets.symmetric(horizontal: padding ?? 16),
+      height: 60,
       child: Row(
         children: [
           Expanded(

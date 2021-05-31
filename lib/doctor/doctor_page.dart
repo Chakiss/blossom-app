@@ -26,9 +26,6 @@ class DoctorPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Toolbar(title: "พบแพทย์",),
-            Container(
-              height: 30,
-            ),
             Expanded(child: Container(
               child: Consumer<DoctorProvider>(
                 builder: (BuildContext context, DoctorProvider value, Widget child) {

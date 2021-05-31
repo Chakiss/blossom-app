@@ -143,7 +143,10 @@ class _FacebookUpdateProfileSecondPageState extends State<FacebookUpdateProfileS
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,
                   radius: 6,
-                )
+                ),
+                SizedBox(
+                  height: 40,
+                ),
               ],
             ),
           ),

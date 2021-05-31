@@ -144,7 +144,10 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                   width: 30 * MediaQuery.of(context).size.width / 100,
                   height: 40,
                   radius: 6,
-                )
+                ),
+                SizedBox(
+                  height: 40,
+                ),
               ],
             ),
           ),
