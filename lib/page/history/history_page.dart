@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/base/base_screen.dart';
 import 'package:blossom_clinic/base/base_screen_second.dart';
+import 'package:blossom_clinic/blossom_theme.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/shipnity_order_model.dart';
 import 'package:blossom_clinic/page/history/history_provider.dart';
@@ -7,11 +8,13 @@ import 'package:blossom_clinic/page/webview/web_view_page.dart';
 import 'package:blossom_clinic/utils/error_handle.dart';
 import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/widget/blossom_progress_indicator.dart';
+import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/customer_appointment_item.dart';
 import 'package:blossom_clinic/widget/dialog/call_type_dialog.dart';
 import 'package:blossom_clinic/widget/history_segment_control.dart';
 import 'package:blossom_clinic/widget/shipnity_order_item.dart';
 import 'package:blossom_clinic/widget/toolbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:intl/intl.dart';
@@ -157,20 +160,78 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   void _showCallTypeDialog(BuildContext context, AppointmentModel appointmentModel) {
-    showDialog(
+    showCupertinoModalPopup<void>(
       context: context,
-      builder: (BuildContext dialogContext) {
-        return CallTypeDialog((type) {
-          Navigator.pop(context);
-          if (type == 0) {
-            _goToChatPage(context, appointmentModel);
-          } else if (type == 1) {
-            _goToVoiceCallDoctorPage(context, appointmentModel);
-          } else {
-            _goToCallDoctorPage(context, appointmentModel);
-          }
-        });
-      },
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: BlossomText(
+          "เลือกประเภทการโทร",
+          textAlign: TextAlign.center,
+          size: 22,
+        ),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "แชท",
+              textAlign: TextAlign.center,
+              size: 20,
+              color: BlossomTheme.darkPink,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              _goToChatPage(context, appointmentModel);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "โทร",
+              textAlign: TextAlign.center,
+              size: 20,
+              color: BlossomTheme.darkPink,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              _goToVoiceCallDoctorPage(context, appointmentModel);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "วีดีโอ",
+              textAlign: TextAlign.center,
+              size: 20,
+              color: BlossomTheme.darkPink,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              _goToCallDoctorPage(context, appointmentModel);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "ยกเลิก",
+              textAlign: TextAlign.center,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
     );
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext dialogContext) {
+    //     return CallTypeDialog((type) {
+    //       Navigator.pop(context);
+    //       if (type == 0) {
+    //         _goToChatPage(context, appointmentModel);
+    //       } else if (type == 1) {
+    //         _goToVoiceCallDoctorPage(context, appointmentModel);
+    //       } else {
+    //         _goToCallDoctorPage(context, appointmentModel);
+    //       }
+    //     });
+    //   },
+    // );
   }
 }

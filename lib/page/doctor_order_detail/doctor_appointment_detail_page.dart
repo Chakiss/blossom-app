@@ -8,6 +8,7 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/dialog/call_type_dialog.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -152,20 +153,78 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
   }
 
   void _showCallTypeDialog(BuildContext context, String url) {
-    showDialog(
+    showCupertinoModalPopup<void>(
       context: context,
-      builder: (BuildContext dialogContext) {
-        return CallTypeDialog((type) {
-          Navigator.pop(context);
-          if (type == 0) {
-            _goToChatPage(context, widget._appointmentModel);
-          } else if (type == 1) {
-            Navigator.push(context, RouteManager.routeVoiceCallCustomer(widget._appointmentModel));
-          } else {
-            Navigator.push(context, RouteManager.routeDoctorCallCustomer(widget._appointmentModel));
-          }
-        });
-      },
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: BlossomText(
+          "เลือกประเภทการโทร",
+          textAlign: TextAlign.center,
+          size: 22,
+        ),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "แชท",
+              textAlign: TextAlign.center,
+              size: 20,
+              color: BlossomTheme.darkPink,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              _goToChatPage(context, widget._appointmentModel);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "โทร",
+              textAlign: TextAlign.center,
+              size: 20,
+              color: BlossomTheme.darkPink,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(context, RouteManager.routeVoiceCallCustomer(widget._appointmentModel));
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "วีดีโอ",
+              textAlign: TextAlign.center,
+              size: 20,
+              color: BlossomTheme.darkPink,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(context, RouteManager.routeDoctorCallCustomer(widget._appointmentModel));
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: BlossomText(
+              "ยกเลิก",
+              textAlign: TextAlign.center,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
     );
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext dialogContext) {
+    //     return CallTypeDialog((type) {
+    //       Navigator.pop(context);
+    //       if (type == 0) {
+    //         _goToChatPage(context, widget._appointmentModel);
+    //       } else if (type == 1) {
+    //         Navigator.push(context, RouteManager.routeVoiceCallCustomer(widget._appointmentModel));
+    //       } else {
+    //         Navigator.push(context, RouteManager.routeDoctorCallCustomer(widget._appointmentModel));
+    //       }
+    //     });
+    //   },
+    // );
   }
 }
