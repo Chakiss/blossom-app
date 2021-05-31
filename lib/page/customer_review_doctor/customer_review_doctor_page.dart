@@ -23,10 +23,11 @@ class CustomerReviewDoctorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     return BaseScreenSecond(
-      true,
+      false,
       title: "รีวิวแพทย์",
       child: SingleChildScrollView(
         child: Container(
+          color: BlossomTheme.white,
           padding: EdgeInsets.symmetric(horizontal: 8 * MediaQuery.of(context).size.width / 100),
           child: Column(
             children: [
