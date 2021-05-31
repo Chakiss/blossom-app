@@ -9,28 +9,27 @@ import 'package:provider/provider.dart';
 import '../../blossom_theme.dart';
 
 class DispensePage extends StatelessWidget {
-
   DispenseProvider _provider;
 
   @override
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     _provider.getProductList(context);
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: BlossomTheme.white,
-        ),
-        Column(
-          children: [
-            Container(
-              width: 100 * MediaQuery.of(context).size.width / 100,
-              child: Image.asset("assets/nav_bar.png"),
-            ),
-            Expanded(
+    return Scaffold(
+      backgroundColor: BlossomTheme.darkPink,
+      body: SafeArea(
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ToolbarBack(
+            title: "สั่งยา",
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: Container(
+              color: BlossomTheme.white,
               child: Consumer<DispenseProvider>(
                 builder: (BuildContext context, DispenseProvider value, Widget child) {
                   return value.list == null
@@ -39,34 +38,25 @@ class DispensePage extends StatelessWidget {
                           itemCount: value.list?.length ?? 0,
                           itemBuilder: (BuildContext context, int index) {
                             return DispenseItem(value.list[index], (product, amount) {
-                                _provider.addProductToOrder(product, amount);
+                              _provider.addProductToOrder(product, amount);
                             });
                           },
                         );
                 },
               ),
             ),
-            ButtonPinkGradient(
-              "ยืนยัน",
-              true,
-              () {
-                _provider.callServiceCreateOrder(context);
-              },
-              width: MediaQuery.of(context).size.width,
-              height: 60,
-            )
-          ],
-        ),
-        SafeArea(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ToolbarBack(
-              title: "สั่งยา",
-            ),
-          ],
-        ))
-      ],
+          ),
+          ButtonPinkGradient(
+            "ยืนยัน",
+            true,
+            () {
+              _provider.callServiceCreateOrder(context);
+            },
+            width: MediaQuery.of(context).size.width,
+            height: 60,
+          ),
+        ],
+      )),
     );
   }
 }
