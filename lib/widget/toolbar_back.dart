@@ -40,7 +40,8 @@ class ToolbarBack extends StatelessWidget {
                       child: BlossomText(
                         title ?? "",
                         color: titleColor ?? BlossomTheme.white,
-                        size: titleSize ?? 28,
+                        // size: titleSize ?? 28,
+                        size: 22,
                       )),
                 ),
               )
