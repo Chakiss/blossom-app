@@ -226,7 +226,7 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
                           context,
                           widget._mapResult,
                           _emailTextController.text,
-                          _phoneNumberTextController.text,
+                          _phoneNumberTextController.text ?? "",
                           _nameTextController.text,
                           _lastNameTextController.text,
                           // _selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(_selectedDate));

@@ -246,7 +246,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           emailTextController.text,
                           passwordTextController.text,
                           confirmPasswordTextController.text,
-                          phoneNumberTextController.text,
+                          phoneNumberTextController.text ?? "",
                           nameTextController.text,
                           lastNameTextController.text,
                           selectedDate == null ? DateFormat("yyyy-MM-dd").format(DateTime.now()) : DateFormat("yyyy-MM-dd").format(selectedDate));
