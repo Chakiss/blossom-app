@@ -123,9 +123,11 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
         } else {
           final profileResult = await _getUserProfileUseCase.execute(userCredential.user.uid);
           Navigator.pop(context);
-          profileResult.whenWithResult((data) {
+          profileResult.whenWithResult((data) async {
             if (data == null) {
-              _goToAppleUpdateProfile(context, mapResult);
+              await _firebaseAuth.signOut();
+              errorHandle.proceed(context, {"message": "Sorry, we couldn't find that account. Theres no Blossom account with that Apple ID or email address. If you already have an account, please sign in with a different option. If you don't have an account, create a new one."});
+              // _goToAppleUpdateProfile(context, mapResult);
             } else {
               _goToMainPage(context);
             }

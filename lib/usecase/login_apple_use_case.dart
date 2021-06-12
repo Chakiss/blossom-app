@@ -25,10 +25,10 @@ class LoginAppleUseCase extends BaseAsyncUseCase<String, Map<String, dynamic>> {
         ),
       );
 
-      // final AuthCredential credential = OAuthProvider("apple.com")
-      //     .credential(accessToken: appleCredential.authorizationCode, idToken: appleCredential.identityToken);
-      var provider = OAuthProvider("apple.com");
-      final userCredential = await _firebaseAuth.signInWithPopup(provider);
+      final AuthCredential credential = OAuthProvider("apple.com")
+          .credential(accessToken: appleCredential.authorizationCode, idToken: appleCredential.identityToken);
+
+      final userCredential = await _firebaseAuth.signInWithCredential(credential);
       Map<String, dynamic> mapResult = {"appleCredential": appleCredential, "userCredential": userCredential};
       return Success(mapResult);
     } catch (e) {
