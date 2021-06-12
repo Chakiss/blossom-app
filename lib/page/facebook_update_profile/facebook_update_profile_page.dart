@@ -229,7 +229,8 @@ class _FacebookUpdateProfilePageState extends State<FacebookUpdateProfilePage> {
                           _phoneNumberTextController.text,
                           _nameTextController.text,
                           _lastNameTextController.text,
-                          _selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(_selectedDate));
+                          // _selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(_selectedDate));
+                          _selectedDate == null ? DateFormat("yyyy-MM-dd").format(DateTime.now()) : DateFormat("yyyy-MM-dd").format(_selectedDate));
                     },
                     width: 30 * MediaQuery.of(context).size.width / 100,
                     height: 40,

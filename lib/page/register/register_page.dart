@@ -249,7 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           phoneNumberTextController.text,
                           nameTextController.text,
                           lastNameTextController.text,
-                          selectedDate == null ? null : DateFormat("yyyy-MM-dd").format(selectedDate));
+                          selectedDate == null ? DateFormat("yyyy-MM-dd").format(DateTime.now()) : DateFormat("yyyy-MM-dd").format(selectedDate));
                     },
                     width: 30 * MediaQuery.of(context).size.width / 100,
                     height: 40,

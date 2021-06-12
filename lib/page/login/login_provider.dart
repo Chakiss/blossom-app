@@ -150,14 +150,19 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
       Navigator.pushReplacement(context, RouteManager.routeDoctorMain());
   }
 
-  void _goToAppleUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
+  Future<void> _goToAppleUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
     final appleCredential = mapResult["appleCredential"] as AuthorizationCredentialAppleID;
     String email = appleCredential.email ?? "";
-    String name = "";
-    Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
+    if (email.isEmpty) {
+      await _firebaseAuth.signOut();
+      errorHandle.proceed(context, {"message": "Sorry, we couldn't find that account. Theres no Blossom account with that Apple ID or email address. If you already have an account, please sign in with a different option. If you don't have an account, create a new one."});
+    } else {
+      String name = "";
+      Navigator.push(context, RouteManager.routeFacebookUpdateProfile(email, name, mapResult));
+    }
   }
 
-  void _goToFacebookUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
+  Future<void> _goToFacebookUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {
     final userData = await _facebookAuth.getUserData();
     String email = userData["email"] ?? "";
     String name = userData["name"] ?? "";
