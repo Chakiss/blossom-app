@@ -99,21 +99,21 @@ class LoginPage extends StatelessWidget {
                     radius: 6,
                     height: 44,
                   ),
-                  getSignInAppleButton(context),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  ButtonLoginFacebook(
-                    "Sign in with Facebook",
-                    true,
-                        () {
-                      _provider.loginWithFacebook(context);
-                    },
-                    radius: 6,
-                    width: MediaQuery.of(context).size.width,
+                  // getSignInAppleButton(context),
+                  // SizedBox(
+                  //   height: 16,
+                  // ),
+                  // ButtonLoginFacebook(
+                  //   "Sign in with Facebook",
+                  //   true,
+                  //       () {
+                  //     _provider.loginWithFacebook(context);
+                  //   },
+                  //   radius: 6,
+                  //   width: MediaQuery.of(context).size.width,
                     // width: 56 * MediaQuery.of(context).size.width / 100,
-                    height: 44,
-                  ),
+                    // height: 44,
+                  // ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 26),
                     color: BlossomTheme.black,

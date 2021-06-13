@@ -3,7 +3,6 @@ import 'package:blossom_clinic/widget/blossom_text.dart';
 import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/text_field_stroke_black.dart';
 import 'package:blossom_clinic/widget/text_stroke_black.dart';
-import 'package:blossom_clinic/widget/toolbar.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -60,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: BlossomText(
-                      "อีเมล",
+                      "อีเมล*",
                       size: 16,
                       color: BlossomTheme.black,
                       fontWeight: FontWeight.bold,
@@ -79,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: BlossomText(
-                      "รหัสผ่าน",
+                      "รหัสผ่าน*",
                       size: 16,
                       color: BlossomTheme.black,
                       fontWeight: FontWeight.bold,
@@ -99,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: BlossomText(
-                      "ยืนยันรหัสผ่าน",
+                      "ยืนยันรหัสผ่าน*",
                       size: 16,
                       color: BlossomTheme.black,
                       fontWeight: FontWeight.bold,
@@ -139,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: BlossomText(
-                      "ชื่อ",
+                      "ชื่อ*",
                       size: 16,
                       color: BlossomTheme.black,
                       fontWeight: FontWeight.bold,
@@ -158,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: BlossomText(
-                      "นามสกุล",
+                      "นามสกุล*",
                       size: 16,
                       color: BlossomTheme.black,
                       fontWeight: FontWeight.bold,

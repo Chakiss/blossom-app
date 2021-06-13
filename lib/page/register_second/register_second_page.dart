@@ -69,7 +69,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
-                    "ลักษณะผิว",
+                    "ลักษณะผิว*",
                     size: 16,
                     color: BlossomTheme.black,
                     fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
-                    "ลักษณะสิว",
+                    "ลักษณะสิว*",
                     size: 16,
                     color: BlossomTheme.black,
                     fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
-                    "เคยรักษาสิว?",
+                    "เคยรักษาสิว?*",
                     size: 16,
                     color: BlossomTheme.black,
                     fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: BlossomText(
-                    "ประวัติแพ้ยา",
+                    "ประวัติแพ้ยา*",
                     size: 16,
                     color: BlossomTheme.black,
                     fontWeight: FontWeight.bold,

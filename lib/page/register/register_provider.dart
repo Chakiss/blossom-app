@@ -36,10 +36,10 @@ class RegisterProvider extends BaseProvider with ChangeNotifier {
       errorHandle.proceed(context, {"message" : "กรุณาใส่รหัสผ่านทั้งสองช่องให้เหมือนกัน"});
       return;
     }
-    if (phoneNumber?.isEmpty ?? true) {
-      errorHandle.proceed(context, {"message" : "กรุณากรอกเบอร์โทรศัพท์"});
-      return;
-    }
+    // if (phoneNumber?.isEmpty ?? true) {
+    //   errorHandle.proceed(context, {"message" : "กรุณากรอกเบอร์โทรศัพท์"});
+    //   return;
+    // }
     if (!(_validatePhoneNumberUseCase.execute(phoneNumber) as Success<bool>).data) {
       errorHandle.proceed(context, {"message" : "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง"});
       return;
