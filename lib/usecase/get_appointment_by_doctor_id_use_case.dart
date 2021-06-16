@@ -15,6 +15,7 @@ class GetAppointmentByDoctorIdUseCase extends BaseAsyncUseCase<String, List<Appo
       final snapshot = await _firestore
           .collection("appointments")
           .where("doctorReference", isEqualTo: _firestore.collection("doctors").doc(parameter))
+          .orderBy("timeStart", descending: true)
           .get();
       final list = snapshot.docs.map((e) => AppointmentModel.fromJson(e.id, e.data())).toList();
       return Success(list);
