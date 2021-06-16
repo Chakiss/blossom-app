@@ -63,11 +63,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Blossom app wants to access your camera.</string>
+	<string>Blossom app wants to access your camera to take a photo.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Blossom app wants to access your microphone.</string>
+	<string>Blossom app wants to access your microphone to contact to doctor.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Blossom app wants to access your photo library.</string>
+	<string>Blossom app accesses your photo library to upload and display photos.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
