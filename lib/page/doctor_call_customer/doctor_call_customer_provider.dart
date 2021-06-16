@@ -2,6 +2,7 @@ import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/fcm/fcm_manager.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
@@ -22,10 +23,15 @@ class DoctorCallCustomerProvider extends BaseProvider with ChangeNotifier {
 
   DoctorCallCustomerProvider(this._userData);
 
+  String _appointmentId;
+  int _userConnectyCubeId;
+  bool _isGoToDiagnose = false;
+
   Future<void> signInConnectyCube(BuildContext context, AppointmentModel appointmentModel) async {
     final snapshot = await appointmentModel.userReference.get();
     final UserProfileModel userProfileModel = UserProfileModel.fromJson(snapshot.id, snapshot.data());
-
+    _appointmentId = appointmentModel.id;
+    _userConnectyCubeId = userProfileModel.referenceConnectyCubeID;
     CubeUser cubeUser = CubeUser(
         id: _userData.doctorInfoModel.referenceConnectyCubeID,
         login: _userData.doctorInfoModel.doctorId,
@@ -87,6 +93,7 @@ class DoctorCallCustomerProvider extends BaseProvider with ChangeNotifier {
         mirror: true,
       );
       notifyListeners();
+      _isGoToDiagnose = true;
     };
 
     callSession.onRemoteStreamRemoved = (callSession, opponentId, mediaStream) {
@@ -156,6 +163,9 @@ class DoctorCallCustomerProvider extends BaseProvider with ChangeNotifier {
       await streamRender.dispose();
     }
     Navigator.pop(context);
+    if (_isGoToDiagnose) {
+      Navigator.push(context, RouteManager.routeDoctorDiagnose(_userConnectyCubeId, _appointmentId));
+    }
   }
 
   Future<void> endCall(BuildContext context) async {
@@ -169,6 +179,9 @@ class DoctorCallCustomerProvider extends BaseProvider with ChangeNotifier {
       callSession.hungUp();
     }
     Navigator.pop(context);
+    if (_isGoToDiagnose) {
+      Navigator.push(context, RouteManager.routeDoctorDiagnose(_userConnectyCubeId, _appointmentId));
+    }
   }
 
   void setMuteAudio() {
@@ -193,23 +206,5 @@ class DoctorCallCustomerProvider extends BaseProvider with ChangeNotifier {
       callSession.setVideoEnabled(isVideoEnable);
       notifyListeners();
     }
-  }
-
-  void sendPushNotification(int doctorConnectyCubeId, String appointmentId) {
-    CreateEventParams params = CreateEventParams();
-    params.parameters = {
-      'message': "มีการโทรเข้าจาก " + "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
-      // 'message' field is required
-      'custom_parameter1': appointmentId,
-      'ios_voip': 1
-      // to send VoIP push notification to iOS
-      //more standard parameters you can found by link https://developers.connectycube.com/server/push_notifications?id=universal-push-notifications
-    };
-
-    params.notificationType = NotificationType.PUSH;
-    params.environment = CubeEnvironment.PRODUCTION;
-    params.usersIds = [doctorConnectyCubeId, _userData.userProfileModel.referenceConnectyCubeID];
-
-    createEvent(params.getEventForRequest()).then((cubeEvent) {}).catchError((error) {});
   }
 }

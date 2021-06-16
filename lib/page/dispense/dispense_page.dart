@@ -24,9 +24,6 @@ class DispensePage extends StatelessWidget {
           ToolbarBack(
             title: "สั่งยา",
           ),
-          SizedBox(
-            height: 20,
-          ),
           Expanded(
             child: Container(
               color: BlossomTheme.white,

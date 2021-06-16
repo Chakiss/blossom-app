@@ -63,6 +63,9 @@ class _DoctorDiagnosePageState extends State<DoctorDiagnosePage> {
             padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
             child: Column(
               children: [
+                SizedBox(
+                  height: 20,
+                ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: BlossomText(

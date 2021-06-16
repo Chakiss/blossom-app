@@ -2,6 +2,7 @@ import 'package:blossom_clinic/base/base_provider.dart';
 import 'package:blossom_clinic/fcm/fcm_manager.dart';
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/model/user_profile_model.dart';
+import 'package:blossom_clinic/utils/route_manager.dart';
 import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
@@ -29,12 +30,14 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
   String minute;
   String second;
   StopWatchTimer _stopWatchTimer;
-
+  int userConnectyCubeId;
+  bool isGoToDiagnose = false;
 
   Future<void> signInConnectyCube(BuildContext context) async {
     final snapshot = await _appointmentModel.userReference.get();
     final UserProfileModel userProfileModel = UserProfileModel.fromJson(snapshot.id, snapshot.data());
     customerFullName = "${userProfileModel.firstName} ${userProfileModel.lastName}";
+    userConnectyCubeId = userProfileModel.referenceConnectyCubeID;
     notifyListeners();
 
     CubeUser cubeUser = CubeUser(
@@ -46,8 +49,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     _connectCubeChat(context, cubeUser, userProfileModel);
   }
 
-  void _connectCubeChat(
-      BuildContext context, CubeUser cubeUser, UserProfileModel userProfileModel) {
+  void _connectCubeChat(BuildContext context, CubeUser cubeUser, UserProfileModel userProfileModel) {
     if (CubeChatConnection.instance.isAuthenticated()) {
       _initCustomerCallClient(context, userProfileModel);
     } else {
@@ -66,8 +68,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     _initCallSession(context, callSession, userProfileModel);
   }
 
-  void _initCallSession(
-      BuildContext context, P2PSession callSession, UserProfileModel userProfileModel) {
+  void _initCallSession(BuildContext context, P2PSession callSession, UserProfileModel userProfileModel) {
     callSession.onLocalStreamReceived = (mediaStream) async {
       logger.d("Prew, onLocalStreamReceived");
       streamRenderSelf = RTCVideoRenderer();
@@ -101,9 +102,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
 
       _stopWatchTimer = StopWatchTimer(
         mode: StopWatchMode.countUp,
-        onChange: (value) {
-
-        },
+        onChange: (value) {},
         onChangeRawSecond: (value) {
           print("RawSecond");
           print(value);
@@ -117,6 +116,7 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
         },
       );
       _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+      isGoToDiagnose = true;
     };
 
     callSession.onRemoteStreamRemoved = (callSession, opponentId, mediaStream) {
@@ -188,6 +188,9 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     }
     _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     Navigator.pop(context);
+    if (isGoToDiagnose) {
+      Navigator.push(context, RouteManager.routeDoctorDiagnose(userConnectyCubeId, _appointmentModel.id));
+    }
   }
 
   Future<void> endCall(BuildContext context) async {
@@ -202,6 +205,9 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
     }
     _stopWatchTimer?.onExecute?.add(StopWatchExecute.stop);
     Navigator.pop(context);
+    if (isGoToDiagnose) {
+      Navigator.push(context, RouteManager.routeDoctorDiagnose(userConnectyCubeId, _appointmentModel.id));
+    }
   }
 
   void setMuteAudio() {
@@ -228,24 +234,6 @@ class VoiceCallCustomerProvider extends BaseProvider with ChangeNotifier {
         notifyListeners();
       }
     }
-  }
-
-  void sendPushNotification(int doctorConnectyCubeId, String appointmentId) {
-    CreateEventParams params = CreateEventParams();
-    params.parameters = {
-      'message': "มีการโทรเข้าจาก " + "${_userData.userProfileModel.firstName} ${_userData.userProfileModel.lastName}",
-      // 'message' field is required
-      'custom_parameter1': appointmentId,
-      'ios_voip': 1
-      // to send VoIP push notification to iOS
-      //more standard parameters you can found by link https://developers.connectycube.com/server/push_notifications?id=universal-push-notifications
-    };
-
-    params.notificationType = NotificationType.PUSH;
-    params.environment = CubeEnvironment.PRODUCTION;
-    params.usersIds = [doctorConnectyCubeId, _userData.userProfileModel.referenceConnectyCubeID];
-
-    createEvent(params.getEventForRequest()).then((cubeEvent) {}).catchError((error) {});
   }
 
   @override
