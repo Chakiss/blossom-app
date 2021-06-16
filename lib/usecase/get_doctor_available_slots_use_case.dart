@@ -20,8 +20,10 @@ class GetDoctorAvailableSlotsUseCase extends BaseAsyncUseCase<String, List<Avail
           .doc(parameter)
           .collection("availableSlots")
           .where("slotType", isEqualTo: 1)
-          .where("date", isGreaterThan: DateFormat("yyyy-MM-dd").format(DateTime.now()))
+          .where("date", isGreaterThanOrEqualTo: DateFormat("yyyy-MM-dd").format(DateTime.now()))
+          // .where("timeStart", isGreaterThanOrEqualTo: DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()))
           .orderBy("date")
+          // .orderBy("timeStart")
           .get();
       final list = snapshot.docs
           .map((e) => AvailableSlotModel(
