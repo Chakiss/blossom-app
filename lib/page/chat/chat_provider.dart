@@ -109,7 +109,11 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
 
     getMessages(_cubeDialog.dialogId, params.getRequestParameters()).then((pagedResult) {
       print(pagedResult);
-      chatList = pagedResult.items;
+      if (pagedResult.items != null) {
+        chatList = pagedResult.items;
+      } else {
+        chatList = [];
+      }
       notifyListeners();
       _observeMessage();
     }).catchError((error) {
