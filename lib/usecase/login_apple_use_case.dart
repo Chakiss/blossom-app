@@ -18,7 +18,7 @@ class LoginAppleUseCase extends BaseAsyncUseCase<String, Map<String, dynamic>> {
           AppleIDAuthorizationScopes.fullName,
         ],
         webAuthenticationOptions: WebAuthenticationOptions(
-          clientId: "com.blossomclinic.app",
+          clientId: "com.blossomclinic.blossomapp",
           redirectUri: Uri.parse(
             'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
           ),

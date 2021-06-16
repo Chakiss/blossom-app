@@ -82,7 +82,7 @@ Future<void> _subscribe(String token) async {
   } else if (Platform.isIOS) {
     parameters.channel = NotificationsChannels.APNS;
     parameters.platform = CubePlatform.IOS;
-    parameters.bundleIdentifier = "com.blossomclinic.app";
+    parameters.bundleIdentifier = "com.blossomclinic.blossomapp";
   }
 
   String deviceId = await _getDeviceId();
