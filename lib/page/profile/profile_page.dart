@@ -127,18 +127,18 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 8,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
-              child: ButtonLoginFacebook(
-                "Sync บัญชีกับ Facebook",
-                true,
-                () {
-                  _profileProvider.syncAccountWithFacebook(context);
-                },
-                radius: 6,
-                height: 46,
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
+            //   child: ButtonLoginFacebook(
+            //     "Sync บัญชีกับ Facebook",
+            //     true,
+            //     () {
+            //       _profileProvider.syncAccountWithFacebook(context);
+            //     },
+            //     radius: 6,
+            //     height: 46,
+            //   ),
+            // ),
             Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
