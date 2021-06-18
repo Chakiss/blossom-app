@@ -23,6 +23,7 @@ class DoctorProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     _profileProvider = Provider.of(context, listen: false);
     return BaseScreen(
+      safeAreaBottom: false,
       child: Column(
         children: [
           Toolbar(title: "ข้อมูลส่วนตัว"),

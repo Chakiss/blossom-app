@@ -16,6 +16,7 @@ class DoctorHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     _provider = Provider.of(context, listen: false);
     return BaseScreen(
+      safeAreaBottom: false,
       child: Column(
         children: [
           Toolbar(title: "สวัสดี ${_userData.doctorInfoModel?.displayName}"),

@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class DoctorHistorySegmentControl extends StatefulWidget {
 
   Function(int) listener;
+  int selectedPosition;
 
-  DoctorHistorySegmentControl(this.listener);
+  DoctorHistorySegmentControl(this.listener, {this.selectedPosition = 0});
 
   @override
   _DoctorHistorySegmentControlState createState() => _DoctorHistorySegmentControlState();
@@ -14,7 +15,13 @@ class DoctorHistorySegmentControl extends StatefulWidget {
 
 class _DoctorHistorySegmentControlState extends State<DoctorHistorySegmentControl> {
 
-  int selectedPosition = 0;
+  int selectedPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedPosition = widget.selectedPosition;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class _DoctorHistorySegmentControlState extends State<DoctorHistorySegmentContro
         mainAxisSize: MainAxisSize.min,
         children: [
           SegmentItem(
-            "การนัดหมาย",
+            "ตารางนัดหมาย",
             selectedPosition == 0,
             () {
               widget.listener.call(0);
@@ -31,12 +38,12 @@ class _DoctorHistorySegmentControlState extends State<DoctorHistorySegmentContro
                 selectedPosition = 0;
               });
             },
-            width: 30 * MediaQuery.of(context).size.width / 100,
+            width: 40 * MediaQuery.of(context).size.width / 100,
             radiusTopLeft: 6,
             radiusBottomLeft: 6,
           ),
           SegmentItem(
-            "ใบสั่งยา",
+            "ประวัตินัดหมาย",
             selectedPosition == 1,
                 () {
               widget.listener.call(1);
@@ -44,7 +51,7 @@ class _DoctorHistorySegmentControlState extends State<DoctorHistorySegmentContro
                 selectedPosition = 1;
               });
             },
-            width: 30 * MediaQuery.of(context).size.width / 100,
+            width: 40 * MediaQuery.of(context).size.width / 100,
             radiusTopRight: 6,
             radiusBottomRight: 6,
           )

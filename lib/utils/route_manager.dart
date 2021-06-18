@@ -458,6 +458,7 @@ class RouteManager {
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorHistoryProvider(
                 Injector.appInstance.get(),
+                Injector.appInstance.get(),
               ),
             ),
             ChangeNotifierProvider(
