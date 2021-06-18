@@ -2,6 +2,7 @@ import 'package:blossom_clinic/usecase/create_appointment_without_payment_use_ca
 import 'package:blossom_clinic/usecase/create_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/create_shipnity_order_use_case.dart';
 import 'package:blossom_clinic/usecase/filter_appointment_by_type_use_case.dart';
+import 'package:blossom_clinic/usecase/forgot_password_use_case.dart';
 import 'package:blossom_clinic/usecase/generate_scb_qr_prompt_pay_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_doctor_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_user_id_use_case.dart';
@@ -96,5 +97,6 @@ class UseCaseModule {
     injector.registerDependency<GetBannerUseCase>(() => GetBannerUseCase(FirebaseFirestore.instance));
     injector.registerDependency<LoginAppleUseCase>(() => LoginAppleUseCase(FirebaseAuth.instance));
     injector.registerDependency<FilterAppointmentByTypeUseCase>(() => FilterAppointmentByTypeUseCase());
+    injector.registerDependency<ForgotPasswordUseCase>(() => ForgotPasswordUseCase(FirebaseAuth.instance));
   }
 }

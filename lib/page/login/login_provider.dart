@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:blossom_clinic/base/base_provider.dart';
+import 'package:blossom_clinic/usecase/forgot_password_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/get_user_profile_use_case.dart';
 import 'package:blossom_clinic/usecase/login_apple_use_case.dart';
@@ -21,9 +22,10 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
   GetDoctorProfileUseCase _getDoctorProfileUseCase;
   FirebaseAuth _firebaseAuth;
   FacebookAuth _facebookAuth;
+  ForgotPasswordUseCase _forgotPasswordUseCase;
   Widget signInAppleButton;
 
-  LoginProvider(this._loginUseCase, this._loginFacebookUseCase, this._loginAppleUseCase, this._getUserProfileUseCase, this._getDoctorProfileUseCase, this._firebaseAuth, this._facebookAuth);
+  LoginProvider(this._loginUseCase, this._loginFacebookUseCase, this._loginAppleUseCase, this._getUserProfileUseCase, this._getDoctorProfileUseCase, this._firebaseAuth, this._facebookAuth, this._forgotPasswordUseCase);
 
   Future<void> login(BuildContext context, String email, String password) async {
     showProgressDialog(context);
@@ -150,6 +152,18 @@ class LoginProvider extends BaseProvider with ChangeNotifier {
 
   void _goToDoctorMainPage(BuildContext context) {
       Navigator.pushReplacement(context, RouteManager.routeDoctorMain());
+  }
+
+  Future<void> forgotPassword(BuildContext context, String email) async {
+    showProgressDialog(context);
+    final result = await _forgotPasswordUseCase.execute(email);
+    Navigator.pop(context);
+    Navigator.pop(context);
+    result.whenWithResult((dynamic) {
+      errorHandle.proceed(context, {"message" : "ระบบได้ทำการส่ง email สำหรับ reset รหัสผ่านเรียบร้อยแล้ว"});
+    }, (map) {
+      errorHandle.proceed(context, {"message" : "ไม่พบ email นี้ในระบบ"});
+    });
   }
 
   Future<void> _goToAppleUpdateProfile(BuildContext context, Map<String, dynamic> mapResult) async {

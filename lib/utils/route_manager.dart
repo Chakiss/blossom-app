@@ -136,13 +136,15 @@ class RouteManager {
             providers: [
               ChangeNotifierProvider(
                   create: (BuildContext context) => LoginProvider(
-                      Injector.appInstance.get(),
-                      Injector.appInstance.get(),
-                      Injector.appInstance.get(),
-                      Injector.appInstance.get(),
-                      Injector.appInstance.get(),
-                      FirebaseAuth.instance,
-                      FacebookAuth.instance)),
+                        Injector.appInstance.get(),
+                        Injector.appInstance.get(),
+                        Injector.appInstance.get(),
+                        Injector.appInstance.get(),
+                        Injector.appInstance.get(),
+                        FirebaseAuth.instance,
+                        FacebookAuth.instance,
+                        Injector.appInstance.get(),
+                      )),
             ],
             child: LoginPage(),
           );
