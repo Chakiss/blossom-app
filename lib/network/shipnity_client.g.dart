@@ -17,10 +17,11 @@ class _ShipnityClient implements ShipnityClient {
   String baseUrl;
 
   @override
-  Future<Response<Map<String, dynamic>>> getProducts(token) async {
+  Future<Response<Map<String, dynamic>>> getProducts(token, perPage) async {
     ArgumentError.checkNotNull(token, 'token');
+    ArgumentError.checkNotNull(perPage, 'perPage');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'per_page': perPage};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>('products',
         queryParameters: queryParameters,
@@ -30,8 +31,7 @@ class _ShipnityClient implements ShipnityClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 
   @override
@@ -50,8 +50,7 @@ class _ShipnityClient implements ShipnityClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 
   @override
@@ -71,8 +70,7 @@ class _ShipnityClient implements ShipnityClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 
   @override
@@ -92,8 +90,7 @@ class _ShipnityClient implements ShipnityClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 
   @override
@@ -112,7 +109,6 @@ class _ShipnityClient implements ShipnityClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 }

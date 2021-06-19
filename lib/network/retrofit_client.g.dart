@@ -44,8 +44,7 @@ class _RetrofitClient implements RetrofitClient {
             contentType: 'application/x-www-form-urlencoded',
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 
   @override
@@ -76,7 +75,6 @@ class _RetrofitClient implements RetrofitClient {
             contentType: 'application/x-www-form-urlencoded',
             baseUrl: baseUrl),
         data: _data);
-    final value = _result;
-    return value;
+    return _result;
   }
 }

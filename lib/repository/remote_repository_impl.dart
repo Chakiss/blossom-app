@@ -25,8 +25,8 @@ class RemoteRepositoryImpl extends RemoteRepository {
   }
 
   @override
-  Future<Response<Map<String, dynamic>>> getProducts(String token) async {
-    return await shipnityClient.getProducts(token);
+  Future<Response<Map<String, dynamic>>> getProducts(String token, String perPage) async {
+    return await shipnityClient.getProducts(token, perPage);
   }
 
   @override

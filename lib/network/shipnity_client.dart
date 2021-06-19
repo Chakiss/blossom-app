@@ -12,6 +12,7 @@ abstract class ShipnityClient {
   @GET("products")
   Future<Response<Map<String, dynamic>>> getProducts(
     @Header("Authorization") String token,
+      @Query("per_page") String perPage
   );
 
   @GET("customers")
