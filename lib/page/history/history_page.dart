@@ -107,7 +107,12 @@ class _HistoryPageState extends State<HistoryPage> {
         itemBuilder: (BuildContext context, int index) {
           return ShipnityOrderItem(orderList[index], Injector.appInstance.get(), Injector.appInstance.get(),
               (shipnityOrder) {
-            goToShipnityOrder(context, shipnityOrder);
+                goToShipnityOrder(context, shipnityOrder);
+            // if (shipnityOrder.paid == true) {
+            //   goToShipnityOrder(context, shipnityOrder);
+            // } else {
+            //
+            // }
           });
         },
       );
