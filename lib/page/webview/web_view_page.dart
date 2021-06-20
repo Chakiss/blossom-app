@@ -54,7 +54,7 @@ class _WebViewPageState extends State<WebViewPage> with WidgetsBindingObserver {
                 controller = webViewController;
               },
               navigationDelegate: (request) {
-                if (!request.url.startsWith('https://') || !request.url.startsWith('http://')) {
+                if (request.url.startsWith('scbeasy://') || request.url.startsWith('market://')) {
                   _launchURL(request.url);
                   return NavigationDecision.prevent;
                 }
