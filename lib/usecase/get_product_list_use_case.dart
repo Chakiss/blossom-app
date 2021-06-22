@@ -12,7 +12,7 @@ class GetProductListUseCase extends BaseAsyncUseCase<String, List<ProductModel>>
   @override
   Future<Result<List<ProductModel>>> execute(String parameter) async {
     try {
-      final response = await _remoteRepository.getProducts(parameter, "50");
+      final response = await _remoteRepository.getProducts(parameter, "80");
       if (response.isSuccess()) {
         final list = (response.data["products"] as List).map((e) => ProductModel.fromJson(e)).toList();
         return Success(list);
