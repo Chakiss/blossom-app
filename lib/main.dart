@@ -5,6 +5,7 @@ import 'package:blossom_clinic/blossom_clinic_application.dart';
 import 'package:blossom_clinic/di/app_module.dart';
 import 'package:blossom_clinic/di/use_case_module.dart';
 import 'package:blossom_clinic/utils/connecty_cube_properties.dart';
+import 'package:blossom_clinic/utils/user_data.dart';
 import 'package:connectycube_sdk/connectycube_core.dart';
 import 'package:connectycube_sdk/connectycube_pushnotifications.dart';
 import 'package:device_info/device_info.dart';
@@ -17,14 +18,15 @@ import 'package:injector/injector.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await registerFirebaseCloudMessage();
   initializeDateFormatting("TH");
   final sharedPref = await SharedPreferences.getInstance();
   _provideDependency(sharedPref);
+  await registerFirebaseCloudMessage();
   _initConnectycube();
   runApp(BlossomClinicApplication());
 }
@@ -36,8 +38,8 @@ void _provideDependency(SharedPreferences sharedPref) {
 }
 
 void _initConnectycube() {
-  init(ConnectyCubProperties.APP_ID, ConnectyCubProperties.AUTH_KEY, ConnectyCubProperties.AUTH_SECRET,
-      onSessionRestore: () {
+  init(ConnectyCubProperties.APP_ID, ConnectyCubProperties.AUTH_KEY,
+      ConnectyCubProperties.AUTH_SECRET, onSessionRestore: () {
     return createSession();
   });
 }
@@ -102,7 +104,14 @@ Future<void> _subscribe(String token) async {
   parameters.udid = deviceId;
   parameters.pushToken = token;
 
-  createSubscription(parameters.getRequestParameters()).then((cubeSubscription) {}).catchError((error) {});
+  UserData userData = Injector.appInstance.get();
+  await FirebaseMessaging.instance.subscribeToTopic(
+      userData.userProfileModel?.userUID ??
+          userData.doctorInfoModel?.doctorId ??
+          "");
+  createSubscription(parameters.getRequestParameters())
+      .then((cubeSubscription) {})
+      .catchError((error) {});
 }
 
 Future<String> _getDeviceId() async {
@@ -124,16 +133,20 @@ Future<String> _getDeviceId() async {
 }
 
 Future<void> _showNotification(Map<String, dynamic> payload) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      '4837', 'BLOSSOM_NOTIFICATION_CHANNEL', 'BLOSSOM_NOTIFICATION_CHANNEL_DETAIL',
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails('4837',
+      'BLOSSOM_NOTIFICATION_CHANNEL', 'BLOSSOM_NOTIFICATION_CHANNEL_DETAIL',
       importance: Importance.max, priority: Priority.high);
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
 
-  var platformChannelSpecifics =
-      NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+  var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics);
 
   await flutterLocalNotificationsPlugin.show(
-      111, (payload["title"] as String) ?? "Blossom", (payload["message"] as String) ?? "Message", platformChannelSpecifics,
+      111,
+      (payload["title"] as String) ?? "Blossom",
+      (payload["message"] as String) ?? "Message",
+      platformChannelSpecifics,
       payload: jsonEncode(payload));
 }
 
