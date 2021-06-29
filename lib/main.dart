@@ -57,9 +57,14 @@ Future<void> registerFirebaseCloudMessage() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Foreground Message data: ${message.data}');
     if (message.notification != null) {
+      final Map<String, String> payload = {};
+      payload["title"] = message.notification.title ?? "Blossom";
+      payload["message"] = message.notification.body ?? "Message";
       print('Message also contained a notification: ${message.notification}');
+      _showNotification(payload);
+    } else {
+      _showNotification(message.data);
     }
-    _showNotification(message.data);
   });
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -67,7 +72,15 @@ Future<void> registerFirebaseCloudMessage() async {
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Background Message data: ${message.data}');
-  _showNotification(message.data);
+  if (message.notification != null) {
+    final Map<String, String> payload = {};
+    payload["title"] = message.notification.title ?? "Blossom";
+    payload["message"] = message.notification.body ?? "Message";
+    print('Message also contained a notification: ${message.notification}');
+    _showNotification(payload);
+  } else {
+    _showNotification(message.data);
+  }
 }
 
 Future<void> _subscribe(String token) async {
@@ -120,7 +133,7 @@ Future<void> _showNotification(Map<String, dynamic> payload) async {
       NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
 
   await flutterLocalNotificationsPlugin.show(
-      111, "Blossom", (payload["message"] as String) ?? "Message", platformChannelSpecifics,
+      111, (payload["title"] as String) ?? "Blossom", (payload["message"] as String) ?? "Message", platformChannelSpecifics,
       payload: jsonEncode(payload));
 }
 
