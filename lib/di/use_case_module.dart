@@ -6,6 +6,7 @@ import 'package:blossom_clinic/usecase/forgot_password_use_case.dart';
 import 'package:blossom_clinic/usecase/generate_scb_qr_prompt_pay_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_doctor_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointment_by_user_id_use_case.dart';
+import 'package:blossom_clinic/usecase/get_appointment_list_by_user_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_appointments_id_by_order_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_banner_use_case.dart';
 import 'package:blossom_clinic/usecase/get_blossom_review_use_case.dart';
@@ -83,6 +84,7 @@ class UseCaseModule {
     injector.registerDependency<CreateShipnityOrderUseCase>(() => CreateShipnityOrderUseCase(injector.get(), injector.get()));
     injector.registerDependency<GetAppointmentByDoctorIdUseCase>(() => GetAppointmentByDoctorIdUseCase(FirebaseFirestore.instance));
     injector.registerDependency<GetAppointmentByUserIdUseCase>(() => GetAppointmentByUserIdUseCase(FirebaseFirestore.instance));
+    injector.registerDependency<GetAppointmentListByUserIdUseCase>(() => GetAppointmentListByUserIdUseCase(FirebaseFirestore.instance));
     injector.registerDependency<SetUserReferenceToLocalStorageUseCase>(() => SetUserReferenceToLocalStorageUseCase(injector.get()));
     injector.registerDependency<SavePatientFormUseCase>(() => SavePatientFormUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetAppointmentsIdByOrderIdUseCase>(() => GetAppointmentsIdByOrderIdUseCase(FirebaseFirestore.instance));

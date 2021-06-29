@@ -1,5 +1,6 @@
 import 'package:blossom_clinic/model/appointment_model.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_customer_data_page.dart';
+import 'package:blossom_clinic/page/doctor_order_detail/appointment_customer_history_data_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_dispense_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_post_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
@@ -120,21 +121,22 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
                       _provider.setPage(AppointmentCustomerDataPage());
                       break;
                     case 1:
-                      _provider.setPage(AppointmentPostPage(widget._appointmentModel.form.post));
+                      _provider.setPage(AppointmentCustomerHistoryDataPage());
                       break;
                     case 2:
-                      if (widget._appointmentModel.referenceShipnity?.isEmpty ?? true) {
-                        _provider.setPage(Container(
-                          child: Center(
-                            child: BlossomText(
-                              "ไม่พบข้อมูลสั่งยา",
-                              size: 20,
-                            ),
-                          ),
-                        ));
-                      } else {
-                        _provider.setPage(AppointmentDispensePage(_provider.shipnityOrderModel));
-                      }
+                      _provider.setPage(AppointmentPrePage(widget._appointmentModel.form.pre));
+                      // if (widget._appointmentModel.referenceShipnity?.isEmpty ?? true) {
+                      //   _provider.setPage(Container(
+                      //     child: Center(
+                      //       child: BlossomText(
+                      //         "ไม่พบข้อมูลสั่งยา",
+                      //         size: 20,
+                      //       ),
+                      //     ),
+                      //   ));
+                      // } else {
+                      //   _provider.setPage(AppointmentDispensePage(_provider.shipnityOrderModel));
+                      // }
                       break;
                   }
                 }),
