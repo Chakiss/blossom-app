@@ -10,13 +10,14 @@ import 'package:intl/intl.dart';
 class AppointmentItem extends StatefulWidget {
   AppointmentModel _appointmentModel;
   SharedPrefUtils _sharedPrefUtils;
-  SetUserReferenceToLocalStorageUseCase _setUserReferenceFromLocalStorageUseCase;
+  SetUserReferenceToLocalStorageUseCase
+      _setUserReferenceFromLocalStorageUseCase;
   Function(AppointmentModel, String, String) _listener;
   DateFormat dateFormat;
   DateFormat dateFormatParse;
 
-  AppointmentItem(
-      this._appointmentModel, this._sharedPrefUtils, this._setUserReferenceFromLocalStorageUseCase, this._listener,
+  AppointmentItem(this._appointmentModel, this._sharedPrefUtils,
+      this._setUserReferenceFromLocalStorageUseCase, this._listener,
       {this.dateFormat, this.dateFormatParse});
 
   @override
@@ -31,7 +32,8 @@ class _AppointmentItemState extends State<AppointmentItem> {
   void initState() {
     super.initState();
     getUserData();
-    appointmentTime = widget.dateFormatParse.format(widget.dateFormat.parse(widget._appointmentModel.timeStart));
+    appointmentTime = widget.dateFormatParse
+        .format(widget.dateFormat.parse(widget._appointmentModel.timeStart));
   }
 
   @override
@@ -41,7 +43,9 @@ class _AppointmentItemState extends State<AppointmentItem> {
         widget._listener.call(widget._appointmentModel, name, appointmentTime);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100, vertical: 10),
+        padding: EdgeInsets.symmetric(
+            horizontal: 10 * MediaQuery.of(context).size.width / 100,
+            vertical: 10),
         child: Column(
           children: [
             Row(
@@ -49,25 +53,28 @@ class _AppointmentItemState extends State<AppointmentItem> {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: BlossomTheme.white,
-                  backgroundImage: AssetImage("assets/profile_place_holder.png"),
+                  backgroundImage:
+                      AssetImage("assets/profile_place_holder.png"),
                 ),
                 SizedBox(
                   width: 12,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BlossomText(
-                      "${name ?? ""}",
-                      size: 18,
-                    ),
-                    BlossomText(
-                      appointmentTime,
-                      size: 14,
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BlossomText(
+                        "${name ?? ""}",
+                        size: 18,
+                      ),
+                      BlossomText(
+                        appointmentTime,
+                        size: 14,
+                      )
+                    ],
+                  ),
                 ),
-                Spacer(),
+                // Spacer(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Icon(
@@ -90,13 +97,16 @@ class _AppointmentItemState extends State<AppointmentItem> {
   }
 
   Future<void> getUserData() async {
-    if (widget._sharedPrefUtils.getMapUserReference().containsKey(widget._appointmentModel.userReference.path)) {
+    if (widget._sharedPrefUtils
+        .getMapUserReference()
+        .containsKey(widget._appointmentModel.userReference.path)) {
       setState(() {
-        name = widget._sharedPrefUtils.getMapUserReference()[widget._appointmentModel.userReference.path];
+        name = widget._sharedPrefUtils
+            .getMapUserReference()[widget._appointmentModel.userReference.path];
       });
     } else {
-      final result =
-          await widget._setUserReferenceFromLocalStorageUseCase.execute(widget._appointmentModel.userReference);
+      final result = await widget._setUserReferenceFromLocalStorageUseCase
+          .execute(widget._appointmentModel.userReference);
       if (result is Success<String>) {
         setState(() {
           name = "${result.data ?? ""}";

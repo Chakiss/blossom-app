@@ -1,4 +1,5 @@
 import 'package:blossom_clinic/model/appointment_model.dart';
+import 'package:blossom_clinic/page/doctor_order_detail/appointment_customer_data_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_dispense_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/appointment_post_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
@@ -116,7 +117,7 @@ class _DoctorAppointmentDetailPageState extends State<DoctorAppointmentDetailPag
                 child: AppointmentDetailSegmentControl((index) {
                   switch (index) {
                     case 0:
-                      _provider.setPage(AppointmentPrePage(widget._appointmentModel.form.pre));
+                      _provider.setPage(AppointmentCustomerDataPage());
                       break;
                     case 1:
                       _provider.setPage(AppointmentPostPage(widget._appointmentModel.form.post));

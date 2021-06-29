@@ -46,6 +46,7 @@ import 'package:blossom_clinic/page/doctor_info_profile/doctor_info_profile_page
 import 'package:blossom_clinic/page/doctor_info_profile/doctor_info_profile_provider.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_page.dart';
 import 'package:blossom_clinic/page/doctor_main/doctor_main_provider.dart';
+import 'package:blossom_clinic/page/doctor_order_detail/appointment_customer_data_provider.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_page.dart';
 import 'package:blossom_clinic/page/doctor_order_detail/doctor_appointment_detail_provider.dart';
 import 'package:blossom_clinic/page/doctor_profile/doctor_profile_provider.dart';
@@ -495,6 +496,11 @@ class RouteManager {
             ChangeNotifierProvider(
               create: (BuildContext context) {
                 return DoctorAppointmentDetailProvider(Injector.appInstance.get(), Injector.appInstance.get());
+              },
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) {
+                return AppointmentCustomerDataProvider(appointmentModel, Injector.appInstance.get());
               },
             )
           ],

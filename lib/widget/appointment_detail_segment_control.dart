@@ -38,7 +38,7 @@ class _AppointmentDetailSegmentControlState extends State<AppointmentDetailSegme
             radiusBottomLeft: 6,
           ),
           SegmentItem(
-            "คำวินิจฉัย",
+            "ประวัติ",
             selectedPosition == 1,
             () {
               if (selectedPosition != 1) {
@@ -51,7 +51,7 @@ class _AppointmentDetailSegmentControlState extends State<AppointmentDetailSegme
             width: 30 * MediaQuery.of(context).size.width / 100,
           ),
           SegmentItem(
-            "ยาที่สั่ง",
+            "ข้อมูลครั้งนี้",
             selectedPosition == 2,
                 () {
               if (selectedPosition != 2) {
