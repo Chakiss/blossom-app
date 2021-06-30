@@ -13,6 +13,7 @@ import 'package:blossom_clinic/usecase/get_blossom_review_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_by_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_profile_with_connecty_cube_id_use_case.dart';
 import 'package:blossom_clinic/usecase/get_doctor_review_by_doctor_id.dart';
+import 'package:blossom_clinic/usecase/get_download_url_from_cloud_storage_use_case.dart';
 import 'package:blossom_clinic/usecase/get_product_list_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_customer_use_case.dart';
 import 'package:blossom_clinic/usecase/get_shipnity_order_by_invoice_id_use_case.dart';
@@ -39,6 +40,7 @@ import 'package:blossom_clinic/usecase/login_use_case.dart';
 import 'package:blossom_clinic/usecase/register_use_case.dart';
 import 'package:blossom_clinic/usecase/update_profile_facebook_login_use_case.dart';
 import 'package:blossom_clinic/usecase/update_shipnity_reference_use_case.dart';
+import 'package:blossom_clinic/usecase/upload_profile_picture_use_case.dart';
 import 'package:blossom_clinic/usecase/validate_email_use_case.dart';
 import 'package:blossom_clinic/usecase/validate_phone_number_use_case.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -67,6 +69,7 @@ class UseCaseModule {
     injector.registerDependency<ValidatePhoneNumberUseCase>(() => ValidatePhoneNumberUseCase());
     injector.registerDependency<GetDoctorAvailableSlotsUseCase>(() => GetDoctorAvailableSlotsUseCase(FirebaseFirestore.instance));
     injector.registerDependency<DownloadFileFromCloudStorageUseCase>(() => DownloadFileFromCloudStorageUseCase(FirebaseStorage.instance, injector.get()));
+    injector.registerDependency<GetDownloadUrlFromCloudStorageUseCase>(() => GetDownloadUrlFromCloudStorageUseCase(FirebaseStorage.instance));
     injector.registerDependency<CreateAppointmentOrderUseCase>(() => CreateAppointmentOrderUseCase(FirebaseFunctions.instance));
     injector.registerDependency<CreateAppointmentWithoutPaymentUseCase>(() => CreateAppointmentWithoutPaymentUseCase(FirebaseFunctions.instance));
     injector.registerDependency<GetCustomerOrderUseCase>(() => GetCustomerOrderUseCase(FirebaseFirestore.instance));
@@ -100,5 +103,6 @@ class UseCaseModule {
     injector.registerDependency<LoginAppleUseCase>(() => LoginAppleUseCase(FirebaseAuth.instance));
     injector.registerDependency<FilterAppointmentByTypeUseCase>(() => FilterAppointmentByTypeUseCase());
     injector.registerDependency<ForgotPasswordUseCase>(() => ForgotPasswordUseCase(FirebaseAuth.instance));
+    injector.registerDependency<UploadProfilePictureUseCase>(() => UploadProfilePictureUseCase(FirebaseFunctions.instance));
   }
 }

@@ -96,36 +96,44 @@ import 'package:provider/provider.dart';
 import 'no_animation_page_route.dart';
 
 class RouteManager {
-  static Route routeSplashScreen() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeSplashScreen() =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  SplashScreenProvider(FirebaseAuth.instance, Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) => SplashScreenProvider(
+                  FirebaseAuth.instance,
+                  Injector.appInstance.get(),
+                  Injector.appInstance.get()),
             )
           ],
           child: SplashScreenPage(),
         );
       });
 
-  static Route routeRegister() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeRegister() =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  RegisterProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) => RegisterProvider(
+                  Injector.appInstance.get(), Injector.appInstance.get()),
             )
           ],
           child: RegisterPage(),
         );
       });
 
-  static Route routeRegisterSecond(Map<String, String> map) => NoAnimationPageRoute(builder: (BuildContext context) {
+  static Route routeRegisterSecond(Map<String, String> map) =>
+      NoAnimationPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => RegisterSecondProvider(Injector.appInstance.get(),
-                  Injector.appInstance.get(), Injector.appInstance.get(), FirebaseAuth.instance),
+              create: (BuildContext context) => RegisterSecondProvider(
+                  Injector.appInstance.get(),
+                  Injector.appInstance.get(),
+                  Injector.appInstance.get(),
+                  FirebaseAuth.instance),
             )
           ],
           child: RegisterSecondPage(map),
@@ -160,45 +168,57 @@ class RouteManager {
         transitionDuration: Duration(milliseconds: 1000),
       );
 
-  static Route routeFacebookUpdateProfile(String email, String name, Map<String, dynamic> mapResult) =>
+  static Route routeFacebookUpdateProfile(
+          String email, String name, Map<String, dynamic> mapResult) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => FacebookUpdateProfileProvider(Injector.appInstance.get()),
+              create: (BuildContext context) =>
+                  FacebookUpdateProfileProvider(Injector.appInstance.get()),
             )
           ],
           child: FacebookUpdateProfilePage(email, name, mapResult),
         );
       });
 
-  static Route routeFacebookUpdateProfileSecond(Map<String, dynamic> mapResult) =>
+  static Route routeFacebookUpdateProfileSecond(
+          Map<String, dynamic> mapResult) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => FacebookUpdateProfileSecondProvider(Injector.appInstance.get(),
-                  Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) =>
+                  FacebookUpdateProfileSecondProvider(
+                      Injector.appInstance.get(),
+                      Injector.appInstance.get(),
+                      Injector.appInstance.get(),
+                      Injector.appInstance.get()),
             )
           ],
           child: FacebookUpdateProfileSecondPage(mapResult),
         );
       });
 
-  static Route routeMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeMain({int initIndex = 0}) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => MainProvider(Injector.appInstance.get(), initIndex: initIndex),
+              create: (BuildContext context) => MainProvider(
+                  Injector.appInstance.get(),
+                  initIndex: initIndex),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => CustomerHomeProvider(),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorProvider(Injector.appInstance.get()),
+              create: (BuildContext context) =>
+                  DoctorProvider(Injector.appInstance.get()),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => ServiceProvider(Injector.appInstance.get()),
+              create: (BuildContext context) =>
+                  ServiceProvider(Injector.appInstance.get()),
             ),
           ],
           child: MainPage(
@@ -207,46 +227,55 @@ class RouteManager {
         );
       });
 
-  static Route routeConfirmConsult(DoctorInfoModel doctorInfoModel, AvailableSlotModel availableSlotModel) =>
+  static Route routeConfirmConsult(DoctorInfoModel doctorInfoModel,
+          AvailableSlotModel availableSlotModel) =>
       CupertinoPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
                 create: (BuildContext context) => ConfirmConsultProvider(
-                    Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get()))
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get()))
           ],
           child: ConfirmConsultPage(doctorInfoModel, availableSlotModel),
         );
       });
 
-  static Route routePayment(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routePayment(String orderId, int price) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => PaymentProvider(Injector.appInstance.get(), Injector.appInstance.get()),
+              create: (BuildContext context) => PaymentProvider(
+                  Injector.appInstance.get(), Injector.appInstance.get()),
             )
           ],
           child: PaymentPage(orderId, price),
         );
       });
 
-  static Route routeOmise(String orderId, int price) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeOmise(String orderId, int price) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => OmiseProvider(Injector.appInstance.get()),
+              create: (BuildContext context) =>
+                  OmiseProvider(Injector.appInstance.get()),
             )
           ],
           child: OmisePage(orderId, price),
         );
       });
 
-  static Route routeAddCustomerInformation(String orderId) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeAddCustomerInformation(String orderId) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return AddCustomerInformationProvider(Injector.appInstance.get(), Injector.appInstance.get());
+                return AddCustomerInformationProvider(
+                    Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],
@@ -254,15 +283,19 @@ class RouteManager {
         );
       });
 
-  static Route routeDispense(
-          UserProfileModel userProfileModel, ShipnityCustomerModel shipnityCustomerModel, String appointmentId) =>
+  static Route routeDispense(UserProfileModel userProfileModel,
+          ShipnityCustomerModel shipnityCustomerModel, String appointmentId) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DispenseProvider(Injector.appInstance.get(), Injector.appInstance.get(),
-                    Injector.appInstance.get(), shipnityCustomerModel, appointmentId);
+                return DispenseProvider(
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    shipnityCustomerModel,
+                    appointmentId);
               },
             )
           ],
@@ -270,12 +303,14 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerHistory() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCustomerHistory() =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CustomerTreatHistoryProvider(Injector.appInstance.get(), Injector.appInstance.get());
+                return CustomerTreatHistoryProvider(
+                    Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],
@@ -283,17 +318,20 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerHistoryDetail(AppointmentModel appointmentModel, String name, String appointmentTime) =>
+  static Route routeCustomerHistoryDetail(AppointmentModel appointmentModel,
+          String name, String appointmentTime) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CustomerHistoryDetailProvider(Injector.appInstance.get(), Injector.appInstance.get());
+                return CustomerHistoryDetailProvider(
+                    Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],
-          child: CustomerHistoryDetailPage(appointmentModel, name, appointmentTime),
+          child: CustomerHistoryDetailPage(
+              appointmentModel, name, appointmentTime),
         );
       });
 
@@ -303,7 +341,8 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return VoiceCallDoctorProvider(Injector.appInstance.get(), appointmentModel);
+                return VoiceCallDoctorProvider(
+                    Injector.appInstance.get(), appointmentModel);
               },
             )
           ],
@@ -311,12 +350,14 @@ class RouteManager {
         );
       });
 
-  static Route routeCallDoctor(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCallDoctor(AppointmentModel appointmentModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return CallDoctorProvider(Injector.appInstance.get(), appointmentModel);
+                return CallDoctorProvider(
+                    Injector.appInstance.get(), appointmentModel);
               },
             )
           ],
@@ -324,14 +365,18 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerReviewDoctor(DoctorInfoModel doctorInfoModel, AppointmentModel appointmentModel) =>
+  static Route routeCustomerReviewDoctor(
+          DoctorInfoModel doctorInfoModel, AppointmentModel appointmentModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
                 return CustomerReviewDoctorProvider(
-                    Injector.appInstance.get(), Injector.appInstance.get(), doctorInfoModel, appointmentModel);
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    doctorInfoModel,
+                    appointmentModel);
               },
             )
           ],
@@ -339,7 +384,8 @@ class RouteManager {
         );
       });
 
-  static Route routeQrScan(String orderId, String base64String, String linkQr) =>
+  static Route routeQrScan(
+          String orderId, String base64String, String linkQr) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -353,7 +399,8 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeCustomerIncomingCall(P2PSession callSession) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -366,7 +413,8 @@ class RouteManager {
         );
       });
 
-  static Route routeCustomerReceiveVoiceCallDoctor(P2PSession callSession, DoctorInfoModel doctorInfoModel) =>
+  static Route routeCustomerReceiveVoiceCallDoctor(
+          P2PSession callSession, DoctorInfoModel doctorInfoModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -376,11 +424,13 @@ class RouteManager {
               },
             )
           ],
-          child: CustomerReceiveVoiceCallDoctorPage(callSession, doctorInfoModel),
+          child:
+              CustomerReceiveVoiceCallDoctorPage(callSession, doctorInfoModel),
         );
       });
 
-  static Route routeCustomerReceiveCallDoctor(P2PSession callSession, DoctorInfoModel doctorInfoModel) =>
+  static Route routeCustomerReceiveCallDoctor(
+          P2PSession callSession, DoctorInfoModel doctorInfoModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -394,12 +444,14 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorReview(String doctorId) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorReview(String doctorId) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorReviewProvider(Injector.appInstance.get(), doctorId);
+                return DoctorReviewProvider(
+                    Injector.appInstance.get(), doctorId);
               },
             )
           ],
@@ -421,13 +473,14 @@ class RouteManager {
         );
       });
 
-  static Route routeHistory() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeHistory() =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return HistoryProvider(
-                    Injector.appInstance.get(), Injector.appInstance.get(), Injector.appInstance.get());
+                return HistoryProvider(Injector.appInstance.get(),
+                    Injector.appInstance.get(), Injector.appInstance.get());
               },
             )
           ],
@@ -435,12 +488,19 @@ class RouteManager {
         );
       });
 
-  static Route routeProfile() => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeProfile() =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return ProfileProvider(FacebookAuth.instance, FirebaseAuth.instance);
+                return ProfileProvider(
+                    FacebookAuth.instance,
+                    FirebaseAuth.instance,
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get());
               },
             )
           ],
@@ -450,11 +510,14 @@ class RouteManager {
 
   ////////// Doctor //////////
 
-  static Route routeDoctorMain({int initIndex = 0}) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorMain({int initIndex = 0}) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorMainProvider(Injector.appInstance.get(), initIndex: initIndex),
+              create: (BuildContext context) => DoctorMainProvider(
+                  Injector.appInstance.get(),
+                  initIndex: initIndex),
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) => DoctorHomeProvider(),
@@ -466,7 +529,8 @@ class RouteManager {
               ),
             ),
             ChangeNotifierProvider(
-              create: (BuildContext context) => DoctorProfileProvider(FacebookAuth.instance, FirebaseAuth.instance),
+              create: (BuildContext context) => DoctorProfileProvider(
+                  FacebookAuth.instance, FirebaseAuth.instance),
             ),
           ],
           child: DoctorMainPage(
@@ -475,14 +539,19 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorDiagnose(int userConnectyCubeId, String appointmentId) =>
+  static Route routeDoctorDiagnose(
+          int userConnectyCubeId, String appointmentId) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorDiagnoseProvider(Injector.appInstance.get(), Injector.appInstance.get(),
-                    Injector.appInstance.get(), Injector.appInstance.get(), appointmentId);
+                return DoctorDiagnoseProvider(
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    Injector.appInstance.get(),
+                    appointmentId);
               },
             )
           ],
@@ -490,31 +559,37 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorAppointmentDetail(AppointmentModel appointmentModel, String name, String appointmentTime) =>
+  static Route routeDoctorAppointmentDetail(AppointmentModel appointmentModel,
+          String name, String appointmentTime) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorAppointmentDetailProvider(Injector.appInstance.get(), Injector.appInstance.get());
+                return DoctorAppointmentDetailProvider(
+                    Injector.appInstance.get(), Injector.appInstance.get());
               },
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return AppointmentCustomerDataProvider(appointmentModel, Injector.appInstance.get());
+                return AppointmentCustomerDataProvider(
+                    appointmentModel, Injector.appInstance.get());
               },
             ),
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return AppointmentCustomerHistoryDataProvider(appointmentModel, Injector.appInstance.get());
+                return AppointmentCustomerHistoryDataProvider(
+                    appointmentModel, Injector.appInstance.get());
               },
             )
           ],
-          child: DoctorAppointmentDetailPage(appointmentModel, name, appointmentTime),
+          child: DoctorAppointmentDetailPage(
+              appointmentModel, name, appointmentTime),
         );
       });
 
-  static Route routeDoctorIncomingCall(P2PSession callSession) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorIncomingCall(P2PSession callSession) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -527,7 +602,8 @@ class RouteManager {
         );
       });
 
-  static Route routeCallCustomer(P2PSession callSession, UserProfileModel userProfileModel) =>
+  static Route routeCallCustomer(
+          P2PSession callSession, UserProfileModel userProfileModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -541,7 +617,8 @@ class RouteManager {
         );
       });
 
-  static Route routeCallCustomerVoice(P2PSession callSession, UserProfileModel userProfileModel) =>
+  static Route routeCallCustomerVoice(
+          P2PSession callSession, UserProfileModel userProfileModel) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
@@ -569,12 +646,14 @@ class RouteManager {
         );
       });
 
-  static Route routeChat(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeChat(AppointmentModel appointmentModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return ChatProvider(appointmentModel, Injector.appInstance.get());
+                return ChatProvider(
+                    appointmentModel, Injector.appInstance.get());
               },
             )
           ],
@@ -582,12 +661,14 @@ class RouteManager {
         );
       });
 
-  static Route routeDoctorChat(AppointmentModel appointmentModel) => MaterialPageRoute(builder: (BuildContext context) {
+  static Route routeDoctorChat(AppointmentModel appointmentModel) =>
+      MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return DoctorChatProvider(appointmentModel, Injector.appInstance.get());
+                return DoctorChatProvider(
+                    appointmentModel, Injector.appInstance.get());
               },
             )
           ],
@@ -595,13 +676,15 @@ class RouteManager {
         );
       });
 
-  static Route routeChatFromNotification(String dialogId, String fullName, int senderId) =>
+  static Route routeChatFromNotification(
+          String dialogId, String fullName, int senderId) =>
       MaterialPageRoute(builder: (BuildContext context) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return ChatFromNotificationProvider(dialogId, fullName, senderId, Injector.appInstance.get());
+                return ChatFromNotificationProvider(
+                    dialogId, fullName, senderId, Injector.appInstance.get());
               },
             )
           ],
@@ -615,7 +698,8 @@ class RouteManager {
           providers: [
             ChangeNotifierProvider(
               create: (BuildContext context) {
-                return VoiceCallCustomerProvider(Injector.appInstance.get(), appointmentModel);
+                return VoiceCallCustomerProvider(
+                    Injector.appInstance.get(), appointmentModel);
               },
             )
           ],

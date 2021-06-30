@@ -10,6 +10,7 @@ class UserData {
 
   UserProfileModel userProfileModel;
   DoctorInfoModel doctorInfoModel;
+  String profileUrl;
 
   Map<String, String> getMapFilePath() {
     return _sharedPrefUtils.getMapFilePath();
