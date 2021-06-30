@@ -43,12 +43,23 @@ class _HistorySegmentControlState extends State<HistorySegmentControl> {
             radiusBottomLeft: 6,
           ),
           SegmentItem(
-            "ใบสั่งยา",
+            "ประวัติ",
             selectedPosition == 1,
                 () {
               widget.listener.call(1);
               setState(() {
                 selectedPosition = 1;
+              });
+            },
+            width: 30 * MediaQuery.of(context).size.width / 100,
+          ),
+          SegmentItem(
+            "ใบสั่งยา",
+            selectedPosition == 2,
+                () {
+              widget.listener.call(2);
+              setState(() {
+                selectedPosition = 2;
               });
             },
             width: 30 * MediaQuery.of(context).size.width / 100,

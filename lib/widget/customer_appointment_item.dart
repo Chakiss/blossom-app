@@ -17,9 +17,10 @@ class CustomerAppointmentItem extends StatefulWidget {
   DateFormat _timeFormatParse;
   GetDoctorProfileByIdUseCase _getDoctorProfileByIdUseCase;
   SharedPrefUtils _sharedPrefUtils;
+  bool isEnable;
 
   CustomerAppointmentItem(this._appointmentModel, this._dateFormat, this._dateFormatParse, this._timeFormat,
-      this._timeFormatParse, this._getDoctorProfileByIdUseCase, this._sharedPrefUtils, this._listener);
+      this._timeFormatParse, this._getDoctorProfileByIdUseCase, this._sharedPrefUtils, this._listener, {this.isEnable = true});
 
   @override
   _CustomerAppointmentItemState createState() => _CustomerAppointmentItemState();
@@ -76,7 +77,7 @@ class _CustomerAppointmentItemState extends State<CustomerAppointmentItem> {
                 )),
                 ButtonPinkGradient(
                   "โทร",
-                  true,
+                  widget.isEnable,
                   () {
                     widget._listener.call(widget._appointmentModel);
                   },

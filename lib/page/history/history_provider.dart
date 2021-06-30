@@ -14,6 +14,7 @@ class HistoryProvider extends BaseProvider with ChangeNotifier {
   UserData _userData;
   int selectedIndex = 0;
   List<AppointmentModel> appointmentList;
+  List<AppointmentModel> historyList;
   List<ShipnityOrderModel> orderList;
 
   HistoryProvider(this._getAppointmentByUserIdUseCase, this._getShipnityOrderListByPhoneNumberUseCase, this._userData);
@@ -21,7 +22,8 @@ class HistoryProvider extends BaseProvider with ChangeNotifier {
   Future<void> getAppointmentList(BuildContext context) async {
     final result = await _getAppointmentByUserIdUseCase.execute(_userData.userProfileModel.userUID);
     result.whenWithResult((data) {
-      appointmentList = data;
+      appointmentList = data["nowList"] ?? [];
+      historyList = data["historyList"] ?? [];
       notifyListeners();
     }, (map) {
       // errorHandle.proceed(context, map);

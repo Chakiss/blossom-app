@@ -16,7 +16,7 @@ class CustomerTreatHistoryProvider extends BaseProvider with ChangeNotifier {
   Future<void> callServiceGetAppointmentList() async {
     final result = await _getAppointmentByUserIdUseCase.execute(_userData.userProfileModel.userUID);
     result.whenWithResult((data) {
-      list = data;
+      list = data["rawList"] ?? [];
       notifyListeners();
     }, (map) {
 

@@ -57,43 +57,62 @@ class _HistoryPageState extends State<HistoryPage> {
             height: 20,
           ),
           Expanded(
-            child: Consumer<HistoryProvider>(
-              builder: (BuildContext context, HistoryProvider value, Widget child) {
-                if (value.selectedIndex == 0) {
-                  return _showAppointmentList(context, value.appointmentList);
-                } else {
-                  return _showShipnityOrderList(context, value.orderList);
-                }
-              },
-            ),
+            child: Consumer<HistoryProvider>(builder:
+                (BuildContext context, HistoryProvider value, Widget child) {
+              if (value.selectedIndex == 0) {
+                return _showAppointmentList(context, value.appointmentList, value.selectedIndex);
+              } else if (value.selectedIndex == 1) {
+                return _showAppointmentList(context, value.historyList, value.selectedIndex);
+              } else {
+                return _showShipnityOrderList(context, value.orderList);
+              }
+            }),
           )
         ],
       ),
     );
   }
 
-  Widget _showAppointmentList(BuildContext context, List<AppointmentModel> appointmentList) {
+  Widget _showAppointmentList(
+      BuildContext context, List<AppointmentModel> appointmentList, int selectedIndex) {
     if (appointmentList == null) {
       return Container(
           child: Center(
         child: BlossomProgressIndicator(),
       ));
     } else {
-      return ListView.builder(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        itemCount: appointmentList?.length ?? 0,
-        itemBuilder: (BuildContext context, int index) {
-          return CustomerAppointmentItem(appointmentList[index], _dateFormat, _dateFormatParse, _timeFormat,
-              _timeFormatParse, Injector.appInstance.get(), Injector.appInstance.get(), (appointment) {
-            _showCallTypeDialog(context, appointment);
-          });
-        },
-      );
+      if (appointmentList.isEmpty) {
+        return Container(
+            child: Center(
+                child: BlossomText(
+          selectedIndex == 0 ? "ไม่พบข้อมูลการนัดหมาย" : "ไม่พบประวัติการนัดหมาย",
+          fontWeight: FontWeight.bold,
+          size: 18,
+        )));
+      } else {
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          itemCount: appointmentList?.length ?? 0,
+          itemBuilder: (BuildContext context, int index) {
+            return CustomerAppointmentItem(
+                appointmentList[index],
+                _dateFormat,
+                _dateFormatParse,
+                _timeFormat,
+                _timeFormatParse,
+                Injector.appInstance.get(),
+                Injector.appInstance.get(), (appointment) {
+              _showCallTypeDialog(context, appointment);
+            }, isEnable: selectedIndex == 0,);
+          },
+        );
+      }
     }
   }
 
-  Widget _showShipnityOrderList(BuildContext context, List<ShipnityOrderModel> orderList) {
+  Widget _showShipnityOrderList(
+      BuildContext context, List<ShipnityOrderModel> orderList) {
     if (orderList == null) {
       return Container(
           child: Center(
@@ -105,9 +124,9 @@ class _HistoryPageState extends State<HistoryPage> {
         shrinkWrap: true,
         itemCount: orderList?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
-          return ShipnityOrderItem(orderList[index], Injector.appInstance.get(), Injector.appInstance.get(),
-              (shipnityOrder) {
-                goToShipnityOrder(context, shipnityOrder);
+          return ShipnityOrderItem(orderList[index], Injector.appInstance.get(),
+              Injector.appInstance.get(), (shipnityOrder) {
+            goToShipnityOrder(context, shipnityOrder);
             // if (shipnityOrder.paid == true) {
             //   goToShipnityOrder(context, shipnityOrder);
             // } else {
@@ -119,10 +138,12 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
-  void goToShipnityOrder(BuildContext context, ShipnityOrderModel shipnityOrder) {
+  void goToShipnityOrder(
+      BuildContext context, ShipnityOrderModel shipnityOrder) {
     final String url = _extractLinkFromString(shipnityOrder.summary_text);
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return WebViewPage("เลขที่ใบสั่งซื้อ: ${shipnityOrder.invoice_number}", url);
+      return WebViewPage(
+          "เลขที่ใบสั่งซื้อ: ${shipnityOrder.invoice_number}", url);
     }));
   }
 
@@ -140,31 +161,39 @@ class _HistoryPageState extends State<HistoryPage> {
     Navigator.push(context, RouteManager.routeChat(appointmentModel));
   }
 
-  void _goToVoiceCallDoctorPage(BuildContext context, AppointmentModel appointment) {
+  void _goToVoiceCallDoctorPage(
+      BuildContext context, AppointmentModel appointment) {
     final timeNow = DateTime.now().millisecondsSinceEpoch;
-    final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
-    final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    final startTime =
+        _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    final endTime =
+        _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
     if (timeNow >= startTime && timeNow <= endTime) {
       Navigator.push(context, RouteManager.routeCallDoctor(appointment));
     } else {
-      _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
+      _errorHandle
+          .proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
     }
     // Navigator.push(context, RouteManager.routeVoiceCallDoctor(appointment));
   }
 
   void _goToCallDoctorPage(BuildContext context, AppointmentModel appointment) {
     final timeNow = DateTime.now().millisecondsSinceEpoch;
-    final startTime = _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
-    final endTime = _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
+    final startTime =
+        _timeFormat.parse(appointment.timeStart).millisecondsSinceEpoch;
+    final endTime =
+        _timeFormat.parse(appointment.timeEnd).millisecondsSinceEpoch;
     if (timeNow >= startTime && timeNow <= endTime) {
       Navigator.push(context, RouteManager.routeCallDoctor(appointment));
     } else {
-      _errorHandle.proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
+      _errorHandle
+          .proceed(context, {"message": "คุณยังไม่ถึงเวลานัดหรือเลยเวลานัด"});
     }
     // Navigator.push(context, RouteManager.routeCallDoctor(appointment));
   }
 
-  void _showCallTypeDialog(BuildContext context, AppointmentModel appointmentModel) {
+  void _showCallTypeDialog(
+      BuildContext context, AppointmentModel appointmentModel) {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
