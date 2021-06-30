@@ -6,6 +6,7 @@ import 'package:blossom_clinic/widget/button_pink_gradient.dart';
 import 'package:blossom_clinic/widget/customer_information_item.dart';
 import 'package:blossom_clinic/widget/dialog/custom_dialog_two_button.dart';
 import 'package:blossom_clinic/widget/slider_acne_duration.dart';
+import 'package:blossom_clinic/widget/subject_information_radio_group.dart';
 import 'package:blossom_clinic/widget/toolbar_back.dart';
 import 'package:blossom_clinic/widget/true_false_product_radio_group.dart';
 import 'package:blossom_clinic/widget/true_false_radio_group.dart';
@@ -21,14 +22,14 @@ class AddCustomerInformationPage extends StatelessWidget {
   AddCustomerInformationPage(this._orderId);
 
   TextEditingController _changeProductTextEditController = TextEditingController();
-  String acnePeriod = "1";
+  String acnePeriod = "0";
   String acneCared;
-  bool isChangeProduct;
+  bool isChangeProduct = false;
   String changeProduct;
-  bool isStressed;
-  bool sleepDeprivation;
-  bool normalMenstruation;
-  bool frequencySweet;
+  bool isStressed = false;
+  bool sleepDeprivation = false;
+  bool normalMenstruation = false;
+  bool frequencySweet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,25 +43,25 @@ class AddCustomerInformationPage extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Stack(children: [
-                //   Container(
-                //     width: 100 * MediaQuery.of(context).size.width / 100,
-                //     child: Image.asset("assets/nav_bar.png"),
-                //   ),
-                  SafeArea(
-                      child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ToolbarBack(
-                        title: "ข้อมูลประกอบการรักษา",
-                      ),
-                    ],
-                  ))
-                ]),
-                Container(
+          Column(
+            children: [
+              Stack(children: [
+              //   Container(
+              //     width: 100 * MediaQuery.of(context).size.width / 100,
+              //     child: Image.asset("assets/nav_bar.png"),
+              //   ),
+                SafeArea(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ToolbarBack(
+                      title: "ข้อมูลประกอบการรักษา",
+                    ),
+                  ],
+                ))
+              ]),
+              Expanded(
+                child: Container(
                   color: BlossomTheme.white,
                   padding: EdgeInsets.symmetric(horizontal: 10 * MediaQuery.of(context).size.width / 100),
                   child: SingleChildScrollView(
@@ -71,61 +72,13 @@ class AddCustomerInformationPage extends StatelessWidget {
                           height: 20,
                         ),
                         BlossomText(
-                          "ระยะเวลาที่เป็นสิว",
+                          "เรื่องที่ปรึกษา",
                           size: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                        // AcneDurationInformationRadioGroup((acneDuration) {}),
-                        SliderAcneDuration((value) {
-                          acnePeriod = value;
-                          print("acnePeriod $acnePeriod");
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        BlossomText(
-                          "เคยรักษาสิวมาก่อนหรือไม่",
-                          size: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        AcneInformationRadioGroup((value) {
+                        SubjectInformationRadioGroup((value) {
                           acneCared = value;
                           print("acneCared $acneCared");
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TrueFalseProductRadioGroup("มีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่?", _changeProductTextEditController,
-                            (boolean) {
-                          isChangeProduct = boolean;
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TrueFalseRadioGroup("มีภาวะเครียด", (data) {
-                          isStressed = data;
-                          print("isStressed $isStressed");
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TrueFalseRadioGroup("มีภาวะนอนน้อย, นอนดึก", (data) {
-                          sleepDeprivation = data;
-                          print("sleepDeprivation $sleepDeprivation");
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TrueFalseRadioGroup("ประจำเดือนมาปกติ", (data) {
-                          normalMenstruation = data;
-                          print("normalMenstruation $normalMenstruation");
-                        }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TrueFalseRadioGroup("ทานขนม นมเป็นประจำ", (data) {
-                          frequencySweet = data;
-                          print("frequencySweet $frequencySweet");
                         }),
                         SizedBox(
                           height: 20,
@@ -215,9 +168,9 @@ class AddCustomerInformationPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ],
       ),

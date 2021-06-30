@@ -41,10 +41,13 @@ class AddCustomerInformationProvider extends BaseProvider with ChangeNotifier {
       bool normalMenstruation,
       bool frequenceSweet) async {
     if (acneCared == null) {
-      errorHandle.proceed(context, {"message": "กรุณาเลือกเคยรักษาสิวมาก่อนหรือไม่"});
+      errorHandle.proceed(context, {"message": "กรุณาเลือกเรื่องที่ปรึกษา"});
       return;
     }
-
+    if (acneCared.isEmpty) {
+      errorHandle.proceed(context, {"message": "กรุณาเลือกเรื่องที่ปรึกษา"});
+      return;
+    }
     if (isChangeProduct == null) {
       errorHandle.proceed(context, {"message": "กรุณาเลือกมีเปลี่ยนผลิตภัณฑ์ใหม่หรือไม่"});
       return;
